@@ -7,54 +7,67 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#282650",
+    "light": "#f7f6f5",
+    "dark": "#282650",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#282650",
+      "to": "#282650"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:info@askui.com"
+    },
+    {
+      "name": "Sign up",
+      "url": "https://app.askui.com"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Login",
+    "url": "https://app.askui.com"
   },
   "tabs": [
     {
-      "name": "API Reference",
+      "name": "Development Guides",
+      "url": "development-guides"
+    },
+    {
+      "name": "API Reference & Integrations",
       "url": "api-reference"
+    },
+    {
+      "name": "Deployment, Support & Resources",
+      "url": "deployment"
     }
   ],
   "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
+    
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "people",
+      "url": "https://community.askui.com"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://askui.com/blog"
+    },
+    {
+      "name": "Trust Center",
+      "icon": "book-open-cover",
+      "url": "https://trust.askui.com/"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "introduction/introduction",
+        "introduction/quickstart",
+        "introduction/development"
       ]
     },
     {
@@ -84,8 +97,8 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://x.com/ask_ui",
+    "github": "https://github.com/askui",
+    "linkedin": "https://www.linkedin.com/company/askui"
   }
 }
