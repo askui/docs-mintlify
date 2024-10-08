@@ -78,7 +78,7 @@
       "group": "Core Concepts",
       "pages": [
         "introduction/core-concepts/architecture",
-        "introduction/core-concepts/prompt-to-action",
+        "introduction/core-concepts/vision-models",
         "introduction/core-concepts/askui-shell",
         "introduction/core-concepts/human-in-the-loop",
         "introduction/core-concepts/agent-orchestration"
