@@ -89,8 +89,11 @@
       "pages": [
         "introduction/agent-setup/installer",
         "introduction/agent-setup/os-configuration",
+        "introduction/agent-setup/virtual-environments",
+        "introduction/agent-setup/native-environments",
         "introduction/agent-setup/proxy-configuration",
-        "introduction/agent-setup/packaging"
+        "introduction/agent-setup/packaging",
+        "introduction/agent-setup/reporting"
       ]
     },
     {
