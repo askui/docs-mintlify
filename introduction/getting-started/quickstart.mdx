@@ -3,7 +3,7 @@ title: Quickstart Tutorial
 description: 'Write your first automations with AskUI.'
 ---
 
-In this quickstart tutorial, we will guide you through your first automation on a [web calculator](https://askui.github.io/askui-practice-page/).
+In this quickstart tutorial, we will guide you through your first automation on a [web calculator](https://askui.github.io/askui-practice-page/). We will calculate **7 + 7** and then extract the calculation result in a variable.
 Please make your you followed through the [Installation Guide](/introduction/getting-started/installation-guide) prior to this.
 
 <Steps>
@@ -105,11 +105,52 @@ Please make your you followed through the [Installation Guide](/introduction/get
     - **Text Selectors**: Use visible text for finding elements
     - **AI Elements**: Train custom elements into your AI model
     - **UI Element Classes**: Use pre-trained elements
+    - **Ask Command**: This command uses GenAI for visual extraction or answering questions to the current screen
 
   A complete overview can be found in the [Prompt-to-Action APIs](/api-reference/api-reference/prompt-to-action).
   
-  For this tutorial, we will use
-  
+  For this tutorial, we will be using the **AI Element** and the **Ask Command**. As we can see on the annotation, not all elements are detected out-of-the-box.
+  For example, lets calculate **7 + 7** and extract the result from the page. If **7** would be detected as text, we could use the **Text Selector** ```await aui.click().text().withText("7").exec();```.
+  However, as this is not the case, we will make use of the **AI Element**.
+
+  You can import this function by typing in the terminal (ADE):
+
+  ```
+  AskUI-ImportExperimentalCommands
+  ```
+
+  and then:
+  ```
+  AskUI-newAIElement
+  ```
+
+  This opens a snipping tool, which you can use to crop out elements for storing them. We will now crop out the **button with number 7**, the **button +** and the **button with the equals sign**. Then press **esc** and you can name them, like here:
+  ![AI Element](/introduction/images/ai-element.gif)
+
+  We can now use those elements in our automation with ```await aui.click().aiElement('name').exec();```, the whole script then looks like this:
+
+  ```
+  await aui.execOnShell("open -a 'Google Chrome'").exec();
+
+  await aui.type(https://askui.github.io/askui-practice-page/).exec();
+  await aui.pressKey('enter').exec();
+
+  await aui.click().aiElement('button_7').exec();
+  await aui.click().aiElement('button_plus').exec();
+  await aui.click().aiElement('button_7').exec();
+  await aui.click().aiElement('button_equals').exec();
+
+  const s =  await aui.ask("What is the calculation result?");
+  console.log(s);
+
+  ```
+  You can see that we also make use of the **Ask Command** which retrieves a value which we then print to the console (we could also use this in an assertion). In this case, the result of the calculation.
+
+  If we run the whole code, we get - which is the correct value:
+
+  ![Ask Command](/introduction/images/ask-command.png)
+
+  This combination of navigating through UIs and extracting values can be very powerful as you can see.
   </Step>
 
   <Step title="(Optional) Configure a Reporter">
