@@ -1,8 +1,9 @@
 ---
 title: Installation Guide
-description: 'Install AskUI on your machine.'
+description: 'Install and run AskUI on your machine.'
 ---
 
+For running AskUI on your machine, follow these steps. If you are running in an enterprise network, you might also want to check out [Proxy & TLS Configuration](/introduction/agent-setup/proxy-configuration).
 <Steps>
   <Step title="Check Prerequisites">
     Make sure that you have:
@@ -18,17 +19,45 @@ description: 'Install AskUI on your machine.'
    ```
   </Step>
   <Step title="Connect your AskUI Account">
-    These are instructions or content that only pertain to the third step.
-  </Step>
-  
-  <Step title="Third Step">
-    These are instructions or content that only pertain to the third step.
-  </Step>
-
-  <Step title="Third Step">
-    These are instructions or content that only pertain to the third step.
+  Run the following command within the AskUI Shell to authenticate and connect your ADE to your AskUI account. Replace ```<access token>``` and ```<workspace id>``` with your real credentials from AskUI Studio.  
+  ```
+  AskUI-SetSettings -WorkspaceId <workspace id> -Token <access token>
+  ```
   </Step>
 
+  <Step title="Create a New Project">
+  Switch to a directory where you want to create the new AskUI project and run:
+  ```
+  AskUI-NewProject
+  ```
+  Then, follow the instructions in the terminal. This will install a new project and install all dependencies. This should look like this:
+  ![Installation](/introduction/images/project-installation.png)
+
+  </Step>
+
+  <Step title="Start the Controller">
+  Make sure the controller is running. You can start it by running following command in the ADE:
+  ```
+  AskUI-startController
+  ```
+  The controller executes your automations on the screen it has selected. The white frame around your display showcases which screen this is.
+  </Step>
+
+  <Step title="Run the Project">
+   You can now run your first project by running:
+  ```
+  AskUI-runProject
+  ```
+  This should look like this:
+  ![Execution](/introduction/images/first-run.png)
+
+    You can now start writing your first steps, which can be found in ```/YourProject/askui_example/my-first-askui-test-suite.test.ts```.
+
+  </Step>
 
 </Steps>
+
+If there is an issue with the installation, it is most likely due to network issues, please refer to following page for this [Proxy & TLS Configuration](/introduction/agent-setup/proxy-configuration).
+You can also ask the [Community](https://community.askui.com) for help.
+
 
