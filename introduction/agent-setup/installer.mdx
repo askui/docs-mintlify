@@ -1,4 +1,74 @@
 ---
 title: Installer
-description: 'Welcome to the home of your new documentation'
+description: 'Learn more about the AskUI installer.'
 ---
+
+The installer will install following components:
+
+- Vision Agent OS
+- Vision Agent Controller
+- Vision Agent Runner
+
+### For Windows
+
+Don't know which architecture you are on? Check [here](https://winaero.com/check-if-processor-is-32-bit-64-bit-or-arm-in-windows-10/).
+
+<CardGroup cols={2}>
+  <Card
+    title="Windows for AMD64"
+    icon="download"
+    href="https://files.askui.com/releases/Installer/24.9.1/AskUI-Suite-24.9.1-Installer-Win-AMD64-Full.exe"
+  >
+  </Card>
+  <Card
+    title="Windows for ARM64"
+    icon="download"
+    href="https://files.askui.com/releases/Installer/24.9.1/AskUI-Suite-24.9.1-Installer-Win-ARM64-Full.exe"
+  >
+  </Card>
+  
+</CardGroup>
+
+<Accordion title="Silent Install">
+  Use the downloaded executable file (.exe) for silent installation, which allows you to choose the installation directory and components. To install silently, run the following command terminal (Application CMD) with Administrator privileges:
+
+```"<installer_path>" /qn```
+
+Options:
+- ```/l*v "<log_file_path>"```: Set the installer log file path.
+- ```APPDIR="<installation_directory>"```: Specify the installation directory.
+- ```INSTALL_ADK="NO"```: Skip AskUI Development Environment installation.
+    - ```INSTALL_NODE="NO"```: Skip Isolated Node environment installation.
+    - ```INSTALL_ASKUI_RUNNER="NO"```: Skip AskUI Runner installation.
+    - ```HTTP_PROXY="<http_proxy_address>"```: Set the HTTP proxy address.
+    - ```HTTPS_PROXY="<https_proxy_address>"```: Set the HTTPS proxy address.
+- ```CONFIGURE_WINDOWS_FIREWALL="NO"```: Skip Windows Firewall configuration.
+Example:
+This command installs all components silently and sets the HTTP proxy address to http://proxy.example.com:
+
+```"<installer_path>" /qn HTTP_PROXY="http://proxy.example.com"```
+</Accordion>
+
+
+### For Linux
+Don't know which architecture you are on? Check [here](https://www.scaler.com/topics/cpu-info-linux/).
+
+```
+# If you have AMD64 use this
+bash /tmp/AskUI-Suite-24.9.1-User-Installer-Linux-x64-Full.run
+```
+
+```
+# If you have ARM64 use this
+bash /tmp/AskUI-Suite-24.9.1-User-Installer-Linux-ARM64-Full.run
+```
+
+### For MacOS
+
+```
+# Download installer into /tmp folder
+curl -o /tmp/AskUI-Suite-24.9.1-User-Installer-MacOS-ARM64-Full.run https://files.askui.com/releases/Installer/24.9.1/AskUI-Suite-24.9.1-User-Installer-MacOS-ARM64-Full.run
+```
+### For Android
+
+To automate an Android device with AskUI you need to have AskUI set up on your machine and connect your device to it. You can then connect to the Android device via [adb](https://developer.android.com/tools/adb?hl=en).
