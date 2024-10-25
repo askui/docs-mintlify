@@ -142,8 +142,7 @@
       "group": "Integrations",
       "pages": [
        "api-reference/integrations/triggering-agents",
-        "api-reference/integrations/pipelines",
-        "api-reference/integrations/report-converters"
+        "api-reference/integrations/pipelines"
       ]
     },
     {

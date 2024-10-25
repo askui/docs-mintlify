@@ -4,7 +4,7 @@ description: 'Write your first automations with AskUI.'
 ---
 
 In this quickstart tutorial, we will guide you through your first automation on a [web calculator](https://askui.github.io/askui-practice-page/). We will calculate **7 + 7** and then extract the calculation result in a variable.
-Please make your you followed through the [Installation Guide](/introduction/getting-started/installation-guide) prior to this.
+Please make sure you followed through the [Installation Guide](/introduction/getting-started/installation-guide) prior to this.
 
 <Steps>
   <Step title="Create a New Project">
@@ -85,10 +85,10 @@ Please make your you followed through the [Installation Guide](/introduction/get
   await aui.annotate();
   ```
 
-  We can then execute the automation by opening the ```askui-shell``` and running (do not forget to start the controller first):
+  We can then execute the automation by opening the ```AskUI-Shell``` and running (do not forget to start the controller first):
 
   ```
-  askui-runProject
+  AskUI-RunProject
   ```
   While execution, your display frame should turn purple which indicates the Agent Controller executing the steps. After successfully running, the ```annotate()```will ahve created a new file in the folder ```/test/report/your_annotation```.
   We can open that file in the browser and can see what the Vision Agent sees:
@@ -121,7 +121,7 @@ Please make your you followed through the [Installation Guide](/introduction/get
 
   and then:
   ```
-  AskUI-newAIElement
+  AskUI-NewAiElement
   ```
 
   This opens a snipping tool, which you can use to crop out elements for storing them. We will now crop out the **button with number 7**, the **button +** and the **button with the equals sign**. Then press **esc** and you can name them, like here:
@@ -224,7 +224,7 @@ export default config;
 
 </Accordion>
 
-You can find more reporters [here](/api-reference/integrations/report-converters).
+You can find more reporters [here](/introduction/agent-setup/reporting).
 
   </Step>
 
