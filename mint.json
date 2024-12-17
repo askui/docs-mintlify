@@ -63,7 +63,8 @@
       "group": "Introduction",
       "pages": [
         "introduction/introduction/overview",
-        "introduction/introduction/use-cases"
+        "introduction/introduction/use-cases",
+        "introduction/introduction/usecaseswalkthrough"
       ]
     },
     {
