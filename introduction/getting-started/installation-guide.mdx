@@ -4,76 +4,84 @@ description: 'Install and run AskUI on your machine.'
 ---
 
 For running AskUI on your machine, follow these steps. If you are running in an enterprise network, you might also want to check out [Proxy & TLS Configuration](/introduction/agent-setup/proxy-configuration).
+
 <Steps>
   <Step title="Check Prerequisites">
     Make sure that you have:
-    - Created an [AskUI account](https://app.askui.com)
-    - Have an IDE installed
-    - Have AskUI [installed](/introduction/agent-setup/installer)
+
+    * Created an [AskUI account](https://app.askui.com)
+
+    * Have an IDE installed
+
+    * Have AskUI [installed](/introduction/agent-setup/installer)
   </Step>
+
 
   <Step title="Activate the AskUI Development Environment (ADE)">
+    After a successful installation, open a terminal and run the following command:
 
-  After a successful installation, open a terminal and run the following command:
-   ```
-   AskUI-Shell
-   ```
+    ```
+    AskUI-Shell
+    ```
   </Step>
+
   <Step title="Connect your AskUI Account">
-  Run the following command within the AskUI Shell to authenticate and connect your ADE to your AskUI account. Replace ```<access token>``` and ```<workspace id>``` with your real credentials from AskUI Studio.  
-  ```
-  AskUI-SetSettings -WorkspaceId <workspace id> -Token <access token>
-  ```
+    Run the following command within the AskUI Shell to authenticate and connect your ADE to your AskUI account. Replace `<access token>` and `<workspace id>` with your real credentials from AskUI Studio.
+
+    ```
+    AskUI-SetSettings -WorkspaceId <workspace id> -Token <access token>
+    ```
   </Step>
 
   <Step title="Create a New Project">
-  Switch to a directory where you want to create the new AskUI project and run:
-  ```
-  AskUI-NewProject
-  ```
-  Then, follow the instructions in the terminal. This will install a new project and install all dependencies. This should look like this:
-  ![Installation](/introduction/images/project-installation.png)
+    Switch to a directory where you want to create the new AskUI project and run:
 
+    ```
+    AskUI-NewProject
+    ```
+
+    Then, follow the instructions in the terminal. This will install a new project and install all dependencies. This should look like this:
+    ![Installation](/introduction/images/project-installation.png)
   </Step>
 
   <Step title="Start the Controller">
-  Make sure the controller is running. You can start it by running following command in the ADE:
-  ```
-  AskUI-StartController
-  ```
-  The controller executes your automations on the screen it has selected. The white frame around your display showcases which screen this is. 
-  You might get asked for permissions, especially on MacOS ([accessibility](https://support.apple.com/en-gb/guide/mac-help/mh43185/mac) and [screen recording](https://support.apple.com/en-gb/guide/mac-help/mchld6aa7d23/mac)).
+    Make sure the controller is running. You can start it by running following command in the ADE:
+
+    ```
+    AskUI-StartController
+    ```
+
+    The controller executes your automations on the screen it has selected. The white frame around your display showcases which screen this is.
+    You might get asked for permissions, especially on MacOS ([accessibility](https://support.apple.com/en-gb/guide/mac-help/mh43185/mac) and [screen recording](https://support.apple.com/en-gb/guide/mac-help/mchld6aa7d23/mac)).
   </Step>
 
   <Step title="Run the Project">
-   You can now run your first project by running:
-  ```
-  AskUI-RunProject
-  ```
-  This should look like this:
-  ![Execution](/introduction/images/first-run.png)
+    You can now run your first project by running:
 
-    You can now start writing your first steps, which can be found in ```/YourProject/askui_example/my-first-askui-test-suite.test.ts```.
+    ```
+    AskUI-RunProject
+    ```
 
+    This should look like this:
+    ![Execution](/introduction/images/first-run.png)
+
+    You can now start writing your first steps, which can be found in `/YourProject/askui_example/my-first-askui-test-suite.test.ts`.
   </Step>
 
   <Step title="(Optional) Enable Jest Runner, ESLint & LiveView">
+    If you are using Visual Studio Code, we recommend using following plugins:
 
-If you are using Visual Studio Code, we recommend using following plugins:
+    * Jest Runner: Lets you easily run your Jest test cases from within the IDE
 
-- Jest Runner: Lets you easily run your Jest test cases from within the IDE
-- Live Preview: Shows you the annotation without leaving VS Code
-- ESLint: Helps you debug your syntax, e.g. a missing ```.exec()```
+    * Live Preview: Shows you the annotation without leaving VS Code
 
-You can find these in the Extensions section in VS Code:
+    * ESLint: Helps you debug your syntax, e.g. a missing `.exec()`
 
-![Execution](/introduction/images/extensions.png)
+    You can find these in the Extensions section in VS Code:
 
+    ![Execution](/introduction/images/extensions.png)
   </Step>
-
 </Steps>
 
 If there is an issue with the installation, it is most likely due to network issues, please refer to following page for this [Proxy & TLS Configuration](/introduction/agent-setup/proxy-configuration).
 You can also ask the [Community](https://community.askui.com) for help.
-
-
