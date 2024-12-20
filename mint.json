@@ -34,10 +34,6 @@
     {
       "name": "API Reference & Integrations",
       "url": "api-reference"
-    },
-    {
-      "name": "Development Guides",
-      "url": "development-guides"
     }
   ],
   "anchors": [
@@ -63,8 +59,7 @@
       "group": "Introduction",
       "pages": [
         "introduction/introduction/overview",
-        "introduction/introduction/use-cases",
-        "introduction/introduction/usecaseswalkthrough"
+        "introduction/introduction/use-cases"
       ]
     },
     {
@@ -80,9 +75,7 @@
       "pages": [
         "introduction/core-concepts/architecture",
         "introduction/core-concepts/vision-models",
-        "introduction/core-concepts/askui-shell",
-        "introduction/core-concepts/human-in-the-loop",
-        "introduction/core-concepts/agent-orchestration"
+        "introduction/core-concepts/askui-shell"
       ]
     },
     {
