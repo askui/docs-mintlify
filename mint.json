@@ -32,8 +32,12 @@
   "tabs": [
    
     {
-      "name": "API Reference & Integrations",
-      "url": "api-reference"
+      "name": "API Reference & Extensibility",
+      "url": "02-api-reference"
+    },
+    {
+      "name": "Account & Settings",
+      "url": "03-account"
     }
   ],
   "anchors": [
@@ -58,94 +62,133 @@
     {
       "group": "Introduction",
       "pages": [
-        "introduction/introduction/overview",
-        "introduction/introduction/use-cases"
+        "introduction/01-introduction/01-overview",
+        "introduction/01-introduction/02-use-cases",
+        "introduction/01-introduction/03-how-it-works"
       ]
     },
     {
       "group": "Getting Started",
       "pages": [
-        "introduction/getting-started/prerequisites",
-        "introduction/getting-started/installation-guide",
-        "introduction/getting-started/quickstart"
+        "introduction/02-getting-started/01-prerequisites",
+        "introduction/02-getting-started/02-installation-guide",
+        "introduction/02-getting-started/03-quickstart",
+        "introduction/02-getting-started/04-configuration",
+        "introduction/02-getting-started/05-running-locally"
       ]
     },
     {
       "group": "Core Concepts",
       "pages": [
-        "introduction/core-concepts/architecture",
-        "introduction/core-concepts/vision-models",
-        "introduction/core-concepts/askui-shell"
+        "introduction/03-core-concepts/01-element-selection",
+        "introduction/03-core-concepts/02-interactions",
+        "introduction/03-core-concepts/03-extraction",
+        "introduction/03-core-concepts/04-yolo-mode"
       ]
     },
     {
-      "group": "Agent Setup & Deployment",
+      "group": "AI Models & Configuration",
       "pages": [
-        "introduction/agent-setup/installer",
-        "introduction/agent-setup/os-configuration",
-        "introduction/agent-setup/virtual-environments",
-        "introduction/agent-setup/native-environments",
-        "introduction/agent-setup/proxy-configuration",
-        "introduction/agent-setup/packaging",
-        "introduction/agent-setup/reporting"
-      ]
-    },
-    {
-      "group": "Account and Settings",
-      "pages": [
-        "introduction/account-and-settings/account-management",
-        "introduction/account-and-settings/workspace-management",
-        "introduction/account-and-settings/billing",
-        "introduction/account-and-settings/sso"
-      ]
-    },
-    {
-      "group": "Updates & Releases",
-      "pages": [
-        "introduction/release-notes",
-        "introduction/changelog"
-      ]
-    },
-    {
-      "group": "Developer Tutorials",
-      "pages": [
-        "development-guides/developer-tutorials/building-a-qa-agent",
-        "development-guides/developer-tutorials/building-a-idp-agent",
-        "development-guides/developer-tutorials/building-a-sales-agent"
+        "introduction/04-ai-models/01-understanding-ai-models",
+        "introduction/04-ai-models/02-model-overview", 
+        "introduction/04-ai-models/03-configuration" 
       ]
     },
 
     {
-      "group": "Working with Agents",
+      "group": "Continuous Integration",
       "pages": [
-        "development-guides/working-with-agents/writing-agent-scripts",
-        "development-guides/working-with-agents/advanced-features",
-        "development-guides/working-with-agents/re-teaching-models"
+        "introduction/05-continuous-integration/01-github",
+        "introduction/05-continuous-integration/02-gitlab",
+        "introduction/05-continuous-integration/03-azure",
+        "introduction/05-continuous-integration/04-jenkins"
+      ]
+    },
+
+    {
+      "group": "Integrations & Advanced Usage",
+      "pages": [
+        "introduction/06-integrations/01-reporters",
+        "introduction/06-integrations/02-docker",
+        "introduction/06-integrations/03-visual-regression",
+        "introduction/06-integrations/04-bdd",
+        "introduction/06-integrations/05-frameworks",
+        "introduction/06-integrations/06-sso",
+        "introduction/06-integrations/07-proxy"
+      ]
+    },
+
+    {
+      "group": "Best Practices & Workflows",
+      "pages": [
+        "introduction/07-best-practices/01-stable-tests",
+        "introduction/07-best-practices/02-flakiness",
+        "introduction/07-best-practices/03-performance"
+      ]
+    },
+    
+    {
+      "group": "Platform & Ecosystem",
+      "pages": [
+        "introduction/08-platform/01-environments",
+        "introduction/08-platform/02-limitations"
+      ]
+    },
+
+    {
+      "group": "Updates & Glossary",
+      "pages": [
+        "introduction/01-changelog",
+        "introduction/02-release-notes",
+        "introduction/03-troubleshooting",
+        "introduction/04-glossary"
       ]
     },
 
     {
       "group": "API Reference",
       "pages": [
-        "api-reference/api-reference/os-apis",
-        "api-reference/api-reference/prompt-to-action",
-        "api-reference/api-reference/model-apis"
+        "02-api-reference/01-api-reference/00-table",
+        "02-api-reference/01-api-reference/01-actions",
+        "02-api-reference/01-api-reference/02-elements",
+        "02-api-reference/01-api-reference/03-relations",
+        "02-api-reference/01-api-reference/04-getters",
+        "02-api-reference/01-api-reference/05-assertions"
       ]
     },
     {
-      "group": "Integrations",
+      "group": "Agent OS",
       "pages": [
-       "api-reference/integrations/triggering-agents",
-        "api-reference/integrations/pipelines"
+        "02-api-reference/02-agent-os/00-overview",
+        "02-api-reference/02-agent-os/01-development-environment",
+        "02-api-reference/02-agent-os/02-controller",
+        "02-api-reference/02-agent-os/03-runner",
+        "02-api-reference/02-agent-os/04-installer"
       ]
     },
+    
+
+
     {
-      "group": "Additional Tools",
+      "group": "Account & Settings",
       "pages": [
-        "api-reference/additional-tools/recorder",
-        "api-reference/additional-tools/askui-shell"
+        "03-account/01-account-management/01-account-management",
+        "03-account/01-account-management/02-tokens",
+        "03-account/01-account-management/03-billing"
+      ]
+    },
+
+    {
+      "group": "Troubleshooting & Support",
+      "pages": [
+        "03-account/02-support/01-common-issues",
+        "03-account/02-support/02-contacting-support",
+        "03-account/02-support/03-feedback"
       ]
     }
+
+
+
   ],
   "footerSocials": {
     "x": "https://x.com/ask_ui",
