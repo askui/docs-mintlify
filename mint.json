@@ -146,24 +146,246 @@
     },
 
     {
-      "group": "API Reference",
+      "group": "Agent Frameworks",
       "pages": [
-        "02-api-reference/01-api-reference/00-table",
-        "02-api-reference/01-api-reference/01-actions",
-        "02-api-reference/01-api-reference/02-elements",
-        "02-api-reference/01-api-reference/03-relations",
-        "02-api-reference/01-api-reference/04-getters",
-        "02-api-reference/01-api-reference/05-assertions"
-      ]
-    },
+            {
+                "group": "TypeScript",
+                "pages": [
+                  "02-api-reference/01-agent-frameworks/01-typescript/01-installation",
+                  "02-api-reference/01-agent-frameworks/01-typescript/02-reporters",
+                  
+                    {
+                     "group": "Test Frameworks",
+                        "pages": [
+                        "02-api-reference/01-agent-frameworks/01-typescript/03-test-frameworks/01-pytest"
+                        ]
+                    },
+                    {
+                     "group": "Control Client API",
+                        "pages": [
+                        
+                          {
+                          "group": "API Commands",
+                            "pages": [
+                              "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/01-api-commands/01-table-of-contents"
+                            ]
+                          },
+                        "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/02-annotations",
+                        "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/03-convenience-functions",
+                        
+                          {
+                          "group": "UI Controller API",
+                            "pages": [
+                              "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/04-ui-controller-api/01-connect",
+                              "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/04-ui-controller-api/02-disconnect"
+                            ]
+                          },
+                        
+                          {
+                          "group": "Recording API",
+                            "pages": [
+                              "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/05-recording-api/01-start",
+                              "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/05-recording-api/02-stop"
+                            ]
+                          }
+                          
+                        ]
+                    }
+                ]
+            },
+      
+            {
+                "group": "Python",
+                "pages": [
+                  "02-api-reference/01-agent-frameworks/02-python/01-installation",
+                 
+                    {
+                     "group": "Vision Agent API",
+                        "pages": [
+                        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/01-table-of-contents"
+                        ]
+                    },
+                   
+                    {
+                     "group": "Test Frameworks",
+                        "pages": [
+                        "02-api-reference/01-agent-frameworks/02-python/03-test-frameworks/01-pytest"
+                        ]
+                    } 
+                ]
+            }
+        ]
+      },
     {
       "group": "Agent OS",
       "pages": [
-        "02-api-reference/02-agent-os/00-overview",
-        "02-api-reference/02-agent-os/01-development-environment",
-        "02-api-reference/02-agent-os/02-controller",
-        "02-api-reference/02-agent-os/03-runner",
-        "02-api-reference/02-agent-os/04-installer"
+        
+            {
+                "group": "Computer API",
+                "pages": [
+                  "02-api-reference/02-agent-os/01-computer-api/01-table-of-contents"
+                ]
+            },
+       
+            {
+                "group": "Screen Change API",
+                "pages": [
+                  "02-api-reference/02-agent-os/02-screen-change-api/01-table-of-contents"
+                ]
+            },
+           
+            {
+                "group": "Automation Target API",
+                "pages": [
+                
+                      {
+                         "group": "Desktop",
+                          "pages": [
+                             "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/01-screen-selection",
+                             "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/02-window-selection",
+                             "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/03-application-selection",
+                             "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/04-area-selection"
+                           ]
+                        },
+                
+                      {
+                         "group": "Mobile",
+                          "pages": [
+                             "02-api-reference/02-agent-os/03-automation-target-api/02-mobile/01-ios",
+                             "02-api-reference/02-agent-os/03-automation-target-api/02-mobile/04-android"
+                           ]
+                        },    
+                 
+                      {
+                         "group": "Remote Control",
+                          "pages": [
+                             "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/01-citrix",
+                             "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/02-teamviewer",
+                             "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/03-rdp",
+                             "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/04-vnc"
+                           ]
+                        }
+
+                ]
+            },
+    
+            {
+                "group": "In-Background Automation API",
+                "pages": [
+                  "02-api-reference/02-agent-os/04-in-background-automation-api/01-windows"
+                ]
+            }
+        ]
+    },
+
+    {
+      "group": "Agent Environment",
+      "pages": [
+        "02-api-reference/03-agent-environment/01-installer",
+        "02-api-reference/03-agent-environment/02-askui-shell",
+        "02-api-reference/03-agent-environment/03-proxy",
+      
+            {
+                "group": "Packages",
+                "pages": [
+                  "02-api-reference/03-agent-environment/04-packages/01-snippet-tool",
+                  "02-api-reference/03-agent-environment/04-packages/02-reteaching-tool"
+                ]
+            }
+      ]
+    },
+
+    {
+      "group": "Agent Hub",
+      "pages": [
+        "02-api-reference/04-agent-hub/01-runner",
+        "02-api-reference/04-agent-hub/02-repository",
+        "02-api-reference/04-agent-hub/03-reporting",
+        "02-api-reference/04-agent-hub/04-cloud-environment"
+      ]
+    },
+
+    {
+      "group": "AskUI Inference",
+      "pages": [
+        
+            {
+                "group": "UIDT Model (Legacy)",
+                "pages": [
+                  "02-api-reference/05-askui-inference/01-uidt-model/01-configuration"
+                ]
+            },
+        
+            {
+                "group": "Image-to-Action Models",
+                "pages": [
+                  "02-api-reference/05-askui-inference/02-image-to-action-models/01-custom-elements",
+                  "02-api-reference/05-askui-inference/02-image-to-action-models/02-ai-elements"
+                ]
+            },
+        
+            {
+                "group": "Prompt-to-Action Models",
+                "pages": [
+                  "02-api-reference/05-askui-inference/03-prompt-to-action-models/01-configuration",
+                  
+                      {
+                         "group": "Models",
+                          "pages": [
+                             "02-api-reference/05-askui-inference/03-prompt-to-action-models/02-models/01-pta-1"
+                           ]
+                        },
+                  "02-api-reference/05-askui-inference/03-prompt-to-action-models/03-prompting-best-practices"
+                  
+                ]
+            },
+        
+            {
+                "group": "Information Extraction Models",
+                "pages": [
+                  "02-api-reference/05-askui-inference/04-information-extraction-models/01-configuration",
+                 
+                      {
+                         "group": "Models",
+                          "pages": [
+                             "02-api-reference/05-askui-inference/04-information-extraction-models/02-models/01-claude",
+                             "02-api-reference/05-askui-inference/04-information-extraction-models/02-models/02-open-ai"
+                           ]
+                        },
+                  "02-api-reference/05-askui-inference/04-information-extraction-models/03-prompting-best-practices"
+                ]
+            }
+        ]
+    },
+
+    {
+      "group": "External Inference",
+      "pages": [
+        
+            {
+                "group": "Prompt-to-Action Models",
+                "pages": [
+                  "02-api-reference/06-external-inference/01-prompt-to-action-models/01-hugging-face"
+                ]
+            },
+     
+            {
+                "group": "Intent-to-Action Models",
+                "pages": [
+                  "02-api-reference/06-external-inference/02-intent-to-action-models/01-computer-use"
+                ]
+            }
+      ]
+    },
+
+    {
+      "group": "Account Management",
+      "pages": [
+        "02-api-reference/07-account-management/01-workspaces-api",
+        "02-api-reference/07-account-management/02-billing-api",
+        "02-api-reference/07-account-management/03-user-api",
+        "02-api-reference/07-account-management/04-usage-api",
+        "02-api-reference/07-account-management/05-audit-api"
       ]
     },
     
