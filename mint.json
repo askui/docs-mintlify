@@ -56,6 +56,12 @@
       "name": "Trust Center",
       "icon": "book-open-cover",
       "url": "https://trust.askui.com/"
+    },
+    {
+      "name": "API Reference",
+      "openapi": "https://workspaces.askui.com/openapi.json",
+      "url": "api-reference",
+      "icon": "square-terminal"
     }
   ],
   "navigation": [
