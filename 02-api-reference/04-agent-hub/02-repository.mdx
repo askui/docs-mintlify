@@ -1,4 +1,45 @@
 ---
 title: Repository
-description: 'Welcome to the home of your new documentation'
+description: 'API Reference for Repository Integration'
 ---
+
+# Repository API Documentation
+
+To integrate API documentation from PyDoc into this documentation, you can follow these steps:
+
+1. Generate PyDoc Documentation:
+   ```bash
+   # Navigate to your Python project directory
+   cd your-project-directory
+   
+   # Generate PyDoc documentation
+   pydoc -w ./your_module
+   ```
+
+2. Integration Options:
+
+   a. **Direct PyDoc HTML Integration**:
+   - Generate PyDoc HTML files
+   - Place them in your documentation's static directory
+   - Link to them from this page
+
+   b. **Markdown Conversion**:
+   - Use tools like `pydoc-markdown` to convert PyDoc output to MDX
+   - Directly embed the generated markdown in this file
+
+3. Example Integration:
+   ```bash
+   # Using pydoc-markdown
+   pip install pydoc-markdown
+   pydoc-markdown -m your_module > api_reference.md
+   ```
+
+For detailed API documentation, you'll need to run PyDoc on your specific repository module and integrate the output here. The documentation will include:
+
+- Module overview
+- Class definitions
+- Method signatures
+- Function documentation
+- Type hints and parameters
+
+> Note: Replace this content with your actual PyDoc-generated documentation once you've processed your Python modules.

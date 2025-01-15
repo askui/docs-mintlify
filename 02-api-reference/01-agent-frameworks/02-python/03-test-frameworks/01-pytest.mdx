@@ -1,4 +1,53 @@
 ---
 title: pytest
-description: 'Welcome to the home of your new documentation'
+description: 'How to integrate API documentation using pydoc with pytest'
 ---
+
+# Integrating API Documentation with pytest
+
+You can integrate API documentation from pydoc with your pytest setup using several approaches:
+
+## Using doctest with pytest
+
+1. **pytest-doctestplus**: This plugin extends pytest's doctest capabilities and can work with pydoc-style docstrings:
+```python
+def my_function(x):
+    """
+    >>> my_function(4)
+    8
+    """
+    return x * 2
+```
+
+## Using sphinx-autodoc with pytest
+
+1. Install required packages:
+```bash
+pip install sphinx pytest sphinx-autodoc
+```
+
+2. In your `conf.py`:
+```python
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+]
+```
+
+## Direct pydoc integration
+
+You can generate documentation for your test files using:
+```bash
+pydoc -w test_file.py
+```
+
+This will create HTML documentation from your docstrings.
+
+## Best Practices
+
+1. Write detailed docstrings in your test files
+2. Use consistent formatting for your docstrings
+3. Include example usage in docstrings
+4. Document test fixtures and their purpose
+
+For more detailed information about pydoc integration, refer to the [official pytest documentation](https://docs.pytest.org).

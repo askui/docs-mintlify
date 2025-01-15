@@ -2,3 +2,35 @@
 title: Installation
 description: 'Welcome to the home of your new documentation'
 ---
+
+## Standard Installation
+
+(Previous installation content would go here)
+
+## API Documentation with Pydoc
+
+To generate and integrate API documentation using pydoc, follow these steps:
+
+1. **Using pydoc from Command Line**
+   ```bash
+   python -m pydoc -w your_module_name
+   ```
+   This will generate HTML documentation for your module.
+
+2. **Viewing Documentation**
+   ```bash
+   python -m pydoc -b
+   ```
+   This starts a local HTTP server and opens your default web browser to view the documentation.
+
+3. **Integrating with Documentation**
+   
+   You can generate documentation for your modules and integrate the output into your documentation structure. Here's a basic example:
+   ```python
+   # Generate documentation for specific modules
+   python -m pydoc -w your_agent_module
+   
+   # The generated HTML can then be converted to markdown or integrated directly
+   ```
+
+For more detailed API documentation, consider using more feature-rich tools like Sphinx with autodoc, which provides better integration capabilities with modern documentation systems.
