@@ -1,4 +1,22 @@
 ---
 title: Working with Other Tools
-description: 'Welcome to the home of your new documentation'
+description: 'Learn how to integrate documentation from various tools and frameworks'
 ---
+
+## Integrating PyDoc Documentation
+
+You can integrate API documentation generated from PyDoc into your documentation. PyDoc is Python's built-in documentation generator that extracts documentation from Python modules and creates HTML documentation.
+
+To integrate PyDoc-generated documentation:
+
+1. Generate your PyDoc documentation by running:
+   ```bash
+   python -m pydoc -w your_module
+   ```
+
+2. The generated HTML files can then be:
+   - Converted to markdown format using HTML-to-markdown tools
+   - Embedded directly using an iframe
+   - Referenced via links to your hosted PyDoc documentation
+
+This allows you to maintain automatically generated API documentation alongside your manual documentation.

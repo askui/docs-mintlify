@@ -1,0 +1,123 @@
+# Integrating Python API Documentation with Pydoc
+
+Pydoc is Python's built-in documentation generator that can automatically generate API documentation from your Python code's docstrings. Here's how you can integrate Python API documentation into your documentation:
+
+## Prerequisites
+
+- Python installed on your system
+- Python project with docstrings
+
+## Using Pydoc to Generate Documentation
+
+### 1. Writing Docstrings
+
+First, ensure your Python code has proper docstrings. Example:
+
+```python
+def calculate_sum(a: int, b: int) -> int:
+    """
+    Calculate the sum of two integers.
+
+    Args:
+        a (int): First number
+        b (int): Second number
+
+    Returns:
+        int: The sum of a and b
+    """
+    return a + b
+```
+
+### 2. Generating Documentation
+
+You can generate documentation in several ways:
+
+#### Command Line
+
+```bash
+# Generate HTML documentation
+python -m pydoc -w your_module_name
+
+# Start an HTTP server with documentation
+python -m pydoc -p 8000
+```
+
+#### Programmatic Usage
+
+```python
+import pydoc
+
+# Generate HTML documentation
+pydoc.writedoc("your_module_name")
+```
+
+### 3. Integration Options
+
+There are several ways to integrate the generated documentation:
+
+1. **Static HTML**: 
+   - Generate HTML files using pydoc
+   - Copy the generated files to your documentation directory
+   - Link to them from your main documentation
+
+2. **Iframe Integration**:
+   ```html
+   <iframe src="path/to/pydoc/documentation.html" width="100%" height="600px"></iframe>
+   ```
+
+3. **Dynamic Server**:
+   - Run pydoc as an HTTP server
+   - Link to the running documentation server
+
+## Best Practices
+
+1. Keep docstrings up to date
+2. Use consistent formatting (Google style, NumPy style, or reStructuredText)
+3. Include examples in your docstrings
+4. Document all public APIs
+
+## Additional Tools
+
+Consider these alternatives to enhance your Python API documentation:
+
+- **Sphinx**: More feature-rich documentation generator
+- **MkDocs**: Markdown-based documentation generator
+- **pdoc**: Modern Python documentation generator
+
+## Example Integration
+
+```python
+# example_module.py
+class Calculator:
+    """A simple calculator class for demonstration."""
+    
+    def add(self, a: float, b: float) -> float:
+        """
+        Add two numbers.
+        
+        Args:
+            a (float): First number
+            b (float): Second number
+            
+        Returns:
+            float: The sum of a and b
+        """
+        return a + b
+```
+
+Generate documentation:
+```bash
+python -m pydoc -w example_module
+```
+
+This will create `example_module.html` which you can then integrate into your documentation structure.
+
+## Troubleshooting
+
+Common issues and solutions:
+
+1. **Missing documentation**: Ensure docstrings are properly formatted
+2. **Broken links**: Check file paths and server configuration
+3. **Styling issues**: Use CSS to match your documentation theme
+
+For more information, refer to the [official Python documentation](https://docs.python.org/3/library/pydoc.html) on pydoc.
