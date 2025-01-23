@@ -152,10 +152,6 @@
             "02-api-reference/01-agent-frameworks/01-typescript/01-installation",
             "02-api-reference/01-agent-frameworks/01-typescript/02-reporters",
             {
-              "group": "Test Frameworks",
-              "pages": []
-            },
-            {
               "group": "Control Client API",
               "pages": [
                 {
