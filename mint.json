@@ -135,18 +135,18 @@
       ]
     },
     {
+      "group": "Legacy Typescript Docs",
+      "pages": [
+        "introduction/09-legacy-docs/docs/general/01-Getting Started"
+      ]
+    },
+    {
       "group": "Updates & Glossary",
       "pages": [
         "introduction/01-changelog",
         "introduction/02-release-notes",
         "introduction/03-troubleshooting",
         "introduction/04-glossary"
-      ]
-    },
-    {
-      "group": "Legacy Typescript Docs",
-      "pages": [
-        "introduction/09-legacy-docs/docs/general/01-Getting Started"
       ]
     },
     {
