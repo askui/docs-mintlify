@@ -135,10 +135,10 @@ await aui.click().text("'This should not").exec();
 ### Detection Fails on a Different Machine / in Pipeline
 When the resolution changes for a workflow run on a different machine or inside a Continuous integration pipeline for example, you may encounter the following problems:
 
-<!-- vale off -->
+
 * Text linebreaks and text detection fails: See [Text Detection Fails Because of Linebreaks](#text-detection-fails-because-of-linebreaks)
 * Elements change shape or color during a workflow run: See [Color of Same Element Changes](#color-of-same-element-changes) and [Duplicate Elements](#duplicate-elements)
-<!-- vale oon -->
+
 
 ---
 
@@ -223,9 +223,8 @@ await aui.click().aiElement('one-button').exec();
 
 ---
 
-<!-- vale off -->
 ### Color of Same Element Changes
-<!-- vale on -->
+
 AskUI can not detect color (yet). If you have an element that changes color like the button shown below:
 
 * Button light themed
