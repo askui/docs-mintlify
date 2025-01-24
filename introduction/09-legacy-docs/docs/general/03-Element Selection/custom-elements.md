@@ -171,8 +171,7 @@ For example for a `textfield` with the label `lastname` that is embedded in a fo
 
 - To find a matching element from the screen, the custom image **must be very similar as it is displayed on the screen.**
 
-<!-- vale off -->
 **2) The Time of the Execution may Increase by a Notable Amount**
-<!-- vale on -->
+
 
 - In some cases using a `customElement()` increases the runtime by a notable amount. Therefore, if the task could be accomplished with other element-descriptions such as `icon()`, `button()`, or `text()`, then it may be better to avoid using the `customElement()`.
