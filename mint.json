@@ -144,6 +144,12 @@
       ]
     },
     {
+      "group": "Legacy Typescript Docs",
+      "pages": [
+        "introduction\09-legacy-docs\docs\general\03-Element Selection",
+      ]
+    },
+    {
       "group": "Agent Frameworks",
       "pages": [
         {
