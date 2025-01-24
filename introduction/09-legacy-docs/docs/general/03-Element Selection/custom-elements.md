@@ -1,12 +1,9 @@
 ---
-sidebar_position: 2
 title: Custom Elements
----
-
----
-title: Dealing with Flakiness
 description: 'Welcome to the home of your new documentation'
 ---
+
+
 
 # Custom Elements
 
@@ -20,13 +17,13 @@ With **Custom Elements**, you can define a custom element-description based on h
 
 
 * Two elements only differ stably in color:
-#![](images/custom-elements-buttons-differ-in-color.png)
+#[](images/custom-elements-buttons-differ-in-color.png)
 
 * Unknown icons or logos
-#![](images/custom-elements-icon-not-recognized.png)
+#[](images/custom-elements-icon-not-recognized.png)
 
 * Very low contrast where detection fails:
-#![](images/custom-elements-button-not-recognized.png)
+#[](images/custom-elements-button-not-recognized.png)
 
 * ...
 
@@ -63,7 +60,7 @@ Arguments:
 ## Step-By-Step Guide
 Now that you know how to click a custom element you will create one on your own step-by-step.
 
-You will move your mouse cursor to a little human-figure ![human-figure](images/street-view-human.png) as shown in the video below.
+You will move your mouse cursor to a little human-figure [human-figure](images/street-view-human.png) as shown in the video below.
 
 <video controls>
   <source src="https://d2dnep8p8ldagm.cloudfront.net/assets/docs/blog_customElement_askui_google_street_view.mp4"/>
@@ -175,8 +172,6 @@ For example for a `textfield` with the label `lastname` that is embedded in a fo
 
 - To find a matching element from the screen, the custom image **must be very similar as it is displayed on the screen.**
 
-<!-- vale off -->
 **2) The Time of the Execution may Increase by a Notable Amount**
-<!-- vale on -->
 
 - In some cases using a `customElement()` increases the runtime by a notable amount. Therefore, if the task could be accomplished with other element-descriptions such as `icon()`, `button()`, or `text()`, then it may be better to avoid using the `customElement()`.
