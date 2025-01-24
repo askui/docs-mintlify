@@ -3,6 +3,11 @@ sidebar_position: 2
 title: Custom Elements
 ---
 
+---
+title: Dealing with Flakiness
+description: 'Welcome to the home of your new documentation'
+---
+
 # Custom Elements
 
 :::tip
@@ -15,13 +20,13 @@ With **Custom Elements**, you can define a custom element-description based on h
 
 
 * Two elements only differ stably in color:
-![](images/custom-elements-buttons-differ-in-color.png)
+#![](images/custom-elements-buttons-differ-in-color.png)
 
 * Unknown icons or logos
-![](images/custom-elements-icon-not-recognized.png)
+#![](images/custom-elements-icon-not-recognized.png)
 
 * Very low contrast where detection fails:
-![](images/custom-elements-button-not-recognized.png)
+#![](images/custom-elements-button-not-recognized.png)
 
 * ...
 
