@@ -259,7 +259,7 @@
         "02-api-reference/03-agent-environment/01-installer",
         "02-api-reference/03-agent-environment/02-askui-shell",
         "02-api-reference/03-agent-environment/03-proxy",
-        "02-api-reference/03-agent-environment/AskUI-StartController.mdx",
+        "02-api-reference/03-agent-environment/AskUI-StartController",
         {
           "group": "Packages",
           "pages": [
