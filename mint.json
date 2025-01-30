@@ -365,9 +365,9 @@
           "group": "workspace-memberships",
           "pages": [
             "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-membership",
-            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-memberships",
-            "02-api-reference/07-workspace-service/workspace-memberships/create-workspace-membership",
-            "02-api-reference/07-workspace-service/workspace-memberships/delete-workspace-membership"
+            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-memberships",        
+            "02-api-reference/07-workspace-service/workspace-memberships/create-workspace-membership",       
+            "02-api-reference/07-workspace-service/workspace-memberships/delete-workspace-membership"        
           ]
         },
         {

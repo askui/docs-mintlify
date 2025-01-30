@@ -74,7 +74,7 @@ rm -r  02-api-reference/05-askui-inference
 ```
 2. Regenerate Workspaces Service
 ```bash
-npm run docs:generate:askui-inference
+npm run docs:generate:inference-api
 
 --- Output ---
 navigation object suggestion:
