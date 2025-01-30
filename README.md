@@ -102,6 +102,21 @@ openapi: https://inference.askui.com/openapi.json
 ```
 
 
+### WIP: API References -> Agent Environment
+
+Currently Work ing Progress
+
+1. Start AskUI Shell by:
+```powersehll
+askui-hsell
+
+```
+
+2. Generate Commands
+
+```powershell
+& .\src\powershell\Get-AskUIHelpByMarkdown.ps1 AskUI-StartController > .\AskUI-StartController.md
+```
 
 ### Publishing Changes
 
