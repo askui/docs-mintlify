@@ -8,9 +8,7 @@ title: AskUI-StartController
 
 ### Syntax
 ```powershell
-
 Start-AskUIController [-DisplayNum <int>] [-Maximize] [-Runtime <string>] [-Port <int>] [-ActionWaitTime <int>] [-WebSocketHost <string>] [-LogFile <string>] [-LogLevel <string>] [-HideOverlay] [-DebugDraw] [-RunInBackground] [<CommonParameters>]
-
 ```
 
 **PARAMETERS**:
