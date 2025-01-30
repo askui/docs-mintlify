@@ -1,0 +1,27 @@
+{
+  "name": "docs-mintlify",
+  "version": "1.0.0",
+  "description": "This is the docs for askui",
+  "main": "index.js",
+  "scripts": {
+    "docs:generate:workspaces-api": "npx @mintlify/scraping@latest openapi-file https://workspaces.askui.com/openapi.json -o 02-api-reference/07-workspace-service/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/askui/docs-mintlify.git"
+  },
+  "keywords": [
+    "docs",
+    "mintlify",
+    "askui"
+  ],
+  "author": "Dominik Klotz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/askui/docs-mintlify/issues"
+  },
+  "homepage": "https://github.com/askui/docs-mintlify#readme",
+  "dependencies": {
+    "@mintlify/scraping": "^4.0.93"
+  }
+}

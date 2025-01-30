@@ -54,12 +54,6 @@
       "name": "Trust Center",
       "icon": "book-open-cover",
       "url": "https://trust.askui.com/"
-    },
-    {
-      "name": "API Reference",
-      "openapi": "https://workspaces.askui.com/openapi.json",
-      "url": "api-reference",
-      "icon": "square-terminal"
     }
   ],
   "navigation": [
@@ -346,13 +340,97 @@
       ]
     },
     {
-      "group": "Account Management",
+      "group": "Workspaces Service",
       "pages": [
-        "02-api-reference/07-account-management/01-workspaces-api",
-        "02-api-reference/07-account-management/02-billing-api",
-        "02-api-reference/07-account-management/03-user-api",
-        "02-api-reference/07-account-management/04-usage-api",
-        "02-api-reference/07-account-management/05-audit-api"
+        {
+          "group": "agent-executions",
+          "pages": [
+            "02-api-reference/07-workspace-service/agent-executions/list-agent-executions",
+            "02-api-reference/07-workspace-service/agent-executions/create-agent-execution",
+            "02-api-reference/07-workspace-service/agent-executions/update-agent-execution"
+          ]
+        },
+        {
+          "group": "access-tokens",
+          "pages": [
+            "02-api-reference/07-workspace-service/access-tokens/list-access-tokens",
+            "02-api-reference/07-workspace-service/access-tokens/create-access-token",
+            "02-api-reference/07-workspace-service/access-tokens/delete-access-token",
+            "02-api-reference/07-workspace-service/access-tokens/lookup-global-access-token-id",
+            "02-api-reference/07-workspace-service/access-tokens/list-access-tokens-1",
+            "02-api-reference/07-workspace-service/access-tokens/create-access-token-1",
+            "02-api-reference/07-workspace-service/access-tokens/delete-access-token-1",
+            "02-api-reference/07-workspace-service/access-tokens/lookup-workspace-access-token-id"
+          ]
+        },
+        {
+          "group": "agents",
+          "pages": [
+            "02-api-reference/07-workspace-service/agents/list-agents",
+            "02-api-reference/07-workspace-service/agents/create-agent",
+            "02-api-reference/07-workspace-service/agents/update-agent"
+          ]
+        },
+        {
+          "group": "files",
+          "pages": [
+            "02-api-reference/07-workspace-service/files/list-files",
+            "02-api-reference/07-workspace-service/files/upload-file",
+            "02-api-reference/07-workspace-service/files/delete-file",
+            "02-api-reference/07-workspace-service/files/set-signed-cookies"
+          ]
+        },
+        {
+          "group": "runner-jobs",
+          "pages": [
+            "02-api-reference/07-workspace-service/runner-jobs/lease",
+            "02-api-reference/07-workspace-service/runner-jobs/ping",
+            "02-api-reference/07-workspace-service/runner-jobs/complete"
+          ]
+        },
+        {
+          "group": "usage",
+          "pages": [
+            "02-api-reference/07-workspace-service/usage/list-usage-events"
+          ]
+        },
+        {
+          "group": "workspace-memberships",
+          "pages": [
+            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-membership",
+            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-memberships",
+            "02-api-reference/07-workspace-service/workspace-memberships/create-workspace-membership",
+            "02-api-reference/07-workspace-service/workspace-memberships/delete-workspace-membership"
+          ]
+        },
+        {
+          "group": "workspaces",
+          "pages": [
+            "02-api-reference/07-workspace-service/workspaces/create-workspace",
+            "02-api-reference/07-workspace-service/workspaces/delete-workspace",
+            "02-api-reference/07-workspace-service/workspaces/update-workspace-name"
+          ]
+        },
+        {
+          "group": "billing",
+          "pages": [
+            "02-api-reference/07-workspace-service/billing/create-customer-portal-session",
+            "02-api-reference/07-workspace-service/billing/get-workspace-subscription"
+          ]
+        },
+        {
+          "group": "runs",
+          "pages": [
+            "02-api-reference/07-workspace-service/runs/list-runs"
+          ]
+        },
+        {
+          "group": "schedules",
+          "pages": [
+            "02-api-reference/07-workspace-service/schedules/suspend-schedule",
+            "02-api-reference/07-workspace-service/schedules/create-schedule"
+          ]
+        }
       ]
     },
     {
