@@ -282,13 +282,18 @@
     {
       "group": "AskUI Inference",
       "pages": [
-        "02-api-reference/05-askui-inference/vqa-inference",
-        "02-api-reference/05-askui-inference/inference",
-        "02-api-reference/05-askui-inference/predict",
-        "02-api-reference/05-askui-inference/train-pta",
-        "02-api-reference/05-askui-inference/train",
-        "02-api-reference/05-askui-inference/check-if-image-required",
-        "02-api-reference/05-askui-inference/validate-instruction"
+        {
+          "group": "API Reference",
+          "pages": [
+            "02-api-reference/05-askui-inference/vqa-inference",
+            "02-api-reference/05-askui-inference/inference",
+            "02-api-reference/05-askui-inference/predict",
+            "02-api-reference/05-askui-inference/train-pta",
+            "02-api-reference/05-askui-inference/train",
+            "02-api-reference/05-askui-inference/check-if-image-required",
+            "02-api-reference/05-askui-inference/validate-instruction"
+          ]
+        }
       ]
     },
     {

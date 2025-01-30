@@ -108,8 +108,7 @@ Currently Work ing Progress
 
 1. Start AskUI Shell by:
 ```powersehll
-askui-hsell
-
+askui-shell
 ```
 
 2. Generate Commands
