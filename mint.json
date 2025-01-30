@@ -1,6 +1,10 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Starter Kit",
+  "openapi": [
+    "https://workspaces.askui.com/openapi.json",
+    "https://inference.askui.com/openapi.json"
+  ],
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -126,12 +130,6 @@
       "pages": [
         "introduction/08-platform/01-environments",
         "introduction/08-platform/02-limitations"
-      ]
-    },
-    {
-      "group": "Legacy Typescript Docs",
-      "pages": [
-        "introduction/09-legacy-docs/docs/general/01-Getting-Started/guide-how-askui-works"
       ]
     },
     {
