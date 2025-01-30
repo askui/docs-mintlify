@@ -259,7 +259,8 @@
         "02-api-reference/03-agent-environment/01-installer",
         "02-api-reference/03-agent-environment/02-askui-shell",
         "02-api-reference/03-agent-environment/03-proxy",
-        "02-api-reference/03-agent-environment/AskUI-StartController",
+        "02-api-reference/03-agent-environment/AskUI-StartController-v1",
+        "02-api-reference/03-agent-environment/AskUI-StartController-v2",
         {
           "group": "Packages",
           "pages": [
