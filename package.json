@@ -4,7 +4,8 @@
   "description": "This is the docs for askui",
   "main": "index.js",
   "scripts": {
-    "docs:generate:workspaces-api": "npx @mintlify/scraping@latest openapi-file https://workspaces.askui.com/openapi.json -o 02-api-reference/07-workspace-service/"
+    "docs:generate:workspaces-api": "npx @mintlify/scraping@latest openapi-file https://workspaces.askui.com/openapi.json -o 02-api-reference/07-workspace-service/",
+    "docs:generate:inference-api": "npx @mintlify/scraping@latest openapi-file https://inference.askui.com/openapi.json -o 02-api-reference/05-askui-inference/"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/askui/docs-mintlify#readme",
   "dependencies": {
-    "@mintlify/scraping": "^4.0.93"
+    "@mintlify/scraping": "^4.0.93",
+    "mintlify": "^4.0.354"
   }
 }

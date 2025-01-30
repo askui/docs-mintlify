@@ -280,46 +280,13 @@
     {
       "group": "AskUI Inference",
       "pages": [
-        {
-          "group": "UIDT Model (Legacy)",
-          "pages": [
-            "02-api-reference/05-askui-inference/01-uidt-model/01-configuration"
-          ]
-        },
-        {
-          "group": "Image-to-Action Models",
-          "pages": [
-            "02-api-reference/05-askui-inference/02-image-to-action-models/01-custom-elements",
-            "02-api-reference/05-askui-inference/02-image-to-action-models/02-ai-elements"
-          ]
-        },
-        {
-          "group": "Prompt-to-Action Models",
-          "pages": [
-            "02-api-reference/05-askui-inference/03-prompt-to-action-models/01-configuration",
-            {
-              "group": "Models",
-              "pages": [
-                "02-api-reference/05-askui-inference/03-prompt-to-action-models/02-models/01-pta-1"
-              ]
-            },
-            "02-api-reference/05-askui-inference/03-prompt-to-action-models/03-prompting-best-practices"
-          ]
-        },
-        {
-          "group": "Information Extraction Models",
-          "pages": [
-            "02-api-reference/05-askui-inference/04-information-extraction-models/01-configuration",
-            {
-              "group": "Models",
-              "pages": [
-                "02-api-reference/05-askui-inference/04-information-extraction-models/02-models/01-claude",
-                "02-api-reference/05-askui-inference/04-information-extraction-models/02-models/02-open-ai"
-              ]
-            },
-            "02-api-reference/05-askui-inference/04-information-extraction-models/03-prompting-best-practices"
-          ]
-        }
+        "02-api-reference/05-askui-inference/vqa-inference",
+        "02-api-reference/05-askui-inference/inference",
+        "02-api-reference/05-askui-inference/predict",
+        "02-api-reference/05-askui-inference/train-pta",
+        "02-api-reference/05-askui-inference/train",
+        "02-api-reference/05-askui-inference/check-if-image-required",
+        "02-api-reference/05-askui-inference/validate-instruction"
       ]
     },
     {
