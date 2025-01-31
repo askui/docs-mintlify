@@ -35,19 +35,19 @@ Author: AskUI Team
 Version: 1.0
 
 ### EXAMPLES
-#### EXAMPLE 1
+**EXAMPLE 1**
 ```powershell
 ADE> Start-AskUIController
 Starts the AskUI Controller with default settings.
 ```
  
-#### EXAMPLE 2
+**EXAMPLE 2**
 ```powershell
 ADE> Start-AskUIController -DisplayNum 1 -Maximize -Runtime desktop
 Starts the AskUI Controller on display 1 in maximized mode using desktop runtime.
 ```
  
-#### EXAMPLE 3
+**EXAMPLE 3**
 ```powershell
 ADE> Start-AskUIController -Port 6770 -LogLevel debug -RunInBackground
 Starts the AskUI Controller on port 6770 with debug logging in background mode.
