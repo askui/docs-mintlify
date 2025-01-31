@@ -26,6 +26,31 @@ mintlify dev
 
 ## Update Pages
 
+### API References -> 02-python -> 02-vision-agent-api
+
+1. ```
+pdm install
+```
+
+2. Install newest version of askui-vision agent
+```
+pdm add askui@<latest version>
+```
+
+3. ```
+pdm run docs:generate:inference-api:python-vision-agent
+```
+
+4. 
+```
+rm -rf 02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/*
+```
+
+4. 
+```
+cp  .....  02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/*
+```
+
 ### API References -> Workspaces Service
 
 

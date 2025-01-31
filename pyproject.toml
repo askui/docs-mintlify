@@ -1,0 +1,46 @@
+[project]
+name = "docs-mintlify"
+version = "0.1.0"
+description = "For generating docs for python projects"
+authors = [
+    {name = "Dominik Klotz", email = "dominik.klotz@askui.com"},
+]
+dependencies = []
+requires-python = "==3.13.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+"docs:api:generate" = {shell  = "pydoc-markdown"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "askui @ git+ssh://git@github.com/askui/vision-agent.git@956c0bea049fa6e3ded772f9b135bf8c1f5c0e7e",
+    "pydoc-markdown>=4.8.2",
+]
+
+
+
+[[tool.pydoc-markdown.loaders]]
+type = "python"
+packages = [ "askui" ]
+modules = [ "askui" ]
+
+[tool.pydoc-markdown.renderer]
+type = "hugo"
+content_directory = "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api"
+
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Agent"
+name = "agent"
+contents = [ "askui.agent.*" ]
+
+
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Tools"
+name = "tools"
+contents = [ "askui.tools.askui.askui_controller.*" ]

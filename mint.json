@@ -185,7 +185,8 @@
             {
               "group": "Vision Agent API",
               "pages": [
-                "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/01-table-of-contents"
+                "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
+                "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
               ]
             },
             {

@@ -1,16 +1,6 @@
 ---
-title: Table of Contents
-description: 'Welcome to the home of your new documentation'
+title: Agent
 ---
-
-# Table of Contents
-
-* [askui.agent](#askui.agent)
-  * [VisionAgent](#askui.agent.VisionAgent)
-    * [click](#askui.agent.VisionAgent.click)
-    * [wait](#askui.agent.VisionAgent.wait)
-    * [key\_up](#askui.agent.VisionAgent.key_up)
-    * [key\_down](#askui.agent.VisionAgent.key_down)
 
 <a id="askui.agent"></a>
 
