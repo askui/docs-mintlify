@@ -1,98 +1,171 @@
 ---
-title: 'How Vision Agent Works'
-description: 'Learn how to preview changes locally'
+title: 'How AskUI Works'
+description: 'Learn how to use AskUI locally'
 ---
 
-<Info>
-  **Prerequisite** You should have installed Node.js (version 18.10.0 or
-  higher).
-</Info>
+# **Getting Started with AskUI: A Beginner-Friendly Guide**
 
-Step 1. Install Mintlify on your OS:
+## **What is AskUI?**
 
-<CodeGroup>
+AskUI is a powerful automation tool that lets you **interact with any software, on any operating system, just like a human would**. It recognizes UI elements on the screen and can perform actions like clicking buttons, typing in text fields, or executing commands—without needing complex programming knowledge.
 
-```bash npm
-npm i -g mintlify
+In this guide, we’ll explain:
+
+- How AskUI works
+- The key components that power it
+- How you can start automating tasks easily
+
+By the end, you’ll **understand how to use AskUI to automate UI interactions efficiently.** 🚀
+
+---
+
+## **How AskUI Works**
+
+AskUI is built on three key components that work together:
+
+1. **AskUI Control Client** – The main interface where you tell AskUI what to do.
+2. **AskUI Controller** – The tool that carries out your automation on the computer.
+3. **AskUI Inference Server** – The brain behind AskUI that recognizes UI elements on your screen.
+
+Let’s go through each one in simple terms. 👇
+
+---
+
+## **1. AskUI Control Client: The Command Center**
+
+The **AskUI Control Client** is where you **tell AskUI what to automate**. It provides a user-friendly API that allows you to create instructions.
+
+For example, let’s say you want AskUI to click a "Login" button. The instruction would look like this:
+
+```
+await aui.click().button().withText('Login').exec();
+
 ```
 
-```bash yarn
-yarn global add mintlify
+Here’s what’s happening:
+
+- **`click()`** → Specifies the action (clicking).
+- **`button().withText('Login')`** → Identifies the UI element (a button with "Login" text).
+- **`exec()`** → Executes the command.
+
+💡 **Key takeaway:** The AskUI Control Client makes automation simple by using easy-to-read instructions.
+
+### **What happens next?**
+
+Once you give a command, the Control Client:
+
+1. Sends a request to the **AskUI Controller** (to perform an action like clicking).
+2. Sends a request to the **AskUI Inference Server** (to analyze the screen and find elements if needed).
+
+---
+
+## **2. AskUI Controller: The Execution Engine**
+
+The **AskUI Controller** is the part that **physically interacts with your operating system**. Think of it as a remote control for your computer—it listens to instructions from the Control Client and performs the requested actions.
+
+### **What does it do?**
+
+- Takes screenshots of your screen (to identify UI elements).
+- Performs interactions like **clicking, typing, and pressing keys**.
+- Runs commands in the background to automate actions.
+
+💡 **Example:** If you tell AskUI to **press three keys at once**, the AskUI Controller will execute it immediately:
+
+```
+await aui.pressThreeKeys('control','alt','del').exec();
+
 ```
 
-</CodeGroup>
+👉 **No need to analyze the screen—this action is performed directly by the Controller.**
 
-Step 2. Go to the docs are located (where you can find `mint.json`) and run the following command:
+---
 
-```bash
-mintlify dev
+## **3. AskUI Inference Server: The AI Brain**
+
+The **AskUI Inference Server** is where the magic happens! 🧠✨ This server uses AI to **"see" your screen** and recognize different UI elements.
+
+### **How does it work?**
+
+1. The Control Client takes a **screenshot** of your screen.
+2. The screenshot is sent to the Inference Server.
+3. The AI model **identifies UI elements** like buttons, text fields, or icons.
+4. The results are sent back, and automation continues.
+
+🔍 **What can it recognize?**
+
+- **Buttons** (e.g., "Login", "Submit")
+- **Text Fields** (e.g., input boxes)
+- **Icons** (e.g., user profile icon)
+- **Custom Elements** (you can define specific areas to be recognized)
+
+💡 **Example:** If you tell AskUI to click a button, but the system first needs to "find" it, the Inference Server helps locate it before performing the action.
+
+---
+
+## **How AskUI Works in Action**
+
+Let’s put everything together! Here’s what happens when you run an AskUI command:
+
+### **Scenario 1: Clicking a Button**
+
+```
+await aui.click().button().withText('Confirm').exec();
+
 ```
 
-The documentation website is now available at `http://localhost:3000`.
+🔹 **Step 1:** AskUI Control Client sends the request.
 
-### Custom Ports
+🔹 **Step 2:** The Inference Server checks the screen for the "Confirm" button.
 
-Mintlify uses port 3000 by default. You can use the `--port` flag to customize the port Mintlify runs on. For example, use this command to run in port 3333:
+🔹 **Step 3:** The AskUI Controller receives the command and clicks the button.
 
-```bash
-mintlify dev --port 3333
+✅ **Result:** The button is clicked automatically!
+
+---
+
+### **Scenario 2: Pressing Shortcut Keys**
+
+```
+await aui.pressThreeKeys('control','alt','del').exec();
+
 ```
 
-You will see an error like this if you try to run Mintlify in a port that's already taken:
+🔹 **Step 1:** The AskUI Control Client sends the request.
 
-```md
-Error: listen EADDRINUSE: address already in use :::3000
-```
+🔹 **Step 2:** The AskUI Controller triggers the keyboard shortcut instantly.
 
-## Mintlify Versions
+✅ **Result:** The keys are pressed at the same time!
 
-Each CLI is linked to a specific version of Mintlify. Please update the CLI if your local website looks different than production.
+---
 
-<CodeGroup>
+## **Getting Started with AskUI**
 
-```bash npm
-npm i -g mintlify@latest
-```
+To use AskUI, you’ll need **user credentials**. You can get these by signing up for a **free trial** in AskUI Studio.
 
-```bash yarn
-yarn global upgrade mintlify
-```
+👉 **Sign up here:** Onboarding
 
-</CodeGroup>
+👉 **Need help?** Join our **community** for support!
 
-## Deployment
+🔗 **Learn more:**
 
-<Tip>
-  Unlimited editors available under the [Startup
-  Plan](https://mintlify.com/pricing)
-</Tip>
+- [API Documentation](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
+- [Tutorials](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
+- [Frequently Asked Questions](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
 
-You should see the following if the deploy successfully went through:
+---
 
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
+## **Conclusion**
 
-## Troubleshooting
+AskUI makes UI automation **simple, flexible, and reliable**—without needing advanced coding skills. 🎉
 
-Here's how to solve some common problems when working with the CLI.
+To recap:
+✅ **AskUI Control Client** → The interface where you define automation.
 
-<AccordionGroup>
-  <Accordion title="Mintlify is not loading">
-    Update to Node v18. Run `mintlify install` and try again.
-  </Accordion>
-  <Accordion title="No such file or directory on Windows">
-Go to the `C:/Users/Username/.mintlify/` directory and remove the `mint`
-folder. Then Open the Git Bash in this location and run `git clone
-https://github.com/mintlify/mint.git`.
+✅ **AskUI Controller** → The execution tool that interacts with the system.
 
-Repeat step 3.
+✅ **AskUI Inference Server** → The AI-powered element recognizer.
 
-  </Accordion>
-  <Accordion title="Getting an unknown error">
-    Try navigating to the root of your device and delete the ~/.mintlify folder.
-    Then run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
+With these three working together, you can **automate anything on any platform!** 🚀
 
-Curious about what changed in a CLI version? [Check out the CLI changelog.](/changelog/command-line)
+📌 **Next Steps:** Try out a simple command in AskUI and start automating today!
+
