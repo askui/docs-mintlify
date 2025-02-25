@@ -17,8 +17,9 @@ description: 'Welcome to the AskUI documentation. This guide will help you under
 
 ## What are Vision Agents?
 
-Vision Agents are an innovative way of interacting with any application through AI-driven vision technology.
-It allows developers to build agents that can perform tasks across various applications, not limited to web browsers, by interpreting and executing actions based on visual cues and natural language instructions.
+Vision Agents offer an innovative way to interact with any application using AI-powered vision technology. They enable users to create intelligent agents that understand visual elements and execute tasks across various applications—including, but not limited to, web browsers—by responding to visual cues and natural language commands. 
+
+Unlike cloud-based solutions, AskUI Vision Agents run **locally on different devices**, ensuring greater **security and data privacy**. This flexibility allows automation to be performed securely across multiple environments without relying on external servers, making it ideal for sensitive or restricted systems.
 
 <CardGroup cols={2}>
   <Card
@@ -38,9 +39,34 @@ It allows developers to build agents that can perform tasks across various appli
   </Card>
 </CardGroup>
 
+## About
+
+**AskUI is building the Vision Agent for enterprises, enabling secure automation of native devices.**
+
+Key features of AskUI include:
+
+- Support for Windows, Linux, MacOS, Android and iOS device automation (Citrix supported)
+- Support for single-step UI automation commands (RPA like) as well as agentic intent-based instructions
+- In-background automation on Windows machines (agent can create a second session; you do not have to watch it take over mouse and keyboard)
+- Flexible model use (hot swap of models) and infrastructure for reteaching of models (available on-premise)
+- Secure deployment of agents in enterprise environments
+
+
+## Components
+
+---
+
+AskUI consists of three main layers:
+
+- **Model Provider:** The AI models used for UI grounding and prompt processing.
+- **Agent Framework:** The framework used to instruct the agent with Agent Commands. We support TypeScript and Python right now.
+- **Agent OS:** This is a client installed on the device to be automated, executing all commands and interacting with mouse and keyboard. Serves as the “hands” of the Vision Agent. Also responsible for environment management of the agent.
+- **Agent Hub:** Cross Team Collaboration Plattform. ****Web frontend for creation and management of access tokens and user management. Serves as repository for vision agents.
+
+
 ## Key Features
 
-	•	**AI Vision Technology:** Leverage advanced computer vision models to detect, interpret, and interact with UI elements in any application.
+	• **AI Vision Technology:** Leverage advanced computer vision models to detect, interpret, and interact with UI elements in any application.
   
   •	**Cross-Application Control:** Automate tasks across different desktop applications seamlessly, enhancing productivity and efficiency.
 	
