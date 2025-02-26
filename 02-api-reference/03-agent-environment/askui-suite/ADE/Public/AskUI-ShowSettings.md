@@ -1,0 +1,37 @@
+---
+title: AskUI-ShowSettings
+---
+
+# AskUI-ShowSettings
+
+### SYNOPSIS
+
+Displays AskUI environment settings.
+
+### DESCRIPTION
+
+The Show-AskUISettings cmdlet displays the current AskUI environment configuration settings.
+Settings can be shown from different locations (Merged, User, or Project) with optional display of secrets.
+
+### PARAMETERS
+
+- `-Location` | _&lt;String&gt;_ - Settings location. (Default: Merged)
+Valid values: Merged, User, Project 
+- `-WithSecrets` | _&lt;SwitchParameter&gt;_ - Specify whether to show the secrets.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+```powershell
+AskUI-ShowSettings
+Shows merged settings without secrets.
+```
+ 
+#### EXAMPLE 2
+
+```powershell
+AskUI-ShowSettings -Location User -WithSecrets
+Shows user-level settings including secrets.
+```
+

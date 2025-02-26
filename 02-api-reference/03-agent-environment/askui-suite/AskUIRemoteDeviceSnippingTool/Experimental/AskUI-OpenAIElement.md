@@ -1,0 +1,14 @@
+---
+title: AskUI-OpenAIElement
+---
+
+# AskUI-OpenAIElement
+
+### SYNOPSIS
+
+Opens AI Element by name filter.
+
+### PARAMETERS
+
+- `-NameFilter` | _&lt;String&gt;_ - (Mandatory) Specifies a name filter for the AI Element to be opened.
+

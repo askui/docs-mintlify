@@ -1,0 +1,27 @@
+---
+title: AskUI-RemovePythonEnvironment
+---
+
+# AskUI-RemovePythonEnvironment
+
+### SYNOPSIS
+
+Removes an existing Python virtual environment.
+
+### DESCRIPTION
+
+The AskUI-RemovePythonEnvironment cmdlet removes a specified Python virtual environment if it exists.
+
+### PARAMETERS
+
+- `-Name` | _&lt;String&gt;_ - The name of the virtual environment to be removed.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+```powershell
+AskUI-RemovePythonEnvironment -Name "oldenv"
+Removes the "oldenv" virtual environment.
+```
+

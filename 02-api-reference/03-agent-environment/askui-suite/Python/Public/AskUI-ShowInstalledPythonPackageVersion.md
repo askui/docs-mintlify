@@ -1,0 +1,34 @@
+---
+title: AskUI-ShowInstalledPythonPackageVersion
+---
+
+# AskUI-ShowInstalledPythonPackageVersion
+
+### SYNOPSIS
+
+Shows the version of an installed Python package.
+
+### DESCRIPTION
+
+The AskUI-ShowInstalledPythonPackageVersion cmdlet retrieves the version information for a specified Python package installed in the environment.
+
+### PARAMETERS
+
+- `-PackageName` | _&lt;String&gt;_ - The name of the Python package whose version is to be retrieved.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+```powershell
+AskUI-ShowInstalledPythonPackageVersion -PackageName "numpy"
+Shows the version of the "numpy" package installed.
+```
+ 
+#### EXAMPLE 2
+
+```powershell
+AskUI-ShowInstalledPythonPackageVersion -PackageName "requests"
+Shows the version of the "requests" package installed.
+```
+

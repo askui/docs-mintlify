@@ -1,0 +1,23 @@
+---
+title: AskUI-ShowVersions
+---
+
+# AskUI-ShowVersions
+
+### SYNOPSIS
+
+Displays the installed extensions and their versions.
+
+### PARAMETERS
+
+- `-Type` | _&lt;ExtensionType&gt;_ - Specifies the type to filter by. Valid values are 'Feature', 'Component', or 'Plugin'. If not specified, all types are shown.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+```powershell
+AskUI-ShowVersions
+Displays the versions of all extensions.
+```
+

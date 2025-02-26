@@ -127,19 +127,26 @@ openapi: https://inference.askui.com/openapi.json
 ```
 
 
-### WIP: API References -> Agent Environment
+### WIP: API References -> Agent Environment -> AskUI Suite
 
-Currently Work ing Progress
+Currently Working Progress
 
-1. Start AskUI Shell by:
-```powersehll
-askui-shell
-```
-
-2. Generate Commands
+1. Generate Markdown
 
 ```powershell
-& .\src\powershell\Get-AskUIHelpByMarkdown.ps1 AskUI-StartController > .\AskUI-StartController.md
+& .\src\powershell\ADE-MarkdownGenerator.ps1
+```
+
+2. Copy `askui-suite` from `src\powershell\out\askui-suite` to `02-api-reference\03-agent-environment\askui-suite`
+3. Update Mintlify by coping the content of `src\powershell\out\output.json` to `mint.json` in
+
+```json
+    ...
+    {
+      "group": "AskUI Suite",
+      "pages": <-- here -->
+    },
+    ...
 ```
 
 ### Publishing Changes

@@ -1,0 +1,14 @@
+---
+title: AskUI-ShowAIElement
+---
+
+# AskUI-ShowAIElement
+
+### SYNOPSIS
+
+Shows AI Element/s.
+
+### PARAMETERS
+
+- `-NameFilter` | _&lt;String&gt;_ - (Optional) Lists the AI Element with the provided name filter. If not set, all AI Elements are listed.
+
