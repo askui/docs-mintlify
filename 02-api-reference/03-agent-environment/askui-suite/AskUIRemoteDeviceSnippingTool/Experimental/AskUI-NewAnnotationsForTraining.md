@@ -2,7 +2,6 @@
 title: AskUI-NewAnnotationsForTraining
 ---
 
-# AskUI-NewAnnotationsForTraining
 
 ### SYNOPSIS
 

@@ -2,7 +2,6 @@
 title: AskUI-NewProject
 ---
 
-# AskUI-NewProject
 
 ### SYNOPSIS
 

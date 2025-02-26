@@ -2,7 +2,6 @@
 title: AskUI-StopLocalProxy
 ---
 
-# AskUI-StopLocalProxy
 
 ### SYNOPSIS
 

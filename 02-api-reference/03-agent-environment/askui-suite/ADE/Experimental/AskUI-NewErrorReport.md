@@ -2,7 +2,6 @@
 title: AskUI-NewErrorReport
 ---
 
-# AskUI-NewErrorReport
 
 ### SYNOPSIS
 

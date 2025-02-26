@@ -2,7 +2,6 @@
 title: AskUI-AddPlugin
 ---
 
-# AskUI-AddPlugin
 
 ### SYNOPSIS
 

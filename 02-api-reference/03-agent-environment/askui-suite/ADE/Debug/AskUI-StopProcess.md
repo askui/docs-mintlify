@@ -2,7 +2,6 @@
 title: AskUI-StopProcess
 ---
 
-# AskUI-StopProcess
 
 ### SYNOPSIS
 

@@ -2,7 +2,6 @@
 title: AskUI-ShowProcess
 ---
 
-# AskUI-ShowProcess
 
 ### SYNOPSIS
 

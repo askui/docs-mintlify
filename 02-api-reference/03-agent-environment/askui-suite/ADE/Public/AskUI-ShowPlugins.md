@@ -2,7 +2,6 @@
 title: AskUI-ShowPlugins
 ---
 
-# AskUI-ShowPlugins
 
 ### SYNOPSIS
 

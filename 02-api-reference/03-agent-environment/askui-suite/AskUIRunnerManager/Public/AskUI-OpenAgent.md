@@ -2,7 +2,6 @@
 title: AskUI-OpenAgent
 ---
 
-# AskUI-OpenAgent
 
 ### SYNOPSIS
 

@@ -2,7 +2,6 @@
 title: AskUI-ShowAvailableCommands
 ---
 
-# AskUI-ShowAvailableCommands
 
 ### SYNOPSIS
 

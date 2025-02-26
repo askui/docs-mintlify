@@ -2,7 +2,6 @@
 title: AskUI-ShowInstalledPythonPackageVersion
 ---
 
-# AskUI-ShowInstalledPythonPackageVersion
 
 ### SYNOPSIS
 

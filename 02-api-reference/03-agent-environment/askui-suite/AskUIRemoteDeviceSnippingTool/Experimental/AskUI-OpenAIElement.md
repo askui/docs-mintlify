@@ -2,7 +2,6 @@
 title: AskUI-OpenAIElement
 ---
 
-# AskUI-OpenAIElement
 
 ### SYNOPSIS
 

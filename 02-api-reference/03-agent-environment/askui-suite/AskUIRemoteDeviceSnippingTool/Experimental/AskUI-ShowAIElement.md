@@ -2,7 +2,6 @@
 title: AskUI-ShowAIElement
 ---
 
-# AskUI-ShowAIElement
 
 ### SYNOPSIS
 

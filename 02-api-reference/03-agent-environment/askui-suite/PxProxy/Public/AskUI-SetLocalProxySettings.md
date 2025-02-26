@@ -2,7 +2,6 @@
 title: AskUI-SetLocalProxySettings
 ---
 
-# AskUI-SetLocalProxySettings
 
 ### SYNOPSIS
 
