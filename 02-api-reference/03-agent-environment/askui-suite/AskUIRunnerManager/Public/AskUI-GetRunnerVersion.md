@@ -2,7 +2,6 @@
 title: AskUI-GetRunnerVersion
 ---
 
-# AskUI-GetRunnerVersion
 
 ### SYNOPSIS
 

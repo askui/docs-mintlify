@@ -2,7 +2,6 @@
 title: AskUI-NewPythonEnvironment
 ---
 
-# AskUI-NewPythonEnvironment
 
 ### SYNOPSIS
 

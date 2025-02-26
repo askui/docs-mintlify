@@ -2,7 +2,6 @@
 title: AskUI-CompressErrorReport
 ---
 
-# AskUI-CompressErrorReport
 
 ### SYNOPSIS
 

@@ -2,7 +2,6 @@
 title: AskUI-RemovePlugin
 ---
 
-# AskUI-RemovePlugin
 
 ### SYNOPSIS
 

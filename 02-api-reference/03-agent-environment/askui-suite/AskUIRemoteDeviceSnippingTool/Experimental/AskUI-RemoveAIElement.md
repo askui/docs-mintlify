@@ -2,7 +2,6 @@
 title: AskUI-RemoveAIElement
 ---
 
-# AskUI-RemoveAIElement
 
 ### SYNOPSIS
 

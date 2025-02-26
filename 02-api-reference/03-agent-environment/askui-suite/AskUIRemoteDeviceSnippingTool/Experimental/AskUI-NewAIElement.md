@@ -2,7 +2,6 @@
 title: AskUI-NewAIElement
 ---
 
-# AskUI-NewAIElement
 
 ### SYNOPSIS
 

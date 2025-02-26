@@ -2,7 +2,6 @@
 title: AskUI-ShowAgents
 ---
 
-# AskUI-ShowAgents
 
 ### SYNOPSIS
 

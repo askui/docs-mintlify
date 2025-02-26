@@ -2,7 +2,6 @@
 title: AskUI-ShowSettings
 ---
 
-# AskUI-ShowSettings
 
 ### SYNOPSIS
 

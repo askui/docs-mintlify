@@ -2,7 +2,6 @@
 title: AskUI-TestConnection
 ---
 
-# AskUI-TestConnection
 
 ### SYNOPSIS
 

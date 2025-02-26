@@ -2,7 +2,6 @@
 title: AskUI-SyncAgents
 ---
 
-# AskUI-SyncAgents
 
 ### SYNOPSIS
 

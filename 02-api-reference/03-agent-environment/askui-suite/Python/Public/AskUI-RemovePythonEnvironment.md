@@ -2,7 +2,6 @@
 title: AskUI-RemovePythonEnvironment
 ---
 
-# AskUI-RemovePythonEnvironment
 
 ### SYNOPSIS
 
