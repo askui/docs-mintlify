@@ -4,37 +4,22 @@ description: 'Welcome to the AskUI documentation. This guide will help you under
 '
 ---
 
-<img
-  className="block dark:hidden"
-  src="./images/agent-os.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="./images/agent-os.png"
-  alt="Hero Dark"
-/>
+<img alt="Hero Light" classname="block dark:hidden" src="./images/agent-os.png" />
+
+<img alt="Hero Dark" classname="hidden dark:block" src="./images/agent-os.png" />
 
 ## What are Vision Agents?
 
-Vision Agents offer an innovative way to interact with any application using AI-powered vision technology. They enable users to create intelligent agents that understand visual elements and execute tasks across various applications—including, but not limited to, web browsers—by responding to visual cues and natural language commands. 
+Vision Agents offer an innovative way to interact with any application using AI-powered vision technology. They enable users to create intelligent agents that understand visual elements and execute tasks across various applications—including, but not limited to, web browsers—by responding to visual cues and natural language commands.
 
 Unlike cloud-based solutions, AskUI Vision Agents run **locally on different devices**, ensuring greater **security and data privacy**. This flexibility allows automation to be performed securely across multiple environments without relying on external servers, making it ideal for sensitive or restricted systems.
 
 <CardGroup cols={2}>
-  <Card
-    title="Installation Guide"
-    icon="book"
-    href="/introduction/02-getting-started/02-installation-guide"
-  >
-      Our website offers a seamless onboarding experience where you can create an account, get access tokens, download the software, and use templates to build your first AI Vision Agent.
-
+  <Card title="Installation Guide" icon="book" href="/introduction/02-getting-started/02-installation-guide">
+    Our website offers a seamless onboarding experience where you can create an account, get access tokens, download the software, and use templates to build your first AI Vision Agent.
   </Card>
-  <Card
-    title="Agent Framework. Python."
-    icon="lightbulb"
-    href="/02-api-reference/01-agent-framework/02-python/01-installation"
-  >
+
+  <Card title="Agent Framework. Python." icon="lightbulb" href="/introduction/02-getting-started/02-installation-guide">
     This tutorial walks you through a simple **calculator example** to help you get started.  Before you begin, **make sure you have downloaded and installed the software** to follow along smoothly.
   </Card>
 </CardGroup>
@@ -45,24 +30,26 @@ Unlike cloud-based solutions, AskUI Vision Agents run **locally on different dev
 
 Key features of AskUI include:
 
-- Support for **Windows**, **Linux**, **MacOS**, **Android** and **iOS** device automation (Citrix supported)
-- Support for single-step UI automation commands (RPA like) as well as **agentic intent-based instructions**
-- **In-background automation on Windows machines** (agent can create a second session; you do not have to watch it take over mouse and keyboard)
-- Flexible model use (hot swap of models) and infrastructure for reteaching of models (available on-premise)
-- **Secure deployment** of agents in enterprise environments
+* Support for **Windows**, **Linux**, **MacOS**, **Android** and **iOS** device automation (Citrix supported)
 
+* Support for single-step UI automation commands (RPA like) as well as **agentic intent-based instructions**
+
+* **In-background automation on Windows machines** (agent can create a second session; you do not have to watch it take over mouse and keyboard)
+
+* Flexible model use (hot swap of models) and infrastructure for reteaching of models (available on-premise)
+
+* **Secure deployment** of agents in enterprise environments
 
 ## Components
 
 AskUI is made of components:
 
-- **Model Provider:** The AI models used for UI grounding and prompt processing.
-- **Agent Framework:** The framework used to instruct the agent with Agent Commands. We support TypeScript and Python right now.
-- **Agent OS:** This is a client installed on the device to be automated, executing all commands and interacting with mouse and keyboard. Serves as the “hands” of the Vision Agent. Also responsible for environment management of the agent.
-- **Agent Hub Web:** Cross Team Collaboration Plattform. Web frontend for creation and management of access tokens and user management. Serves as repository for vision agents.
-- **Agent Hub Desktop:** Configuration Tool. Local frontend for agent configuration and interaction. 
+* **Model Provider:** The AI models used for UI grounding and prompt processing.
 
+* **Agent Framework:** The framework used to instruct the agent with Agent Commands. We support TypeScript and Python right now.
 
+* **Agent OS:** This is a client installed on the device to be automated, executing all commands and interacting with mouse and keyboard. Serves as the “hands” of the Vision Agent. Also responsible for environment management of the agent.
 
-	
+* **Agent Hub Web:** Cross Team Collaboration Plattform. Web frontend for creation and management of access tokens and user management. Serves as repository for vision agents.
 
+* **Agent Hub Desktop:** Configuration Tool. Local frontend for agent configuration and interaction.
