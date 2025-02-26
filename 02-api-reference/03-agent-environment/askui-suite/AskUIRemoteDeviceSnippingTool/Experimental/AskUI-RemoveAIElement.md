@@ -1,0 +1,16 @@
+---
+title: AskUI-RemoveAIElement
+---
+
+# AskUI-RemoveAIElement
+
+### SYNOPSIS
+
+Removes AI Element by name filter.
+
+### PARAMETERS
+
+- `-NameFilter` | _&lt;String&gt;_ - (Mandatory) Specifies a name filter for the AI Element to be removed. 
+- `-NoPreview` | _&lt;SwitchParameter&gt;_ - (Optional) Skips the preview of the filtered AI Elements before removal. 
+- `-AutoApproval` | _&lt;SwitchParameter&gt;_ - (Optional) Automatically approves the deletion without prompting for confirmation.
+

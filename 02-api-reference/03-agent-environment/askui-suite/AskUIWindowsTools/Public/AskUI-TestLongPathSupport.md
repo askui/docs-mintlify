@@ -1,0 +1,27 @@
+---
+title: AskUI-TestLongPathSupport
+---
+
+# AskUI-TestLongPathSupport
+
+### SYNOPSIS
+
+Tests if Long Path Support is enabled.
+
+### DESCRIPTION
+
+This Commandlet checks if Long Path Support is enabled in Windows.
+
+### NOTES
+
+This Commandlet is only available on Windows.
+This Commandlet provides logging information about the current status of Long Path Support.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+```powershell
+AskUI-TestLongPathSupport
+```
+

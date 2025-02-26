@@ -1,0 +1,48 @@
+---
+title: AskUI-NewErrorReport
+---
+
+# AskUI-NewErrorReport
+
+### SYNOPSIS
+
+Creates a new AskUI error report.
+
+### DESCRIPTION
+
+The AskUI-NewErrorReport cmdlet creates, compresses and optionally submits a new error report 
+containing project files, logs, and additional artifacts for troubleshooting AskUI issues.
+
+### PARAMETERS
+
+- `-Project` | _&lt;String[]&gt;_ - Project directories to be included in the error report. 
+- `-AdditionalFiles` | _&lt;String[]&gt;_ - Additional files to be included in the error report. (e.g. annotations, screenshots) 
+- `-MaxLogFileAgeInHours` | _&lt;Int32&gt;_ - Maximum age of log files to be included in the error report.
+Default: 96 hours (4 days) 
+- `-SkipCleanup` | _&lt;SwitchParameter&gt;_ - Skip cleanup of the expanded error report directory. 
+- `-SkipSubmit` | _&lt;SwitchParameter&gt;_ - Skip submitting the error report archive to the cloud. 
+- `-AutoApprove` | _&lt;SwitchParameter&gt;_ - Automatically approve the error report content.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+```powershell
+AskUI-NewErrorReport
+Creates and submits an error report with default settings.
+```
+ 
+#### EXAMPLE 2
+
+```powershell
+AskUI-NewErrorReport -Project "C:\MyProject" -AdditionalFiles "error.log" -MaxLogFileAgeInHours 48
+Creates report with project files, specific log file, and 48-hour log history.
+```
+ 
+#### EXAMPLE 3
+
+```powershell
+AskUI-NewErrorReport -SkipSubmit -SkipCleanup -AutoApprove
+Creates report locally without submission, preserves files, and skips approval prompt.
+```
+
