@@ -2,31 +2,36 @@
 title: 'How AskUI Works'
 description: 'Learn how to use AskUI locally'
 ---
+
 ## **What is AskUI?**
 
 AskUI is a powerful automation tool that lets you **interact with any software, on any operating system, just like a human would**. It recognizes UI elements on the screen and can perform actions like clicking buttons, typing in text fields, or executing commands—without needing complex programming knowledge.
 
 In this guide, we’ll explain:
 
-- How AskUI works
-- The key components that power it
-- How you can start automating tasks easily
+* How AskUI works
+
+* The key components that power it
+
+* How you can start automating tasks easily
 
 By the end, you’ll **understand how to use AskUI to automate UI interactions efficiently.** 🚀
 
----
+***
 
 ## **How AskUI Works**
 
-AskUI is built on three key components that work together:
+AskUI Agent OS is built on five key components that work together:
 
 1. **AskUI Control Client** – The main interface where you tell AskUI what to do.
+
 2. **AskUI Controller** – The tool that carries out your automation on the computer.
+
 3. **AskUI Inference Server** – The brain behind AskUI that recognizes UI elements on your screen.
 
 Let’s go through each one in simple terms. 👇
 
----
+***
 
 ## **1. AskUI Control Client: The Command Center**
 
@@ -41,9 +46,11 @@ await aui.click().button().withText('Login').exec();
 
 Here’s what’s happening:
 
-- **`click()`** → Specifies the action (clicking).
-- **`button().withText('Login')`** → Identifies the UI element (a button with "Login" text).
-- **`exec()`** → Executes the command.
+* **`click()`** → Specifies the action (clicking).
+
+* **`button().withText('Login')`** → Identifies the UI element (a button with "Login" text).
+
+* **`exec()`** → Executes the command.
 
 💡 **Key takeaway:** The AskUI Control Client makes automation simple by using easy-to-read instructions.
 
@@ -52,9 +59,10 @@ Here’s what’s happening:
 Once you give a command, the Control Client:
 
 1. Sends a request to the **AskUI Controller** (to perform an action like clicking).
+
 2. Sends a request to the **AskUI Inference Server** (to analyze the screen and find elements if needed).
 
----
+***
 
 ## **2. AskUI Controller: The Execution Engine**
 
@@ -62,9 +70,11 @@ The **AskUI Controller** is the part that **physically interacts with your opera
 
 ### **What does it do?**
 
-- Takes screenshots of your screen (to identify UI elements).
-- Performs interactions like **clicking, typing, and pressing keys**.
-- Runs commands in the background to automate actions.
+* Takes screenshots of your screen (to identify UI elements).
+
+* Performs interactions like **clicking, typing, and pressing keys**.
+
+* Runs commands in the background to automate actions.
 
 💡 **Example:** If you tell AskUI to **press three keys at once**, the AskUI Controller will execute it immediately:
 
@@ -75,7 +85,7 @@ await aui.pressThreeKeys('control','alt','del').exec();
 
 👉 **No need to analyze the screen—this action is performed directly by the Controller.**
 
----
+***
 
 ## **3. AskUI Inference Server: The AI Brain**
 
@@ -84,20 +94,26 @@ The **AskUI Inference Server** is where the magic happens! 🧠✨ This server u
 ### **How does it work?**
 
 1. The Control Client takes a **screenshot** of your screen.
+
 2. The screenshot is sent to the Inference Server.
+
 3. The AI model **identifies UI elements** like buttons, text fields, or icons.
+
 4. The results are sent back, and automation continues.
 
 🔍 **What can it recognize?**
 
-- **Buttons** (e.g., "Login", "Submit")
-- **Text Fields** (e.g., input boxes)
-- **Icons** (e.g., user profile icon)
-- **Custom Elements** (you can define specific areas to be recognized)
+* **Buttons** (e.g., "Login", "Submit")
+
+* **Text Fields** (e.g., input boxes)
+
+* **Icons** (e.g., user profile icon)
+
+* **Custom Elements** (you can define specific areas to be recognized)
 
 💡 **Example:** If you tell AskUI to click a button, but the system first needs to "find" it, the Inference Server helps locate it before performing the action.
 
----
+***
 
 ## **How AskUI Works in Action**
 
@@ -118,7 +134,7 @@ await aui.click().button().withText('Confirm').exec();
 
 ✅ **Result:** The button is clicked automatically!
 
----
+***
 
 ### **Scenario 2: Pressing Shortcut Keys**
 
@@ -133,7 +149,7 @@ await aui.pressThreeKeys('control','alt','del').exec();
 
 ✅ **Result:** The keys are pressed at the same time!
 
----
+***
 
 ## **Getting Started with AskUI**
 
@@ -145,11 +161,13 @@ To use AskUI, you’ll need **user credentials**. You can get these by signing u
 
 🔗 **Learn more:**
 
-- [API Documentation](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
-- [Tutorials](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
-- [Frequently Asked Questions](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
+* [API Documentation](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
 
----
+* [Tutorials](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
+
+* [Frequently Asked Questions](https://chatgpt.com/c/67bdd3c7-0f50-8005-b95f-341018ad6100#)
+
+***
 
 ## **Conclusion**
 
@@ -165,4 +183,3 @@ To recap:
 With these three working together, you can **automate anything on any platform!** 🚀
 
 📌 **Next Steps:** Try out a simple command in AskUI and start automating today!
-
