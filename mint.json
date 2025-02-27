@@ -74,7 +74,6 @@
       "pages": [
         "introduction/02-getting-started/01-prerequisites",
         "introduction/02-getting-started/02-installation-guide",
-        "introduction/02-getting-started/03-quickstart",
         "introduction/02-getting-started/04-configuration",
         "introduction/02-getting-started/05-running-locally"
       ]
