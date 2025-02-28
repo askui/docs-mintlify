@@ -1,6 +1,188 @@
 ---
-title: Understanding AI Models
-description: 'Welcome to the home of your new documentation'
+title: "Agent Framework"
+description: "AskUI Vision Agent is a versatile AI powered framework that enables you to automate computer tasks in Python."
 ---
 
-https://github.com/askui/vision-agent 
+## What is AskUI Vision Agent?
+
+AskUI Vision Agent is a versatile AI powered framework that enables you to automate computer tasks in Python.
+
+It connects Agent OS with powerful computer use models like Anthropic's Claude Sonnet 3.5 v2 and the AskUI Prompt-to-Action series. It is your entry point for building complex automation scenarios with detailed instructions or let the agent explore new challenges on its own.
+
+Agent OS is a custom-built OS controller designed to enhance your automation experience.
+
+## It offers powerful features like:
+
+* multi-screen support,
+
+* support for all major operating systems (incl. Windows, MacOS and Linux),
+
+* process visualizations,
+
+* real Unicode character typing
+
+* and more exciting features like application selection, in background automation and video streaming are to be released soon.
+
+## Setup
+
+1. Install AskUI Agent OS
+   Agent OS is a device controller that allows agents to take screenshots, move the mouse, click, and type on the keyboard across any operating system.
+
+* Windows
+
+* Linux
+
+* MacOS
+
+1. Install vision-agent in your Python environment
+
+```bash
+pip install askui
+```
+
+Note: Requires Python version >=3.10.
+
+3a. Authenticate with an AI Model Provider
+
+|                    | AskUI INFO                                          | Anthropic INFO           |
+| ------------------ | --------------------------------------------------- | ------------------------ |
+| ENV Variables      | ASKUI\_WORKSPACE\_ID, ASKUI\_TOKEN                  | ANTHROPIC\_API\_KEY      |
+| Supported Commands | click()                                             | click(), get(), act()    |
+| Description        | Faster Inference, European Server, Enterprise Ready | Supports complex actions |
+
+To get started, set the environment variables required to authenticate with your chosen model provider.
+
+How to set an environment variable?
+
+* Linux & MacOS
+
+* Windows PowerShell
+
+3b. Test with 🤗 Hugging Face AI Models (Spaces API)
+You can test the Vision Agent with Hugging Face models via their Spaces API. Please note that the API is rate-limited so for production use cases, it is recommended to choose step 3a.
+
+Note: Hugging Face Spaces host model demos provided by individuals not associated with Hugging Face or AskUI. Don't use these models on screens with sensible information.
+
+Supported Models:
+
+* AskUI/PTA-1
+
+* OS-Copilot/OS-Atlas-Base-7B
+
+* showlab/ShowUI-2B
+
+* Qwen/Qwen2-VL-2B-Instruct
+
+* Qwen/Qwen2-VL-7B-Instruct
+
+Example Code:
+
+```python
+agent.click("search field", model_name="OS-Copilot/OS-Atlas-Base-7B")
+```
+
+3c. Host your own AI Models
+
+### UI-TARS
+
+You can use Vision Agent with UI-TARS if you provide your own UI-TARS API endpoint.
+
+1. Step: Host the model locally or in the cloud. More information about hosting UI-TARS can be found here.
+
+2. Step: Provide the TARS\_URL and TARS\_API\_KEY environment variables to Vision Agent.
+
+3. Step: Use the model\_name="tars" parameter in your click(), get() and act() commands.
+
+## ▶️ Start Building
+
+```python
+from askui import VisionAgent
+
+# Initialize your agent context manager
+with VisionAgent() as agent:
+    # Use the webbrowser tool to start browsing
+    agent.tools.webbrowser.open_new("http://www.google.com")
+
+    # Start to automate individual steps
+    agent.click("url bar")
+    agent.type("http://www.google.com")
+    agent.keyboard("enter")
+
+    # Extract information from the screen
+    datetime = agent.get("What is the datetime at the top of the screen?")
+    print(datetime)
+
+    # Or let the agent work on its own
+    agent.act("search for a flight from Berlin to Paris in January")
+```
+
+## 🎛️ Model Selection
+
+Instead of relying on the default model for the entire automation script, you can specify a model for each click command using the model\_name parameter.
+
+|         | AskUI                             | Anthropic                            |
+| ------- | --------------------------------- | ------------------------------------ |
+| click() | askui-combo, askui-pta, askui-ocr | anthropic-claude-3-5-sonnet-20241022 |
+
+Example: `agent.click("Preview", model_name="askui-combo")`
+
+* Antrophic AI Models
+
+* AskUI AI Models
+
+* Huggingface AI Models (Spaces API)
+
+* Self Hosted UI Models
+
+## 🛠️ Direct Tool Use
+
+Under the hood agents are using a set of tools. You can also directly access these tools.
+
+### Agent OS
+
+The controller for the operating system.
+
+```python
+agent.tools.os.click("left", 2) # clicking
+agent.tools.os.mouse(100, 100) # mouse movement
+agent.tools.os.keyboard_tap("v", modifier_keys=["control"]) # Paste
+# and many more
+```
+
+### Web browser
+
+The webbrowser tool powered by webbrowser allows you to directly access webbrowsers in your environment.
+
+```python
+agent.tools.webbrowser.open_new("http://www.google.com")
+# also check out open and open_new_tab
+```
+
+### Clipboard
+
+The clipboard tool powered by pyperclip allows you to interact with the clipboard.
+
+```python
+agent.tools.clipboard.copy("...")
+result = agent.tools.clipboard.paste()
+```
+
+## 📜 Logging & Reporting
+
+You want a better understanding of what you agent is doing? Set the log\_level to DEBUG. You can also generate a report of the automation run by setting enable\_report to True.
+
+```python
+import logging
+
+with VisionAgent(log_level=logging.DEBUG, enable_report=True) as agent:
+    agent...
+```
+
+## 🖥️ Multi-Monitor Support
+
+You have multiple monitors? Choose which one to automate by setting display to 1 or 2.
+
+```python
+with VisionAgent(display=1) as agent:
+    agent...
+```
