@@ -15,7 +15,8 @@ The AskUI-StopControllers cmdlet stops one or more running AskUI Controllers bas
 
 - `-DisplayNum` | _&lt;Int32&gt;_ - Specifies the display number of the controller to stop. 
 - `-Runtime` | _&lt;String&gt;_ - Defines the runtime environment ('desktop' or 'android') of the controller to stop. 
-- `-Port` | _&lt;Int32&gt;_ - Specifies the port number of the controller to stop.
+- `-Port` | _&lt;Int32&gt;_ - Specifies the port number of the controller to stop. 
+- `-DeviceId` | _&lt;String&gt;_ - Specifies the device id of the controller to stop.
 
 ### EXAMPLES
 

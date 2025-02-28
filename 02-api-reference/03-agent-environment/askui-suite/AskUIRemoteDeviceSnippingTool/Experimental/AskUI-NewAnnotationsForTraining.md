@@ -20,6 +20,7 @@ the metadata includes:
 - `-WorkspaceId` | _&lt;String&gt;_ - (Optional) Workspace ID for the annotation. 
 - `-Token` | _&lt;String&gt;_ - (Optional) Token for sending the annotation to the train endpoint. 
 - `-Delay` | _&lt;Int32&gt;_ - (Optional) Delay in seconds before the screen freezes. Default is 0. 
+- `-Url` | _&lt;String&gt;_ - (Optional) URL for the inference server. Default is https://inference.askui.com. 
 - `-ConfigFile` | _&lt;String&gt;_ - *Experimental* (Optional) Absolute file path for the configuration to be loaded.
 
 ### EXAMPLES
