@@ -80,18 +80,13 @@
     {
       "group": "Core Concepts",
       "pages": [
-        "introduction/03-core-concepts/01-element-selection",
-        "introduction/03-core-concepts/02-interactions",
-        "introduction/03-core-concepts/03-extraction",
-        "introduction/03-core-concepts/04-yolo-mode"
+        "introduction/03-core-concepts/01-element-selection"
       ]
     },
     {
       "group": "AI Models & Configuration",
       "pages": [
-        "introduction/04-ai-models/01-understanding-ai-models",
-        "introduction/04-ai-models/02-model-overview",
-        "introduction/04-ai-models/03-configuration"
+        "introduction/04-ai-models/01-understanding-ai-models"
       ]
     },
     {
@@ -99,8 +94,7 @@
       "pages": [
         "introduction/05-continuous-integration/01-github",
         "introduction/05-continuous-integration/02-gitlab",
-        "introduction/05-continuous-integration/03-azure",
-        "introduction/05-continuous-integration/04-jenkins"
+        "introduction/05-continuous-integration/03-azure"
       ]
     },
     {
