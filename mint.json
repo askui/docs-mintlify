@@ -106,21 +106,6 @@
       ]
     },
     {
-      "group": "Best Practices & Workflows",
-      "pages": [
-        "introduction/07-best-practices/01-stable-tests",
-        "introduction/07-best-practices/02-flakiness",
-        "introduction/07-best-practices/03-performance"
-      ]
-    },
-    {
-      "group": "Platform & Ecosystem",
-      "pages": [
-        "introduction/08-platform/01-environments",
-        "introduction/08-platform/02-limitations"
-      ]
-    },
-    {
       "group": "Updates & Glossary",
       "pages": [
         "introduction/01-changelog",
