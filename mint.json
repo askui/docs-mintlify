@@ -102,11 +102,7 @@
       "pages": [
         "introduction/06-integrations/01-reporters",
         "introduction/06-integrations/02-docker",
-        "introduction/06-integrations/03-visual-regression",
-        "introduction/06-integrations/04-bdd",
         "introduction/06-integrations/05-frameworks",
-        "introduction/06-integrations/06-sso",
-        "introduction/06-integrations/07-proxy"
       ]
     },
     {
