@@ -28,7 +28,8 @@ mintlify dev
 
 ### API References -> 02-python -> 02-vision-agent-api
 
-1. ```
+1. Install all dependencies
+```
 pdm install
 ```
 
@@ -37,16 +38,17 @@ pdm install
 pdm add askui@<latest version>
 ```
 
-3. ```
+3. Generate Docs 
+```
 pdm run docs:generate:inference-api:python-vision-agent
 ```
 
-4. 
+4. Remove Old
 ```
 rm -rf 02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/*
 ```
 
-4. 
+4. Copy things manual over
 ```
 cp  .....  02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/*
 ```
