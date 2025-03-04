@@ -1,20 +1,68 @@
 ---
-title: Element Selection
+title: Selecting Elements
 description: 'On this page you will learn the different recommended practices'
 ---
 
-Selecting the right UI elements is key to reliable automation. We’ve put together a guide with recommended strategies to improve accuracy and performance.&#x20;
+Selecting the right UI elements is crucial for creating reliable automation workflows. This guide provides strategies to improve accuracy and performance when interacting with UI elements.
 
-<Card title="Recommended Practices" icon="bolt" href="https://docs.askui.com/docs/general/Element%20Selection/recommended-practices">
-  Best practices for selecting UI elements effectively. It covers methods like **AI Elements, text recognition, and class-based selectors** to improve detection accuracy. The guide also addresses challenges such as **single-character recognition, text overlays, and dynamic UI changes**, offering solutions like **relational selectors and fallback options** to enhance automation reliability.
-</Card>
+## Natural Language Element Selection
 
-<Card title="Text Selectors" icon="bolt" href="https://docs.askui.com/docs/general/Element%20Selection/text-and-element-selectors">
-  The **Text and Element Selectors** guide in AskUI explains how to select UI elements using methods like `withText()`, `containsText()`, and `withTextRegex()`. These help match text accurately, even in dynamic layouts. The guide also covers challenges like small text recognition and provides solutions for improving detection reliability.
-</Card>
+AskUI's Vision Agent uses natural language prompts to identify and interact with UI elements on your screen. This approach offers several advantages:
 
-<Card title="AI Element " icon="bolt" href="https://docs.askui.com/docs/general/Element%20Selection/aielement">
-  The **AI Elements** feature in AskUI lets users capture and define custom UI elements from their screens for more adaptable automation. Using the `AskUI-NewAIElement` command, you can **snip, name, and save elements** for seamless integration into workflows, enhancing precision and flexibility.
-</Card>
+- **Intuitive Descriptions**: Use everyday language to describe elements like "login button" or "search field"
+- **Contextual Understanding**: The agent understands elements based on their visual appearance and surrounding context
+- **Flexibility**: No need to learn complex selector syntax or DOM structures
 
-These guides provide essential best practices for selecting and interacting with UI elements in AskUI, helping you create more **reliable, flexible, and accurate** automation workflows.
+### How Natural Language Selection Works
+
+When you provide a natural language prompt like "login button", the Vision Agent:
+
+1. Captures the current screen state
+2. Analyzes the visual elements present
+3. Identifies the element that best matches your description
+4. Performs the requested action on that element
+
+### Example: Calculator Automation
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        # Open Chrome and navigate to calculator
+        agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-page/")
+
+        # Click numbers and operators
+        agent.click("7")
+        agent.click("+")
+        agent.click("7")
+        agent.click("=")
+
+        # Extract the result
+        result = agent.get("What is the calculation result?")
+        print(f"The result is: {result}")
+    ```
+
+## AI Elements
+
+AI Elements allow you to capture and use specific visual elements from your screen for reliable automation.
+
+<Note>
+Enable the AskUI Development Environment as described in the installation guide and activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
+</Note>
+
+### AskUI-NewAIElement Command
+
+This command captures elements from your screen for use in AskUI workflows.
+
+**Parameters:**
+- **Name** (Optional): The name for the screenshot file. If defined, indicates only one element is being captured. For multiple elements, you'll provide names individually.
+- **WorkspaceId** (Optional): Uses the Workspace ID from settings by default. Required if not in settings.
+- **AlwaysPreview** (Optional): Automatically opens preview without prompting. Cannot be used with NoPreview.
+- **NoPreview** (Optional): Skips the preview. Cannot be used with AlwaysPreview.
+- **OneShot** (Optional): Ends snipping after first successful AI Element creation.
+- **Annotate** (Optional): Takes a fullscreen capture for region annotation.
+
+**Example Output:**
+
+
+By implementing these techniques, you'll build **more reliable, flexible, and accurate** automation workflows that can handle complex UI interactions with confidence.

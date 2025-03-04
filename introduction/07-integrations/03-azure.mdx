@@ -1,0 +1,134 @@
+---
+title: "Azure DevOps"
+description: "This page explains how to set up and run **AskUI workflows in Azure DevOps**, including pipeline configuration, environment variables, Docker setup, and report generation, with a full example on **GitHub**."
+---
+
+## Setting Up AskUI in Azure DevOps
+
+<Tip>
+Automate your AskUI workflows in Azure DevOps with this comprehensive guide for Python!
+</Tip>
+
+<Steps>
+  <Step title="Project Structure">
+    Create a `tests` directory in your repository root to store your AskUI Python scripts.
+    
+    > Note: The directory name may vary based on your project organization.
+  </Step>
+
+  <Step title="Configure Pipeline YAML">
+    Create an `azure-pipelines.yml` file in your repository root with the following configuration:
+    
+    ```yaml
+    trigger:
+      - main
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.10'
+        addToPath: true
+      displayName: 'Set up Python 3.10'
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install askui pytest pytest-html
+      displayName: 'Install dependencies'
+    ```
+  </Step>
+
+  <Step title="Configure Environment Variables">
+    Add the following required variables to your pipeline:
+    ```yaml
+    variables:
+      ASKUI_WORKSPACE_ID: $(ASKUI_WORKSPACE_ID)
+      ASKUI_TOKEN: $(ASKUI_TOKEN)
+    ```
+
+    For AI model integration:
+    ```yaml
+    variables:
+      ANTHROPIC_API_KEY: $(ANTHROPIC_API_KEY)  # Required if using Anthropic models
+    ```
+
+    > Note: Set these variables in your Azure DevOps pipeline settings.
+  </Step>
+
+  <Step title="Set Up AskUI Agent OS">
+    Add the following to your pipeline YAML to set up the AskUI Agent OS:
+    
+    ```yaml
+    - script: |
+        curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-x64-Full.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-x64-Full.run
+        bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-x64-Full.run --unattended
+      displayName: 'Install AskUI Agent OS'
+    ```
+  </Step>
+
+  <Step title="Run Tests">
+    Execute your AskUI Python scripts:
+    
+    ```yaml
+    - script: |
+        python -m pytest tests/ --html=report.html --self-contained-html
+      displayName: 'Run AskUI tests'
+      env:
+        ASKUI_WORKSPACE_ID: $(ASKUI_WORKSPACE_ID)
+        ASKUI_TOKEN: $(ASKUI_TOKEN)
+        ANTHROPIC_API_KEY: $(ANTHROPIC_API_KEY)
+    ```
+  </Step>
+
+  <Step title="Publish Test Results">
+    Publish the test results:
+    
+    ```yaml
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/test-*.xml'
+        mergeTestResults: true
+        testRunTitle: 'AskUI Tests'
+      condition: succeededOrFailed()
+      displayName: 'Publish test results'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: 'report.html'
+        artifact: 'TestReport'
+        publishLocation: 'pipeline'
+      condition: succeededOrFailed()
+      displayName: 'Publish HTML report'
+    ```
+  </Step>
+</Steps>
+
+<Card title="Example Python Script">
+  Here's a sample Python script to use in your tests directory:
+
+  ```python
+  from askui import VisionAgent
+
+  def test_calculator():
+      with VisionAgent() as agent:
+          # Open Chrome and navigate to calculator
+          agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-page/")
+
+          # Click numbers and operators
+          agent.click("7")
+          agent.click("+")
+          agent.click("7")
+          agent.click("=")
+
+          # Extract the result
+          result = agent.get("What is the calculation result?")
+          assert result == "14"
+  ```
+</Card>
+
+<Card title="Complete Example">
+  Check out our [complete example pipeline configuration](https://github.com/askui/askui-ci/blob/main/azure-devops/azure-pipelines-python.yml) on GitHub.
+</Card>

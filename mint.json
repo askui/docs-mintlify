@@ -26,7 +26,7 @@
     },
     {
       "name": "Sign up",
-      "url": "https://app.askui.com"
+      "url": "https://hub.askui.com"
     }
   ],
   "topbarCtaButton": {
@@ -44,6 +44,11 @@
     }
   ],
   "anchors": [
+    {
+      "name": "TypeScript",
+      "icon": "code",
+      "url": "https://docs.askui.com"
+    },
     {
       "name": "Community",
       "icon": "people",
@@ -65,8 +70,8 @@
       "group": "Introduction",
       "pages": [
         "introduction/01-introduction/01-overview",
-        "introduction/01-introduction/02-use-cases",
-        "introduction/01-introduction/03-how-it-works"
+        "introduction/01-introduction/03-how-it-works",
+        "introduction/01-introduction/02-quickstart"
       ]
     },
     {
@@ -80,156 +85,45 @@
     {
       "group": "Core Concepts",
       "pages": [
-        "introduction/03-core-concepts/01-element-selection"
+        "introduction/03-core-concepts/01-element-selection",
+        "introduction/03-core-concepts/02-interactions",
+        "introduction/03-core-concepts/03-agentic-mode"
       ]
     },
     {
-      "group": "AI Models & Configuration",
+      "group": "Agent OS",
       "pages": [
-        "introduction/04-ai-models/01-understanding-ai-models"
+        "introduction/05-agent-os/01-commands",
+        "introduction/05-agent-os/02-supported-actions",
+        "introduction/05-agent-os/03-reteaching",
+        "introduction/05-agent-os/04-proxy"
       ]
     },
     {
-      "group": "Continuous Integration",
+      "group": "Model Usage & Configuration",
       "pages": [
-        "introduction/05-continuous-integration/01-github",
-        "introduction/05-continuous-integration/02-gitlab",
-        "introduction/05-continuous-integration/03-azure"
+        "introduction/04-ai-models/01-grounding-models"
       ]
     },
+
     {
       "group": "Integrations & Advanced Usage",
       "pages": [
-        "introduction/06-integrations/01-reporters",
-        "introduction/06-integrations/02-docker",
-        "introduction/06-integrations/05-frameworks"
+        "introduction/07-integrations/01-github",
+        "introduction/07-integrations/02-gitlab",
+        "introduction/07-integrations/03-azure",
+        "introduction/07-integrations/07-sso"
       ]
     },
     {
       "group": "Updates & Glossary",
       "pages": [
         "introduction/01-changelog",
-        "introduction/02-release-notes",
-        "introduction/03-troubleshooting",
         "introduction/04-glossary"
       ]
     },
     {
-      "group": "Agent Frameworks",
-      "pages": [
-        {
-          "group": "TypeScript",
-          "pages": [
-            "02-api-reference/01-agent-frameworks/01-typescript/01-installation",
-            "02-api-reference/01-agent-frameworks/01-typescript/02-reporters",
-            {
-              "group": "Control Client API",
-              "pages": [
-                {
-                  "group": "API Commands",
-                  "pages": [
-                    "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/01-api-commands/01-table-of-contents"
-                  ]
-                },
-                "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/02-annotations",
-                "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/03-convenience-functions",
-                {
-                  "group": "UI Controller API",
-                  "pages": [
-                    "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/04-ui-controller-api/01-connect",
-                    "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/04-ui-controller-api/02-disconnect"
-                  ]
-                },
-                {
-                  "group": "Recording API",
-                  "pages": [
-                    "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/05-recording-api/01-start",
-                    "02-api-reference/01-agent-frameworks/01-typescript/04-control-client-api/05-recording-api/02-stop"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "group": "Python",
-          "pages": [
-            "02-api-reference/01-agent-frameworks/02-python/01-installation",
-            {
-              "group": "Vision Agent API",
-              "pages": [
-                "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
-                "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools"
-              ]
-            },
-            {
-              "group": "Test Frameworks",
-              "pages": [
-                "02-api-reference/01-agent-frameworks/02-python/03-test-frameworks/01-pytest"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Agent OS",
-      "pages": [
-        {
-          "group": "Computer API",
-          "pages": [
-            "02-api-reference/02-agent-os/01-computer-api/01-table-of-contents"
-          ]
-        },
-        {
-          "group": "Screen Change API",
-          "pages": [
-            "02-api-reference/02-agent-os/02-screen-change-api/01-table-of-contents"
-          ]
-        },
-        {
-          "group": "Automation Target API",
-          "pages": [
-            {
-              "group": "Desktop",
-              "pages": [
-                "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/01-screen-selection",
-                "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/02-window-selection",
-                "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/03-application-selection",
-                "02-api-reference/02-agent-os/03-automation-target-api/01-desktop/04-area-selection"
-              ]
-            },
-            {
-              "group": "Mobile",
-              "pages": [
-                "02-api-reference/02-agent-os/03-automation-target-api/02-mobile/01-ios",
-                "02-api-reference/02-agent-os/03-automation-target-api/02-mobile/04-android"
-              ]
-            },
-            {
-              "group": "Remote Control",
-              "pages": [
-                "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/01-citrix",
-                "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/02-teamviewer",
-                "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/03-rdp",
-                "02-api-reference/02-agent-os/03-automation-target-api/03-remote-control/04-vnc"
-              ]
-            }
-          ]
-        },
-        {
-          "group": "In-Background Automation API",
-          "pages": [
-            "02-api-reference/02-agent-os/04-in-background-automation-api/01-windows"
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Agent Environment",
-      "pages": [
-        "02-api-reference/03-agent-environment/01-installer",
-        {
+
           "group": "AskUI Suite",
           "pages": [
             {
@@ -238,36 +132,36 @@
                 {
                   "group": "Public",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-NewProject",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-RunProject",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-ImportDebugCommands",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-ShowVersions",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-TestConnection",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-AddPlugin",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-RemovePlugin",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-ShowPlugins",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-RemoveSettings",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-SetSettings",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Public/AskUI-ShowSettings"
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-NewProject",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-RunProject",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-ShowVersions",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-TestConnection",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-AddPlugin",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-SetSettings",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Public/AskUI-ShowSettings"
                   ]
                 },
                 {
                   "group": "Debug",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Debug/AskUI-ShowProcess",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Debug/AskUI-StopProcess",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Debug/AskUI-StopProcess",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
                   ]
                 },
                 {
                   "group": "Experimental",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Experimental/AskUI-NewErrorReport",
-                    "02-api-reference/03-agent-environment/askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Experimental/AskUI-NewErrorReport",
+                    "02-api-reference/02-agent-os/02-askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
                   ]
                 }
               ]
@@ -278,7 +172,7 @@
                 {
                   "group": "Experimental",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIOCRTeaching/Experimental/AskUI-StartOCRTeaching"
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIOCRTeaching/Experimental/AskUI-StartOCRTeaching"
                   ]
                 }
               ]
@@ -289,11 +183,11 @@
                 {
                   "group": "Experimental",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAIElement",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-OpenAIElement",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-RemoveAIElement",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-ShowAIElement",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAnnotationsForTraining"
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAIElement",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-OpenAIElement",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-RemoveAIElement",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-ShowAIElement",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAnnotationsForTraining"
                   ]
                 }
               ]
@@ -304,12 +198,12 @@
                 {
                   "group": "Public",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
                   ]
                 }
               ]
@@ -320,8 +214,8 @@
                 {
                   "group": "Public",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
-                    "02-api-reference/03-agent-environment/askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
+                    "02-api-reference/02-agent-os/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
                   ]
                 }
               ]
@@ -332,10 +226,10 @@
                 {
                   "group": "Public",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
-                    "02-api-reference/03-agent-environment/askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
-                    "02-api-reference/03-agent-environment/askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
-                    "02-api-reference/03-agent-environment/askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
+                    "02-api-reference/02-agent-os/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
+                    "02-api-reference/02-agent-os/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
+                    "02-api-reference/02-agent-os/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
+                    "02-api-reference/02-agent-os/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
                   ]
                 }
               ]
@@ -346,11 +240,11 @@
                 {
                   "group": "Public",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
-                    "02-api-reference/03-agent-environment/askui-suite/Python/Public/AskUI-NewPythonEnvironment",
-                    "02-api-reference/03-agent-environment/askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
-                    "02-api-reference/03-agent-environment/askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
-                    "02-api-reference/03-agent-environment/askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
+                    "02-api-reference/02-agent-os/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
+                    "02-api-reference/02-agent-os/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
+                    "02-api-reference/02-agent-os/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
+                    "02-api-reference/02-agent-os/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
+                    "02-api-reference/02-agent-os/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
                   ]
                 }
               ]
@@ -361,156 +255,14 @@
                 {
                   "group": "Public",
                   "pages": [
-                    "02-api-reference/03-agent-environment/askui-suite/UIController/Public/AskUI-ShowControllers",
-                    "02-api-reference/03-agent-environment/askui-suite/UIController/Public/AskUI-StartController",
-                    "02-api-reference/03-agent-environment/askui-suite/UIController/Public/AskUI-StopControllers"
+                    "02-api-reference/02-agent-os/02-askui-suite/UIController/Public/AskUI-ShowControllers",
+                    "02-api-reference/02-agent-os/02-askui-suite/UIController/Public/AskUI-StartController",
+                    "02-api-reference/02-agent-os/02-askui-suite/UIController/Public/AskUI-StopControllers"
                   ]
                 }
               ]
             }
           ]
-        },
-        "02-api-reference/03-agent-environment/03-proxy",
-        {
-          "group": "Packages",
-          "pages": [
-            "02-api-reference/03-agent-environment/04-packages/01-snippet-tool",
-            "02-api-reference/03-agent-environment/04-packages/02-reteaching-tool"
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Agent Hub",
-      "pages": [
-        "02-api-reference/04-agent-hub/01-runner",
-        "02-api-reference/04-agent-hub/02-repository",
-        "02-api-reference/04-agent-hub/03-reporting",
-        "02-api-reference/04-agent-hub/04-cloud-environment"
-      ]
-    },
-    {
-      "group": "AskUI Inference",
-      "pages": [
-        "02-api-reference/05-askui-inference/vqa-inference",
-        "02-api-reference/05-askui-inference/inference",
-        "02-api-reference/05-askui-inference/predict",
-        "02-api-reference/05-askui-inference/train-pta",
-        "02-api-reference/05-askui-inference/train",
-        "02-api-reference/05-askui-inference/check-if-image-required",
-        "02-api-reference/05-askui-inference/validate-instruction"
-      ]
-    },
-    {
-      "group": "External Inference",
-      "pages": [
-        {
-          "group": "Prompt-to-Action Models",
-          "pages": [
-            "02-api-reference/06-external-inference/01-prompt-to-action-models/01-hugging-face"
-          ]
-        },
-        {
-          "group": "Intent-to-Action Models",
-          "pages": [
-            "02-api-reference/06-external-inference/02-intent-to-action-models/01-computer-use"
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Workspaces Service",
-      "pages": [
-        {
-          "group": "agent-executions",
-          "pages": [
-            "02-api-reference/07-workspace-service/agent-executions/list-agent-executions",
-            "02-api-reference/07-workspace-service/agent-executions/create-agent-execution",
-            "02-api-reference/07-workspace-service/agent-executions/update-agent-execution"
-          ]
-        },
-        {
-          "group": "access-tokens",
-          "pages": [
-            "02-api-reference/07-workspace-service/access-tokens/list-access-tokens",
-            "02-api-reference/07-workspace-service/access-tokens/create-access-token",
-            "02-api-reference/07-workspace-service/access-tokens/delete-access-token",
-            "02-api-reference/07-workspace-service/access-tokens/lookup-global-access-token-id",
-            "02-api-reference/07-workspace-service/access-tokens/list-access-tokens-1",
-            "02-api-reference/07-workspace-service/access-tokens/create-access-token-1",
-            "02-api-reference/07-workspace-service/access-tokens/delete-access-token-1",
-            "02-api-reference/07-workspace-service/access-tokens/lookup-workspace-access-token-id"
-          ]
-        },
-        {
-          "group": "agents",
-          "pages": [
-            "02-api-reference/07-workspace-service/agents/list-agents",
-            "02-api-reference/07-workspace-service/agents/create-agent",
-            "02-api-reference/07-workspace-service/agents/update-agent"
-          ]
-        },
-        {
-          "group": "files",
-          "pages": [
-            "02-api-reference/07-workspace-service/files/list-files",
-            "02-api-reference/07-workspace-service/files/upload-file",
-            "02-api-reference/07-workspace-service/files/delete-file",
-            "02-api-reference/07-workspace-service/files/set-signed-cookies"
-          ]
-        },
-        {
-          "group": "runner-jobs",
-          "pages": [
-            "02-api-reference/07-workspace-service/runner-jobs/lease",
-            "02-api-reference/07-workspace-service/runner-jobs/ping",
-            "02-api-reference/07-workspace-service/runner-jobs/complete"
-          ]
-        },
-        {
-          "group": "usage",
-          "pages": [
-            "02-api-reference/07-workspace-service/usage/list-usage-events"
-          ]
-        },
-        {
-          "group": "workspace-memberships",
-          "pages": [
-            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-membership",
-            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-memberships",
-            "02-api-reference/07-workspace-service/workspace-memberships/create-workspace-membership",
-            "02-api-reference/07-workspace-service/workspace-memberships/delete-workspace-membership"
-          ]
-        },
-        {
-          "group": "workspaces",
-          "pages": [
-            "02-api-reference/07-workspace-service/workspaces/create-workspace",
-            "02-api-reference/07-workspace-service/workspaces/delete-workspace",
-            "02-api-reference/07-workspace-service/workspaces/update-workspace-name"
-          ]
-        },
-        {
-          "group": "billing",
-          "pages": [
-            "02-api-reference/07-workspace-service/billing/create-customer-portal-session",
-            "02-api-reference/07-workspace-service/billing/get-workspace-subscription"
-          ]
-        },
-        {
-          "group": "runs",
-          "pages": [
-            "02-api-reference/07-workspace-service/runs/list-runs"
-          ]
-        },
-        {
-          "group": "schedules",
-          "pages": [
-            "02-api-reference/07-workspace-service/schedules/suspend-schedule",
-            "02-api-reference/07-workspace-service/schedules/create-schedule"
-          ]
-        }
-      ]
     },
     {
       "group": "Account & Settings",
@@ -524,7 +276,6 @@
       "group": "Troubleshooting & Support",
       "pages": [
         "03-account/02-support/01-common-issues",
-        "03-account/02-support/02-contacting-support",
         "03-account/02-support/03-feedback"
       ]
     }
