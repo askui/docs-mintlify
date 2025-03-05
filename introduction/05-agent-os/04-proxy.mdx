@@ -1,0 +1,183 @@
+---
+title: Proxy & TLS Configuration
+description: 'Welcome to the home of your new documentation'
+---
+
+In enterprise settings, proxies are commonly used to secure and control network traffic. You may encounter proxy-related issues at two points:
+
+1. During AskUI installation
+2. When AskUI Controller connects to AskUI Inference
+
+## Installing AskUI Through NTLM or Kerberos Proxy Server
+
+NTLM or Kerberos proxies require authentication via your Windows user or username/password combination. We recommend using a local proxy to handle authentication.
+
+### Setting Up a Local Proxy
+
+We recommend [Px](https://github.com/genotrance/px) as a local proxy:
+
+1. Install Px following their documentation
+2. Start the proxy (default port: 3128)
+
+<Note>
+Choose the binary option if package managers aren't available in your environment.
+</Note>
+
+#### Windows Startup Configuration
+
+Create a `px-start.bat` file in your Px installation folder:
+
+```batch
+cd c:\tools\px
+px.exe
+```
+
+To set up autostart:
+1. Create a link to `px-start.bat`
+2. Press `Windows + R`, enter `shell:startup`
+3. Move the link to this folder
+
+### Configure pip to Use Proxy
+
+Create a `pip.conf` file (Linux/macOS) or `pip.ini` file (Windows):
+
+**Linux/macOS** (`~/.config/pip/pip.conf`):
+```ini
+[global]
+proxy = http://127.0.0.1:3128
+```
+
+**Windows** (`%APPDATA%\pip\pip.ini`):
+```ini
+[global]
+proxy = http://127.0.0.1:3128
+```
+
+### Set Environment Variables
+
+```python
+# Add to your Python script to configure proxy at runtime
+import os
+os.environ['HTTP_PROXY'] = 'http://127.0.0.1:3128'
+os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:3128'
+```
+
+Or set them in your system:
+
+**Linux/macOS**:
+```bash
+export HTTP_PROXY=http://127.0.0.1:3128
+export HTTPS_PROXY=http://127.0.0.1:3128
+```
+
+**Windows**:
+```batch
+set HTTP_PROXY=http://127.0.0.1:3128
+set HTTPS_PROXY=http://127.0.0.1:3128
+```
+
+## AskUI Controller Connection to AskUI Inference
+
+### Using Default Configuration with Requests
+
+The Python client uses the `requests` library which supports proxies. You can configure proxies in two ways:
+
+#### Method 1: Using Environment Variables
+
+Set the environment variables as shown above. The `requests` library will automatically use these variables.
+
+#### Method 2: Explicitly Configure Proxies in Code
+
+```python
+from askui import AskuiClient
+
+proxies = {
+    'http': 'http://your-proxy-url:port',
+    'https': 'https://your-proxy-url:port'
+}
+
+# Initialize AskUI client with proxy configuration
+askui_client = AskuiClient(proxy_config=proxies)
+```
+
+### Proxy Authentication
+
+If your proxy requires authentication:
+
+```python
+proxies = {
+    'http': 'http://username:password@your-proxy-url:port',
+    'https': 'https://username:password@your-proxy-url:port'
+}
+
+askui_client = AskuiClient(proxy_config=proxies)
+```
+
+## Handling SSL/TLS Certificate Issues
+
+Corporate proxies often perform Deep Package Inspection by adding self-signed certificates to HTTPS requests. This can cause errors like:
+
+```
+SSLError: self-signed certificate
+```
+
+or
+
+```
+SSLError: unable to verify the first certificate
+```
+
+### Adding Custom Certificates (Recommended)
+
+<Accordion title="Certificate Configuration Options">
+
+#### Method 1: Environment Variable
+
+```python
+import os
+os.environ['REQUESTS_CA_BUNDLE'] = '/path/to/your/certificate.pem'
+```
+
+#### Method 2: Directly in Code
+
+```python
+import requests
+from askui import AskuiClient
+
+# Initialize client with custom certificate
+askui_client = AskuiClient(
+    verify='/path/to/your/certificate.pem'
+)
+```
+
+</Accordion>
+
+### Extracting the Required Certificate
+
+1. Open the certificate viewer in your browser:
+   - **Chrome**: Click the lock icon in the address bar → "Certificate"
+   - **Firefox**: Click the lock icon → "Connection Secure" → "More Information" → "View Certificate"
+
+2. Select the root certificate (often "GTS Root R1" for corporate proxies)
+
+3. Export/download the certificate in PEM format
+
+4. Save it to a location accessible by your Python script
+
+<Warning>
+**Security Note**: Disabling certificate verification (`verify=False`) is not recommended in production environments as it makes your connection vulnerable to man-in-the-middle attacks.
+</Warning>
+
+## Troubleshooting
+
+If you're still experiencing connectivity issues:
+
+```python
+# Enable verbose logging for debugging
+import logging
+logging.basicConfig(level=logging.DEBUG)
+```
+
+<Tip>
+For advanced proxy configurations or issues with specific corporate networks, please contact AskUI support with details about your environment.
+</Tip>

@@ -1,0 +1,49 @@
+---
+title: Agentic Mode
+description: 'Welcome to the home of your new documentation'
+---
+
+# Agentic Mode with AskUI
+
+Agentic mode allows your automation to operate at a higher level of abstraction by giving the AI agent a goal to accomplish rather than specifying individual steps. This enables more flexible and powerful automations that can adapt to changing interfaces and solve complex tasks.
+
+<Warning>
+  Agentic mode requires the Anthropic Claude 3.5 Sonnet Computer Use model to function. This feature is currently in beta and not recommended for production use. Make sure you have set up the `ANTHROPIC_API_KEY` environment variable as described in the [Model Usage](/introduction/04-ai-models/01-grounding-models) documentation.
+</Warning>
+
+## Getting Started with Agentic Mode
+
+To use agentic mode, you'll need to:
+
+1. Set up authentication with Anthropic (see [Model Usage](/introduction/04-ai-models/01-grounding-models))
+2. Use the `act()` command with a clear goal description
+3. Let the agent work autonomously to accomplish the task
+
+
+## Understanding Agentic Mode
+
+Unlike single-step commands that perform specific actions (like clicking a button or typing text), agentic mode lets you describe what you want to accomplish, and the AI agent figures out how to achieve it.
+
+### Key Benefits
+
+- **Goal-oriented automation**: Focus on what you want to achieve, not how to achieve it
+- **Adaptability**: Agents can navigate changing UIs and unexpected scenarios
+- **Reduced maintenance**: Less need to update scripts when interfaces change
+- **Complex task handling**: Accomplish multi-step workflows with a single instruction
+
+## Using the `act()` Command
+
+The `act()` command is the gateway to agentic mode in AskUI. It takes a natural language description of your goal and lets the agent work autonomously to accomplish it.
+
+### Basic Syntax
+
+### Example: Booking a Flight
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.act("book a flight from Berlin to Paris in January")
+```
+
+

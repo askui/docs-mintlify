@@ -1,4 +1,68 @@
 ---
-title: Interactions (Single-Step Execution)
+title: Single-Step Actions 
 description: 'Welcome to the home of your new documentation'
 ---
+
+# Single-Step Actions in AskUI
+
+AskUI provides a comprehensive set of single-step actions that allow you to interact with any UI element on your screen. These actions range from basic mouse clicks to complex keyboard combinations and system operations.
+
+## Core Interaction Commands
+
+|  | **Description** | **Models** | **Example (Python)** |
+| --- | --- | --- | --- |
+| `click()` | Clicks on an element described by text | All | `agent.click('Login button')` |
+| `expect()` | Asserts that an element exists | All | `agent.expect('Login successful')` |
+| `type()` | Types text into a focused element | All | `agent.type('username@example.com')` |
+
+## Tools
+
+AskUI provides several built-in tools to interact with the operating system and applications:
+
+|  | **Description** | **Example (Python)** |
+| --- | --- | --- |
+| `os` | Provides OS-level operations | `agent.tools.os.get_clipboard_text()` |
+| `webbrowser` | Controls web browser operations | `agent.tools.webbrowser.open_new("https://askui.com")` |
+| `clipboard` | Manages clipboard operations | `agent.tools.clipboard.copy("Text to copy")` |
+
+## Assertion and Information Commands
+
+|  | **Description** | **Models** | **Example (Python)** |
+| --- | --- | --- | --- |
+| `get()` | Extracts text or information from the screen | All | `text = agent.get('What is the value in the total field?')` |
+
+
+## Mouse Interactions
+
+|  | **Description** | **Models** | **Example (Python)** |
+| --- | --- | --- | --- |
+| `mouseDoubleLeftClick()` | Performs a double left click | All | `agent.mouseDoubleLeftClick('icon')` |
+| `mouseDoubleMiddleClick()` | Performs a double middle click | All | `agent.mouseDoubleMiddleClick('tab')` |
+| `mouseDoubleRightClick()` | Performs a double right click | All | `agent.mouseDoubleRightClick('file')` |
+| `mouseLeftClick()` | Performs a left click | All | `agent.mouseLeftClick('button')` |
+| `mouseMiddleClick()` | Performs a middle click | All | `agent.mouseMiddleClick('link')` |
+| `mouseRightClick()` | Performs a right click | All | `agent.mouseRightClick('context menu')` |
+| `mouseToggleDown()` | Holds down a mouse button | All | `agent.mouseToggleDown('left')` |
+| `mouseToggleUp()` | Releases a mouse button | All | `agent.mouseToggleUp('left')` |
+| `moveMouse()` | Moves mouse to coordinates | All | `agent.moveMouse(100, 200)` |
+| `moveMouseRelatively()` | Moves mouse by offset | All | `agent.moveMouseRelatively(10, 20)` |
+| `moveMouseRelativelyTo()` | Moves mouse relative to element | All | `agent.moveMouseRelativelyTo('button', 5, 5)` |
+| `moveMouseTo()` | Moves mouse to element | All | `agent.moveMouseTo('search field')` |
+
+## Keyboard Interactions
+
+|  | **Description** | **Models** | **Example (Python)** |
+| --- | --- | --- | --- |
+| `pressAndroidKey()` | Presses Android-specific key | All | `agent.pressAndroidKey('home')` |
+| `pressAndroidTwoKey()` | Presses two Android keys | All | `agent.pressAndroidTwoKey('shift', 'home')` |
+| `pressKey()` | Presses a keyboard key | All | `agent.pressKey('enter')` |
+| `pressThreeKeys()` | Presses three keys simultaneously | All | `agent.pressThreeKeys('ctrl', 'shift', 'esc')` |
+| `pressTwoKeys()` | Presses two keys simultaneously | All | `agent.pressTwoKeys('ctrl', 'c')` |
+
+## Scrolling and Touch Interactions
+
+|  | **Description** | **Models** | **Example (Python)** |
+| --- | --- | --- | --- |
+| `scroll()` | Scrolls the page | All | `agent.scroll('down', 500)` |
+| `scrollInside()` | Scrolls inside an element | All | `agent.scrollInside('dropdown menu', 'down', 200)` |
+| `swipe()` | Performs a swipe gesture | All | `agent.swipe('left', 300)` |

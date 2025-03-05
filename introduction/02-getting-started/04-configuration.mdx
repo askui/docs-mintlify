@@ -2,111 +2,72 @@
 title: Configuration & Setup
 description: 'Write your first automations with AskUI.'
 ---
+## Setting Up Your AskUI Agent 🚀
 
-## **Setup Agent - Instructions**
+Follow these steps to get your AI agent configured and ready for automation.
 
-1. Open a Terminal
-   A terminal (also known as command line or console) is a program that provides a text-based interface to interact with your computer. You'll need it to run commands for syncing your agent to your device.
+<Note>
+  Complete the onboarding process at [askui.com](https://askui.com) first to:
+  - Create your workspace
+  - Obtain authentication tokens
+  - Download the AskUI installer
+</Note>
 
-<Card title="Windows" icon="bolt">
-  #### Windows PowerShell or Command Prompt
+### Step 1: Open Your Terminal
 
-  1. Press Win + X on your keyboard
-
-  2. Select "Windows PowerShell" or "Command Prompt"
-
-  3. Alternatively, press Win + R , type "cmd" and press Enter
-
-
+<Card title="Windows" icon="windows">
+  **PowerShell or Command Prompt:**
+  - Press `Win + X` and select "Windows PowerShell" or "Command Prompt"
+  - Or press `Win + R`, type "cmd" and hit Enter
 </Card>
 
-<Card title="MacOS" icon="bolt">
-  #### Terminal App
-
-  1. Click on Spotlight (magnifying glass) in the menu bar
-
-  2. Type "Terminal"
-
-  3. Press Return or click on the Terminal app
-
-  4. Alternatively, find it in Applications → Utilities → Terminal
-
-
+<Card title="MacOS" icon="apple">
+  **Terminal:**
+  - Click Spotlight (🔍), type "Terminal" and press Return
+  - Or go to Applications → Utilities → Terminal
 </Card>
 
-<Card title="Linux" icon="bolt">
-  #### Terminal Emulator
-
-  1. Press Ctrl + Alt + T (works on most distributions)
-
-  2. Or search for "Terminal" in your system's application menu
-
-  3. Common terminals: GNOME Terminal, Konsole, xterm
-
-
+<Card title="Linux" icon="linux">
+  **Terminal:**
+  - Press `Ctrl + Alt + T`
+  - Or search for "Terminal" in your application menu
 </Card>
 
-### Sync Your AI Agent to Your Local Device&#xA;
+### Step 2: Configure Your Development Environment
 
-Run the following commands in your terminal to set up your agent:
+1. **Launch AskUI Shell**
+   ```bash
+   askui-shell
+   ```
 
-### Start the AskUI Development Environment (ADE)
+2. **Connect to Your Workspace**
+   - Generate your access token at [hub.askui.com](https://hub.askui.com)
+   - This is a one-time setup per device
 
-`askui-shell`
+3. **Install the Runner**
+   ```bash
+   AskUI-InstallRunner
+   ```
 
-This makes AskUI commands (AskUI-\*) and dependencies available within the terminal.
+### Step 3: Set Up Your Agent
 
-### Connect local ADE to your Workspace
+1. **Download Your Agent**
+   ```bash
+   AskUI-SyncAgents -Direction DOWN
+   ```
 
+2. **Launch Your Agent**
+   ```bash
+   AskUI-OpenAgent -ID 'agent-id'
+   ```
 
-To connect your ADE to your workspace, you need an access token and set it in the settings. You only need to do this once for your local device for your workspace, so if you have done this already, you can skip this step. Otherwise, generate one now.
+### Agent Structure Overview
 
-1. Generate Access Token using our Onboarding - hub.askui.com&#x20;
+Your agent folder contains:
+- `agent.yml` - Configuration and metadata
+- Python files - Automation logic
+- `README.md` - Usage instructions
 
+### Updating and Syncing
 
-2. Install the Runner
-
-`AskUI-InstallRunner`
-
-This installs the component (the Runner) which allows you to synchronize agents created within the AskUI Hub with your local device, downloading and uploading the latest changes.
-
-1. Download Your Agent to Your Local Device
-
-`AskUI-SyncAgents -Direction DOWN`
-
-1. Open Your Agent
-
-`AskUI-OpenAgent -ID 7ddbaaf8-4d10-4b39-823e-2207094b34fd`Run Your Agent:&#x20;
-
-
-
-Your agent is a basically a folder that contains:
-
-* `agent.yml` - Contains metadata about the agent
-
-* Files with logic and assets of the agent, for example, Python files
-
-* `README.md` - Contains setup and running instructions
-
-Check the README.md file for detailed instructions on how to setup and run your agent.
-
-### Edit and Sync Changes
-
-After making changes to your agent locally, sync them back to AskUI Hub:
-
-1. Edit Your Agent
-   Open and edit your agent files in your preferred code editor. Common files to edit:
-
-* Python files containing your agent's logic
-
-* Configuration files
-
-* Asset files (images, data files, etc.)
-
-### Sync Changes to AskUI Hub
-
-`AskUI-SyncAgents -Direction UP`
-
-This uploads your local changes to AskUI Hub, making them available to other team members.
-
-Return to Agent Overview.&#x20;
+After making changes to your agent:

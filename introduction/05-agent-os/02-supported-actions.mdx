@@ -1,0 +1,122 @@
+---
+title: "Supported Actions"
+description: "This page explains how to set up **AskUI with GitHub Actions**, including dependency setup, environment variables, test execution, and optional report generation."
+---
+
+# Supported Keyboard Keys
+
+AskUI Agent OS supports a wide range of keyboard keys for automation. This reference lists all supported keys organized by category, along with their status and description.
+
+## 🪄 Modifier Keys
+
+These keys modify the behavior of other keys when pressed in combination.
+
+| Key Name | Description | Status |
+| --- | --- | --- |
+| `alt` | ALT key | Special case |
+| `capslock` | CAPS LOCK key | Special case |
+| `command` | Windows key (both left and right) | Special case |
+| `control` | CTRL key | Special case |
+| `left_control` | Left CONTROL key | Special case |
+| `numpad_lock` | NUM LOCK key | Special case |
+| `right_alt` | Right ALT key | Special case |
+| `right_control` | Right CONTROL key | Special case |
+| `right_shift` | Right SHIFT key | Special case |
+| `shift` | SHIFT key | Special case |
+| (Left ALT key) | Left ALT key | Special case |
+| (Left SHIFT key) | Left SHIFT key | Special case |
+
+## 🔠 Alphanumeric Keys
+
+Standard alphanumeric keys for text input.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `0` - `9` | Numeric keys 0-9 | ✅ | ✅ |
+| `a` - `z` | Alphabetic keys A-Z | ✅ | ✅ |
+
+## ⚙️ Control Keys
+
+Basic control keys for text editing and navigation.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `backspace` | BACKSPACE key | ✅ | ✅ |
+| `delete` | DEL key | ✅ | ✅ |
+| `enter` | ENTER key | ✅ | ✅ |
+| `escape` | ESC key | ✅ | ✅ |
+| `space` | SPACEBAR key | ✅ | ✅ |
+| `tab` | TAB key | ✅ | ✅ |
+
+## ➡️ Arrow Keys
+
+Directional arrow keys for navigation.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `down` | DOWN ARROW key | ❌ | ❌ |
+| `left` | LEFT ARROW key | ✅ | ✅ |
+| `right` | RIGHT ARROW key | ✅ | ✅ |
+| `up` | UP ARROW key | ✅ | ✅ |
+
+## ⚡️ Function Keys
+
+Function keys F1-F24 for special operations.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `f1` - `f9` | Function keys F1-F9 | ✅ (except F10) | ✅ (except F10) |
+| `f10` | F10 key | ❌ | ❌ |
+| `f11` - `f24` | Function keys F11-F24 | ✅ | ✅ |
+
+## ⏯️ Media Control Keys
+
+Keys for controlling media playback and volume.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `audio_mute` | Volume Mute key | ✅ | ✅ |
+| `audio_next` | Next Track key | ✅ | ✅ |
+| `audio_play` | Play/Pause Media key | ❌ | ❌ |
+| `audio_prev` | Previous Track key | ✅ | ✅ |
+| `audio_stop` | Stop Media key | ✅ | ✅ |
+| `audio_vol_down` | Volume Down key | ✅ | ✅ |
+| `audio_vol_up` | Volume Up key | ✅ | ✅ |
+
+## 🔢 Keypad Keys
+
+Numeric keypad keys for numeric input.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `numpad_*` | Multiply key | ✅ | ✅ |
+| `numpad_+` | Add key | ✅ | ✅ |
+| `numpad_-` | Subtract key | ✅ | ✅ |
+| `numpad_.` | Decimal key | ✅ | ✅ |
+| `numpad_/` | Divide key | ❌ | ❌ |
+| `numpad_0` - `numpad_9` | Numeric keypad 0-9 keys | ✅ (except 5) | ✅ (except 5) |
+| `numpad_5` | Numeric keypad 5 key | ❌ | ❌ |
+
+## 🦄 Special Purpose Keys
+
+Additional keys for navigation and special functions.
+
+| Key Name | Description | Press | Release |
+| --- | --- | --- | --- |
+| `end` | END key | ✅ | ✅ |
+| `home` | HOME key | ✅ | ✅ |
+| `insert` | INS key | ✅ | ✅ |
+| `pagedown` | PAGE DOWN key | ✅ | ✅ |
+| `pageup` | PAGE UP key | ✅ | ✅ |
+| `printscreen` | PRINT SCREEN key | ❌ | ❌ |
+
+## Unsupported Key Categories
+
+The following key categories are currently unsupported:
+
+- **#️⃣ Symbol Keys**: Various symbol and punctuation keys
+- **🈯️ International Keys**: IME and language-specific keys
+- **🖱️ Mouse Keys**: Mouse button emulation keys
+- Various browser control keys
+- Application launch keys
+- System keys (Sleep, Help, etc.)

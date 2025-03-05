@@ -1,0 +1,87 @@
+---
+title: "Model Usage"
+description: "Learn how to use and configure different AI models"
+---
+
+## Quick Reference
+
+| Platform | Available Models |
+|----------|-----------------|
+| AskUI | **`askui-combo`**, **`askui-pta`**, **`askui-ocr`**, **`askui-ai-element`** |
+| Anthropic | **`anthropic-claude-3-5-sonnet-20241022`** |
+| Hugging Face | **`AskUI/PTA-1`**, **`OS-Copilot/OS-Atlas-Base-7B`**, **`showlab/ShowUI-2B`**, **`Qwen/Qwen2-VL-2B-Instruct`**, **`Qwen/Qwen2-VL-7B-Instruct`** |
+| Self-Hosted | **`UI-Tars`** |
+
+## Authenticate with an AI Model Provider
+
+| Provider | AskUI | Anthropic |
+|----------|-------|-----------|
+| ENV Variables | `ASKUI_WORKSPACE_ID`, `ASKUI_TOKEN` | `ANTHROPIC_API_KEY` |
+| Supported Commands | click() | click(), get(), act() |
+| Description | Faster Inference, European Server, Enterprise Ready | Supports complex actions |
+
+To get started, set the environment variables required to authenticate with your chosen model provider.
+
+## How to set an environment variable?
+
+### Setting Environment Variables
+
+Environment variables are used to securely store API keys and other sensitive information. Here's how to set them on different operating systems:
+
+#### Linux & macOS
+Use the `export` command in your terminal:
+
+```bash
+export ANTHROPIC_API_KEY=<your-api-key-here>
+```
+
+#### Windows PowerShell
+Set an environment variable with `$env:`:   
+
+```powershell
+$env:ANTHROPIC_API_KEY="<your-api-key-here>"
+```
+
+### Anthropic AI Models
+
+Supported commands are: click(), type(), mouse_move(), get(), act()
+
+| Model Name | Info | Execution Speed | Security | Cost | Reliability |
+|------------|------|-----------------|----------|------|-------------|
+| **anthropic-claude-3-5-sonnet-20241022** | The Computer Use model from Anthropic is a Large Action Model (LAM), which can autonomously achieve goals. e.g. "Book me a flight from Berlin to Rom" | Slow, {'>'} 1s per step | Model hosting by Anthropic | High, up to 1,5$ per act | Not recommended for production usage |
+
+### AskUI AI Models
+
+Supported commands are: click(), type(), mouse_move()
+
+| Model Name | Info | Execution Speed | Security | Cost | Reliability |
+|------------|------|-----------------|----------|------|-------------|
+| **askui-pta** | PTA-1 (Prompt-to-Automation) is a vision language model (VLM) trained by AskUI which to address all kinds of UI elements by a textual description e.g. "Login button", "Text login" | Fast, {'<'}500ms per step | Secure hosting by AskUI or on-premise | Low, {'<'}0.05$ per step | Recommended for production usage, can be retrained |
+| **askui-ocr** | AskUI OCR is an OCR model trained to address texts on UI Screens e.g. "Login", "Search" | Fast, {'<'}500ms per step | Secure hosting by AskUI or on-premise | Low, {'<'}0.05$ per step | Recommended for production usage, can be retrained |
+| **askui-combo** | AskUI Combo is an combination from the askui-pta and the askui-ocr model to improve the accuracy. | Fast, {'<'}500ms per step | Secure hosting by AskUI or on-premise | Low, {'<'}0.05$ per step | Recommended for production usage, can be retrained |
+| **askui-ai-element** | AskUI AI Element allows you to address visual elements like icons or images by demonstrating what you looking for. Therefore, you have to crop out the element and give it a name. | Very fast, {'<'}5ms per step | Secure hosting by AskUI or on-premise | Low, {'<'}0.05$ per step | Recommended for production usage, determinitic behaviour |
+
+
+### Huggingface AI Models (Spaces API)
+
+Supported commands are: click(), type(), mouse_move()
+
+| Model Name | Info | Execution Speed | Security | Cost | Reliability |
+|------------|------|-----------------|----------|------|-------------|
+| **AskUI/PTA-1** | PTA-1 (Prompt-to-Automation) is a vision language model (VLM) trained by AskUI which to address all kinds of UI elements by a textual description e.g. "Login button", "Text login" | Fast, {'<'}500ms per step | Huggingface hosted | Prices for Huggingface hosting | Not recommended for production applications |
+| **OS-Copilot/OS-Atlas-Base-7B** | OS-Atlas-Base-7B is a Large Action Model (LAM), which can autonomously achieve goals. e.g. "Please help me modify VS Code settings to hide all folders in the explorer view". This model is not available in the act() command | Slow, {'>'}1s per step | Huggingface hosted | Prices for Huggingface hosting | Not recommended for production applications |
+| **showlab/ShowUI-2B** | showlab/ShowUI-2B is a Large Action Model (LAM), which can autonomously achieve goals. e.g. "Search in google maps for Nahant". This model is not available in the act() command | Slow, {'>'}1s per step | Huggingface hosted | Prices for Huggingface hosting | Not recommended for production usage |
+| **Qwen/Qwen2-VL-2B-Instruct** | Qwen/Qwen2-VL-2B-Instruct is a Visual Language Model (VLM) pre-trained on multiple datasets including UI data. This model is not available in the act() command | Slow, {'>'}1s per step | Huggingface hosted | Prices for Huggingface hosting | Not recommended for production usage |
+| **Qwen/Qwen2-VL-7B-Instruct** | Qwen/Qwen2-VL-7B-Instruct is a Visual Language Model (VLM) pre-trained on multiple dataset including UI data. This model is not available in the act()` command available | Slow, {'>'}1s per step | Huggingface hosted | Prices for Huggingface hosting | Not recommended for production usage |
+
+Note: No authentication required! But rate-limited!
+
+### Self Hosted UI Models
+
+Supported commands are: click(), type(), mouse_move(), get(), act()
+
+| Model Name | Info | Execution Speed | Security | Cost | Reliability |
+|------------|------|-----------------|----------|------|-------------|
+| **UI-Tars** | UI-Tars is a Large Action Model (LAM) based on Qwen2 and fine-tuned by ByteDance on UI data e.g. "Book me a flight to rom" | Slow, {'>'}1s per step | Self-hosted | Depening on infrastructure | Out-of-the-box not recommended for production usage |
+
+Note: These models need to been self hosted by yourself.
