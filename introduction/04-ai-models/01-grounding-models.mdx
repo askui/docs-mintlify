@@ -12,7 +12,22 @@ description: "Learn how to use and configure different AI models"
 | Hugging Face | **`AskUI/PTA-1`**, **`OS-Copilot/OS-Atlas-Base-7B`**, **`showlab/ShowUI-2B`**, **`Qwen/Qwen2-VL-2B-Instruct`**, **`Qwen/Qwen2-VL-7B-Instruct`** |
 | Self-Hosted | **`UI-Tars`** |
 
+
+## Using Different Models
+
+AskUI allows you to specify which model to use for each command by passing the `model_name` parameter. This gives you flexibility to choose the most appropriate model for each specific task.
+
+### Basic Usage
+
+To use a specific model for a command, add the `model_name` parameter:
+
+```python
+agent.click("search field", model_name="OS-Copilot/OS-Atlas-Base-7B")
+```
+
 ## Authenticate with an AI Model Provider
+
+Before you can use different models, you need to authenticate with an AI Model Provider.
 
 | Provider | AskUI | Anthropic |
 |----------|-------|-----------|
