@@ -50,9 +50,17 @@ AI Elements allow you to capture and use specific visual elements from your scre
 Enable the AskUI Development Environment as described in the installation guide and activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
 </Note>
 
-### AskUI-NewAIElement Command
+```bash
+AskUI-NewAIElement
+```
 
 This command captures elements from your screen for use in AskUI workflows.
+
+It then can be used by setting the model config to `askui-ai-element`, like:
+
+```Python
+agent.click("ai-element-name", model_name="askui-ai-element")
+```
 
 **Parameters:**
 - **Name** (Optional): The name for the screenshot file. If defined, indicates only one element is being captured. For multiple elements, you'll provide names individually.
