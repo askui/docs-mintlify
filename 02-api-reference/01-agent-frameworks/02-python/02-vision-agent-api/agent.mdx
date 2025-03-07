@@ -41,14 +41,70 @@ Simulates a mouse click on the user interface element identified by the provided
   
 
 **Example**:
-  ```python
-  with VisionAgent() as agent:
-      agent.click()              # Left click on current position
-      agent.click("Edit")        # Left click on text "Edit"
-      agent.click("Edit", button=right)  # Left click on text "Edit"
-      agent.click(repeat=2)      # Double left click on current position
-      agent.click("Edit", button="middle", repeat=4)   # 4x middle click on text "edit
-  ```
+
+```python
+with VisionAgent() as agent:
+    agent.click()              # Left click on current position
+    agent.click("Edit")        # Left click on text "Edit"
+    agent.click("Edit", button="right")  # Right click on text "Edit"
+    agent.click(repeat=2)      # Double left click on current position
+    agent.click("Edit", button="middle", repeat=4)   # 4x middle click on text "Edit"
+```
+
+<a id="askui.agent.VisionAgent.mouse_move"></a>
+
+#### mouse\_move
+
+```python
+def mouse_move(instruction: str, model_name: Optional[str] = None) -> None
+```
+
+Moves the mouse cursor to the UI element identified by the provided instruction.
+
+**Arguments**:
+
+- `instruction` _str_ - The identifier or description of the element to move to.
+- `model_name` _str | None_ - The model name to be used for element detection. Optional.
+  
+
+**Example**:
+
+  >>> with VisionAgent() as agent:
+  >>>     agent.mouse_move("Submit button")  # Moves cursor to submit button
+  >>>     agent.mouse_move("Close")  # Moves cursor to close element
+  >>>     agent.mouse_move("Profile picture", model_name="custom_model")  # Uses specific model
+
+<a id="askui.agent.VisionAgent.mouse_scroll"></a>
+
+#### mouse\_scroll
+
+```python
+def mouse_scroll(x: int, y: int) -> None
+```
+
+Simulates scrolling the mouse wheel by the specified horizontal and vertical amounts.
+
+**Arguments**:
+
+- `x` _int_ - The horizontal scroll amount. Positive values typically scroll right, negative values scroll left.
+- `y` _int_ - The vertical scroll amount. Positive values typically scroll down, negative values scroll up.
+  
+
+**Notes**:
+
+  The actual `scroll direction` depends on the operating system's configuration.
+  Some systems may have "natural scrolling" enabled, which reverses the traditional direction.
+  
+  The meaning of scroll `units` varies across operating systems and applications.
+  A scroll value of 10 might result in different distances depending on the application and system settings.
+  
+
+**Example**:
+
+  >>> with VisionAgent() as agent:
+  >>>     agent.mouse_scroll(0, 10)  # Usually scrolls down 10 units
+  >>>     agent.mouse_scroll(0, -5)  # Usually scrolls up 5 units
+  >>>     agent.mouse_scroll(3, 0)   # Usually scrolls right 3 units
 
 <a id="askui.agent.VisionAgent.wait"></a>
 
@@ -89,15 +145,13 @@ Simulates the release of a key.
 
 **Arguments**:
 
-- `key` _PC_AND_MODIFIER_KEY_ - The key to be released. This can be any key or a combination of keys with modifiers.
+- `key` _PC_AND_MODIFIER_KEY_ - The key to be released.
   
 
 **Example**:
 
-  This example demonstrates how to simulate the release of the 'a' key and the 'shift' key:
-  
   >>> agent.key_up('a')  # Release the 'a' key.
-  >>> agent.key_up('shift')  # Release the 'shift' key.
+  >>> agent.key_up('shift')  # Release the 'Shift' key.
 
 <a id="askui.agent.VisionAgent.key_down"></a>
 
@@ -111,7 +165,7 @@ Simulates the pressing of a key.
 
 **Arguments**:
 
-- `key` _PC_AND_MODIFIER_KEY_ - The key to be pressed. This can be any key or a combination of keys with modifiers.
+- `key` _PC_AND_MODIFIER_KEY_ - The key to be pressed.
   
 
 **Example**:
