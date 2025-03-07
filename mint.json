@@ -129,8 +129,8 @@
     {
       "group": "Python Vision Agent",
       "pages": [
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent.mdx",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools.mdx"
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools"
       ]
     },
     {
