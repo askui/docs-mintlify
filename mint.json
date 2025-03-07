@@ -22,7 +22,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:info@askui.com"
+      "url": "mailto:support@askui.com"
     },
     {
       "name": "Sign up",
@@ -31,7 +31,7 @@
   ],
   "topbarCtaButton": {
     "name": "Login",
-    "url": "https://app.askui.com"
+    "url": "https://hub.askui.com"
   },
   "tabs": [
     {
@@ -99,7 +99,6 @@
       "group": "Agent OS",
       "pages": [
         "introduction/05-agent-os/01-commands",
-        "introduction/05-agent-os/02-supported-actions",
         "introduction/05-agent-os/03-reteaching",
         "introduction/05-agent-os/04-proxy"
       ]
