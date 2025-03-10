@@ -7,7 +7,7 @@ AskUI consists of mutliple components which all work together to allow users to 
 
 * **Model Provider:** The Model Providers host AI models. The AI models are the brain of the Agents for Locating Elements (Grounding Models), Asking (Query Models) and autonoumous Acting (Large Action Models)
 
-* **Agent Framework:** The Agent Framework is used to build an Agent in Python. You can easily interact with the any OS by taking over the mouse and keyborad, visulizing the thinking process or use specialized tools like excel, pdf or web requests. 
+* **Agent Framework:** The Agent Framework is used to build an Agent in Python. You can easily interact with any OS by taking over the mouse and keyborad, visulizing the thinking process or use specialized tools like excel, pdf or web requests. 
 
 * **Agent OS:** The Agent OS is installed on the device to automated, executing all commands and interacting with mouse and keyboard. Serves as the “hands” of the Vision Agent.
 
@@ -17,31 +17,47 @@ AskUI consists of mutliple components which all work together to allow users to 
 
 Lets have a deeper look at these components:
 
-## Agent Framework
+## Building Your Agent
 
-The **Agent Framework** is where you **tell AskUI what to automate**. You can write single-step instructions or let the agent act on its own.
+The **Agent Framework** is where you **tell AskUI what to automate**. You can write single-step instructions or let the agent act on its own `agent.act("Book me flight from Karlsruhe to Rome")`.
 
 For example, let’s say you want AskUI to click a "Login" button (single-step action). The instruction would look like this:
 
+`my_agent.py`
+```python
+with VisionAgent(display=1) as agent: 
+    agent.click("the Login button")
+```
+* **`VisionAgent(display=1)`** → Start and configure the agent (e.g. start a Vision Agent on display 1).
+* **`agent`** → Specifies which agent is executing the instruction. 
+* **`click("Element locator")`** → Specifies the action (clicking)
+
+
+## Running your Agent
+
+Here’s what’s happening under the hood why you now execute the agent with `python my_agent.py`:
+
+### Start and configure the Vision Agent
+```python
+with VisionAgent(display=1) as agent:
+```
+
+### Run an Single Step Command
+The with
 ```
 agent.click("the Login button")
 ```
-
-Here’s what’s happening:
-
-* **`agent`** → Specifies which agent is executing the instruction. It connects to the respective Agent OS controller and executes the command there. Per default we use the installed controller which runs on your local machine.
-
-* **`click("Element description")`** → Specifies the action (clicking) and takes in a natural language description of the to be located element (Element description). This description is send to the configured AI model of the Model Providers. Per default, we have set PTA-1 as a model hosted on AskUI infrastructure.
-
-Once you run the agent, the Agent OS is executing the instructions.
+2. Connects to the Agent OS and take a screenshot.
+2. Takes in a natural language locator of the to be located element. 
+3. This locator is send with the screenshot to the configured AI model of the Model Providers. (Per default, we have set PTA-1 as a model hosted on AskUI Model Provider.)
+4. The model is returning an AgentOS action. e.g. Click on pixel 100x 100y. 
+5. This Action is the send to the AgentOS
+6. The AgentOS is then take over the mouse and move the mouse to pixel 100x 100y and press the left mouse button
 
 ## Agent OS
 
 Specifically, the Agent OS is doing the following when the agent is triggered:
 
-1. **Takes a screenshot** of the screen it is running on
-2. Sends the screenshots to the Model Provider to **retrieve the position it will execute the action**. The model inference is called for every single step if it is not cached.
-3. **Executes the specified action**, in this case a **`leftClick()`**. AskUI supports all actions which a human can do via keyboard and mouse. For some actions just as a direct **`mouseLeftClick()`**, no onbject localization is needed. In these cases, no AI inference is used.
 
 The Agent OS furthermore has specific functions such as environment management, proxy configuration and in-background automation. A detailed overview can be found here. #todo
 
