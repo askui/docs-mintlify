@@ -96,11 +96,11 @@
       ]
     },
     {
-      "group": "Agent Sutie",
+      "group": "AskUI Suite",
       "pages": [
-        "introduction/02-agent-suite/01-commands",
-        "introduction/02-agent-suite/03-reteaching",
-        "introduction/02-agent-suite/04-proxy"
+        "introduction/05-askui-suite/01-commands",
+        "introduction/05-askui-suite/03-reteaching",
+        "introduction/05-askui-suite/04-proxy"
       ]
     },
     {
@@ -141,36 +141,36 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-TestConnection",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-AddPlugin",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-TestConnection",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-AddPlugin",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
               ]
             },
             {
               "group": "Debug",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
               ]
             },
             {
               "group": "Experimental",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Experimental/AskUI-NewErrorReport",
-                "02-api-reference/02-agent-suite/02-askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-NewErrorReport",
+                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
               ]
             }
           ]
@@ -181,7 +181,7 @@
             {
               "group": "Experimental",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIOCRTeaching/Experimental/AskUI-StartOCRTeaching"
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Experimental/AskUI-StartOCRTeaching"
               ]
             }
           ]
@@ -192,11 +192,11 @@
             {
               "group": "Experimental",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAIElement",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-OpenAIElement",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-RemoveAIElement",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-ShowAIElement",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAnnotationsForTraining"
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-OpenAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-RemoveAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-ShowAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAnnotationsForTraining"
               ]
             }
           ]
@@ -207,12 +207,12 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
               ]
             }
           ]
@@ -223,8 +223,8 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
-                "02-api-reference/02-agent-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
               ]
             }
           ]
@@ -235,10 +235,10 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
-                "02-api-reference/02-agent-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
-                "02-api-reference/02-agent-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
-                "02-api-reference/02-agent-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
+                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
+                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
+                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
+                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
               ]
             }
           ]
@@ -249,11 +249,11 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
-                "02-api-reference/02-agent-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
-                "02-api-reference/02-agent-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
-                "02-api-reference/02-agent-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
-                "02-api-reference/02-agent-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
+                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
+                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
+                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
+                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
+                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
               ]
             }
           ]
@@ -264,9 +264,9 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-agent-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
-                "02-api-reference/02-agent-suite/02-askui-suite/UIController/Public/AskUI-StartController",
-                "02-api-reference/02-agent-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
+                "02-api-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
+                "02-api-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StartController",
+                "02-api-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
               ]
             }
           ]
