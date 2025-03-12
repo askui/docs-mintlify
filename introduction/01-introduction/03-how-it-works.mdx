@@ -5,51 +5,63 @@ description: 'Learn how AskUI works'
 
 AskUI consists of mutliple components which all work together to allow users to build versatile automations across different operating systems. These components are:
 
-* **Model Provider:** The AI models used for UI grounding and prompt processing.
+* **Model Provider:** The Model Providers host AI models. The AI models are the brain of the Agents for Locating Elements (Grounding Models), Asking (Query Models) and autonoumous Acting (Large Action Models)
 
-* **Agent Framework:** The framework used to instruct the agent with agent commands (Python).
+* **Agent Framework:** The Agent Framework is used to build an Vision Agent in Python. You can easily interact with any OS by taking over the mouse and keyborad, visulizing the thinking process or use specialized tools like excel, pdf or web requests. 
 
-* **Agent OS:** This is a client installed on the device to be automated, executing all commands and interacting with mouse and keyboard. Serves as the “hands” of the Vision Agent. Also responsible for environment management of the agent.
+* **Agent OS:** The Agent OS is installed on the device to automated, executing all commands and interacting with mouse and keyboard and visulize the thinking process. Serves as the “hands” and "speech" of your Vision Agent.
 
-* **Agent Hub Web:** Cross Team Collaboration Plattform. Web frontend for creation and management of access tokens and user management. Serves as repository for vision agents.
+* **Agent Hub Web:** The Agent Hub Web provides you an easy way to coloborate with you're team. It allows you to sync your build Vision Agents over the repository to other devices. Let's trigger you agents from E-Mail or Web, schedule Agents on remote devices and manage your team.
 
-* **Agent Hub Desktop:** Configuration Tool. Local frontend for agent configuration and interaction. To be released Summer 2025.&#x20;
+* **Agent Hub Desktop:** The Agent Hub Desktop is GUI for your Vision Agents. This is installed on your local device and allows you to setup your device, sync agents and interact with running agents. To be released Summer 2025.&#x20;
 
 Lets have a deeper look at these components:
 
-## Agent Framework
+## Building Your Agent
 
-The **Agent Framework** is where you **tell AskUI what to automate**. You can write single-step instructions or let the agent act on its own.
+The **Agent Framework** is where you **tell AskUI what to automate**. You can write single-step instructions or let the agent act on its own e.g. `agent.act("Book me flight from Karlsruhe to Rome")`.
 
-For example, let’s say you want AskUI to click a "Login" button (single-step action). The instruction would look like this:
+For example, let’s say you want AskUI to click a "Login" button (single-step action). You can define your agent in python e.g. `my_agent.py`:
+```python
+with VisionAgent(display=1) as agent: 
+    agent.click("the Login button")
+```
+* **`VisionAgent(display=1)`** → Start and configure the agent (e.g. start a Vision Agent on display 1).
+* **`agent.click("Element locator")`** → Specifies the action of the agent (clicking)
 
+
+## Running your Agent
+
+Here’s what’s happening under the hood when you now execute the agent with `python my_agent.py`:
+
+Let's zoom in what the *first line* is doing:
+```python
+with VisionAgent(display=1) as agent:
+```
+1. `with`-statement creates a context for the Vision Agent to start & stop the ***Agent OS***
+2. `VisionAgent(display=1)`
+    1. Instantiate a Vision Agent with the args
+    2. Start the ***Agent OS*** on display 1
+3. `as agent` make the instance available in the context 
+
+
+Now what's happening when a single step is executed:
 ```
 agent.click("the Login button")
 ```
+1. Take a *screenshot* over **Agent OS**.
+2. Use the natural language *locator* (`"the Login button"`) of the to be located element. 
+3. This locator is send with the *screenshot* to the configured AI model of the ***Model Providers***. (Per default, we have set PTA-1 as a model hosted on AskUI Model Provider.)
+4. The *Grounding Model* is returing an location. e.g. Click on pixel 100x 100y. 
+5. This Action is the send to the ***AgentOS***
+6. The ***AgentOS*** is then take over the mouse and move the mouse to pixel 100x 100y and press the left mouse button.
 
-Here’s what’s happening:
-
-* **`agent`** → Specifies which agent is executing the instruction. It connects to the respective Agent OS controller and executes the command there. Per default we use the installed controller which runs on your local machine.
-
-* **`click("Element description")`** → Specifies the action (clicking) and takes in a natural language description of the to be located element (Element description). This description is send to the configured AI model of the Model Providers. Per default, we have set PTA-1 as a model hosted on AskUI infrastructure.
-
-Once you run the agent, the Agent OS is executing the instructions.
-
-## Agent OS
-
-Specifically, the Agent OS is doing the following when the agent is triggered:
-
-1. **Takes a screenshot** of the screen it is running on
-2. Sends the screenshots to the Model Provider to **retrieve the position it will execute the action**. The model inference is called for every single step if it is not cached.
-3. **Executes the specified action**, in this case a **`leftClick()`**. AskUI supports all actions which a human can do via keyboard and mouse. For some actions just as a direct **`mouseLeftClick()`**, no onbject localization is needed. In these cases, no AI inference is used.
-
-The Agent OS furthermore has specific functions such as environment management, proxy configuration and in-background automation. A detailed overview can be found here. #todo
 
 ## Model Provider
 
 AskUI supports multiple Model Providers and various different AI models for different purposes. Generally, these can be split into two:
 
-* **UI Grounding Tasks:** This describes the process of using an AI model for localization of UI elements on a screen. Typically OCR, Computer Vision or Vision Language Models (VLMs) are used for this.
+* **UI Grounding Model:** This describes the process of using an AI model for localization of UI elements on a screen. Typically OCR, Computer Vision or Vision Language Models (VLMs) are used for this.
 * **Reasoning and Planning:** To enable real agentic behaviour, a Large Language Model such as the Computer Use model by Anthropic is used for planning the steps to be executed with a reasoning loop.
 
-We provide our own models as well as external Model Providers. You can find all supported models in #todo
+We provide our own models as well as external Model Providers. You can find all supported models in 
