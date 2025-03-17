@@ -75,6 +75,9 @@ Please make sure you followed through the [Installation Guide](/introduction/02-
     with VisionAgent() as agent:
         # Open Chrome and navigate to calculator
         agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-page/")
+    
+        # Wait for the page to load
+        agent.wait(3)
 
         # Click numbers and operators
         agent.click("7")
