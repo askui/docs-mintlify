@@ -124,9 +124,18 @@
         "introduction/01-changelog",
         "introduction/04-glossary",
         {
-          "group": "AskUI Suite",
+          "group": "Release Notes",
           "pages": [
-            "introduction/09-release-notes/25-2-1-release-notes"
+            {
+              "group": "AskUI Suite",
+              "pages": [
+                "introduction/09-release-notes/25-2-1-release-notes"
+              ]
+            },
+            {
+              "group": "Python Vision Agent",
+              "pages": ["https://github.com/askui/vision-agent/releases"]
+            }
           ]
         }
       ]
