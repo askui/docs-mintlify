@@ -129,13 +129,10 @@
             {
               "group": "AskUI Suite",
               "pages": [
-                "introduction/09-release-notes/25-2-1-release-notes-link"
+                "introduction/09-release-notes/01-askui-suite/askui-suite-25-2-1-release-notes-link.mdx"
               ]
             },
-            {
-              "group": "Python Vision Agent",
-              "pages": ["https://github.com/askui/vision-agent/releases"]
-            }
+            "introduction/09-release-notes/02-python-vision-agent/python-vision-agent-release-notes"
           ]
         }
       ]
