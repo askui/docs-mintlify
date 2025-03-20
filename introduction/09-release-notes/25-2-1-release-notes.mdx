@@ -115,3 +115,79 @@ Info:  To load debug commands, run 'AskUI-ImportDebugCommands'.
 Info:  To get detailed information about a command, run 'Get-Help <CommandName>'.
 ```
 </details>
+
+
+<details>
+  <summary><code>AskUI-ShowVersions</code> - Displays all AskUI components and versions.  - <a href="https://askui.mintlify.app/02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions">docs</a></summary>
+ 
+ ```bash
+ (base) ADE C:\Users\MaxMustermann> AskUI-ShowVersions
+AskUI Suite Version: 25.2.1
+Extensions:
+
+Name                          Version Type
+----                          ------- ----
+ADE                           0.9.3   Component
+NodeJS                        21.0.0  Component
+AskUIOCRTeaching              0.4.0   Component
+PowerShell                    7.4.6   Component
+PxProxy                       0.9.2   Component
+Python                        3.13.1  Component
+AskUIRemoteDeviceController   0.14.0  Component
+AskUIRemoteDeviceSnippingTool 0.2.0   Component
+UIController                  0.14.8  Component
+AskUIWindowsTools             1.0.0   Component
+AskUIRunnerManager            0.1.0   Component
+ADE.ProcessManager            0.1.0   Feature
+ADE.ProjectManager            0.1.0   Feature
+ADE.ErrorReporter             0.1.0   Feature
+ADE.UserInterface             0.1.0   Feature
+ADE.PluginManager             0.1.0   Feature
+ADE.EnvironmentManager        0.1.0   Feature
+
+
+```
+</details>
+
+
+
+### ADE: Proxy Commandlets
+<details>
+  <summary><b>Autostart</b>  of Local Proxy - Start the Local Proxy if proxy are set in the system settings when starting the <code>askui-shell</code>. Manual start of Local Proxy with <code>AskUI-StartLocalProxy</code> is not necessary anymore</summary>
+ 
+ ```bash
+PS C:\Users\MaxMustermann>  askui-shell
+Starting AskUI Development Environment (ADE) ...
+************************************************************
+   █████╗ ███████╗██╗  ██╗██╗   ██╗██╗
+  ██╔══██╗██╔════╝██║ ██╔╝██║   ██║██║
+  ███████║███████╗█████╔╝ ██║   ██║██║
+  ██╔══██║╚════██║██╔═██╗ ██║   ██║██║
+  ██║  ██║███████║██║  ██╗╚██████╔╝██║
+  ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝
+  Copyright (C) askui GmbH. All rights Reserved.
+************************************************************
+Info:  Starting local proxy automatically ...
+Info:  Starting PX proxy ...
+```
+</details>
+
+<details>
+  <summary><code>AskUI-TestConnection</code> - Test if an Internet Connection is available. Mostly used in an Enterprise Environment with Proxy.  - <a href="https://askui.mintlify.app/02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-TestConnection">docs</a></summary>
+ 
+ ```bash
+ (base) ADE C:\Users\MaxMustermann> AskUI-TestConnection
+Info:  Testing the connection to the URL: https://inference.askui.com/health
+Info:  Following proxy variables are used:
+Info:    HTTP_PROXY=
+Info:    HTTPS_PROXY=
+Info:    NO_PROXY=
+Info:  The connection to the URL 'https://inference.askui.com/health' was successful.
+Info:  Response status code: 200
+Info:  Response description: OK
+```
+</details>
+
+### ADE: Windows Tools: Long Path Tools
+
+On Windows, the maximum file path length is 260 characters. Exceeding this limit results in a "Destination Path Too Long" error. This tool helps users check and enable Windows Long Path support. This helps to avoid errors with Python Vision Agent.
