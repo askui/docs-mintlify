@@ -122,7 +122,13 @@
       "group": "Updates & Glossary",
       "pages": [
         "introduction/01-changelog",
-        "introduction/04-glossary"
+        "introduction/04-glossary",
+        {
+          "group": "AskUI Suite",
+          "pages": [
+            "introduction/09-release-notes/25-2-1-release-notes"
+          ]
+        }
       ]
     },
     {
