@@ -121,7 +121,6 @@
     {
       "group": "Updates & Glossary",
       "pages": [
-        "introduction/01-changelog",
         "introduction/04-glossary",
         {
           "group": "Release Notes",
