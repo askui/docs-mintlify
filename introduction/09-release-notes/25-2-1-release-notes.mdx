@@ -59,3 +59,59 @@ Please follow our offical [installation guide](https://docs.askui.com/introducti
 - **Windows Users** may encounter long path issues when installing and using ADE.
 - **Project Support**: `AskUI-NewProject` and `AskUI-RunProject` only support TypeScript projects.
 
+---
+# Release Notes
+
+## New Features
+
+### ADE: Information Commandlets
+
+<details>
+  <summary><code>AskUI-ShowAvailableCommands</code> - Displays all available commands. - <a href="https://askui.mintlify.app/02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands">docs</a></summary>
+ 
+ ```bash
+ (base) ADE C:\Users\MaxMustermann> AskUI-ShowAvailableCommands
+Public Commands:
+
+CommandName                             Source
+-----------                             ------
+AskUI-RemoveLocalProxySettings          Public.Local.Proxy
+AskUI-SetLocalProxySettings             Public.Local.Proxy
+AskUI-StartLocalProxy                   Public.Local.Proxy
+AskUI-StopLocalProxy                    Public.Local.Proxy
+AskUI-EnablePythonEnvironment           Public.PythonManager
+AskUI-NewPythonEnvironment              Public.PythonManager
+AskUI-RemovePythonEnvironment           Public.PythonManager
+AskUI-ShowInstalledPythonPackageVersion Public.PythonManager
+AskUI-ShowPythonEnvironments            Public.PythonManager
+AskUI-ShowControllers                   Public.UiController
+AskUI-StartController                   Public.UiController
+AskUI-StopControllers                   Public.UiController
+AskUI-EnableLongPath                    Public.WindowsTools
+AskUI-TestLongPathSupport               Public.WindowsTools
+AskUI-GetRunnerVersion                  Public.AskUIRunner
+AskUI-InstallRunner                     Public.AskUIRunner
+AskUI-OpenAgent                         Public.AskUIRunner
+AskUI-ShowAgents                        Public.AskUIRunner
+AskUI-StartRunner                       Public.AskUIRunner
+AskUI-SyncAgents                        Public.AskUIRunner
+AskUI-NewProject                        Public.Project.Manager
+AskUI-RunProject                        Public.Project.Manager
+AskUI-ImportDebugCommands               Public.ADE.UserInterface
+AskUI-ImportExperimentalCommands        Public.ADE.UserInterface
+AskUI-ShowAvailableCommands             Public.ADE.UserInterface
+AskUI-ShowVersions                      Public.ADE.UserInterface
+AskUI-TestConnection                    Public.ADE.UserInterface
+AskUI-AddPlugin                         Public.Plugin.Manager
+AskUI-RemovePlugin                      Public.Plugin.Manager
+AskUI-ShowPlugins                       Public.Plugin.Manager
+AskUI-RemoveSettings                    Public.EnvironmentManager
+AskUI-SetSettings                       Public.EnvironmentManager
+AskUI-ShowSettings                      Public.EnvironmentManager
+
+
+Info:  To load experimental commands, run 'AskUI-ImportExperimentalCommands'.
+Info:  To load debug commands, run 'AskUI-ImportDebugCommands'.
+Info:  To get detailed information about a command, run 'Get-Help <CommandName>'.
+```
+</details>
