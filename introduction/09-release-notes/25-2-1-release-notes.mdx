@@ -192,3 +192,24 @@ Info:  Response description: OK
 ### ADE: Windows Tools: Long Path Tools
 
 On Windows, the maximum file path length is 260 characters. Exceeding this limit results in a "Destination Path Too Long" error. This tool helps users check and enable Windows Long Path support. This helps to avoid errors with Python Vision Agent.
+
+<details>
+  <summary><b>Startup Check</b> Warns Long Path Support is not enabled  - Displays a Long Path not enabled warning when starting the <code>askui-shell</code></summary>
+ 
+ ```bash
+PS C:\Users\MaxMustermann>  askui-shell
+Starting AskUI Development Environment (ADE) ...
+************************************************************
+   █████╗ ███████╗██╗  ██╗██╗   ██╗██╗
+  ██╔══██╗██╔════╝██║ ██╔╝██║   ██║██║
+  ███████║███████╗█████╔╝ ██║   ██║██║
+  ██╔══██║╚════██║██╔═██╗ ██║   ██║██║
+  ██║  ██║███████║██║  ██╗╚██████╔╝██║
+  ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝
+  Copyright (C) askui GmbH. All rights Reserved.
+************************************************************
+Warning:  Long Path Support is not enabled. You may encounter issues with long paths, especially when using Python.
+Info:  To enable Long Path Support, run the 'AskUI-EnableLongPath' commandlet in an elevated PowerShell session.
+Info:  To check if Long Path Support is enabled, run the 'AskUI-TestLongPathSupport' commandlet.
+```
+</details>
