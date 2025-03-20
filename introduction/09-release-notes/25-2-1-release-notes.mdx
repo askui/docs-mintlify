@@ -254,17 +254,6 @@ function Say-Hello {
 Export-ModuleMember -Function Say-Hello
 ```
 
-8. Register the plugin in the ADE
- ```bash
- (base) ADE C:\Users\MaxMustermann> AskUI-AddPlugin -PluginVersion "1.0.0" -PluginName "MyPlugin" -AbsolutePluginFileNames "C:\Users\MaxMustermann\HelloWorldCmdlet.psm1"
-WARNING: The names of some imported commands from the module 'HelloWorldCmdlet' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
-```
-
-9. Use your commandlet in the ADE: 
-```bash
-(base) ADE C:\Users\MaxMustermann> Say-Hello
-Hello, World!
-```
 </details>
 
 
