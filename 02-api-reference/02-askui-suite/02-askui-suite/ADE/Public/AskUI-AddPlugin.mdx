@@ -24,15 +24,17 @@ current session only or configured to load on startup.
 
 #### EXAMPLE 1
 
+Adds MyPlugin version 1.0.0 to the current session permanently.
+
 ```powershell
 AskUI-AddPlugin -PluginVersion "1.0.0" -PluginName "MyPlugin" -AbsolutePluginFileNames "C:\Plugins\MyPlugin.ps1"
-Adds MyPlugin version 1.0.0 to the current session permanently.
 ```
  
 #### EXAMPLE 2
 
+Adds TestPlugin version 2.0.0 with multiple files temporarily to the current session.
+
 ```powershell
 AskUI-AddPlugin -PluginVersion "2.0.0" -PluginName "TestPlugin" -AbsolutePluginFileNames @("C:\Plugins\MyCommandlet.ps1","C:\Plugins\Test2.ps1") -AddOnlyDuringThisSession
-Adds TestPlugin version 2.0.0 with multiple files temporarily to the current session.
 ```
 

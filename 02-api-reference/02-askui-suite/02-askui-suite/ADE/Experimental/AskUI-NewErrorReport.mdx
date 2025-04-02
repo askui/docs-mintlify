@@ -26,22 +26,25 @@ Default: 96 hours (4 days)
 
 #### EXAMPLE 1
 
+Creates and submits an error report with default settings.
+
 ```powershell
 AskUI-NewErrorReport
-Creates and submits an error report with default settings.
 ```
  
 #### EXAMPLE 2
 
+Creates report with project files, specific log file, and 48-hour log history.
+
 ```powershell
 AskUI-NewErrorReport -Project "C:\MyProject" -AdditionalFiles "error.log" -MaxLogFileAgeInHours 48
-Creates report with project files, specific log file, and 48-hour log history.
 ```
  
 #### EXAMPLE 3
 
+Creates report locally without submission, preserves files, and skips approval prompt.
+
 ```powershell
 AskUI-NewErrorReport -SkipSubmit -SkipCleanup -AutoApprove
-Creates report locally without submission, preserves files, and skips approval prompt.
 ```
 

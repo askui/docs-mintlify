@@ -22,22 +22,25 @@ Supports both upload (Up) and download (Down) synchronization with optional dry-
 
 #### EXAMPLE 1
 
+Uploads local agent files to remote location.
+
 ```powershell
 AskUI-SyncAgents -Direction Up
-Uploads local agent files to remote location.
 ```
  
 #### EXAMPLE 2
 
+Simulates downloading remote agent files without making changes.
+
 ```powershell
 AskUI-SyncAgents -Direction Down -Dry
-Simulates downloading remote agent files without making changes.
 ```
  
 #### EXAMPLE 3
 
+Uploads local files and removes remote files that don't exist locally.
+
 ```powershell
 AskUI-SyncAgents -Direction Up -Delete
-Uploads local files and removes remote files that don't exist locally.
 ```
 

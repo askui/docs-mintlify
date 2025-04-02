@@ -26,22 +26,25 @@ It sets up the project structure with optional workspace ID, token, and Node.js 
 
 #### EXAMPLE 1
 
+Creates a new AskUI project named "MyAskUIProject" with default settings.
+
 ```powershell
 AskUI-NewProject -ProjectName "MyAskUIProject"
-Creates a new AskUI project named "MyAskUIProject" with default settings.
 ```
  
 #### EXAMPLE 2
 
+Creates a new AskUI project with specified workspace ID, token and test framework.
+
 ```powershell
 AskUI-NewProject -ProjectName "TestProject" -WorkspaceId "ws123" -Token "tk456" -TestFramework "jest"
-Creates a new AskUI project with specified workspace ID, token and test framework.
 ```
  
 #### EXAMPLE 3
 
+Creates a new project using specific Node.js version and skips path change prompt.
+
 ```powershell
 AskUI-NewProject -ProjectName "AutomationProject" -AskUINodeJsVersion "0.20.10" -SkipChangingPathUserPrompt
-Creates a new project using specific Node.js version and skips path change prompt.
 ```
 

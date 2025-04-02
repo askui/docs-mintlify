@@ -29,22 +29,25 @@ Valid values: User, Project
 
 #### EXAMPLE 1
 
+Removes both HTTP and HTTPS proxy settings from User level configuration.
+
 ```powershell
 AskUI-RemoveSettings -HttpProxy -HttpsProxy
-Removes both HTTP and HTTPS proxy settings from User level configuration.
 ```
  
 #### EXAMPLE 2
 
+Removes Token and WorkspaceId from Project level configuration.
+
 ```powershell
 AskUI-RemoveSettings -Token -WorkspaceId -Location Project
-Removes Token and WorkspaceId from Project level configuration.
 ```
  
 #### EXAMPLE 3
 
+Removes all environment variables and credentials from User level configuration.
+
 ```powershell
 AskUI-RemoveSettings -EnvironmentVariables -Credentials
-Removes all environment variables and credentials from User level configuration.
 ```
 

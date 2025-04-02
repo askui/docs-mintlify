@@ -24,22 +24,25 @@ The AskUI-StopProcess cmdlet terminates running AskUI processes. Processes can b
 
 #### EXAMPLE 1
 
+Stops all running AskUI processes.
+
 ```powershell
 AskUI-StopProcess -All
-Stops all running AskUI processes.
 ```
  
 #### EXAMPLE 2
 
+Stops All AskUI processes with names starting with "askui-controller".
+
 ```powershell
 AskUI-StopProcess -ProcessName "askui-controller*"
-Stops All AskUI processes with names starting with "askui-controller".
 ```
  
 #### EXAMPLE 3
 
+Stops the AskUI process with ID 1234.
+
 ```powershell
 AskUI-StopProcess -ProcessId 1234
-Stops the AskUI process with ID 1234.
 ```
 
