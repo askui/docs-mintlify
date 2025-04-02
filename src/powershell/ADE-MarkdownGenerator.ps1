@@ -61,7 +61,7 @@ foreach ($moduleInfo in $moduleInfos)
             & $markdownGeneratorFileName $moduleAlias | Out-File -FilePath $outputFileName
 
             # Build the JSON structure
-            $pagePath = "02-api-reference/03-agent-environment/askui-suite/$componentName/$type/$moduleAlias"
+            $pagePath = "02-api-reference/02-askui-suite/02-askui-suite/$componentName/$type/$moduleAlias"
 
             # Add or update the JSON structure
             $componentPage = $jsonStructure.pages | Where-Object { $_.group -eq $componentName }
