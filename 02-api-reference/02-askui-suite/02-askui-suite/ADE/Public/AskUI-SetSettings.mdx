@@ -19,7 +19,7 @@ proxy settings, certificates, authentication tokens, workspace IDs, logging leve
 - `-ServerIdentityCertificate` | _&lt;String&gt;_ - Sets a server identity certificate that shall be accepted by our tooling. 
 - `-Token` | _&lt;String&gt;_ - AskUI Token. 
 - `-WorkspaceId` | _&lt;String&gt;_ - AskUI Workspace ID. 
-- `-LogLevel` | _&lt;String&gt;_ - Log level. (Default: info)
+- `-LogLevel` | _&lt;String&gt;_ - Log level. (Default: Info)
 Valid values: Verbose, Debug, Info, Warning, Error, Fatal 
 - `-Location` | _&lt;String&gt;_ - Update level. (Default: User)
 Valid values: User, Project
@@ -28,22 +28,25 @@ Valid values: User, Project
 
 #### EXAMPLE 1
 
+Sets HTTP and HTTPS proxy settings.
+
 ```powershell
 AskUI-SetSettings -HttpProxy "http://proxy:8080" -HttpsProxy "https://proxy:8080"
-Sets HTTP and HTTPS proxy settings.
 ```
  
 #### EXAMPLE 2
 
+Configures authentication and logging settings.
+
 ```powershell
 AskUI-SetSettings -Token "myToken" -WorkspaceId "wsId123" -LogLevel "Debug"
-Configures authentication and logging settings.
 ```
  
 #### EXAMPLE 3
 
+Sets update location to Project level and configures server certificate.
+
 ```powershell
 AskUI-SetSettings -Location "Project" -ServerIdentityCertificate "path/to/cert"
-Sets update location to Project level and configures server certificate.
 ```
 

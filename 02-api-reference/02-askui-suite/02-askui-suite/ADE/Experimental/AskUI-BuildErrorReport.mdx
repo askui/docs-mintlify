@@ -23,22 +23,25 @@ Default: 96 hours (4 days)
 
 #### EXAMPLE 1
 
+Creates an error report using default settings.
+
 ```powershell
 AskUI-BuildErrorReport
-Creates an error report using default settings.
 ```
  
 #### EXAMPLE 2
 
+Creates an error report including specified project files and logs from last 48 hours.
+
 ```powershell
 AskUI-BuildErrorReport -Project "C:\MyProject" -MaxLogFileAgeInHours 48
-Creates an error report including specified project files and logs from last 48 hours.
 ```
  
 #### EXAMPLE 3
 
-```powershell
-AskUI-BuildErrorReport -AdditionalFiles "screenshot.png","error.log" 
 Creates an error report including specified additional files.
+
+```powershell
+AskUI-BuildErrorReport -AdditionalFiles "screenshot.png","error.log"
 ```
 

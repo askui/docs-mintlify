@@ -23,7 +23,7 @@ AskUI-ImportExperimentalCommands
 $publicModulesInfos = [AskUI.Runtime]::Application.m_extensionCollection.GetModuleInfoByType('Public')
 $debugModulesInfos = [AskUI.Runtime]::Application.m_extensionCollection.GetModuleInfoByType('Debug')
 $experimentalModulesInfos = [AskUI.Runtime]::Application.m_extensionCollection.GetModuleInfoByType('Experimental')
-$absoluteOutputDirectoryName = Join-Path -Path $PSScriptRoot -ChildPath 'out' 'askui-suite'
+$absoluteOutputDirectoryName = Join-Path -Path $PSScriptRoot -ChildPath 'out' '02-askui-suite'
 
 $moduleInfos = $publicModulesInfos + $debugModulesInfos + $experimentalModulesInfos
 
@@ -56,7 +56,7 @@ foreach ($moduleInfo in $moduleInfos)
         if (-not $pages -contains "$componentName/$type/$($moduleAlias)")
         {
             # Output markdown file creation
-            [string]$outputFileName = Join-Path -Path $absoluteOutputDirectoryName -ChildPath "$componentName" "$type" "$($moduleAlias).md"
+            [string]$outputFileName = Join-Path -Path $absoluteOutputDirectoryName -ChildPath "$componentName" "$type" "$($moduleAlias).mdx"
             New-Item -ItemType Directory -Path $(Split-Path -Path $outputFileName -Parent) -Force | Out-Null
             & $markdownGeneratorFileName $moduleAlias | Out-File -FilePath $outputFileName
 

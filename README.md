@@ -139,7 +139,7 @@ Currently Working Progress
 & .\src\powershell\ADE-MarkdownGenerator.ps1
 ```
 
-2. Copy `askui-suite` from `src\powershell\out\askui-suite` to `02-api-reference\03-agent-environment\askui-suite`
+2. Copy `02-askui-suite` from `src\powershell\out\02-askui-suite` to `02-api-reference/02-askui-suite/02-askui-suite`
 3. Update Mintlify by coping the content of `src\powershell\out\output.json` to `mint.json` in
 
 ```json

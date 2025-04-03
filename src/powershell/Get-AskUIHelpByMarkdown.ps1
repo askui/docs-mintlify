@@ -102,6 +102,8 @@ function FormatExamples
 
 #### $($_.title -replace '-*', '' | ForEach-Object { $_.Trim() })
 
+$($_.remarks | Out-String | ForEach-Object { $_.Trim() })
+
 ``````powershell
 $(ExtractCode $_)
 ``````
@@ -159,7 +161,7 @@ title: $Name
 
 try
 {
-    if ($Host.UI.RawUI)
+    if ($IsWindows -and $Host.UI.RawUI)
     {
         $rawUI = $Host.UI.RawUI
         $oldSize = $rawUI.BufferSize
@@ -172,7 +174,7 @@ try
 }
 finally
 {
-    if ($Host.UI.RawUI)
+    if ($IsWindows -and $Host.UI.RawUI)
     {
         $Host.UI.RawUI.BufferSize = $oldSize
     }
