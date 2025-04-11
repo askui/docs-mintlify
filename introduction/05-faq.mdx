@@ -1,8 +1,6 @@
 ---
-title: Frequently Asked Questions (FAQ)
+title: "Frequently Asked Questions (FAQ)"
 ---
-
-
 
 ## ❓ What is AskUI?
 
@@ -11,7 +9,6 @@ AskUI is an AI-powered UI automation tool that interacts with applications visua
 ---
 
 ## 🚀 What can I automate with AskUI?
-
 
 You can automate:
 
@@ -44,7 +41,7 @@ This makes it highly flexible - even across dynamic or custom UIs. See more in t
 
 ## 🧪 Can I use AskUI for automated testing?
 
-Yes! AskUI is great for:
+Yes\! AskUI is great for:
 
 - UI regression testing
 - End-to-end test cases
@@ -64,60 +61,55 @@ Yes! AskUI is great for:
 
 AskUI uses a **layered system of AI models,** each with a distinct role in understanding, executing, and interacting with user interfaces. Here's how we classify and use them:
 
-1. Grouding Models (Locators)
-    1. Grounding models identify and interact with UI elements on the screen.
-        1. Draw an image where a Grounding Model has
-            1. The input is an UI Image and an Instruction e.g. click on logi button
-            2. THe output is an list of bounding boxes 
+1. [Grounding Models](https://docs.askui.com/introduction/04-ai-models/01-grounding-models) (Locators)
+   1. Grounding models identify and interact with UI elements on the screen.
+      1. Draw an image where a Grounding Model has
+         1. The input is an UI Image and an Instruction e.g. click on logi button
+         2. THe output is an list of bounding boxes
 2. Query Models (Asks)
-    - Responsible for answering user queries or generating intelligent responses.
+   - Responsible for answering user queries or generating intelligent responses.
 3. Large Action Models (act) (Multi Step)
-    - Responsibilites
-        - Goal to → Planning
-        - Delegate Grounding Models
-        - Delegate Query Models
-        - Reflection of Errors
-    - UI-Tars
-    - Computer-Use
-    
-    ### Which models do we have?
-    
-    | **Model Type** | **Model Name** | **Purpose** | **Teachable** | Online Trainable |
-    | --- | --- | --- | --- | --- |
-    | Grounding | UIDT-1 | Locate elements & understand screen | No | Partial |
-    | Grounding | PTA-1 | Convert prompts into one-click actions | No | Yes |
-    | Query | GPT-4 | Understand & respond to user queries | Yes | No |
-    | Query | Computer Use | Understand & respond to user queries | Yes | No |
-    | Large Action (act) | Computer Use | Plan and execute full workflows | Yes | No |
-    | Large Action (act) | UI-Tars | Plan and execute full workflows | Yes | No |
+   - Responsibilites
+     - Goal to → Planning
+     - Delegate Grounding Models
+     - Delegate Query Models
+     - Reflection of Errors
+   - UI-Tars
+   - Computer-Use
 
-[https://docs.askui.com/introduction/04-ai-models/01-grounding-models](https://docs.askui.com/introduction/04-ai-models/01-grounding-models)
+   ### Which models do we have?
+
+   | **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | Online Trainable |
+   | ------------------ | -------------- | -------------------------------------- | ------------- | ---------------- |
+   | Grounding          | UIDT-1         | Locate elements & understand screen    | No            | Partial          |
+   | Grounding          | PTA-1          | Convert prompts into one-click actions | No            | Yes              |
+   | Query              | GPT-4          | Understand & respond to user queries   | Yes           | No               |
+   | Query              | Computer Use   | Understand & respond to user queries   | Yes           | No               |
+   | Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No               |
+   | Large Action (act) | UI-Tars        | Plan and execute full workflows        | Yes           | No               |
 
 ### 🧠 What exactly is the **AskUI UIDT-1 Model?**
 
 A powerful model composed of multiple specialized sub-models:
 
 - **Element Detector**
-    
-    Trained to detect 9 key UI element types (like buttons, text fields, checkboxes, etc.).
-    
-- **End-to-End OCR (Optical Character Recognition)**
-    
-    Used to read and understand text in the UI:
-    
-    - **Text Recognition**: A *teachable model* that learns from user corrections.
-    - **Text Detection**: Locates where text appears on the screen.
-- **DSL (Domain-Specific Language)**
-    
-    Allows precise descriptions of UI actions.
-    
 
-### ⚡ How does the **Prompt-to-Action (PTA-1)**  work? – *Single-Step Execution*
+  Trained to detect 9 key UI element types (like buttons, text fields, checkboxes, etc.).
+- **End-to-End OCR (Optical Character Recognition)**
+
+  Used to read and understand text in the UI:
+  - **Text Recognition**: A _teachable model_ that learns from user corrections.
+  - **Text Detection**: Locates where text appears on the screen.
+- **DSL (Domain-Specific Language)**
+
+  Allows precise descriptions of UI actions.
+
+### ⚡ How does the **Prompt-to-Action (PTA-1)**  work? – _Single-Step Execution_
 
 - Converts natural language prompts into direct UI actions.
-- Built as a *teachable model* to continuously improve from user feedback.
+- Built as a _teachable model_ to continuously improve from user feedback.
 
-### 🧠 What is a **Large Action Models (LAM)** – *Multi-Step Execution*
+### 🧠 What is a **Large Action Models (LAM)** – _Multi-Step Execution_
 
 These are higher-level models responsible for planning and executing more complex workflows.
 
@@ -136,13 +128,13 @@ These are higher-level models responsible for planning and executing more comple
 
 # 🧑‍🏫 What is the difference between Teaching vs. Training?
 
-**Teaching** is about helping the model improve or adapt **without changing its underlying neural network weights.** 
+**Teaching** is about helping the model improve or adapt **without changing its underlying neural network weights.**
 
 Instead, you guide it using **examples, rules, or context.** It’s often about using **prompts, memory, or interaction history** to adjust model behavior in a targeted and efficient way.
 
 ### 🧰 Teaching in AskUI includes:
 
-- **Prompt Engineering:** Giving clear, contextual instructions like *“Click on the login button”* helps models interpret intent more accurately.
+- **Prompt Engineering:** Giving clear, contextual instructions like _“Click on the login button”_ helps models interpret intent more accurately.
 - **LLMs and LAMs are teacheable models, like GPT4, Anthropic Claude etc**
 
 ---
@@ -153,14 +145,12 @@ Instead, you guide it using **examples, rules, or context.** It’s often about 
 
 ### 🧰 Online-Training in AskUI includes:
 
-- [**OCR Re-Training (UIDT-1)](https://www.askui.com/blog-posts/how-to-retrain-your-text-elements-with-askui-ocr-teaching-app):**
-    
-    Our OCR engine is a composite of teachable and trainable models. While you can “teach” it by correcting recognized text, deeper improvements (like recognizing new font types or edge cases) require training on more labeled images.
-    
+- [\*\*OCR Re-Training (UIDT-1)](https://www.askui.com/blog-posts/how-to-retrain-your-text-elements-with-askui-ocr-teaching-app):\*\*
+
+  Our OCR engine is a composite of teachable and trainable models. While you can “teach” it by correcting recognized text, deeper improvements (like recognizing new font types or edge cases) require training on more labeled images.
 - [**Prompt-to-Action (e.g., PTA-1):**](https://docs.askui.com/02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAnnotationsForTraining)
-    
-    These models incorporate feedback from user corrections. For example, if a button click fails, and the user clarifies the intended target, the model updates its interpretation next time.
-    
+
+  These models incorporate feedback from user corrections. For example, if a button click fails, and the user clarifies the intended target, the model updates its interpretation next time.
 
 ---
 
@@ -171,13 +161,13 @@ AskUI combines **training and teaching** because:
 - **Teaching is agile**: It empowers users to refine behavior instantly.
 - **Training is foundational**: It builds the core capabilities of the model.
 
-| Aspect | Teaching | Training |
-| --- | --- | --- |
-| Speed | Immediate or near real-time | Takes time (minutes to hours) |
-| Who does it? | Users or **automation** | Developers/Engineers |
-| Affects Model Weights | ❌ No | ✅ Yes |
-| Flexibility | High - works with new scenarios | Medium - needs structured data |
-| Example in AskUI | PTA-1 prompt learning, OCR tweaks | UIDT-1 model expansion |
+| Aspect                | Teaching                          | Training                       |
+| --------------------- | --------------------------------- | ------------------------------ |
+| Speed                 | Immediate or near real-time       | Takes time (minutes to hours)  |
+| Who does it?          | Users or **automation**           | Developers/Engineers           |
+| Affects Model Weights | ❌ No                              | ✅ Yes                          |
+| Flexibility           | High - works with new scenarios   | Medium - needs structured data |
+| Example in AskUI      | PTA-1 prompt learning, OCR tweaks | UIDT-1 model expansion         |
 
 ---
 
@@ -193,14 +183,12 @@ Typescript: Install the CLI with:
 
 ```bash
 npm install -g @askui/cli
-
 ```
 
 Python: Install with:
 
 ```bash
 pip install askui
-
 ```
 
 Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-introduction/02-quickstart) to set up your workspace.
