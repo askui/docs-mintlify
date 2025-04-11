@@ -68,13 +68,6 @@
       "name": "Blog",
       "icon": "newspaper",
       "url": "https://askui.com/blog"
-    },
-    {
-      "name": "FAQ",
-      "icon": "question",
-      "pages": [
-        "introduction/05-faq"
-      ]
     }
   ],
   "navigation": [
@@ -148,7 +141,8 @@
               ]
             }
             ]
-        }
+        }, 
+        "introduction/05-faq"
       ]
     },
     {
