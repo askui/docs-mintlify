@@ -72,7 +72,9 @@
     {
       "name": "FAQ",
       "icon": "question",
-      "url": "introduction/05-faq"
+      "pages": [
+        "introduction/05-faq"
+      ]
     }
   ],
   "navigation": [
