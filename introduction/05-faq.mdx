@@ -4,13 +4,13 @@ title: "Frequently Asked Questions (FAQ)"
 
 # 1. General Questions
 
-##  What is AskUI?
+### What is AskUI?
 
 AskUI is an AI-powered UI automation tool that interacts with applications visually - like a human would. It enables automation across any platform, UI, or application without relying on code-level selectors or APIs.
 
 ---
 
-## What can I automate with AskUI?
+### What can I automate with AskUI?
 
 You can automate:
 
@@ -22,13 +22,13 @@ You can automate:
 
 ---
 
-##  Do I need to write code?
+### Do I need to write code?
 
 AskUI provides a developer-friendly [TypeScript SDK](https://github.com/askui/askui) and a [Python Vision Agent](https://github.com/askui/vision-agent), and we're working on more intuitive, low-code/no-code options for non-dev users.
 
 ---
 
-## How does AskUI detect UI elements?
+### How does AskUI detect UI elements?
 
 AskUI uses computer vision and OCR to recognize elements visually based on:
 
@@ -41,7 +41,7 @@ This makes it highly flexible - even across dynamic or custom UIs. See more in t
 
 ---
 
-## Can I use AskUI for automated testing?
+### Can I use AskUI for automated testing?
 
 Yes\! AskUI is great for:
 
@@ -52,7 +52,7 @@ Yes\! AskUI is great for:
 
 ---
 
-## What platforms are supported?
+### What platforms are supported?
 
 - OS: Windows, macOS, Linux, Android, iOS (cominig soon)
 - Apps: Any web or desktop app
@@ -60,7 +60,7 @@ Yes\! AskUI is great for:
 
 It´s framework independent: You can use Electron, JavaFX, Java Swing, .NET apps, and more
 
-##  Where are the examples and templates?
+### Where are the examples and templates?
 
 You can find:
 
@@ -70,7 +70,7 @@ You can find:
 
 # 2. Model Questions
 
-## What models is AskUI using?
+### What models is AskUI using?
 
 \
 AskUI uses a **layered system of AI models,** each with a distinct role in understanding, executing, and interacting with user interfaces. Here's how we classify and use them:
@@ -97,7 +97,7 @@ AskUI uses a **layered system of AI models,** each with a distinct role in under
    | Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No               |
    | Large Action (act) | UI-Tars        | Plan and execute full workflows        | Yes           | No               |
 
-## What exactly is the **AskUI UIDT-1 Model?**
+### What exactly is the **AskUI UIDT-1 Model?**
 
 A powerful model composed of multiple specialized sub-models:
 
@@ -113,12 +113,12 @@ A powerful model composed of multiple specialized sub-models:
 
   Allows precise descriptions of UI actions.
 
-## How does the **Prompt-to-Action (PTA-1)**  work? – _Single-Step Execution_
+### How does the **Prompt-to-Action (PTA-1)**  work? – _Single-Step Execution_
 
 - Converts natural language prompts into direct UI actions.
 - Built as a _teachable model_ to continuously improve from user feedback.
 
-## What is a **Large Action Models (LAM)** – _Multi-Step Execution_
+### What is a **Large Action Models (LAM)** – _Multi-Step Execution_
 
 These are higher-level models responsible for planning and executing more complex workflows.
 
@@ -135,7 +135,7 @@ These are higher-level models responsible for planning and executing more comple
 
 ---
 
-## What is the difference between Teaching vs. Training?
+### What is the difference between Teaching vs. Training?
 
 ### **Teaching**
 
@@ -184,7 +184,7 @@ AskUI combines **training and teaching** because:
 
 # 3. Set-Up Questions
 
-## How do I install AskUI?
+### How do I install AskUI?
 
 Typescript: Install the CLI with:
 
@@ -202,7 +202,7 @@ Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-i
 
 # 4. Enterprise Questions
 
-## Is AskUI secure?
+### Is AskUI secure?
 
 Yes. AskUI runs automation on your infrastructure. Screenshots and input data are handled locally unless explicitly shared through cloud functions.
 
@@ -210,7 +210,7 @@ Yes. AskUI runs automation on your infrastructure. Screenshots and input data ar
 
 # 5. Pricing Questions
 
-## **What is an Ask?**
+### **What is an Ask?**
 
 An **ask()** refers to one **action or inference call** that AskUI performs. This involves taking a **screenshot** to localize an element on the screen, which is a key part of interacting with UI elements visually.
 
@@ -227,12 +227,12 @@ In this case, there are **3 asks** or inference calls:
 
 However, simple **mouse actions** such as `scroll()`, `leftclick()`, or other actions that do not require localization or element recognition (i.e., no screenshot taken) **do not count as asks**.
 
-## **How is Pricing for Ask Commands Calculated?**
+### **How is Pricing for Ask Commands Calculated?**
 
 \
 Each **ask()** call (which involves one screenshot) will be counted toward your usage, and the pricing is based on the total number of asks or inference calls made during the automation process.
 
-## **How is the Act Command Priced?**
+### **How is the Act Command Priced?**
 
 The **act()** command is a more advanced action that involves multi-step workflows and typically requires **interaction with external models** such as **Anthropic's Claude Sonnet** (or other models like OpenAI, etc.) for task execution. As such, **act()** is priced separately.\
 The pricing for **act()** commands is determined by the **license agreement** for the external model being used. For example, if you're using **Claude Sonnet** by Anthropic, charges will be based on the number of calls made to the model during task execution. The pricing model can vary depending on the specific external model (e.g., OpenAI, Anthropic, or other AI providers).
