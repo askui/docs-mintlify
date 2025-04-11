@@ -2,7 +2,9 @@
 title: "Frequently Asked Questions (FAQ)"
 ---
 
-## ❓ What is AskUI?
+## 1. General Questions \
+\
+❓ What is AskUI?
 
 AskUI is an AI-powered UI automation tool that interacts with applications visually - like a human would. It enables automation across any platform, UI, or application without relying on code-level selectors or APIs.
 
@@ -55,20 +57,31 @@ Yes\! AskUI is great for:
 - OS: Windows, macOS, Linux, Android, iOS (cominig soon)
 - Apps: Any web or desktop app
 - Mobile: Android (via emulator/screen mirroring)
-- It´s framework independent: You can use Electron, JavaFX, Java Swing, .NET apps, and more
 
-## 🧠 What models is AskUI using?
+It´s framework independent: You can use Electron, JavaFX, Java Swing, .NET apps, and more
+
+## \
+📂 Where are the examples and templates?
+
+You can find:
+
+- [Example use cases](https://github.com/orgs/askui/repositories?q=askui-example-*)
+- [Templates for testing and automation](https://github.com/askui/askui-agent-templates)
+- [Customer stories](https://www.askui.com/customer-stories)
+
+# 2. Model Questions
+
+## \
+\
+🧠 What models is AskUI using?
 
 AskUI uses a **layered system of AI models,** each with a distinct role in understanding, executing, and interacting with user interfaces. Here's how we classify and use them:
 
 1. [Grounding Models](https://docs.askui.com/introduction/04-ai-models/01-grounding-models) (Locators)
    1. Grounding models identify and interact with UI elements on the screen.
-      1. Draw an image where a Grounding Model has
-         1. The input is an UI Image and an Instruction e.g. click on logi button
-         2. THe output is an list of bounding boxes
-2. Query Models (Asks)
+2. **Query Models **(Asks)
    - Responsible for answering user queries or generating intelligent responses.
-3. Large Action Models (act) (Multi Step)
+3. **Large Action Models **(act command) (Multi Step)
    - Responsibilites
      - Goal to → Planning
      - Delegate Grounding Models
@@ -76,8 +89,6 @@ AskUI uses a **layered system of AI models,** each with a distinct role in under
      - Reflection of Errors
    - UI-Tars
    - Computer-Use
-
-   ### Which models do we have?
 
    | **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | Online Trainable |
    | ------------------ | -------------- | -------------------------------------- | ------------- | ---------------- |
@@ -88,7 +99,7 @@ AskUI uses a **layered system of AI models,** each with a distinct role in under
    | Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No               |
    | Large Action (act) | UI-Tars        | Plan and execute full workflows        | Yes           | No               |
 
-### 🧠 What exactly is the **AskUI UIDT-1 Model?**
+## 🧠 What exactly is the **AskUI UIDT-1 Model?**
 
 A powerful model composed of multiple specialized sub-models:
 
@@ -104,31 +115,34 @@ A powerful model composed of multiple specialized sub-models:
 
   Allows precise descriptions of UI actions.
 
-### ⚡ How does the **Prompt-to-Action (PTA-1)**  work? – _Single-Step Execution_
+## ⚡ How does the **Prompt-to-Action (PTA-1)**  work? – _Single-Step Execution_
 
 - Converts natural language prompts into direct UI actions.
 - Built as a _teachable model_ to continuously improve from user feedback.
 
-### 🧠 What is a **Large Action Models (LAM)** – _Multi-Step Execution_
+## 🧠 What is a **Large Action Models (LAM)** – _Multi-Step Execution_
 
 These are higher-level models responsible for planning and executing more complex workflows.
 
-### Responsibilities:
+**Responsibilities:**
 
 - **Planning**: Understand a user goal and break it into steps.
 - **Delegation**: Assign tasks to Grounding or Query models.
 - **Reflection**: Analyze and correct errors during execution.
 
-### Includes:
+**Includes:**
 
 - **UI-Tars**: Task agents specialized in certain UI flows.
 - **Computer-Use**: Models that simulate a real user interacting with a full application or system.
 
 ---
 
-# 🧑‍🏫 What is the difference between Teaching vs. Training?
+## 🧑‍🏫 What is the difference between Teaching vs. Training?
 
-**Teaching** is about helping the model improve or adapt **without changing its underlying neural network weights.**
+### \
+🧰 **Teaching**
+
+**Teaching **is about helping the model improve or adapt **without changing its underlying neural network weights.**
 
 Instead, you guide it using **examples, rules, or context.** It’s often about using **prompts, memory, or interaction history** to adjust model behavior in a targeted and efficient way.
 
@@ -137,13 +151,13 @@ Instead, you guide it using **examples, rules, or context.** It’s often about 
 - **Prompt Engineering:** Giving clear, contextual instructions like _“Click on the login button”_ helps models interpret intent more accurately.
 - **LLMs and LAMs are teacheable models, like GPT4, Anthropic Claude etc**
 
----
+### 🏋️ Training:
 
-### 🏋️ Training: Deep Learning, Long-Term Learning
+**Training** involves changing the internal parameters of a model - its **weights -** through exposure to **large datasets** and feedback signals. \
+\
+This is computationally expensive and typically happens during development, online training or in batch processes. OCR re-teaching is on example of training and AskUI supports online training.
 
-**Training** involves changing the internal parameters of a model - its **weights -** through exposure to **large datasets** and feedback signals. This is computationally expensive and typically happens during development, online training or in batch processes. OCR re-teaching is on example of training and AskUI supports online training.
-
-### 🧰 Online-Training in AskUI includes:
+### 🏋️ Online-Training in AskUI includes:
 
 - [\*\*OCR Re-Training (UIDT-1)](https://www.askui.com/blog-posts/how-to-retrain-your-text-elements-with-askui-ocr-teaching-app):\*\*
 
@@ -154,7 +168,7 @@ Instead, you guide it using **examples, rules, or context.** It’s often about 
 
 ---
 
-### 🧠 Why Use Both?
+### 🧠 Why Use Both 🧰🏋️  ?
 
 AskUI combines **training and teaching** because:
 
@@ -171,11 +185,7 @@ AskUI combines **training and teaching** because:
 
 ---
 
-## 🔐 Is AskUI secure?
-
-Yes. AskUI runs automation on your infrastructure. Screenshots and input data are handled locally unless explicitly shared through cloud functions.
-
----
+# 3. Set-Up Questions
 
 ## 📦 How do I install AskUI?
 
@@ -193,12 +203,37 @@ pip install askui
 
 Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-introduction/02-quickstart) to set up your workspace.
 
+# 4. Enterprise Questions
+
+## 🔐 Is AskUI secure?
+
+Yes. AskUI runs automation on your infrastructure. Screenshots and input data are handled locally unless explicitly shared through cloud functions.
+
 ---
 
-## 📂 Where are the examples and templates?
+# 5. Pricing Questions 
 
-You can find:
+## \
+**What is an Ask?**
 
-- [Example use cases](https://github.com/orgs/askui/repositories?q=askui-example-*)
-- [Templates for testing and automation](https://github.com/askui/askui-agent-templates)
-- [Customer stories](https://www.askui.com/customer-stories)
+An **ask()** refers to one **action or inference call** that AskUI performs. This involves taking a **screenshot** to localize an element on the screen, which is a key part of interacting with UI elements visually.\
+For example, if you have a test case where a user browses through a menu, like this:
+
+1. `click('nav bar')`
+2. `click('home')`
+3. `ask('is the home site visible?')`
+
+In this case, there are **3 asks** or inference calls:
+
+- The first two `click()` commands don't count as asks, as they don't require screenshots to be taken.
+- The third action, `ask('is the home site visible?')`, requires a screenshot to check the visibility of the element, so it counts as **one ask/inference call**.
+
+## **How is Pricing for Ask Commands Calculated?**
+
+\
+Each **ask()** call (which involves one screenshot) will be counted toward your usage, and the pricing is based on the total number of asks or inference calls made during the automation process.
+
+## **How is the Act Command Priced?**
+
+The **act()** command is a more advanced action that involves multi-step workflows and typically requires **interaction with external models** such as **Anthropic's Claude Sonnet** (or other models like OpenAI, etc.) for task execution. As such, **act()** is priced separately.\
+The pricing for **act()** commands is determined by the **license agreement** for the external model being used. For example, if you're using **Claude Sonnet** by Anthropic, charges will be based on the number of calls made to the model during task execution. The pricing model can vary depending on the specific external model (e.g., OpenAI, Anthropic, or other AI providers).
