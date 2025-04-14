@@ -198,9 +198,9 @@ Python: Install with:
 pip install askui
 ```
 
-Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-introduction/02-quickstart) to set up your workspace.
+Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-introduction/02-quickstart) to set up your workspace.\\
 
-# 4. Enterprise Questions
+# 4. Common Errors & Troubleshooting
 
 ### Is AskUI secure?
 
@@ -236,3 +236,9 @@ Each **ask()** call (which involves one screenshot) will be counted toward your 
 
 The **act()** command is a more advanced action that involves multi-step workflows and typically requires **interaction with external models** such as **Anthropic's Claude Sonnet** (or other models like OpenAI, etc.) for task execution. As such, **act()** is priced separately.\
 The pricing for **act()** commands is determined by the **license agreement** for the external model being used. For example, if you're using **Claude Sonnet** by Anthropic, charges will be based on the number of calls made to the model during task execution. The pricing model can vary depending on the specific external model (e.g., OpenAI, Anthropic, or other AI providers).
+
+# 6. Enterprise Questions
+
+### Is AskUI secure?
+
+Yes. AskUI runs automation on your infrastructure. Screenshots and input data are handled locally unless explicitly shared through cloud functions.
