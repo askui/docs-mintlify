@@ -184,6 +184,52 @@ AskUI combines **training and teaching** because:
 
 # 3. Set-Up Questions
 
+### 1. Install AskUI Agent OS
+
+Agent OS is a device controller that allows agents to take screenshots, move the mouse, click, and type on the keyboard across any operating system.
+
+<Accordion title="Windows">
+  **AMD64**
+
+  [AskUI Installer for AMD64](https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Win-AMD64-Web.exe)
+
+  **ARM64**
+
+  [AskUI Installer for ARM64](https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Win-ARM64-Web.exe)
+</Accordion>
+
+<Accordion title="Linux">
+  **AMD64**
+
+  ```shell
+  curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run
+  ```
+
+  ```shell
+  bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run
+  ```
+
+  **ARM64**
+
+  ```shell
+  curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run
+  ```
+
+  ```shell
+  bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run
+  ```
+</Accordion>
+
+<Accordion title="MacOS">
+  
+  ```shell
+curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-MacOS-ARM64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-MacOS-ARM64-Web.run
+```
+```shell
+bash /tmp/AskUI-Suite-Latest-User-Installer-MacOS-ARM64-Web.run
+```
+</Accordion>
+
 ### How do I install AskUI?
 
 Typescript: Install the CLI with:
@@ -241,7 +287,7 @@ Yes. AskUI runs automation on your infrastructure. Screenshots and input data ar
 
 ### What are all the domains used by AskUI so I can whitelist them?
 
-### Is AskUI hosting within the European Union? 
+### Is AskUI hosting within the European Union?
 
 Yes.
 
@@ -255,7 +301,7 @@ Yes. Given you use our inference, we are compliant to the standards of safety. E
 \
 Yes. Given you use our inference, we are compliant to the standards of safety. External models such as Anthropic or other LLM do not fall under our Service Level Agreement (SLA).
 
-### Where can I find all the compliance documents? 
+### Where can I find all the compliance documents?
 
 \
 You can find this here in our Trust Center at [trust.askui.com](https://trust.askui.com/).
