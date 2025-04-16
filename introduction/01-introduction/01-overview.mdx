@@ -1,21 +1,24 @@
 ---
-title: Overview
-description: 'Welcome to the AskUI documentation. This guide will help you understand what Vision Agents are, their key features, benefits, and how they can empower you to build AI agents for various use cases.
-'
+title: "Overview"
+description: "Welcome to the AskUI documentation. This guide will help you understand what Vision Agents are, their key features, benefits, and how they can empower you to build AI agents for various use cases. "
 ---
 
-<img alt="Hero Dark" classname="hidden dark:block" src="./images/agent-os.png" />
+<img
+  alt="Hero Dark"
+  classname="hidden dark:block"
+  src="./images/agent-os.png"
+/>
 
 ## What are Vision Agents?
 
 Vision Agents offer an innovative way to interact with any application using different AI models. They enable users to create intelligent agents that understand visual elements and execute tasks across various applications—including, but not limited to, web browsers—by responding to visual cues and natural language commands.
 
 <CardGroup cols="2">
-  <Card title="Installation Guide" icon="sparkles" href="/introduction/02-getting-started/02-installation-guide">
+  <Card title="Frequently Asked Questions" icon="sparkles" href="/introduction/05-faq">
+    
   </Card>
-
   <Card title="Quickstart Tutorial" icon="sparkles" href="/introduction/01-introduction/02-Quickstart">
-
+    
   </Card>
 </CardGroup>
 
@@ -23,34 +26,28 @@ Vision Agents offer an innovative way to interact with any application using dif
 
 Key features of AskUI include:
 
-* Support for **Windows**, **Linux**, **MacOS**, **Android** and **iOS** device automation, including Citrix environments
+- Support for **Windows**, **Linux**, **MacOS**, **Android** and **iOS** device automation, including Citrix environments
+- Support for single-step commands as well as agentic instructions
+- **In-background automation on Windows machines** (agent can create a second session; you do not have to watch it take over mouse and keyboard)
+- Flexible model use (hot swap of models) and infrastructure for reteaching of models (available on-premise)
+- **Secure deployment** of agents in enterprise environments
 
-* Support for single-step commands as well as agentic instructions
-
-* **In-background automation on Windows machines** (agent can create a second session; you do not have to watch it take over mouse and keyboard)
-
-* Flexible model use (hot swap of models) and infrastructure for reteaching of models (available on-premise)
-
-* **Secure deployment** of agents in enterprise environments
-
-
-| Feature | AskUI Vision Agent | Computer Use by Anthropic | Operator by OpenAI | Browser Use | Custom (VLM + PyAutoGUI + Playwright) |
-| --- | --- | --- | --- | --- | --- |
-| Browser Use | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DOM Support | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Windows Use | ✅ | ✅ | ❌ | ❌ | ✅ |
-| Linux Use | ✅ | ✅ | ❌ | ❌ | ✅ |
-| MacOS Use | ✅ | ✅ | ❌ | ❌ | ✅ |
-| Android Use | ✅ | ❌ | ❌ | ❌ | ❌ |
-| iOS Use | ✅ | ❌ | ❌ | ❌ | ❌ |
-| In-Background Automation | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Change Detection (Automatic waits) | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Multi-Screen Support | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Multi-Device Support | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Intent-based Prompting | ✅ | ✅ | ✅ | ❌ | ✅ |
-| Single-step Commands | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Human-in-the-Loop | ✅ | ✅ | ✅ | ❌ | ❌ |
-| Prompting Interface | Python, TypeScript | Chat | Chat | Python | Custom |
-| Enterprise Installer | ✅ | ❌ | ❌ | ❌ | ❌ |
-| On-Premise Availability | ✅ | ❌ | ❌ | ❌ | ✅ |
-
+| Feature                            | AskUI Vision Agent | Computer Use by Anthropic | Operator by OpenAI | Browser Use | Custom (VLM \+ PyAutoGUI \+ Playwright) |
+| ---------------------------------- | ------------------ | ------------------------- | ------------------ | ----------- | --------------------------------------- |
+| Browser Use                        | ✅                  | ✅                         | ✅                  | ✅           | ✅                                       |
+| DOM Support                        | ❌                  | ❌                         | ✅                  | ✅           | ✅                                       |
+| Windows Use                        | ✅                  | ✅                         | ❌                  | ❌           | ✅                                       |
+| Linux Use                          | ✅                  | ✅                         | ❌                  | ❌           | ✅                                       |
+| MacOS Use                          | ✅                  | ✅                         | ❌                  | ❌           | ✅                                       |
+| Android Use                        | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| iOS Use                            | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| In-Background Automation           | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| Change Detection (Automatic waits) | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| Multi-Screen Support               | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| Multi-Device Support               | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| Intent-based Prompting             | ✅                  | ✅                         | ✅                  | ❌           | ✅                                       |
+| Single-step Commands               | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| Human-in-the-Loop                  | ✅                  | ✅                         | ✅                  | ❌           | ❌                                       |
+| Prompting Interface                | Python, TypeScript | Chat                      | Chat               | Python      | Custom                                  |
+| Enterprise Installer               | ✅                  | ❌                         | ❌                  | ❌           | ❌                                       |
+| On-Premise Availability            | ✅                  | ❌                         | ❌                  | ❌           | ✅                                       |
