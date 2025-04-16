@@ -1,9 +1,29 @@
 ---
-title: Selecting Elements
-description: 'On this page you will learn the different recommended practices'
+title: "Selecting Elements"
+description: "On this page you will learn the different recommended practices"
 ---
 
 Selecting the right UI elements is crucial for creating reliable automation workflows. This guide provides strategies to improve accuracy and performance when interacting with UI elements.
+
+### Example: Calculator Automation
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    # Open Chrome and navigate to calculator
+    agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-	page/")
+
+    # Click numbers and operators
+    agent.click("7")
+    agent.click("+")
+    agent.click("7")
+    agent.click("=")
+
+    # Extract the result
+    result = agent.get("What is the calculation result?")
+    print(f"The result is: {result}")
+```
 
 ## Natural Language Element Selection
 
@@ -22,32 +42,12 @@ When you provide a natural language prompt like "login button", the Vision Agent
 3. Identifies the element that best matches your description
 4. Performs the requested action on that element
 
-### Example: Calculator Automation
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        # Open Chrome and navigate to calculator
-        agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-page/")
-
-        # Click numbers and operators
-        agent.click("7")
-        agent.click("+")
-        agent.click("7")
-        agent.click("=")
-
-        # Extract the result
-        result = agent.get("What is the calculation result?")
-        print(f"The result is: {result}")
-    ```
-
 ## AI Elements
 
 AI Elements allow you to capture and use specific visual elements from your screen for reliable automation.
 
 <Note>
-Enable the AskUI Development Environment as described in the installation guide and activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
+  Enable the AskUI Development Environment as described in the installation guide and activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
 </Note>
 
 ```bash
@@ -63,6 +63,7 @@ agent.click("ai-element-name", model_name="askui-ai-element")
 ```
 
 **Parameters:**
+
 - **Name** (Optional): The name for the screenshot file. If defined, indicates only one element is being captured. For multiple elements, you'll provide names individually.
 - **WorkspaceId** (Optional): Uses the Workspace ID from settings by default. Required if not in settings.
 - **AlwaysPreview** (Optional): Automatically opens preview without prompting. Cannot be used with NoPreview.
@@ -71,6 +72,5 @@ agent.click("ai-element-name", model_name="askui-ai-element")
 - **Annotate** (Optional): Takes a fullscreen capture for region annotation.
 
 **Example Output:**
-
 
 By implementing these techniques, you'll build **more reliable, flexible, and accurate** automation workflows that can handle complex UI interactions with confidence.

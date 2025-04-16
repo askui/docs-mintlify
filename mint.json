@@ -94,19 +94,20 @@
       ]
     },
     {
-      "group": "AskUI Suite",
-      "pages": [
-        "introduction/05-askui-suite/01-commands",
-        "introduction/05-askui-suite/04-proxy"
-      ]
-    },
-    {
       "group": "Model Usage & Configuration",
       "pages": [
         "introduction/04-ai-models/01-grounding-models",
         "introduction/05-askui-suite/03-reteaching"
       ]
     },
+    {
+      "group": "AskUI Suite",
+      "pages": [
+        "introduction/05-askui-suite/01-commands",
+        "introduction/05-askui-suite/04-proxy"
+      ]
+    },
+  
     {
       "group": "Integrations & Advanced Usage",
       "pages": [
