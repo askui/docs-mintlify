@@ -75,16 +75,14 @@
       "group": "Introduction",
       "pages": [
         "introduction/01-introduction/01-overview",
-        "introduction/01-introduction/03-how-it-works",
-        "introduction/01-introduction/02-quickstart"
+        "introduction/01-introduction/03-how-it-works"
       ]
     },
     {
       "group": "Getting Started",
       "pages": [
         "introduction/02-getting-started/01-prerequisites",
-        "introduction/02-getting-started/02-installation-guide",
-        "introduction/02-getting-started/04-configuration"
+        "introduction/01-introduction/02-quickstart"
       ]
     },
     {
