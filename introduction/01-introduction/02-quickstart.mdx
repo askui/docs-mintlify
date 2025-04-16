@@ -1,9 +1,9 @@
 ---
-title: Quickstart Tutorial
-description: 'Build your first agent with AskUI.'
+title: "Quickstart Tutorial"
+description: "Build your first agent with AskUI."
 ---
 
-In this quickstart tutorial, we will guide you through your first automation on a [web calculator](https://askui.github.io/askui-practice-page/). We will calculate **7 + 7** and then extract the calculation result in a variable.
+In this quickstart tutorial, we will guide you through your first automation on a [web calculator](https://askui.github.io/askui-practice-page/). We will calculate **7 \+ 7** and then extract the calculation result in a variable.
 Please make sure you followed through the [Installation Guide](/introduction/02-getting-started/02-installation-guide) prior to this.
 
 <Steps>
@@ -14,23 +14,23 @@ Please make sure you followed through the [Installation Guide](/introduction/02-
       - [AskUI Installer for AMD64](https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Win-AMD64-Web.exe)
       - [AskUI Installer for ARM64](https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Win-ARM64-Web.exe)
     </Accordion>
-
     <Accordion title="Linux">
       **⚠️ Warning:** Agent OS currently does not work on Wayland. Switch to XOrg to use it.
 
       AMD64:
+
       ```bash
       curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run
       bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run
       ```
 
       ARM64:
+
       ```bash
       curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run
       bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run
       ```
     </Accordion>
-
     <Accordion title="MacOS">
       ```bash
       curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-MacOS-ARM64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-MacOS-ARM64-Web.run
@@ -38,76 +38,111 @@ Please make sure you followed through the [Installation Guide](/introduction/02-
       ```
     </Accordion>
   </Step>
-
   <Step title="Install Python Package">
     Install the AskUI Python package:
+
     ```bash
     pip install askui
     ```
-    **Note:** Requires Python version >=3.10.
-  </Step>
 
+    **Note:** Requires Python version \>=3.10.
+  </Step>
   <Step title="Set Up Authentication">
     Set up authentication with your chosen AI model provider:
 
     <Accordion title="AskUI">
       Set environment variables:
+
       ```bash
       export ASKUI_WORKSPACE_ID=<your-workspace-id>
       export ASKUI_TOKEN=<your-token>
       ```
     </Accordion>
-
     <Accordion title="Anthropic">
       Set environment variable:
+
       ```bash
       export ANTHROPIC_API_KEY=<your-api-key>
       ```
     </Accordion>
   </Step>
-
   <Step title="Create Your First Automation">
-    Create a new Python file `calculator.py` and add the following code:
+    Create a new Python file `main.py` and add the following code:
 
     ```python
     from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        # Open Chrome and navigate to calculator
-        agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-page/")
     
-        # Wait for the page to load
+    # Initialize your agent context manager
+    with VisionAgent() as agent:
+        # Use the webbrowser tool to start browsing
+        agent.tools.webbrowser.open_new("http://www.google.com")
+    
+        # Start to automate individual steps
+        agent.click("url bar")
+        agent.type("http://www.google.com")
+        agent.keyboard("enter")
+    
+    
+        agent.click("email download")
+        datetime = agent.get("Simulate: retrieve invoice number from pdf")
+    
+        agent.act("""
+        You are a CRM expert and filling it details
+        Simulate a online shopper:
+    
+         take the invoice and enter it into hubspot crm
+    
+        """)
+    
+    
+        # Extract information from the screen
+        datetime = agent.get("Simulate: What is the datetime at the top of the screen?")
+        print(datetime)
+    
         agent.wait(3)
-
-        # Click numbers and operators
-        agent.click("7")
-        agent.click("+ right of equals")
-        agent.click("7")
-        agent.click("=")
-
-        # Extract the result
-        result = agent.get("What is the calculation result?")
-        print(f"The result is: {result}")
+        agent.click("Search Amazon.de inputfield")
+        agent.type("nike shoes")
+        agent.keyboard('enter')
+    
+        agent.act("""
+        You are testing amazon.de for functionality and have searched for nike shoes.
+        Simulate a online shopper:
+    
+        Look for the first option which is below Results and click on the first picture from the left
+    
+        """)
+    
+        agent.click("Add to Basket")
+    
+        agent.act("""
+        You are testing amazon.de for functionality and have searched for nike shoes.
+        Simulate a online shopper:
+    
+        Go to the basket
+        """)
+    
+        basket_ver = agent.get("Is the shoe in the basket and is a value calculated?")
+        print(basket_ver)
+    
     ```
 
     Run the script:
+
     ```bash
-    python calculator.py
+    python main.py
     ```
   </Step>
-
   <Step title="(Optional) Enable Detailed Logging">
     To better understand what your agent is doing, enable debug logging and reporting:
 
     ```python
     import logging
     from askui import VisionAgent
-
+    
     with VisionAgent(log_level=logging.DEBUG, enable_report=True) as agent:
         # Your automation code here
     ```
   </Step>
-
   <Step title="(Optional) Run in CI/CD Pipeline">
     You can run your automations in any CI/CD pipeline. Here's an example for GitHub Actions:
 

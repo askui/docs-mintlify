@@ -10,19 +10,57 @@ Selecting the right UI elements is crucial for creating reliable automation work
 ```python
 from askui import VisionAgent
 
+# Initialize your agent context manager
 with VisionAgent() as agent:
-    # Open Chrome and navigate to calculator
-    agent.tools.webbrowser.open_new("https://askui.github.io/askui-practice-	page/")
+    # Use the webbrowser tool to start browsing
+    agent.tools.webbrowser.open_new("http://www.google.com")
 
-    # Click numbers and operators
-    agent.click("7")
-    agent.click("+")
-    agent.click("7")
-    agent.click("=")
+    # Start to automate individual steps
+    agent.click("url bar")
+    agent.type("http://www.google.com")
+    agent.keyboard("enter")
 
-    # Extract the result
-    result = agent.get("What is the calculation result?")
-    print(f"The result is: {result}")
+
+    agent.click("email download")
+    datetime = agent.get("Simulate: retrieve invoice number from pdf")
+
+    agent.act("""
+    You are a CRM expert and filling it details
+    Simulate a online shopper:
+
+     take the invoice and enter it into hubspot crm
+
+    """)
+
+
+    # Extract information from the screen
+    datetime = agent.get("Simulate: What is the datetime at the top of the screen?")
+    print(datetime)
+
+    agent.wait(3)
+    agent.click("Search Amazon.de inputfield")
+    agent.type("nike shoes")
+    agent.keyboard('enter')
+
+    agent.act("""
+    You are testing amazon.de for functionality and have searched for nike shoes.
+    Simulate a online shopper:
+
+    Look for the first option which is below Results and click on the first picture from the left
+
+    """)
+
+    agent.click("Add to Basket")
+
+    agent.act("""
+    You are testing amazon.de for functionality and have searched for nike shoes.
+    Simulate a online shopper:
+
+    Go to the basket
+    """)
+
+    basket_ver = agent.get("Is the shoe in the basket and is a value calculated?")
+    print(basket_ver)
 ```
 
 ## Natural Language Element Selection
