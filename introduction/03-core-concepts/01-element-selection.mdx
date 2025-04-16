@@ -5,7 +5,7 @@ description: "On this page you will learn the different recommended practices"
 
 Selecting the right UI elements is crucial for creating reliable automation workflows. This guide provides strategies to improve accuracy and performance when interacting with UI elements.
 
-### Example: Calculator Automation
+### Example: Amazon Automation
 
 ```python
 from askui import VisionAgent
@@ -13,29 +13,7 @@ from askui import VisionAgent
 # Initialize your agent context manager
 with VisionAgent() as agent:
     # Use the webbrowser tool to start browsing
-    agent.tools.webbrowser.open_new("http://www.google.com")
-
-    # Start to automate individual steps
-    agent.click("url bar")
-    agent.type("http://www.google.com")
-    agent.keyboard("enter")
-
-
-    agent.click("email download")
-    datetime = agent.get("Simulate: retrieve invoice number from pdf")
-
-    agent.act("""
-    You are a CRM expert and filling it details
-    Simulate a online shopper:
-
-     take the invoice and enter it into hubspot crm
-
-    """)
-
-
-    # Extract information from the screen
-    datetime = agent.get("Simulate: What is the datetime at the top of the screen?")
-    print(datetime)
+    agent.tools.webbrowser.open_new("http://www.amazon.com")
 
     agent.wait(3)
     agent.click("Search Amazon.de inputfield")
