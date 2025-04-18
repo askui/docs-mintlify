@@ -248,6 +248,31 @@ Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-i
 
 # 4. Common Errors & Troubleshooting
 
+
+## Agent OS
+
+### Send Error Report to AskUI
+
+This steps are describing how you can send an Error Report to AskUI.  
+
+1. Start Terminal/Powershell/Console
+2. Enter `askui-shell`
+3. Enter `AskUI-ImportExperimentalCommands`
+4. Enter `AskUI-NewErrorReport` (See Logs below)
+  1. Press `n` for `Do you want to open the error report directory?`
+  2. Press `y` for `Do you approve the error report content?`
+```bash
+(base) ADE C:\Users\AskUi\Development\docs-mintlify> AskUI-NewErrorReport
+Info:  Generating a new error report...
+Info:  Error description file created at 'C:\Users\AskUi\.askui\ErrorReports\64284117-40ba-4a09-b451-9c75c1754f74.prepared\ErrorDescription.md'. Please fill in the details.
+Do you want to open the error report directory? (y/n): n
+Do you approve the error report content? (y/n): y
+Info:  Error report with GUID '64284117-40ba-4a09-b451-9c75c1754f74' compressed at 'C:\Users\AskUi\.askui\ErrorReports\ErrorReport-64284117-40ba-4a09-b451-9c75c1754f74-2025-04-18T12_27.zip'.
+Info:  Submitting error report archive 'C:\Users\AskUi\.askui\ErrorReports\ErrorReport-64284117-40ba-4a09-b451-9c75c1754f74-2025-04-18T12_27.zip' ...
+Info:  Error report was submitted successfully.
+```
+5. Send the `ErrorReport-<uui>-<date>.zip` from line `Info:  Submitting error report archive '...` to info@askui.com or an AskUI Employee. 
+
 ---
 
 # 5. Pricing Questions
