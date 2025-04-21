@@ -198,9 +198,9 @@
           "group": "AskUIOCRTeaching",
           "pages": [
             {
-              "group": "Experimental",
+              "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Experimental/AskUI-StartOCRTeaching"
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Public/AskUI-StartOCRTeaching"
               ]
             }
           ]
@@ -209,13 +209,13 @@
           "group": "AskUIRemoteDeviceSnippingTool",
           "pages": [
             {
-              "group": "Experimental",
+              "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-OpenAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-RemoveAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-ShowAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Experimental/AskUI-NewAnnotationsForTraining"
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-OpenAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-RemoveAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-ShowAIElement",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAnnotationsForTraining"
               ]
             }
           ]
