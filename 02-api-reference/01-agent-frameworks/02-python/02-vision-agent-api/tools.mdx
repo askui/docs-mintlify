@@ -2,13 +2,9 @@
 title: Tools
 ---
 
-<a id="askui.tools.agent_os"></a>
+<a id="askui.tools.AgentOs"></a>
 
-# askui.tools.agent\_os
-
-<a id="askui.tools.agent_os.AgentOs"></a>
-
-## askui.tools.agent\_os.AgentOs
+## askui.tools.AgentOs
 
 ```python
 class AgentOs(ABC)
@@ -20,82 +16,7 @@ This class defines the interface for operating system interactions including mou
 keyboard input, and screen capture functionality. Implementations should provide concrete
 functionality for these abstract methods.
 
-<a id="askui.tools.agent_os.AgentOs.connect"></a>
-
-#### connect
-
-```python
-def connect() -> None
-```
-
-Establishes a connection to the Agent OS.
-
-This method is called before performing any OS-level operations.
-It handles any necessary setup or initialization required for the OS interaction.
-
-<a id="askui.tools.agent_os.AgentOs.disconnect"></a>
-
-#### disconnect
-
-```python
-def disconnect() -> None
-```
-
-Terminates the connection to the Agent OS.
-
-This method is called after all OS-level operations are complete.
-It handles any necessary cleanup or resource release.
-
-<a id="askui.tools.agent_os.AgentOs.screenshot"></a>
-
-#### screenshot
-
-```python
-def screenshot(report: bool = True) -> Image.Image
-```
-
-Captures a screenshot of the current display.
-
-**Arguments**:
-
-- `report` _bool, optional_ - Whether to include the screenshot in reporting. Defaults to `True`.
-  
-
-**Returns**:
-
-- `Image.Image` - A PIL Image object containing the screenshot.
-
-<a id="askui.tools.agent_os.AgentOs.mouse"></a>
-
-#### mouse
-
-```python
-def mouse(x: int, y: int) -> None
-```
-
-Moves the mouse cursor to specified screen coordinates.
-
-**Arguments**:
-
-- `x` _int_ - The horizontal coordinate (in pixels) to move to.
-- `y` _int_ - The vertical coordinate (in pixels) to move to.
-
-<a id="askui.tools.agent_os.AgentOs.type"></a>
-
-#### type
-
-```python
-def type(text: str, typing_speed: int = 50) -> None
-```
-
-Simulates typing text as if entered on a keyboard.
-
-**Arguments**:
-
-- `text` _str_ - The text to be typed.
-- `typing_speed` _int, optional_ - The speed of typing in characters per minute. Defaults to `50`.
-
-<a id="askui.tools.agent_os.AgentOs.click"></a>
+<a id="askui.tools.AgentOs.click"></a>
 
 #### click
 
@@ -113,50 +34,33 @@ Simulates clicking a mouse button.
 - `button` _Literal["left", "middle", "right"], optional_ - The mouse button to click. Defaults to `"left"`.
 - `count` _int, optional_ - Number of times to click. Defaults to `1`.
 
-<a id="askui.tools.agent_os.AgentOs.mouse_down"></a>
+<a id="askui.tools.AgentOs.connect"></a>
 
-#### mouse\_down
-
-```python
-def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
-```
-
-Simulates pressing and holding a mouse button.
-
-**Arguments**:
-
-- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to press. Defaults to `"left"`.
-
-<a id="askui.tools.agent_os.AgentOs.mouse_up"></a>
-
-#### mouse\_up
+#### connect
 
 ```python
-def mouse_up(button: Literal["left", "middle", "right"] = "left") -> None
+def connect() -> None
 ```
 
-Simulates releasing a mouse button.
+Establishes a connection to the Agent OS.
 
-**Arguments**:
+This method is called before performing any OS-level operations.
+It handles any necessary setup or initialization required for the OS interaction.
 
-- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to release. Defaults to `"left"`.
+<a id="askui.tools.AgentOs.disconnect"></a>
 
-<a id="askui.tools.agent_os.AgentOs.mouse_scroll"></a>
-
-#### mouse\_scroll
+#### disconnect
 
 ```python
-def mouse_scroll(x: int, y: int) -> None
+def disconnect() -> None
 ```
 
-Simulates scrolling the mouse wheel.
+Terminates the connection to the Agent OS.
 
-**Arguments**:
+This method is called after all OS-level operations are complete.
+It handles any necessary cleanup or resource release.
 
-- `x` _int_ - The horizontal scroll amount. Positive values scroll right, negative values scroll left.
-- `y` _int_ - The vertical scroll amount. Positive values scroll down, negative values scroll up.
-
-<a id="askui.tools.agent_os.AgentOs.keyboard_pressed"></a>
+<a id="askui.tools.AgentOs.keyboard_pressed"></a>
 
 #### keyboard\_pressed
 
@@ -174,7 +78,7 @@ Simulates pressing and holding a keyboard key.
 - `key` _PcKey | ModifierKey_ - The key to press.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Defaults to `None`.
 
-<a id="askui.tools.agent_os.AgentOs.keyboard_release"></a>
+<a id="askui.tools.AgentOs.keyboard_release"></a>
 
 #### keyboard\_release
 
@@ -192,7 +96,7 @@ Simulates releasing a keyboard key.
 - `key` _PcKey | ModifierKey_ - The key to release.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to release along with the main key. Defaults to `None`.
 
-<a id="askui.tools.agent_os.AgentOs.keyboard_tap"></a>
+<a id="askui.tools.AgentOs.keyboard_tap"></a>
 
 #### keyboard\_tap
 
@@ -210,136 +114,65 @@ Simulates pressing and immediately releasing a keyboard key.
 - `key` _PcKey | ModifierKey_ - The key to tap.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Defaults to `None`.
 
-<a id="askui.tools.agent_os.AgentOs.set_display"></a>
+<a id="askui.tools.AgentOs.mouse"></a>
 
-#### set\_display
+#### mouse
 
 ```python
-def set_display(displayNumber: int = 1) -> None
+def mouse(x: int, y: int) -> None
 ```
 
-Sets the active display for screen interactions.
+Moves the mouse cursor to specified screen coordinates.
 
 **Arguments**:
 
-- `displayNumber` _int, optional_ - The display number to set as active. Defaults to `1`.
+- `x` _int_ - The horizontal coordinate (in pixels) to move to.
+- `y` _int_ - The vertical coordinate (in pixels) to move to.
 
-<a id="askui.tools.askui.askui_controller"></a>
+<a id="askui.tools.AgentOs.mouse_down"></a>
 
-# askui.tools.askui.askui\_controller
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerServer"></a>
-
-## askui.tools.askui.askui\_controller.AskUiControllerServer
+#### mouse\_down
 
 ```python
-class AskUiControllerServer()
+def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
 ```
 
-Concrete implementation of `ControllerServer` for managing the AskUI Remote Device Controller process.
-Handles process discovery, startup, and shutdown for the native controller binary.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerServer.start"></a>
-
-#### start
-
-```python
-def start(clean_up: bool = False) -> None
-```
-
-Start the controller process.
+Simulates pressing and holding a mouse button.
 
 **Arguments**:
 
-- `clean_up` _bool, optional_ - Whether to clean up existing processes (only on Windows) before starting. Defaults to `False`.
+- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to press. Defaults to `"left"`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerServer.stop"></a>
+<a id="askui.tools.AgentOs.mouse_scroll"></a>
 
-#### stop
+#### mouse\_scroll
 
 ```python
-def stop(force: bool = False) -> None
+def mouse_scroll(x: int, y: int) -> None
 ```
 
-Stop the controller process.
+Simulates scrolling the mouse wheel.
 
 **Arguments**:
 
-- `force` _bool, optional_ - Whether to forcefully terminate the process. Defaults to `False`.
+- `x` _int_ - The horizontal scroll amount. Positive values scroll right, negative values scroll left.
+- `y` _int_ - The vertical scroll amount. Positive values scroll down, negative values scroll up.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient"></a>
+<a id="askui.tools.AgentOs.mouse_up"></a>
 
-## askui.tools.askui.askui\_controller.AskUiControllerClient
+#### mouse\_up
 
 ```python
-class AskUiControllerClient(AgentOs)
+def mouse_up(button: Literal["left", "middle", "right"] = "left") -> None
 ```
 
-Implementation of `AgentOs` that communicates with the AskUI Remote Device Controller via gRPC.
+Simulates releasing a mouse button.
 
 **Arguments**:
 
-- `reporter` _Reporter_ - Reporter used for reporting with the `"AgentOs"`.
-- `display` _int, optional_ - Display number to use. Defaults to `1`.
-- `controller_server` _AskUiControllerServer | None, optional_ - Custom controller server. Defaults to `ControllerServer`.
+- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to release. Defaults to `"left"`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.connect"></a>
-
-#### connect
-
-```python
-def connect() -> None
-```
-
-Establishes a connection to the AskUI Remote Device Controller.
-
-This method starts the controller server, establishes a gRPC channel,
-creates a session, and sets up the initial display.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.disconnect"></a>
-
-#### disconnect
-
-```python
-def disconnect() -> None
-```
-
-Terminates the connection to the AskUI Remote Device Controller.
-
-This method stops the execution, ends the session, closes the gRPC channel,
-and stops the controller server.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.__enter__"></a>
-
-#### \_\_enter\_\_
-
-```python
-def __enter__() -> Self
-```
-
-Context manager entry point that establishes the connection.
-
-**Returns**:
-
-- `Self` - The instance of AskUiControllerClient.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.__exit__"></a>
-
-#### \_\_exit\_\_
-
-```python
-def __exit__(exc_type, exc_value, traceback) -> None
-```
-
-Context manager exit point that disconnects the client.
-
-**Arguments**:
-
-- `exc_type` - The exception type if an exception was raised.
-- `exc_value` - The exception value if an exception was raised.
-- `traceback` - The traceback if an exception was raised.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.screenshot"></a>
+<a id="askui.tools.AgentOs.screenshot"></a>
 
 #### screenshot
 
@@ -358,22 +191,21 @@ Captures a screenshot of the current display.
 
 - `Image.Image` - A PIL Image object containing the screenshot.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.mouse"></a>
+<a id="askui.tools.AgentOs.set_display"></a>
 
-#### mouse
+#### set\_display
 
 ```python
-def mouse(x: int, y: int) -> None
+def set_display(displayNumber: int = 1) -> None
 ```
 
-Moves the mouse cursor to specified screen coordinates.
+Sets the active display for screen interactions.
 
 **Arguments**:
 
-- `x` _int_ - The horizontal coordinate (in pixels) to move to.
-- `y` _int_ - The vertical coordinate (in pixels) to move to.
+- `displayNumber` _int, optional_ - The display number to set as active. Defaults to `1`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.type"></a>
+<a id="askui.tools.AgentOs.type"></a>
 
 #### type
 
@@ -386,9 +218,55 @@ Simulates typing text as if entered on a keyboard.
 **Arguments**:
 
 - `text` _str_ - The text to be typed.
-- `typing_speed` _int, optional_ - The speed of typing in characters per second. Defaults to `50`.
+- `typing_speed` _int, optional_ - The speed of typing in characters per minute. Defaults to `50`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.click"></a>
+<a id="askui.tools.askui.AskUiControllerClient"></a>
+
+## askui.tools.askui.AskUiControllerClient
+
+```python
+class AskUiControllerClient(AgentOs)
+```
+
+Implementation of `AgentOs` that communicates with the AskUI Remote Device Controller via gRPC.
+
+**Arguments**:
+
+- `reporter` _Reporter_ - Reporter used for reporting with the `"AgentOs"`.
+- `display` _int, optional_ - Display number to use. Defaults to `1`.
+- `controller_server` _AskUiControllerServer | None, optional_ - Custom controller server. Defaults to `ControllerServer`.
+
+<a id="askui.tools.askui.AskUiControllerClient.__enter__"></a>
+
+#### \_\_enter\_\_
+
+```python
+def __enter__() -> Self
+```
+
+Context manager entry point that establishes the connection.
+
+**Returns**:
+
+- `Self` - The instance of AskUiControllerClient.
+
+<a id="askui.tools.askui.AskUiControllerClient.__exit__"></a>
+
+#### \_\_exit\_\_
+
+```python
+def __exit__(exc_type, exc_value, traceback) -> None
+```
+
+Context manager exit point that disconnects the client.
+
+**Arguments**:
+
+- `exc_type` - The exception type if an exception was raised.
+- `exc_value` - The exception value if an exception was raised.
+- `traceback` - The traceback if an exception was raised.
+
+<a id="askui.tools.askui.AskUiControllerClient.click"></a>
 
 #### click
 
@@ -406,50 +284,33 @@ Simulates clicking a mouse button.
 - `button` _Literal["left", "middle", "right"], optional_ - The mouse button to click. Defaults to `"left"`.
 - `count` _int, optional_ - Number of times to click. Defaults to `1`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.mouse_down"></a>
+<a id="askui.tools.askui.AskUiControllerClient.connect"></a>
 
-#### mouse\_down
-
-```python
-def mouse_down(button: Literal['left', 'middle', 'right'] = 'left') -> None
-```
-
-Simulates pressing and holding a mouse button.
-
-**Arguments**:
-
-- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to press. Defaults to `"left"`.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.mouse_up"></a>
-
-#### mouse\_up
+#### connect
 
 ```python
-def mouse_up(button: Literal['left', 'middle', 'right'] = 'left') -> None
+def connect() -> None
 ```
 
-Simulates releasing a mouse button.
+Establishes a connection to the AskUI Remote Device Controller.
 
-**Arguments**:
+This method starts the controller server, establishes a gRPC channel,
+creates a session, and sets up the initial display.
 
-- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to release. Defaults to `"left"`.
+<a id="askui.tools.askui.AskUiControllerClient.disconnect"></a>
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.mouse_scroll"></a>
-
-#### mouse\_scroll
+#### disconnect
 
 ```python
-def mouse_scroll(x: int, y: int) -> None
+def disconnect() -> None
 ```
 
-Simulates scrolling the mouse wheel.
+Terminates the connection to the AskUI Remote Device Controller.
 
-**Arguments**:
+This method stops the execution, ends the session, closes the gRPC channel,
+and stops the controller server.
 
-- `x` _int_ - The horizontal scroll amount. Positive values scroll right, negative values scroll left.
-- `y` _int_ - The vertical scroll amount. Positive values scroll down, negative values scroll up.
-
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.keyboard_pressed"></a>
+<a id="askui.tools.askui.AskUiControllerClient.keyboard_pressed"></a>
 
 #### keyboard\_pressed
 
@@ -467,7 +328,7 @@ Simulates pressing and holding a keyboard key.
 - `key` _PcKey | ModifierKey_ - The key to press.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Defaults to `None`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.keyboard_release"></a>
+<a id="askui.tools.askui.AskUiControllerClient.keyboard_release"></a>
 
 #### keyboard\_release
 
@@ -485,7 +346,7 @@ Simulates releasing a keyboard key.
 - `key` _PcKey | ModifierKey_ - The key to release.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to release along with the main key. Defaults to `None`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.keyboard_tap"></a>
+<a id="askui.tools.askui.AskUiControllerClient.keyboard_tap"></a>
 
 #### keyboard\_tap
 
@@ -503,7 +364,84 @@ Simulates pressing and immediately releasing a keyboard key.
 - `key` _PcKey | ModifierKey_ - The key to tap.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Defaults to `None`.
 
-<a id="askui.tools.askui.askui_controller.AskUiControllerClient.set_display"></a>
+<a id="askui.tools.askui.AskUiControllerClient.mouse"></a>
+
+#### mouse
+
+```python
+def mouse(x: int, y: int) -> None
+```
+
+Moves the mouse cursor to specified screen coordinates.
+
+**Arguments**:
+
+- `x` _int_ - The horizontal coordinate (in pixels) to move to.
+- `y` _int_ - The vertical coordinate (in pixels) to move to.
+
+<a id="askui.tools.askui.AskUiControllerClient.mouse_down"></a>
+
+#### mouse\_down
+
+```python
+def mouse_down(button: Literal['left', 'middle', 'right'] = 'left') -> None
+```
+
+Simulates pressing and holding a mouse button.
+
+**Arguments**:
+
+- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to press. Defaults to `"left"`.
+
+<a id="askui.tools.askui.AskUiControllerClient.mouse_scroll"></a>
+
+#### mouse\_scroll
+
+```python
+def mouse_scroll(x: int, y: int) -> None
+```
+
+Simulates scrolling the mouse wheel.
+
+**Arguments**:
+
+- `x` _int_ - The horizontal scroll amount. Positive values scroll right, negative values scroll left.
+- `y` _int_ - The vertical scroll amount. Positive values scroll down, negative values scroll up.
+
+<a id="askui.tools.askui.AskUiControllerClient.mouse_up"></a>
+
+#### mouse\_up
+
+```python
+def mouse_up(button: Literal['left', 'middle', 'right'] = 'left') -> None
+```
+
+Simulates releasing a mouse button.
+
+**Arguments**:
+
+- `button` _Literal["left", "middle", "right"], optional_ - The mouse button to release. Defaults to `"left"`.
+
+<a id="askui.tools.askui.AskUiControllerClient.screenshot"></a>
+
+#### screenshot
+
+```python
+def screenshot(report: bool = True) -> Image.Image
+```
+
+Captures a screenshot of the current display.
+
+**Arguments**:
+
+- `report` _bool, optional_ - Whether to include the screenshot in reporting. Defaults to `True`.
+  
+
+**Returns**:
+
+- `Image.Image` - A PIL Image object containing the screenshot.
+
+<a id="askui.tools.askui.AskUiControllerClient.set_display"></a>
 
 #### set\_display
 
@@ -517,3 +455,56 @@ Sets the active display for screen interactions.
 
 - `displayNumber` _int, optional_ - The display number to set as active. Defaults to `1`.
 
+<a id="askui.tools.askui.AskUiControllerClient.type"></a>
+
+#### type
+
+```python
+def type(text: str, typing_speed: int = 50) -> None
+```
+
+Simulates typing text as if entered on a keyboard.
+
+**Arguments**:
+
+- `text` _str_ - The text to be typed.
+- `typing_speed` _int, optional_ - The speed of typing in characters per second. Defaults to `50`.
+
+<a id="askui.tools.askui.AskUiControllerServer"></a>
+
+## askui.tools.askui.AskUiControllerServer
+
+```python
+class AskUiControllerServer()
+```
+
+Concrete implementation of `ControllerServer` for managing the AskUI Remote Device Controller process.
+Handles process discovery, startup, and shutdown for the native controller binary.
+
+<a id="askui.tools.askui.AskUiControllerServer.start"></a>
+
+#### start
+
+```python
+def start(clean_up: bool = False) -> None
+```
+
+Start the controller process.
+
+**Arguments**:
+
+- `clean_up` _bool, optional_ - Whether to clean up existing processes (only on Windows) before starting. Defaults to `False`.
+
+<a id="askui.tools.askui.AskUiControllerServer.stop"></a>
+
+#### stop
+
+```python
+def stop(force: bool = False) -> None
+```
+
+Stop the controller process.
+
+**Arguments**:
+
+- `force` _bool, optional_ - Whether to forcefully terminate the process. Defaults to `False`.

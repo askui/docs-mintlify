@@ -2,9 +2,45 @@
 title: Reporting
 ---
 
-<a id="askui.reporting"></a>
+<a id="askui.reporting.CompositeReporter"></a>
 
-# askui.reporting
+## askui.reporting.CompositeReporter
+
+```python
+class CompositeReporter(Reporter)
+```
+
+A reporter that combines multiple reporters.
+
+Allows generating different reports simultaneously. Each message added will be forwarded to all reporters passed to the constructor. The reporters are called (`add_message()`, `generate()`) in the order they are ordered in the `reporters` list.
+
+**Arguments**:
+
+- `reporters` _list[Reporter] | None, optional_ - List of reporters to combine
+
+<a id="askui.reporting.CompositeReporter.add_message"></a>
+
+#### add\_message
+
+```python
+def add_message(
+    role: str,
+    content: Union[str, dict, list],
+    image: Optional[Image.Image | list[Image.Image]] = None
+) -> None
+```
+
+Add a message to the report.
+
+<a id="askui.reporting.CompositeReporter.generate"></a>
+
+#### generate
+
+```python
+def generate() -> None
+```
+
+Generates the final report.
 
 <a id="askui.reporting.Reporter"></a>
 
@@ -51,46 +87,6 @@ Generates the final report.
 Implementing this method is only required if the report is not generated in "real-time", e.g., on calls of `add_message()`, but must be generated at the end of the execution.
 
 This method is called when the `askui.VisionAgent` context is exited or `askui.VisionAgent.close()` is called.
-
-<a id="askui.reporting.CompositeReporter"></a>
-
-## askui.reporting.CompositeReporter
-
-```python
-class CompositeReporter(Reporter)
-```
-
-A reporter that combines multiple reporters.
-
-Allows generating different reports simultaneously. Each message added will be forwarded to all reporters passed to the constructor. The reporters are called (`add_message()`, `generate()`) in the order they are ordered in the `reporters` list.
-
-**Arguments**:
-
-- `reporters` _list[Reporter] | None, optional_ - List of reporters to combine
-
-<a id="askui.reporting.CompositeReporter.add_message"></a>
-
-#### add\_message
-
-```python
-def add_message(
-    role: str,
-    content: Union[str, dict, list],
-    image: Optional[Image.Image | list[Image.Image]] = None
-) -> None
-```
-
-Add a message to the report.
-
-<a id="askui.reporting.CompositeReporter.generate"></a>
-
-#### generate
-
-```python
-def generate() -> None
-```
-
-Generates the final report.
 
 <a id="askui.reporting.SimpleHtmlReporter"></a>
 

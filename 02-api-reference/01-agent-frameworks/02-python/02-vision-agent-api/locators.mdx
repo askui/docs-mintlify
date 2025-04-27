@@ -2,67 +2,50 @@
 title: Locators
 ---
 
-<a id="askui.locators.locators"></a>
+<a id="askui.locators.AiElement"></a>
 
-# askui.locators.locators
-
-<a id="askui.locators.locators.TextMatchType"></a>
-
-#### askui.locators.locators.TextMatchType
+## askui.locators.AiElement
 
 ```python
-TextMatchType = Literal["similar", "exact", "contains", "regex"]
+class AiElement(ImageBase)
 ```
 
-The type of match to use.
-
-- `"similar"` uses a similarity threshold to determine if the text is a match.
-- `"exact"` requires the text to be exactly the same (this is not the same as `"similar"` 
-  with a `similarity_threshold` of `100` as a `similarity_threshold` of `100` can still 
-  allow for small differences in very long texts).
-- `"contains"` requires the text to contain (exactly) the specified text.
-- `"regex"` uses a regular expression to match the text.
-
-<a id="askui.locators.locators.Locator"></a>
-
-## askui.locators.locators.Locator
-
-```python
-class Locator(Relatable, ABC)
-```
-
-Abstract base class for all locators. Cannot be instantiated directly.
-
-<a id="askui.locators.locators.Prompt"></a>
-
-## askui.locators.locators.Prompt
-
-```python
-class Prompt(Locator)
-```
-
-Locator for finding ui elements by a textual prompt / description of a ui element, e.g., "green sign up button".
+Locator for finding ui elements by data (e.g., image) collected with the [AskUIRemoteDeviceSnippingTool](http://localhost:3000/02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement) using the `name` assigned to the AI element during *snipping* to retrieve the data used for locating the ui element(s).
 
 **Arguments**:
 
-- `prompt` _str_ - A textual prompt / description of a ui element, e.g., `"green sign up button"`
-  
+- `name` _str_ - Name of the AI element
+- `threshold` _float, optional_ - A threshold for how similar UI elements need to be to the image to be considered a match.
+  Takes values between `0.0` (= all elements are recognized) and `1.0` (= elements need to look exactly
+  like defined). Defaults to `0.5`. Important: The threshold impacts the prediction quality.
+- `stop_threshold` _float | None, optional_ - A threshold for when to stop searching for UI elements similar to the image. As soon
+  as UI elements have been found that are at least as similar as the `stop_threshold`, the search stops.
+  Should be greater than or equal to `threshold`. Takes values between `0.0` and `1.0`. Defaults to value of
+  `threshold` if not provided. Important: The `stop_threshold` impacts the prediction speed.
+- `mask` _list[tuple[float, float]] | None, optional_ - A polygon to match only a certain area of the image. Must have at least 3 points.
+  Defaults to `None`.
+- `rotation_degree_per_step` _int, optional_ - A step size in rotation degree. Rotates the image by rotation_degree_per_step
+  until 360° is exceeded. Range is between `0°` - `360°`. Defaults to `0°`. Important: This increases the
+  prediction time quite a bit. So only use it when absolutely necessary.
+- `name` _str | None, optional_ - Name for the image. Defaults to random name.
+- `image_compare_format` _Literal["RGB", "grayscale", "edges"], optional_ - A color compare style. Defaults to `'grayscale'`. **Important**:
+  The `image_compare_format` impacts the prediction time as well as quality. As a rule of thumb,
+  `'edges'` is likely to be faster than `'grayscale'` and `'grayscale'` is likely to be faster than `'RGB'`.
+  For quality it is most often the other way around.
 
-**Examples**:
+<a id="askui.locators.CircularDependencyError"></a>
 
-    ```python
-    from askui import locators as loc
-    # locates a green sign up button
-    button = loc.Prompt("green sign up button")
-    # locates an email text field, e.g., with label "Email" or a placeholder "john.doe@example.com"
-    textfield = loc.Prompt("email text field")
-    # locates the avatar in the right hand corner of the application
-    avatar_top_right_corner = loc.Prompt("avatar in the top right corner of the application")
-    ```
+## askui.locators.CircularDependencyError
 
-<a id="askui.locators.locators.Element"></a>
+```python
+class CircularDependencyError(ValueError)
+```
 
-## askui.locators.locators.Element
+Exception raised for circular dependencies in locator relations.
+
+<a id="askui.locators.Element"></a>
+
+## askui.locators.Element
 
 ```python
 class Element(Locator)
@@ -87,48 +70,9 @@ Locator for finding ui elements by their class.
     element = loc.Element()
     ```
 
-<a id="askui.locators.locators.Text"></a>
+<a id="askui.locators.Image"></a>
 
-## askui.locators.locators.Text
-
-```python
-class Text(Element)
-```
-
-Locator for finding text elements by their textual content.
-
-**Arguments**:
-
-- `text` _str | None, optional_ - The text content of the ui element, e.g., `'Sign up'`. Defaults to `None`.
-  If `None`, the locator will match any text element.
-- `match_type` _TextMatchType, optional_ - The type of match to use. Defaults to `"similar"`.
-- `similarity_threshold` _int, optional_ - A threshold for how similar the actual text content of the ui element
-  needs to be to the specified text to be considered a match when `match_type` is `"similar"`.
-  Takes values between `0` and `100` (inclusive, higher is more similar).
-  Defaults to `70`.
-  
-
-**Examples**:
-
-    ```python
-    from askui import locators as loc
-    # locates a text element with text similar to "Sign up", e.g., "Sign up" or "Sign Up" or "Sign-Up"
-    text = loc.Text("Sign up")
-    # if it does not find an element, you can try decreasing the similarity threshold (default is `70`)
-    text = loc.Text("Sign up", match_type="similar", similarity_threshold=50)
-    # if it also locates "Sign In", you can try increasing the similarity threshold (default is `70`)
-    text = loc.Text("Sign up", match_type="similar", similarity_threshold=80)
-    # or use `match_type="exact"` to require an exact match (does not match other variations of "Sign up", e.g., "Sign Up" or "Sign-Up")
-    text = loc.Text("Sign up", match_type="exact")
-    # locates a text element starting with "Sign" or "sign" using a regular expression
-    text = loc.Text("^[Ss]ign.*", match_type="regex")
-    # locates a text element containing "Sign" (exact match)
-    text = loc.Text("Sign", match_type="contains")
-    ```
-
-<a id="askui.locators.locators.Image"></a>
-
-## askui.locators.locators.Image
+## askui.locators.Image
 
 ```python
 class Image(ImageBase)
@@ -166,44 +110,46 @@ Locator for finding ui elements by an image.
     image = loc.Image("path/to/image.png")
     ```
 
-<a id="askui.locators.locators.AiElement"></a>
+<a id="askui.locators.Locator"></a>
 
-## askui.locators.locators.AiElement
+## askui.locators.Locator
 
 ```python
-class AiElement(ImageBase)
+class Locator(Relatable, ABC)
 ```
 
-Locator for finding ui elements by data (e.g., image) collected with the [AskUIRemoteDeviceSnippingTool](http://localhost:3000/02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement) using the `name` assigned to the AI element during *snipping* to retrieve the data used for locating the ui element(s).
+Abstract base class for all locators. Cannot be instantiated directly.
+
+<a id="askui.locators.Prompt"></a>
+
+## askui.locators.Prompt
+
+```python
+class Prompt(Locator)
+```
+
+Locator for finding ui elements by a textual prompt / description of a ui element, e.g., "green sign up button".
 
 **Arguments**:
 
-- `name` _str_ - Name of the AI element
-- `threshold` _float, optional_ - A threshold for how similar UI elements need to be to the image to be considered a match.
-  Takes values between `0.0` (= all elements are recognized) and `1.0` (= elements need to look exactly
-  like defined). Defaults to `0.5`. Important: The threshold impacts the prediction quality.
-- `stop_threshold` _float | None, optional_ - A threshold for when to stop searching for UI elements similar to the image. As soon
-  as UI elements have been found that are at least as similar as the `stop_threshold`, the search stops.
-  Should be greater than or equal to `threshold`. Takes values between `0.0` and `1.0`. Defaults to value of
-  `threshold` if not provided. Important: The `stop_threshold` impacts the prediction speed.
-- `mask` _list[tuple[float, float]] | None, optional_ - A polygon to match only a certain area of the image. Must have at least 3 points.
-  Defaults to `None`.
-- `rotation_degree_per_step` _int, optional_ - A step size in rotation degree. Rotates the image by rotation_degree_per_step
-  until 360° is exceeded. Range is between `0°` - `360°`. Defaults to `0°`. Important: This increases the
-  prediction time quite a bit. So only use it when absolutely necessary.
-- `name` _str | None, optional_ - Name for the image. Defaults to random name.
-- `image_compare_format` _Literal["RGB", "grayscale", "edges"], optional_ - A color compare style. Defaults to `'grayscale'`. **Important**:
-  The `image_compare_format` impacts the prediction time as well as quality. As a rule of thumb,
-  `'edges'` is likely to be faster than `'grayscale'` and `'grayscale'` is likely to be faster than `'RGB'`.
-  For quality it is most often the other way around.
+- `prompt` _str_ - A textual prompt / description of a ui element, e.g., `"green sign up button"`
+  
 
-<a id="askui.locators.relatable"></a>
+**Examples**:
 
-# askui.locators.relatable
+    ```python
+    from askui import locators as loc
+    # locates a green sign up button
+    button = loc.Prompt("green sign up button")
+    # locates an email text field, e.g., with label "Email" or a placeholder "john.doe@example.com"
+    textfield = loc.Prompt("email text field")
+    # locates the avatar in the right hand corner of the application
+    avatar_top_right_corner = loc.Prompt("avatar in the top right corner of the application")
+    ```
 
-<a id="askui.locators.relatable.ReferencePoint"></a>
+<a id="askui.locators.ReferencePoint"></a>
 
-#### askui.locators.relatable.ReferencePoint
+## askui.locators.ReferencePoint
 
 ```python
 ReferencePoint = Literal["center", "boundary", "any"]
@@ -360,58 +306,9 @@ Defines under which conditions an element *A* is considered to be above, below, 
     =========== ===========
     ```
 
-<a id="askui.locators.relatable.RelationIndex"></a>
+<a id="askui.locators.Relatable"></a>
 
-#### askui.locators.relatable.RelationIndex
-
-```python
-RelationIndex = Annotated[int, Field(ge=0)]
-```
-
-Index of the element *A* above, below, right or left of the other element *B*,
-e.g., the first (`0`), second (`1`), third (`2`) etc. element
-above, below, right or left of the other element *B*. *A*'s position relative
-to other elements above, below, right or left of *B*
-(which determines its index) is determined by the relative position of its
-lowest (above), highest (below), leftmost (right) or rightmost (left) point(s)
-(edge of its bounding box).
-
-**Important**: Which elements are counted ("indexed") depends on the locator used, e.g.,
-when using `Text` only text matched is counted, and the `reference_point`.
-
-**Examples**:
-
-  
-```text
-===========
-|    A    | ===========
-=========== |    B    |
-            ===========
-                   ===========                  
-                   |    C    |                  
-    ===========    ===========                  
-    |    D    |
-    ===========
-```
-  
-  For `reference_point`
-  - `"center"`, *A* is the first (`index=0`) element above *B*.
-  - `"boundary"`, *A* is the second (`index=1`) element above *B*.
-  - `"any"`, *A* is the third (`index=2`) element above *B*.
-
-<a id="askui.locators.relatable.CircularDependencyError"></a>
-
-## askui.locators.relatable.CircularDependencyError
-
-```python
-class CircularDependencyError(ValueError)
-```
-
-Exception raised for circular dependencies in locator relations.
-
-<a id="askui.locators.relatable.Relatable"></a>
-
-## askui.locators.relatable.Relatable
+## askui.locators.Relatable
 
 ```python
 class Relatable(ABC)
@@ -419,7 +316,7 @@ class Relatable(ABC)
 
 Abstract base class for locators that can be related to other locators, e.g., spatially, logically etc. Cannot be instantiated directly.
 
-<a id="askui.locators.relatable.Relatable.above_of"></a>
+<a id="askui.locators.Relatable.above_of"></a>
 
 #### above\_of
 
@@ -552,7 +449,41 @@ bounding box).
     text = loc.Text().above_of(loc.Text("C"), index=0, reference_point="boundary")
     ```
 
-<a id="askui.locators.relatable.Relatable.below_of"></a>
+<a id="askui.locators.Relatable.and_"></a>
+
+#### and\_
+
+```python
+def and_(other_locator: "Relatable") -> Self
+```
+
+Logical and operator to combine multiple locators, e.g., to require an
+element to match multiple locators.
+
+**Arguments**:
+
+- `other_locator` _Relatable_ - The locator to combine with
+  
+
+**Returns**:
+
+- `Self` - The locator with the relation added
+  
+
+**Examples**:
+
+    ```python
+    from askui import locators as loc
+
+    # Searches for an element that contains the text "Google" and is a
+    # multi-colored Google logo (instead of, e.g., simply some text that says
+    # "Google")
+    icon_user = loc.Element().containing(
+        loc.Text("Google").and_(loc.Description("Multi-colored Google logo"))
+    )
+    ```
+
+<a id="askui.locators.Relatable.below_of"></a>
 
 #### below\_of
 
@@ -685,40 +616,20 @@ box).
     text = loc.Text().below_of(loc.Text("C"), index=0, reference_point="boundary")
     ```
 
-<a id="askui.locators.relatable.Relatable.right_of"></a>
+<a id="askui.locators.Relatable.containing"></a>
 
-#### right\_of
+#### containing
 
 ```python
-def right_of(
-    other_locator: "Relatable",
-    index: RelationIndex = 0,
-    reference_point: ReferencePoint = "center"
-) -> Self
+def containing(other_locator: "Relatable") -> Self
 ```
 
-Defines the element (located by *self*) to be **right of** another element /
-other elements (located by *other_locator*).
-
-An element **A** is considered to be *right of* another element / other elements **B**
-
-- if most of **A** (or, more specifically, **A**'s bounding box) is *right of* **B**
-(or, more specifically, the **right border** of **B**'s bounding box) **and**
-- if the **left border** of **A** (or, more specifically, **A**'s bounding box) is
-*right of* the **left border** of **B** (or, more specifically, **B**'s
-bounding box).
+Defines the element (located by *self*) to contain another element (located
+by *other_locator*).
 
 **Arguments**:
 
-- `other_locator` _Relatable_ - Locator for an element / elements to relate to
-- `index` _RelationIndex, optional_ - Index of the element (located by *self*) **right of** the other
-  element(s) (located by *other_locator*), e.g., the first (`0`), second (`1`), third (`2`) etc. element right of the other
-  element(s). Elements' (relative) position is determined by the **left
-  border** (*x*-coordinate) of their bounding box.
-  We don't guarantee the order of elements with the same left border
-  (*x*-coordinate). Defaults to `0`.
-- `reference_point` _ReferencePoint, optional_ - Defines which element (located by *self*) is considered to be
-  *right of* the other element(s) (located by *other_locator*). Defaults to `"center"`.
+- `other_locator` _Relatable_ - The locator to check if it's contained
   
 
 **Returns**:
@@ -729,86 +640,63 @@ bounding box).
 **Examples**:
 
     ```text
-
-    =========== ===========
-    |    B    | |    A    |
-    =========== ===========
+    ---------------------------
+    |     textfield           |
+    |  ---------------------  |
+    |  |  placeholder text |  |
+    |  ---------------------  |
+    |                         |
+    ---------------------------
     ```
     ```python
     from askui import locators as loc
-    # locates text "A" as it is the first (index 0) element right of ("center"
-    # of) text "B"
-    text = loc.Text().right_of(loc.Text("B"), reference_point="center")
+
+    # Returns the textfield because it contains the placeholder text
+    textfield = loc.Element("textfield").containing(loc.Text("placeholder"))
     ```
+
+<a id="askui.locators.Relatable.inside_of"></a>
+
+#### inside\_of
+
+```python
+def inside_of(other_locator: "Relatable") -> Self
+```
+
+Defines the element (located by *self*) to be inside of another element
+(located by *other_locator*).
+
+**Arguments**:
+
+- `other_locator` _Relatable_ - The locator to check if it contains this element
   
-    ```text
 
-    =========== 
-    |    B    | 
-    =========== ===========
-                |    A    |
-                ===========
-    ```
-    ```python
-    from askui import locators as loc
-    # locates text "A" as it is the first (index 0) element right of 
-    # ("boundary" of / any point of) text "B" 
-    # (reference point "center" won't work here)
-    text = loc.Text().right_of(loc.Text("B"), reference_point="boundary")
-    ```
+**Returns**:
+
+- `Self` - The locator with the relation added
   
-    ```text
 
-    =========== 
-    |    B    |
-    ===========
-                ===========
-                |    A    |
-                ===========
+**Examples**:
+
+    ```text
+    ---------------------------
+    |     textfield           |
+    |  ---------------------  |
+    |  |  placeholder text |  |
+    |  ---------------------  |
+    |                         |
+    ---------------------------
     ```
     ```python
     from askui import locators as loc
-    # locates text "A" as it is the first (index 0) element right of text "B" 
-    # (reference point "center" or "boundary" won't work here)
-    text = loc.Text().right_of(loc.Text("B"), reference_point="any")
-    ```
-  
-    ```text
 
-                            ===========
-                            |    A    |
-                            ===========
-    =========== ===========
-    |    C    | |    B    |
-    =========== ===========
-    ```
-    ```python
-    from askui import locators as loc
-    # locates text "A" as it is the second (index 1) element right of text "C" 
-    # (reference point "center" or "boundary" won't work here)
-    text = loc.Text().right_of(loc.Text("C"), index=1, reference_point="any")
-    ```
-  
-    ```text
-
-            ===========
-            |    B    |
-            =========== ===========
-    ===========         |    A    |
-    |    C    |         ===========
-    ===========
-    ```
-    ```python
-    from askui import locators as loc
-    # locates text "A" as it is the second (index 1) element right of text "C"
-    # (reference point "any")
-    text = loc.Text().right_of(loc.Text("C"), index=1, reference_point="any")
-    # locates also text "A" as it is the first (index 0) element right of text
-    # "C" with reference point "boundary"
-    text = loc.Text().right_of(loc.Text("C"), index=0, reference_point="boundary")
+    # Returns the placeholder text of the textfield
+    placeholder_text = loc.Text("placeholder").inside_of(
+        loc.Element("textfield")
+    )
     ```
 
-<a id="askui.locators.relatable.Relatable.left_of"></a>
+<a id="askui.locators.Relatable.left_of"></a>
 
 #### left\_of
 
@@ -930,87 +818,7 @@ bounding box).
     text = loc.Text().right_of(loc.Text("C"), index=0, reference_point="boundary")
     ```
 
-<a id="askui.locators.relatable.Relatable.containing"></a>
-
-#### containing
-
-```python
-def containing(other_locator: "Relatable") -> Self
-```
-
-Defines the element (located by *self*) to contain another element (located
-by *other_locator*).
-
-**Arguments**:
-
-- `other_locator` _Relatable_ - The locator to check if it's contained
-  
-
-**Returns**:
-
-- `Self` - The locator with the relation added
-  
-
-**Examples**:
-
-    ```text
-    ---------------------------
-    |     textfield           |
-    |  ---------------------  |
-    |  |  placeholder text |  |
-    |  ---------------------  |
-    |                         |
-    ---------------------------
-    ```
-    ```python
-    from askui import locators as loc
-
-    # Returns the textfield because it contains the placeholder text
-    textfield = loc.Element("textfield").containing(loc.Text("placeholder"))
-    ```
-
-<a id="askui.locators.relatable.Relatable.inside_of"></a>
-
-#### inside\_of
-
-```python
-def inside_of(other_locator: "Relatable") -> Self
-```
-
-Defines the element (located by *self*) to be inside of another element
-(located by *other_locator*).
-
-**Arguments**:
-
-- `other_locator` _Relatable_ - The locator to check if it contains this element
-  
-
-**Returns**:
-
-- `Self` - The locator with the relation added
-  
-
-**Examples**:
-
-    ```text
-    ---------------------------
-    |     textfield           |
-    |  ---------------------  |
-    |  |  placeholder text |  |
-    |  ---------------------  |
-    |                         |
-    ---------------------------
-    ```
-    ```python
-    from askui import locators as loc
-
-    # Returns the placeholder text of the textfield
-    placeholder_text = loc.Text("placeholder").inside_of(
-        loc.Element("textfield")
-    )
-    ```
-
-<a id="askui.locators.relatable.Relatable.nearest_to"></a>
+<a id="askui.locators.Relatable.nearest_to"></a>
 
 #### nearest\_to
 
@@ -1055,41 +863,7 @@ Defines the element (located by *self*) to be the nearest to another element
     textfield = loc.Element("textfield").nearest_to(loc.Text())
     ```
 
-<a id="askui.locators.relatable.Relatable.and_"></a>
-
-#### and\_
-
-```python
-def and_(other_locator: "Relatable") -> Self
-```
-
-Logical and operator to combine multiple locators, e.g., to require an
-element to match multiple locators.
-
-**Arguments**:
-
-- `other_locator` _Relatable_ - The locator to combine with
-  
-
-**Returns**:
-
-- `Self` - The locator with the relation added
-  
-
-**Examples**:
-
-    ```python
-    from askui import locators as loc
-
-    # Searches for an element that contains the text "Google" and is a
-    # multi-colored Google logo (instead of, e.g., simply some text that says
-    # "Google")
-    icon_user = loc.Element().containing(
-        loc.Text("Google").and_(loc.Description("Multi-colored Google logo"))
-    )
-    ```
-
-<a id="askui.locators.relatable.Relatable.or_"></a>
+<a id="askui.locators.Relatable.or_"></a>
 
 #### or\_
 
@@ -1122,7 +896,7 @@ if no element is found for one of the locators.
     )
     ```
 
-<a id="askui.locators.relatable.Relatable.raise_if_cycle"></a>
+<a id="askui.locators.Relatable.raise_if_cycle"></a>
 
 #### raise\_if\_cycle
 
@@ -1132,3 +906,220 @@ def raise_if_cycle() -> None
 
 Raises CircularDependencyError if the relations form a cycle (see [Cycle (graph theory)](https://en.wikipedia.org/wiki/Cycle_(graph_theory))).
 
+<a id="askui.locators.RelationIndex"></a>
+
+## askui.locators.RelationIndex
+
+```python
+RelationIndex = Annotated[int, Field(ge=0)]
+```
+
+Index of the element *A* above, below, right or left of the other element *B*,
+e.g., the first (`0`), second (`1`), third (`2`) etc. element
+above, below, right or left of the other element *B*. *A*'s position relative
+to other elements above, below, right or left of *B*
+(which determines its index) is determined by the relative position of its
+lowest (above), highest (below), leftmost (right) or rightmost (left) point(s)
+(edge of its bounding box).
+
+**Important**: Which elements are counted ("indexed") depends on the locator used, e.g.,
+when using `Text` only text matched is counted, and the `reference_point`.
+
+**Examples**:
+
+  
+```text
+===========
+|    A    | ===========
+=========== |    B    |
+            ===========
+                   ===========                  
+                   |    C    |                  
+    ===========    ===========                  
+    |    D    |
+    ===========
+```
+  
+  For `reference_point`
+  - `"center"`, *A* is the first (`index=0`) element above *B*.
+  - `"boundary"`, *A* is the second (`index=1`) element above *B*.
+  - `"any"`, *A* is the third (`index=2`) element above *B*.
+
+<a id="askui.locators.Text"></a>
+
+## askui.locators.Text
+
+```python
+class Text(Element)
+```
+
+Locator for finding text elements by their textual content.
+
+**Arguments**:
+
+- `text` _str | None, optional_ - The text content of the ui element, e.g., `'Sign up'`. Defaults to `None`.
+  If `None`, the locator will match any text element.
+- `match_type` _TextMatchType, optional_ - The type of match to use. Defaults to `"similar"`.
+- `similarity_threshold` _int, optional_ - A threshold for how similar the actual text content of the ui element
+  needs to be to the specified text to be considered a match when `match_type` is `"similar"`.
+  Takes values between `0` and `100` (inclusive, higher is more similar).
+  Defaults to `70`.
+  
+
+**Examples**:
+
+    ```python
+    from askui import locators as loc
+    # locates a text element with text similar to "Sign up", e.g., "Sign up" or "Sign Up" or "Sign-Up"
+    text = loc.Text("Sign up")
+    # if it does not find an element, you can try decreasing the similarity threshold (default is `70`)
+    text = loc.Text("Sign up", match_type="similar", similarity_threshold=50)
+    # if it also locates "Sign In", you can try increasing the similarity threshold (default is `70`)
+    text = loc.Text("Sign up", match_type="similar", similarity_threshold=80)
+    # or use `match_type="exact"` to require an exact match (does not match other variations of "Sign up", e.g., "Sign Up" or "Sign-Up")
+    text = loc.Text("Sign up", match_type="exact")
+    # locates a text element starting with "Sign" or "sign" using a regular expression
+    text = loc.Text("^[Ss]ign.*", match_type="regex")
+    # locates a text element containing "Sign" (exact match)
+    text = loc.Text("Sign", match_type="contains")
+    ```
+
+<a id="askui.locators.TextMatchType"></a>
+
+## askui.locators.TextMatchType
+
+```python
+TextMatchType = Literal["similar", "exact", "contains", "regex"]
+```
+
+The type of match to use.
+
+- `"similar"` uses a similarity threshold to determine if the text is a match.
+- `"exact"` requires the text to be exactly the same (this is not the same as `"similar"` 
+  with a `similarity_threshold` of `100` as a `similarity_threshold` of `100` can still 
+  allow for small differences in very long texts).
+- `"contains"` requires the text to contain (exactly) the specified text.
+- `"regex"` uses a regular expression to match the text.
+
+<a id="askui.locators.Relatable.right_of"></a>
+
+#### right\_of
+
+```python
+def right_of(
+    other_locator: "Relatable",
+    index: RelationIndex = 0,
+    reference_point: ReferencePoint = "center"
+) -> Self
+```
+
+Defines the element (located by *self*) to be **right of** another element /
+other elements (located by *other_locator*).
+
+An element **A** is considered to be *right of* another element / other elements **B**
+
+- if most of **A** (or, more specifically, **A**'s bounding box) is *right of* **B**
+(or, more specifically, the **right border** of **B**'s bounding box) **and**
+- if the **left border** of **A** (or, more specifically, **A**'s bounding box) is
+*right of* the **left border** of **B** (or, more specifically, **B**'s
+bounding box).
+
+**Arguments**:
+
+- `other_locator` _Relatable_ - Locator for an element / elements to relate to
+- `index` _RelationIndex, optional_ - Index of the element (located by *self*) **right of** the other
+  element(s) (located by *other_locator*), e.g., the first (`0`), second (`1`), third (`2`) etc. element right of the other
+  element(s). Elements' (relative) position is determined by the **left
+  border** (*x*-coordinate) of their bounding box.
+  We don't guarantee the order of elements with the same left border
+  (*x*-coordinate). Defaults to `0`.
+- `reference_point` _ReferencePoint, optional_ - Defines which element (located by *self*) is considered to be
+  *right of* the other element(s) (located by *other_locator*). Defaults to `"center"`.
+  
+
+**Returns**:
+
+- `Self` - The locator with the relation added
+  
+
+**Examples**:
+
+    ```text
+
+    =========== ===========
+    |    B    | |    A    |
+    =========== ===========
+    ```
+    ```python
+    from askui import locators as loc
+    # locates text "A" as it is the first (index 0) element right of ("center"
+    # of) text "B"
+    text = loc.Text().right_of(loc.Text("B"), reference_point="center")
+    ```
+  
+    ```text
+
+    =========== 
+    |    B    | 
+    =========== ===========
+                |    A    |
+                ===========
+    ```
+    ```python
+    from askui import locators as loc
+    # locates text "A" as it is the first (index 0) element right of 
+    # ("boundary" of / any point of) text "B" 
+    # (reference point "center" won't work here)
+    text = loc.Text().right_of(loc.Text("B"), reference_point="boundary")
+    ```
+  
+    ```text
+
+    =========== 
+    |    B    |
+    ===========
+                ===========
+                |    A    |
+                ===========
+    ```
+    ```python
+    from askui import locators as loc
+    # locates text "A" as it is the first (index 0) element right of text "B" 
+    # (reference point "center" or "boundary" won't work here)
+    text = loc.Text().right_of(loc.Text("B"), reference_point="any")
+    ```
+  
+    ```text
+
+                            ===========
+                            |    A    |
+                            ===========
+    =========== ===========
+    |    C    | |    B    |
+    =========== ===========
+    ```
+    ```python
+    from askui import locators as loc
+    # locates text "A" as it is the second (index 1) element right of text "C" 
+    # (reference point "center" or "boundary" won't work here)
+    text = loc.Text().right_of(loc.Text("C"), index=1, reference_point="any")
+    ```
+  
+    ```text
+
+            ===========
+            |    B    |
+            =========== ===========
+    ===========         |    A    |
+    |    C    |         ===========
+    ===========
+    ```
+    ```python
+    from askui import locators as loc
+    # locates text "A" as it is the second (index 1) element right of text "C"
+    # (reference point "any")
+    text = loc.Text().right_of(loc.Text("C"), index=1, reference_point="any")
+    # locates also text "A" as it is the first (index 0) element right of text
+    # "C" with reference point "boundary"
+    text = loc.Text().right_of(loc.Text("C"), index=0, reference_point="boundary")
+    ```
