@@ -1,0 +1,154 @@
+---
+title: Types
+---
+
+<a id="askui.tools.agent_os"></a>
+
+# askui.tools.agent\_os
+
+<a id="askui.tools.agent_os.ModifierKey"></a>
+
+#### askui.tools.agent\_os.ModifierKey
+
+```python
+ModifierKey = Literal["command", "alt", "control", "shift", "right_shift"]
+```
+
+Modifier keys for keyboard actions.
+
+<a id="askui.tools.agent_os.PcKey"></a>
+
+#### askui.tools.agent\_os.PcKey
+
+```python
+PcKey = Literal[
+    "backspace",
+    "delete",
+    "enter",
+    "tab",
+    "escape",
+    "up",
+     ...
+```
+
+PC keys for keyboard actions.
+
+<a id="askui.utils.image_utils"></a>
+
+# askui.utils.image\_utils
+
+<a id="askui.utils.image_utils.Img"></a>
+
+#### askui.utils.image\_utils.Img
+
+```python
+Img = Union[str, Path, PILImage.Image]
+```
+
+Type of the input images for `askui.VisionAgent.get()`, `askui.VisionAgent.locate()`, etc.
+
+Accepts:
+- `PIL.Image.Image`
+- Relative or absolute file path (`str` or `pathlib.Path`)
+- Data URL (e.g., `"data:image/png;base64,..."`)
+
+<a id="askui.models.types.response_schemas"></a>
+
+# askui.models.types.response\_schemas
+
+<a id="askui.models.types.response_schemas.ResponseSchemaBase"></a>
+
+## askui.models.types.response\_schemas.ResponseSchemaBase
+
+```python
+class ResponseSchemaBase(BaseModel)
+```
+
+Base class for response schemas to be used for defining the response of data extraction, e.g., using `askui.VisionAgent.get()`.
+
+This class extends Pydantic's BaseModel and adds constraints and configuration on top so that it can be used with models to define the schema (type) of the data to be extracted.
+
+**Example**:
+
+    ```python
+    class UrlResponse(ResponseSchemaBase):
+        url: str
+
+    # nested models should also extend ResponseSchemaBase
+    class NestedResponse(ResponseSchemaBase):
+        nested: UrlResponse
+
+    # metadata, e.g., `examples` or `description` of `Field`, is generally also passed to and considered by the models
+    class UrlResponse(ResponseSchemaBase):
+        url: str = Field(description="The URL of the response. Should used `"https"` scheme.", examples=["https://www.example.com"])
+    ```
+
+<a id="askui.models.types.response_schemas.ResponseSchema"></a>
+
+#### askui.models.types.response\_schemas.ResponseSchema
+
+```python
+ResponseSchema = TypeVar(
+    'ResponseSchema', ResponseSchemaBase, str, bool, int, float
+)
+```
+
+Type of the responses of data extracted, e.g., using `askui.VisionAgent.get()`.
+
+The following types are allowed:
+- `ResponseSchemaBase`: Custom Pydantic models that extend `ResponseSchemaBase`
+- `str`: String responses
+- `bool`: Boolean responses
+- `int`: Integer responses
+- `float`: Floating point responses
+
+Usually, serialized as a JSON schema, e.g., `str` as `{"type": "string"}`, to be passed to model(s).
+Also used for validating the responses of the model(s) used for data extraction.
+
+<a id="askui.models.models"></a>
+
+# askui.models.models
+
+<a id="askui.models.models.ModelDefinition"></a>
+
+## askui.models.models.ModelDefinition
+
+```python
+class ModelDefinition(BaseModel)
+```
+
+A definition of a model.
+
+**Arguments**:
+
+- `task` _str_ - The task the model is trained for, e.g., end-to-end OCR (`"e2e_ocr"`) or object detection (`"od"`)
+- `architecture` _str_ - The architecture of the model, e.g., `"easy_ocr"` or `"yolo"`
+- `version` _str_ - The version of the model
+- `interface` _str_ - The interface the model is trained for, e.g., `"online_learning"`
+- `use_case` _str, optional_ - The use case the model is trained for. In the case of workspace specific AskUI models, this is often the workspace id but with "-" replaced by "_". Defaults to `"00000000_0000_0000_0000_000000000000"` (custom null value).
+- `tags` _list[str], optional_ - Tags for identifying the model that cannot be represented by other properties, e.g., `["trained", "word_level"]`
+
+<a id="askui.models.models.ModelComposition"></a>
+
+## askui.models.models.ModelComposition
+
+```python
+class ModelComposition(RootModel[list[ModelDefinition]])
+```
+
+A composition of models (list of `ModelDefinition`) to be used for a task, e.g., locating an element on the screen to be able to click on it or extracting text from an image.
+
+<a id="askui.models.router"></a>
+
+# askui.models.router
+
+<a id="askui.models.router.Point"></a>
+
+#### askui.models.router.Point
+
+```python
+Point = tuple[int, int]
+```
+
+A tuple of two integers representing the coordinates of a point on the screen.
+

@@ -148,7 +148,10 @@
       "group": "Python Vision Agent",
       "pages": [
         "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools"
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/types"
       ]
     },
     {

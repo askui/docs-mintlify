@@ -17,14 +17,6 @@ distribution = false
 [tool.pdm.scripts]
 "docs:api:generate" = {shell  = "pydoc-markdown"}
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "askui @ git+ssh://git@github.com/askui/vision-agent.git@956c0bea049fa6e3ded772f9b135bf8c1f5c0e7e",
-    "pydoc-markdown>=4.8.2",
-]
-
-
-
 [[tool.pydoc-markdown.loaders]]
 type = "python"
 packages = [ "askui" ]
@@ -34,13 +26,74 @@ modules = [ "askui" ]
 type = "hugo"
 content_directory = "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api"
 
+[tool.pydoc-markdown.renderer.markdown]
+classdef_with_decorators = false
+signature_with_decorators = false
+data_code_block = true
+descriptive_class_title = false
+render_module_header = true
+format_code_style = "facebook"
+add_full_prefix = true
+sub_prefix = true
+header_level_by_type = {Module = 1, Class = 2, Method = 4, Function = 4, Variable = 4}
+
 [[tool.pydoc-markdown.renderer.pages]]
 title = "Agent"
 name = "agent"
-contents = [ "askui.agent.*" ]
+contents = [ 
+    "askui.agent.VisionAgent.*",
+]
 
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Locators"
+name = "locators"
+contents = [
+    "askui.locators.relatable.ReferencePoint",
+    "askui.locators.relatable.RelationIndex",
+    "askui.locators.locators.TextMatchType",
+    "askui.locators.relatable.CircularDependencyError",
+    "askui.locators.locators.AiElement",
+    "askui.locators.locators.Element",
+    "askui.locators.locators.Image",
+    "askui.locators.locators.Prompt",
+    "askui.locators.locators.Text",
+    "askui.locators.locators.Locator",
+    "askui.locators.relatable.Relatable.*",
+]
+
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Reporting"
+name = "reporting"
+contents = [
+    "askui.reporting.*",
+]
 
 [[tool.pydoc-markdown.renderer.pages]]
 title = "Tools"
 name = "tools"
-contents = [ "askui.tools.askui.askui_controller.*" ]
+contents = [
+    "askui.tools.agent_os.AgentOs.*",
+    "askui.tools.askui.askui_controller.ControllerServer.*",
+    "askui.tools.askui.askui_controller.AskUiControllerServer.*",
+    "askui.tools.askui.askui_controller.AskUiControllerClient.*",
+]
+
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Types"
+name = "types"
+contents = [
+    "askui.models.models.ModelComposition",
+    "askui.models.models.ModelDefinition",
+    "askui.models.router.Point",
+    "askui.models.types.response_schemas.ResponseSchema",
+    "askui.models.types.response_schemas.ResponseSchemaBase",
+    "askui.tools.agent_os.ModifierKey",
+    "askui.tools.agent_os.PcKey",
+    "askui.utils.image_utils.Img",
+]
+
+[dependency-groups]
+dev = [
+    "pydoc-markdown>=4.8.2",
+    "askui",
+]
