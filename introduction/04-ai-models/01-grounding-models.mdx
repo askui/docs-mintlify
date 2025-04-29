@@ -31,7 +31,7 @@ AskUI uses a **layered system of AI models,** each with a distinct role in under
 
 ## Configure Different Models
 
-AskUI allows you to specify which model to use for each command by passing the `model_name` parameter. This gives you flexibility to choose the most appropriate model for each specific task.
+AskUI allows you to specify which model to use for each command by passing the `model` parameter. This gives you flexibility to choose the most appropriate model for each specific task.
 
 ## Quick Reference
 
@@ -44,10 +44,10 @@ AskUI allows you to specify which model to use for each command by passing the `
 
 ### Basic Usage
 
-To use a specific model for a command, add the `model_name` parameter:
+To use a specific model for a command, add the `model` parameter:
 
 ```python
-agent.click("search field", model_name="OS-Copilot/OS-Atlas-Base-7B")
+agent.click("search field", model="OS-Copilot/OS-Atlas-Base-7B")
 ```
 
 ## Authenticate with an AI Model Provider
