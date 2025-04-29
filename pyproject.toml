@@ -99,5 +99,5 @@ contents = [
 [dependency-groups]
 dev = [
     "pydoc-markdown>=4.8.2",
-    "askui @ file:///Users/adrianstritzinger/Projects/askui/vision-agent",
+    "askui",
 ]

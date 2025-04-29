@@ -106,8 +106,18 @@ Locator for finding ui elements by an image.
 
     ```python
     from askui import locators as loc
-    # locates an image element with an image similar to "sign up button"
+    from PIL import Image as PILImage
+    from pathlib import Path
+
+    # locates an element using an image of the element
+    # passed as `str` path
     image = loc.Image("path/to/image.png")
+    # passed as `pathlib.Path`
+    image = loc.Image(Path("path/to/image.png"))
+    # passed as `PIL.Image.Image`
+    image = loc.Image(PILImage.open("path/to/image.png"))
+    # passed as data url `str`
+    image = loc.Image("data:image/png;base64,...")
     ```
 
 <a id="askui.locators.Locator"></a>
