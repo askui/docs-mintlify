@@ -73,6 +73,8 @@ title = "Tools"
 name = "tools"
 contents = [
     "askui.tools.agent_os.AgentOs.*",
+    "askui.tools.anthropic.base.ToolError",
+    "askui.tools.anthropic.base.ToolResult",
     "askui.tools.askui.askui_controller.ControllerServer.*",
     "askui.tools.askui.askui_controller.AskUiControllerServer.*",
     "askui.tools.askui.askui_controller.AskUiControllerClient.*",
@@ -90,10 +92,12 @@ contents = [
     "askui.tools.agent_os.ModifierKey",
     "askui.tools.agent_os.PcKey",
     "askui.utils.image_utils.Img",
+    "askui.exceptions.*",
+    "askui.models.askui.ai_element_utils.AiElementNotFound",
 ]
 
 [dependency-groups]
 dev = [
     "pydoc-markdown>=4.8.2",
-    "askui",
+    "askui @ file:///Users/adrianstritzinger/Projects/askui/vision-agent",
 ]

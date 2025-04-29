@@ -508,3 +508,35 @@ Stop the controller process.
 **Arguments**:
 
 - `force` _bool, optional_ - Whether to forcefully terminate the process. Defaults to `False`.
+
+<a id="askui.tools.exceptions.ToolError"></a>
+
+## askui.tools.exceptions.ToolError
+
+```python
+class ToolResult()
+```
+
+Represents the result of a tool execution.
+
+**Arguments**:
+
+- `output` _str | None, optional_ - The output of the tool.
+- `error` _str | None, optional_ - The error message of the tool.
+- `base64_image` _str | None, optional_ - The base64 image of the tool.
+- `system` _str | None, optional_ - The system message of the tool.
+
+<a id="askui.tools.exceptions.ToolError"></a>
+
+## askui.tools.exceptions.ToolError
+
+```python
+class ToolError(Exception)
+```
+
+Raised when a tool encounters an error.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+- `result` _ToolResult_ - The ToolResult that caused the error.

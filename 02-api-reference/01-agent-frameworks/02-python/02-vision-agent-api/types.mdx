@@ -2,6 +2,49 @@
 title: Types
 ---
 
+<a id="askui.exceptions.AiElementNotFound"></a>
+
+## askui.exceptions.AiElementNotFound
+
+```python
+class AiElementNotFound(ValueError)
+```
+
+Exception raised when an AI element is not found.
+
+**Arguments**:
+
+- `name` _str_ - The name of the AI element that was not found.
+- `locations` _list[pathlib.Path]_ - The locations that were searched for the AI element.
+
+<a id="askui.exceptions.AutomationError"></a>
+
+## askui.exceptions.AutomationError
+
+```python
+class AutomationError(Exception)
+```
+
+Exception raised when the automation step cannot complete.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+
+<a id="askui.exceptions.ElementNotFoundError"></a>
+
+## askui.exceptions.ElementNotFoundError
+
+```python
+class ElementNotFoundError(AutomationError)
+```
+
+Exception raised when an element cannot be located.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+
 <a id="askui.Img"></a>
 
 ## askui.Img
