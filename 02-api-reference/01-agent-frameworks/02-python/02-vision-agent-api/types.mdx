@@ -1,0 +1,290 @@
+---
+title: Types
+---
+
+<a id="askui.exceptions.AiElementNotFound"></a>
+
+## askui.exceptions.AiElementNotFound
+
+```python
+class AiElementNotFound(ValueError)
+```
+
+Exception raised when an AI element is not found.
+
+**Arguments**:
+
+- `name` _str_ - The name of the AI element that was not found.
+- `locations` _list[pathlib.Path]_ - The locations that were searched for the AI element.
+
+<a id="askui.exceptions.AutomationError"></a>
+
+## askui.exceptions.AutomationError
+
+```python
+class AutomationError(Exception)
+```
+
+Exception raised when the automation step cannot complete.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+
+<a id="askui.exceptions.ElementNotFoundError"></a>
+
+## askui.exceptions.ElementNotFoundError
+
+```python
+class ElementNotFoundError(AutomationError)
+```
+
+Exception raised when an element cannot be located.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+
+<a id="askui.Img"></a>
+
+## askui.Img
+
+```python
+Img = Union[str, Path, PILImage.Image]
+```
+
+Type of the input images for `askui.VisionAgent.get()`, `askui.VisionAgent.locate()`, etc.
+
+Accepts:
+- `PIL.Image.Image`
+- Relative or absolute file path (`str` or `pathlib.Path`)
+- Data URL (e.g., `"data:image/png;base64,..."`)
+
+<a id="askui.ModelComposition"></a>
+
+## askui.ModelComposition
+
+```python
+class ModelComposition(RootModel[list[ModelDefinition]])
+```
+
+A composition of models (list of `ModelDefinition`) to be used for a task, e.g., locating an element on the screen to be able to click on it or extracting text from an image.
+
+<a id="askui.ModelDefinition"></a>
+
+## askui.ModelDefinition
+
+```python
+class ModelDefinition(BaseModel)
+```
+
+A definition of a model.
+
+**Arguments**:
+
+- `task` _str_ - The task the model is trained for, e.g., end-to-end OCR (`"e2e_ocr"`) or object detection (`"od"`)
+- `architecture` _str_ - The architecture of the model, e.g., `"easy_ocr"` or `"yolo"`
+- `version` _str_ - The version of the model
+- `interface` _str_ - The interface the model is trained for, e.g., `"online_learning"`
+- `use_case` _str, optional_ - The use case the model is trained for. In the case of workspace specific AskUI models, this is often the workspace id but with "-" replaced by "_". Defaults to `"00000000_0000_0000_0000_000000000000"` (custom null value).
+- `tags` _list[str], optional_ - Tags for identifying the model that cannot be represented by other properties, e.g., `["trained", "word_level"]`
+
+<a id="askui.ModifierKey"></a>
+
+## askui.ModifierKey
+
+```python
+ModifierKey = Literal["command", "alt", "control", "shift", "right_shift"]
+```
+
+Modifier keys for keyboard actions.
+
+<a id="askui.PcKey"></a>
+
+## askui.PcKey
+
+```python
+PcKey = Literal[
+    "backspace",
+    "delete",
+    "enter",
+    "tab",
+    "escape",
+    "up",
+    "down",
+    "right",
+    "left",
+    "home",
+    "end",
+    "pageup",
+    "pagedown",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f11",
+    "f12",
+    "space",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "!",
+    '"',
+    "#",
+    "$",
+    "%",
+    "&",
+    "'",
+    "(",
+    ")",
+    "*",
+    "+",
+    ",",
+    "-",
+    ".",
+    "/",
+    ":",
+    ";",
+    "<",
+    "=",
+    ">",
+    "?",
+    "@",
+    "[",
+    "\\",
+    "]",
+    "^",
+    "_",
+    "`",
+    "{",
+    "|",
+    "}",
+    "~",
+]
+```
+
+PC keys for keyboard actions.
+
+<a id="askui.Point"></a>
+
+## askui.Point
+
+```python
+Point = tuple[int, int]
+```
+
+A tuple of two integers representing the coordinates of a point on the screen.
+
+<a id="askui.ResponseSchema"></a>
+
+## askui.ResponseSchema
+
+```python
+ResponseSchema = TypeVar(
+    'ResponseSchema', ResponseSchemaBase, str, bool, int, float
+)
+```
+
+Type of the responses of data extracted, e.g., using `askui.VisionAgent.get()`.
+
+The following types are allowed:
+- `ResponseSchemaBase`: Custom Pydantic models that extend `ResponseSchemaBase`
+- `str`: String responses
+- `bool`: Boolean responses
+- `int`: Integer responses
+- `float`: Floating point responses
+
+Usually, serialized as a JSON schema, e.g., `str` as `{"type": "string"}`, to be passed to model(s).
+Also used for validating the responses of the model(s) used for data extraction.
+
+<a id="askui.ResponseSchemaBase"></a>
+
+## askui.ResponseSchemaBase
+
+```python
+class ResponseSchemaBase(BaseModel)
+```
+
+Base class for response schemas to be used for defining the response of data extraction, e.g., using `askui.VisionAgent.get()`.
+
+This class extends Pydantic's BaseModel and adds constraints and configuration on top so that it can be used with models to define the schema (type) of the data to be extracted.
+
+**Example**:
+
+    ```python
+    class UrlResponse(ResponseSchemaBase):
+        url: str
+
+    # nested models should also extend ResponseSchemaBase
+    class NestedResponse(ResponseSchemaBase):
+        nested: UrlResponse
+
+    # metadata, e.g., `examples` or `description` of `Field`, is generally also passed to and considered by the models
+    class UrlResponse(ResponseSchemaBase):
+        url: str = Field(description="The URL of the response. Should used `"https"` scheme.", examples=["https://www.example.com"])
+    ```

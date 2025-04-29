@@ -21,7 +21,7 @@ npm install
 Run the following command at the root of your documentation (where mint.json is)
 
 ```
-mintlify dev
+npx mintlify dev
 ```
 
 ## Update Pages
@@ -40,7 +40,7 @@ pdm add askui@<latest version>
 
 3. Generate Docs 
 ```
-pdm run docs:generate:inference-api:python-vision-agent
+pdm run docs:generate:api
 ```
 
 4. Remove Old
