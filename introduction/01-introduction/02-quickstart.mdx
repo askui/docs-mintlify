@@ -118,13 +118,14 @@ In this quickstart tutorial, we will guide you through your first automation on 
     ```
   </Step>
   <Step title="(Optional) Enable Detailed Logging">
-    To better understand what your agent is doing, enable debug logging and reporting:
+    To better understand what your agent is doing, enable debug logging and use a reporter, e.g., the `SimpleHtmlReporter` to create a simple HTML report:
 
     ```python
     import logging
     from askui import VisionAgent
+    from askui.reporting import SimpleHtmlReporter
     
-    with VisionAgent(log_level=logging.DEBUG, enable_report=True) as agent:
+    with VisionAgent(log_level=logging.DEBUG, reporters=[SimpleHtmlReporter()]) as agent:
         # Your automation code here
     ```
   </Step>
