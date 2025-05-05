@@ -1,135 +1,145 @@
 ---
-title: "Agentic Mode"
-description: "Welcome to the home of your new documentation"
+title: "Element Selection"
+description: "Learn how to find and select UI elements with AskUI's powerful selection capabilities"
 ---
 
-# Agentic Mode with AskUI
+# Finding and Selecting UI Elements
 
-Agentic mode allows your automation to operate at a higher level of abstraction by giving the AI agent a goal to accomplish rather than specifying individual steps. This enables more flexible and powerful automations that can adapt to changing interfaces and solve complex tasks.
+AskUI provides multiple ways to find and select UI elements on your screen. This guide covers the different approaches, from simple text-based selection to advanced locator strategies.
 
-<Warning>
-  Agentic mode requires the Anthropic Claude 3.5 Sonnet Computer Use model to function. This feature is currently in beta and not recommended for production use. Make sure you have set up the `ANTHROPIC_API_KEY` environment variable as described in the [Model Usage](/introduction/04-ai-models/01-grounding-models) documentation.
-</Warning>
+## Natural Language Selection
 
-## Using the `act()` Command
-
-The `act()` command is the gateway to agentic mode in AskUI. It takes a natural language description of your goal and lets the agent work autonomously to accomplish it.
-
-### Basic Syntax
-
-### Example: Booking a Flight
+The simplest way to interact with UI elements is using natural language descriptions. AskUI's Vision Agent understands everyday language to find elements on your screen.
 
 ```python
 from askui import VisionAgent
 
 with VisionAgent() as agent:
-    agent.act("book a flight from Berlin to Paris in January")
+    # Find and click a button
+    agent.click("Login button")
+    
+    # Find and type in a text field
+    agent.type("myuser@example.com")
+    
+    # Find and hover over a menu item
+    agent.mouse_move("Settings menu")
 ```
 
-## Getting Started with Agentic Mode
+### Benefits of Natural Language Selection
 
-To use agentic mode, you'll need to:
+- **Intuitive**: Use everyday language to describe elements
+- **Context-Aware**: Understands elements based on their visual appearance and surroundings
+- **Flexible**: Works across different applications and interfaces
+- **Maintainable**: No need to update selectors when UI changes slightly
 
-1. Set up authentication with Anthropic (see [Model Usage](/introduction/04-ai-models/01-grounding-models))
-2. Use the `act()` command with a clear goal description
-3. Let the agent work autonomously to accomplish the task
+## Advanced Selection with Locators
 
-## Understanding Agentic Mode
+For more precise element selection, use AskUI's locator system to build sophisticated element selectors.
 
-Unlike single-step commands that perform specific actions (like clicking a button or typing text), agentic mode lets you describe what you want to accomplish, and the AI agent figures out how to achieve it.
+### Basic Locators
 
-### Key Benefits
+```python
+from askui import locators as loc
 
-- **Goal-oriented automation**: Focus on what you want to achieve, not how to achieve it
-- **Adaptability**: Agents can navigate changing UIs and unexpected scenarios
-- **Reduced maintenance**: Less need to update scripts when interfaces change
-- **Complex task handling**: Accomplish multi-step workflows with a single instruction
-
-## Using the `act()` Command
-
-The `act()` command is the gateway to agentic mode in AskUI. It takes a natural language description of your goal and lets the agent work autonomously to accomplish it.
-
-## Prompting Best Practices
-
-### **1. Use "simulate" for Enhanced Stability**
-
-When using the Act command, the keyword _simulate_ can improve stability and accuracy. It mimics user interactions more precisely, ensuring that actions like typing or clicking are performed as a real user would.
-
-Example:
-
-```
-agent.act("simulate a user clicking into the textfield and typing username: xyz and password: 123456")
+with VisionAgent() as agent:
+    # Find by text
+    agent.click(loc.Text("Submit"))
+    
+    # Find by element type
+    agent.click(loc.Element("textfield"))  # Find a text field
+    agent.click(loc.Element("text"))       # Find a text element
+    
+    # Find by image
+    agent.click(loc.Image("logo.png"))
 ```
 
-By simulating actions rather than directly executing them, you reduce errors caused by UI inconsistencies or timing issues.
+### Relative Locators
 
-### **2. Add "if" Conditions for Context Awareness**
+Build complex selectors by describing element relationships:
 
-To ensure reliable execution, include conditional prompts like _if_ statements. For example, only proceed with an action if specific fields (e.g., search bars) are empty. This approach prevents unintended overwrites or conflicts in native apps.
+```python
+from askui import locators as loc
 
-Example:
-
-```
-agent.act("Click on Login button, if the screen does not change then that probably means that you forgot to enter the username and password, which is username: xyz and password: 123456")
-```
-
-This technique ensures the agent adapts dynamically to the application's state, improving robustness in automation workflows.
-
-### **3. Break Actions Into Step-by-Step Instructions**
-
-Complex tasks can be simplified by breaking them into smaller steps. This makes debugging easier and enhances reliability by ensuring each step is executed sequentially.
-
-Example:
-
-```
-agent.act("""
-Simulate a user doing the following actions:
-1. Click on the Textfield below text username
-2. Type in username: xyz
-3. Click on the Textfield below text password
-4. Type in password: 123456
-5. Click on the Login button
-""")
+with VisionAgent() as agent:
+    # Find a text field next to a label
+    password_label = loc.Text("Password")
+    password_field = loc.Element("textfield").right_of(password_label)
+    
+    # Find text below a heading
+    submit_text = loc.Element("text").below(loc.Text("Complete Registration"))
+    
+    # Find an element near another element
+    menu_item = loc.Text("Settings").near(loc.Image("user-icon.png"))
 ```
 
-This approach is particularly useful for multi-step processes like form filling or playing games (e.g., Blackjack), where precision is critical.
+### Available Locator Methods
 
-### **4. Add Verification Conditions for Stability**
+- `Text()`: Find elements by their text content
+- `Element()`: Find elements by their type:
+  - `"text"`: Text elements
+  - `"textfield"`: Input fields
+- `Image()`: Find elements by their visual appearance
+- `AiElement()`: Use AI-captured elements for reliable selection
 
-Verification conditions are crucial when dealing with dynamic or ambiguous application states. For example, you can instruct the agent to proceed only if certain fields (e.g., search bars) are empty or specific UI elements are visible.
+### Locator Relationships
 
-Example:
+- `right_of()`: Element is to the right of another element
+- `left_of()`: Element is to the left of another element
+- `above()`: Element is above another element
+- `below()`: Element is below another element
+- `near()`: Element is near another element
 
-```
-agent.act("""
-Simulate a user doing the following actions:
-1. Click on the Textfield below text username
-2. Type in username: xyz
-3. Click on the Textfield below text password
-4. Type in password: 123456
-5. Click on the Login button
+## Multi-Monitor Support
 
-Only proceed if the search bar is empty.
-""")
-```
+When working with multiple monitors, specify which display to automate:
 
-This ensures that your automation script adapts dynamically to real-time application states, preventing errors like overwriting existing data.
+```python
+with VisionAgent(display=1) as agent:  # Use primary display
+    agent.click("Element on first monitor")
 
-### **5. Use Multiple Approaches for Actions**
-
-Flexibility is key when automating tasks, especially for repetitive actions like deleting text. The AskUI Vision Agent allows you to use multiple approaches for the same action, ensuring compatibility across different scenarios.
-
-Example:
-
-```
-# Approach 1: Delete using backspace
-agent.act("Simulate deleting the text 'xyz' by pressing backspace")
-
-# Approach 2: Delete using right-click and delete option
-agent.act("Simulate deleting the text 'xyz' by right-clicking and pressing delete")
-
-# Approach 3: Delete using cmd+a and backspace
-agent.act("Simulate deleting the text 'xyz' by pressing command + a, and afterwards pressing backspace")
+with VisionAgent(display=2) as agent:  # Use secondary display
+    agent.click("Element on second monitor")
 ```
 
-By combining multiple approaches, you increase flexibility and ensure that your automation script works across various environments and input methods.
+## AI Elements
+
+For complex or dynamic elements, use AI Elements to capture and reuse specific visual elements:
+
+```bash
+# Capture elements from your screen
+AskUI-NewAIElement
+```
+
+Use captured AI Elements in your code:
+
+```python
+from askui import locators as loc
+
+with VisionAgent() as agent:
+    agent.click(loc.AiElement("my-element-name"))
+```
+
+<Note>
+  If you cannot use the AskUI-NewAIElement command, activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
+</Note>
+
+## Best Practices
+
+1. **Start Simple**
+   - Use natural language selection for basic cases
+   - Only use locators when needed for precision
+
+2. **Be Specific**
+   - Use clear, descriptive text for natural language selection
+   - Combine multiple locators for unique identification
+   - Use the correct element types with `Element()` locator
+
+3. **Handle Dynamic Content**
+   - Use relative locators for elements that move
+   - Consider AI Elements for complex visual patterns
+
+4. **Multi-Monitor Setup**
+   - Test on each monitor to find the correct display number
+   - Use consistent display settings across your team
+
+By following these guidelines, you'll create robust and maintainable element selection strategies for your automation workflows.

@@ -1,152 +1,155 @@
 ---
-title: "Single-Step Actions"
-description: "Welcome to the home of your new documentation"
+title: "Interactions and Tools"
+description: "Learn how to interact with UI elements using AskUI's powerful tools and actions"
 ---
 
-# Single-Step Actions in AskUI
+# Interacting with UI Elements
 
-AskUI provides a comprehensive set of single-step actions that allow you to interact with any UI element on your screen. These actions range from basic mouse clicks to complex keyboard combinations and system operations.
+Once you've selected an element, you can interact with it using AskUI's comprehensive set of actions and tools. This guide covers the different ways to interact with elements, from basic clicks to complex keyboard operations.
 
-## Core Interaction Commands
+## Basic Actions
 
-|                | **Description**                        | **Models** | **Example (Python)**                 |
-| -------------- | -------------------------------------- | ---------- | ------------------------------------ |
-| `click()`      | Clicks on an element described by text | All        | `agent.click('Login button')`        |
-| `type()`       | Types text into a focused element      | All        | `agent.type('username@example.com')` |
-| `mouse_move()` | Moves the mouse over located element   | All        | `agent.mouse_move('red button')`     |
+The most common actions for interacting with elements:
 
-Detailed usage on how to use click can be found [here](/02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent).
+```python
+from askui import VisionAgent
 
-## Tools
+with VisionAgent() as agent:
+    # Click actions
+    agent.click("Login button")  # Single click
+    agent.click("Submit", button="right")  # Right click
+    agent.click("Open", button="middle")  # Middle click
+    
+    # Text input
+    agent.type("myuser@example.com")  # Type text
+    agent.type("password123", interval=0.1)  # Type with delay
+    
+    # Mouse movement
+    agent.mouse_move("Menu item")  # Move to element
+    agent.mouse_move(100, 200)  # Move to coordinates
+```
 
-AskUI provides several built-in tools to interact with the operating system and applications:
+## Keyboard Operations
 
-|              | **Description**                 | **Example (Python)**                                   |
-| ------------ | ------------------------------- | ------------------------------------------------------ |
-| `os`         | Provides OS-level operations    | `agent.tools.os.keyboard_release()`                    |
-| `webbrowser` | Controls web browser operations | `agent.tools.webbrowser.open_new("https://askui.com")` |
-| `clipboard`  | Manages clipboard operations    | `agent.tools.clipboard.copy("Text to copy")`           |
+Control keyboard input for complex interactions:
 
-## Assertion and Information Commands
+```python
+with VisionAgent() as agent:
+    # Basic keyboard input
+    agent.keyboard("enter")  # Press Enter
+    agent.keyboard("tab")  # Press Tab
+    
+    # Keyboard shortcuts
+    agent.keyboard("a", modifier_keys=["control"])  # Ctrl+A
+    agent.keyboard("c", modifier_keys=["control"])  # Ctrl+C
+    agent.keyboard("v", modifier_keys=["control"])  # Ctrl+V
+```
 
-|         | **Description**                              | **Models**        | **Example (Python)**                                        |
-| ------- | -------------------------------------------- | ----------------- | ----------------------------------------------------------- |
-| `get()` | Extracts text or information from the screen | sonnet-3.5-latest | `text = agent.get('What is the value in the total field?')` |
+### Supported Keyboard Keys
 
-## Supported Keyboard Keys
+#### Modifier Keys
+- `alt`, `control`, `shift`, `command`
+- `left_control`, `right_control`
+- `left_alt`, `right_alt`
+- `left_shift`, `right_shift`
 
-AskUI Agent OS supports a wide range of keyboard keys for automation. This reference lists all supported keys organized by category, along with their status and description.
+#### Navigation Keys
+- Arrow keys: `up`, `down`, `left`, `right`
+- `home`, `end`, `pageup`, `pagedown`
+- `tab`, `enter`, `escape`
 
-### Modifier Keys
+#### Function Keys
+- `f1` through `f24` (except `f10`)
 
-These keys modify the behavior of other keys when pressed in combination.
+#### Media Keys
+- `audio_mute`, `audio_vol_up`, `audio_vol_down`
+- `audio_play`, `audio_stop`, `audio_next`, `audio_prev`
 
-| Key Name         | Description                       | Status       |
-| :--------------- | :-------------------------------- | :----------- |
-| `alt`            | ALT key                           | Special case |
-| `capslock`       | CAPS LOCK key                     | Special case |
-| `command`        | Windows key (both left and right) | Special case |
-| `control`        | CTRL key                          | Special case |
-| `left_control`   | Left CONTROL key                  | Special case |
-| `numpad_lock`    | NUM LOCK key                      | Special case |
-| `right_alt`      | Right ALT key                     | Special case |
-| `right_control`  | Right CONTROL key                 | Special case |
-| `right_shift`    | Right SHIFT key                   | Special case |
-| `shift`          | SHIFT key                         | Special case |
-| (Left ALT key)   | Left ALT key                      | Special case |
-| (Left SHIFT key) | Left SHIFT key                    | Special case |
+## Built-in Tools
 
-### Alphanumeric Keys
+AskUI provides several built-in tools for different types of interactions:
 
-Standard alphanumeric keys for text input.
+### OS Tools
 
-| Key Name  | Description         | Press | Release |
-| :-------- | :------------------ | :---- | :------ |
-| `0` - `9` | Numeric keys 0-9    | ✅     | ✅       |
-| `a` - `z` | Alphabetic keys A-Z | ✅     | ✅       |
+Control operating system-level operations:
 
-### Control Keys
+```python
+with VisionAgent() as agent:
+    # Keyboard operations
+    agent.tools.os.keyboard_tap("a", modifier_keys=["control"])
+    agent.tools.os.keyboard_release()
+    
+    # Mouse operations
+    agent.tools.os.mouse(100, 100)  # Move to coordinates
+    agent.tools.os.click("left", 2)  # Double click
+```
 
-Basic control keys for text editing and navigation.
+### Web Browser Tools
 
-| Key Name    | Description   | Press | Release |
-| :---------- | :------------ | :---- | :------ |
-| `backspace` | BACKSPACE key | ✅     | ✅       |
-| `delete`    | DEL key       | ✅     | ✅       |
-| `enter`     | ENTER key     | ✅     | ✅       |
-| `escape`    | ESC key       | ✅     | ✅       |
-| `space`     | SPACEBAR key  | ✅     | ✅       |
-| `tab`       | TAB key       | ✅     | ✅       |
+Control web browser operations:
 
-### Arrow Keys
+```python
+with VisionAgent() as agent:
+    # Open new browser window
+    agent.tools.webbrowser.open_new("https://askui.com")
+    
+    # Open in new tab
+    agent.tools.webbrowser.open_new_tab("https://docs.askui.com")
+```
 
-Directional arrow keys for navigation.
+### Clipboard Tools
 
-| Key Name | Description     | Press | Release |
-| :------- | :-------------- | :---- | :------ |
-| `down`   | DOWN ARROW key  | ❌     | ❌       |
-| `left`   | LEFT ARROW key  | ✅     | ✅       |
-| `right`  | RIGHT ARROW key | ✅     | ✅       |
-| `up`     | UP ARROW key    | ✅     | ✅       |
+Manage clipboard operations:
 
-### Function Keys
+```python
+with VisionAgent() as agent:
+    # Copy and paste
+    agent.tools.clipboard.copy("Text to copy")
+    result = agent.tools.clipboard.paste()
+```
 
-Function keys F1-F24 for special operations.
+## Information Extraction
 
-| Key Name      | Description           | Press          | Release        |
-| :------------ | :-------------------- | :------------- | :------------- |
-| `f1` - `f9`   | Function keys F1-F9   | ✅ (except F10) | ✅ (except F10) |
-| `f10`         | F10 key               | ❌              | ❌              |
-| `f11` - `f24` | Function keys F11-F24 | ✅              | ✅              |
+Use the `get()` method to extract information from the screen:
 
-### Media Control Keys
+```python
+with VisionAgent() as agent:
+    # Get text content
+    url = agent.get("What is the current URL?")
+    
+    # Get structured data using response schema
+    from askui import ResponseSchemaBase
+    
+    class UserInfo(ResponseSchemaBase):
+        username: str
+        is_online: bool
+    
+    user_info = agent.get(
+        "What is the username and online status?",
+        response_schema=UserInfo
+    )
+```
 
-Keys for controlling media playback and volume.
+## Best Practices
 
-| Key Name         | Description          | Press | Release |
-| :--------------- | :------------------- | :---- | :------ |
-| `audio_mute`     | Volume Mute key      | ✅     | ✅       |
-| `audio_next`     | Next Track key       | ✅     | ✅       |
-| `audio_play`     | Play/Pause Media key | ❌     | ❌       |
-| `audio_prev`     | Previous Track key   | ✅     | ✅       |
-| `audio_stop`     | Stop Media key       | ✅     | ✅       |
-| `audio_vol_down` | Volume Down key      | ✅     | ✅       |
-| `audio_vol_up`   | Volume Up key        | ✅     | ✅       |
+1. **Action Selection**
+   - Use the simplest action that accomplishes your goal
+   - Consider element state before interacting
+   - Handle potential errors gracefully
 
-### Keypad Keys
+2. **Keyboard Operations**
+   - Use modifier keys for shortcuts
+   - Release keys after use
+   - Use appropriate key combinations
 
-Numeric keypad keys for numeric input.
+3. **Tool Usage**
+   - Choose the appropriate tool for the task
+   - Combine tools when needed
+   - Follow tool-specific best practices
 
-| Key Name                | Description             | Press        | Release      |
-| :---------------------- | :---------------------- | :----------- | :----------- |
-| `numpad_*`              | Multiply key            | ✅            | ✅            |
-| `numpad_+`              | Add key                 | ✅            | ✅            |
-| `numpad_-`              | Subtract key            | ✅            | ✅            |
-| `numpad_.`              | Decimal key             | ✅            | ✅            |
-| `numpad_/`              | Divide key              | ❌            | ❌            |
-| `numpad_0` - `numpad_9` | Numeric keypad 0-9 keys | ✅ (except 5) | ✅ (except 5) |
-| `numpad_5`              | Numeric keypad 5 key    | ❌            | ❌            |
+4. **Information Extraction**
+   - Use response schemas for structured data
+   - Be specific in your queries
+   - Handle potential errors
 
-### Special Purpose Keys
-
-Additional keys for navigation and special functions.
-
-| Key Name      | Description      | Press | Release |
-| :------------ | :--------------- | :---- | :------ |
-| `end`         | END key          | ✅     | ✅       |
-| `home`        | HOME key         | ✅     | ✅       |
-| `insert`      | INS key          | ✅     | ✅       |
-| `pagedown`    | PAGE DOWN key    | ✅     | ✅       |
-| `pageup`      | PAGE UP key      | ✅     | ✅       |
-| `printscreen` | PRINT SCREEN key | ❌     | ❌       |
-
-### Unsupported Key Categories
-
-The following key categories are currently unsupported:
-
-- **#️⃣ Symbol Keys**: Various symbol and punctuation keys
-- **🈯️ International Keys**: IME and language-specific keys
-- **🖱️ Mouse Keys**: Mouse button emulation keys
-- Various browser control keys
-- Application launch keys
-- System keys (Sleep, Help, etc.)
+By following these guidelines and using the appropriate actions and tools, you can create robust and reliable automation workflows with AskUI.
