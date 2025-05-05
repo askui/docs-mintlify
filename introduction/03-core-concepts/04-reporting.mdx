@@ -1,0 +1,121 @@
+---
+title: "Reporting and Logging"
+description: "Learn how to monitor and debug your AskUI automation workflows"
+---
+
+AskUI provides powerful reporting and logging capabilities to help you monitor and debug your automation workflows. This guide covers how to use these features effectively.
+
+## Logging
+
+Enable detailed logging to better understand what your agent is doing during execution. This is particularly useful for debugging and monitoring automation workflows.
+
+### Basic Logging
+
+```python
+import logging
+from askui import VisionAgent
+
+# Set log level to DEBUG for detailed output
+with VisionAgent(log_level=logging.DEBUG) as agent:
+    agent.click("Login button")
+    agent.type("myuser@example.com")
+```
+
+The DEBUG log level will show you:
+- Detailed information about each action
+- Element detection results
+- Screen capture details
+- Any errors or warnings
+
+## Reporting
+
+AskUI's reporting system allows you to generate detailed reports of your agent's actions. This is useful for:
+- Debugging automation workflows
+- Documenting test runs
+- Sharing results with team members
+- Analyzing automation performance
+
+### Using the Simple HTML Reporter
+
+```python
+from askui import VisionAgent
+from askui.reporting import SimpleHtmlReporter
+
+with VisionAgent(reporters=[SimpleHtmlReporter()]) as agent:
+    agent.click("Login button")
+    agent.type("myuser@example.com")
+```
+
+The SimpleHtmlReporter generates an HTML report containing:
+- Screenshots of each action
+- Timestamps
+- Action details
+- Success/failure status
+
+### Creating Custom Reporters
+
+You can create custom reporters by implementing the `Reporter` interface:
+
+```python
+from typing import Optional, Union
+from typing_extensions import override
+from askui.reporting import Reporter
+from PIL import Image
+
+class CustomReporter(Reporter):
+    @override
+    def add_message(
+        self,
+        role: str,
+        content: Union[str, dict, list],
+        image: Optional[Image.Image | list[Image.Image]] = None,
+    ) -> None:
+        # Add your custom message handling logic here
+        pass
+
+    @override
+    def generate(self) -> None:
+        # Add your custom report generation logic here
+        pass
+
+# Use your custom reporter
+with VisionAgent(reporters=[CustomReporter()]) as agent:
+    agent.click("Login button")
+```
+
+### Using Multiple Reporters
+
+You can use multiple reporters simultaneously. Their methods will be called in the order they are listed:
+
+```python
+from askui import VisionAgent
+from askui.reporting import SimpleHtmlReporter
+
+with VisionAgent(reporters=[
+    SimpleHtmlReporter(),  # First reporter
+    CustomReporter()       # Second reporter
+]) as agent:
+    agent.click("Login button")
+```
+
+## Best Practices
+
+1. **Logging Levels**
+   - Use DEBUG for development and troubleshooting
+   - Use INFO for normal operation
+   - Use WARNING for potential issues
+   - Use ERROR for critical problems
+
+2. **Reporting**
+   - Generate reports for important test runs
+   - Include relevant screenshots
+   - Document any failures or issues
+   - Share reports with team members
+
+3. **Custom Reporters**
+   - Implement specific reporting needs
+   - Add custom metrics or analytics
+   - Integrate with your existing tools
+   - Format reports for your team's needs
+
+By implementing these logging and reporting features, you'll have better visibility into your automation workflows and be able to debug issues more effectively. 

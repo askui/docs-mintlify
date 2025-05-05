@@ -1,6 +1,6 @@
 ---
 title: Prerequisites
-description: 'What you need before getting started.'
+description: 'What you need before getting started with AskUI.'
 ---
 
 ## System Requirements
@@ -19,17 +19,76 @@ AskUI SDK is compatible with:
 - **Linux**:  
   - Ubuntu 18.04 or newer
 
-## AskUI Account
+## Required Software
+
+Before installing AskUI, ensure you have:
+
+**Python 3.10 or newer**
+   - Required for running AskUI scripts
+   - Install from [python.org](https://python.org)
+
+
+## AskUI Account Setup
 
 To use AskUI, you'll need to create an account:
 
-1. Sign up at [askui.com](https://askui.com)
+1. Sign up at [hub.askui.com](https://hub.askui.com)
 2. Activate your **free trial** (no credit card required)
-3. Access your workspace with:
+3. Access your workspace to get:
    - Installer downloads
    - Access tokens
    - Project templates
 
+## Environment Setup
+
+1. **Install AskUI SDK**
+   ```bash
+   pip install askui
+   ```
+
+2. **Set up environment variables**
+
+   For macOS/Linux:
+   ```bash
+   # For AskUI authentication
+   export ASKUI_WORKSPACE_ID=<your-workspace-id>
+   export ASKUI_TOKEN=<your-access-token>
+
+   # For Anthropic models (optional)
+   export ANTHROPIC_API_KEY=<your-anthropic-api-key>
+   ```
+
+   For Windows PowerShell:
+   ```powershell
+   # For AskUI authentication
+   $env:ASKUI_WORKSPACE_ID="<your-workspace-id>"
+   $env:ASKUI_TOKEN="<your-access-token>"
+
+   # For Anthropic models (optional)
+   $env:ANTHROPIC_API_KEY="<your-anthropic-api-key>"
+   ```
+
+   For Windows Command Prompt:
+   ```cmd
+   # For AskUI authentication
+   set ASKUI_WORKSPACE_ID=<your-workspace-id>
+   set ASKUI_TOKEN=<your-access-token>
+
+   # For Anthropic models (optional)
+   set ANTHROPIC_API_KEY=<your-anthropic-api-key>
+   ```
+
 ## Before You Begin
 
-Ensure you've completed the installation process on your system before continuing to the next steps. This will guarantee a smooth setup experience for your first AI Vision Agent.
+1. **Complete the installation process** on your system
+2. **Set up your development environment** with the required tools
+3. **Configure your authentication** with the necessary API keys
+4. **Test your setup** with a simple automation script
+
+## Next Steps
+
+Once you've completed the prerequisites, you can:
+
+1. [Create your first automation script](/introduction/02-getting-started/02-first-automation)
+2. [Learn about element selection](/introduction/03-core-concepts/01-element-selection)
+3. [Explore available AI models](/introduction/04-ai-models/01-grounding-models)

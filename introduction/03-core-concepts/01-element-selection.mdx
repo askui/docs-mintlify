@@ -1,94 +1,136 @@
 ---
-title: "Selecting Elements"
-description: "On this page you will learn the different recommended practices"
+title: "Agentic Mode"
+description: "Welcome to the home of your new documentation"
 ---
 
-Selecting the right UI elements is crucial for creating reliable automation workflows. This guide provides strategies to improve accuracy and performance when interacting with UI elements.
+# Agentic Mode with AskUI
 
-### Example: Amazon Automation
+Agentic mode allows your automation to operate at a higher level of abstraction by giving the AI agent a goal to accomplish rather than specifying individual steps. This enables more flexible and powerful automations that can adapt to changing interfaces and solve complex tasks.
+
+<Warning>
+  Agentic mode requires the Anthropic Claude 3.5 Sonnet Computer Use model to function. This feature is currently in beta and not recommended for production use. Make sure you have set up the `ANTHROPIC_API_KEY` environment variable as described in the [Model Usage](/introduction/04-ai-models/01-grounding-models) documentation.
+</Warning>
+
+
+## Using the `act()` Command
+
+The `act()` command is the gateway to agentic mode in AskUI. It takes a natural language description of your goal and lets the agent work autonomously to accomplish it.
+
+### Basic Syntax
+
+### Example: Booking a Flight
 
 ```python
 from askui import VisionAgent
 
-# Initialize your agent context manager
 with VisionAgent() as agent:
-    # Use the webbrowser tool to start browsing
-    agent.tools.webbrowser.open_new("http://www.amazon.com")
-
-    agent.wait(3)
-    agent.click("Search Amazon.de inputfield")
-    agent.type("nike shoes")
-    agent.keyboard('enter')
-
-    agent.act("""
-    You are testing amazon.de for functionality and have searched for nike shoes.
-    Simulate a online shopper:
-
-    Look for the first option which is below Results and click on the first picture from the left
-
-    """)
-
-    agent.click("Add to Basket")
-
-    agent.act("""
-    You are testing amazon.de for functionality and have searched for nike shoes.
-    Simulate a online shopper:
-
-    Go to the basket
-    """)
-
-    basket_ver = agent.get("Is the shoe in the basket and is a value calculated?")
-    print(basket_ver)
+    agent.act("book a flight from Berlin to Paris in January")
 ```
 
-## Natural Language Element Selection
+## Getting Started with Agentic Mode
 
-AskUI's Vision Agent uses natural language prompts to identify and interact with UI elements on your screen. This approach offers several advantages:
+To use agentic mode, you'll need to:
 
-- **Intuitive Descriptions**: Use everyday language to describe elements like "login button" or "search field"
-- **Contextual Understanding**: The agent understands elements based on their visual appearance and surrounding context
-- **Flexibility**: No need to learn complex selector syntax or DOM structures
+1. Set up authentication with Anthropic (see [Model Usage](/introduction/04-ai-models/01-grounding-models))
+2. Use the `act()` command with a clear goal description
+3. Let the agent work autonomously to accomplish the task
 
-### How Natural Language Selection Works
+## Understanding Agentic Mode
 
-When you provide a natural language prompt like "login button", the Vision Agent:
+Unlike single-step commands that perform specific actions (like clicking a button or typing text), agentic mode lets you describe what you want to accomplish, and the AI agent figures out how to achieve it.
 
-1. Captures the current screen state
-2. Analyzes the visual elements present
-3. Identifies the element that best matches your description
-4. Performs the requested action on that element
+### Key Benefits
 
-## AI Elements
+- **Goal-oriented automation**: Focus on what you want to achieve, not how to achieve it
+- **Adaptability**: Agents can navigate changing UIs and unexpected scenarios
+- **Reduced maintenance**: Less need to update scripts when interfaces change
+- **Complex task handling**: Accomplish multi-step workflows with a single instruction
 
-AI Elements allow you to capture and use specific visual elements from your screen for reliable automation.
+## Using the `act()` Command
 
-<Note>
-  Enable the AskUI Development Environment as described in the installation guide and activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
-</Note>
+The `act()` command is the gateway to agentic mode in AskUI. It takes a natural language description of your goal and lets the agent work autonomously to accomplish it.
 
-```bash
-AskUI-NewAIElement
+## Prompting Best Practices
+
+### **1. Use "simulate" for Enhanced Stability**
+
+When using the Act command, the keyword _simulate_ can improve stability and accuracy. It mimics user interactions more precisely, ensuring that actions like typing or clicking are performed as a real user would.
+
+Example:
+
+```
+agent.act("simulate a user clicking into the textfield and typing username: xyz and password: 123456")
 ```
 
-This command captures elements from your screen for use in AskUI workflows.
+By simulating actions rather than directly executing them, you reduce errors caused by UI inconsistencies or timing issues.
 
-It then can be used by setting the model config to `askui-ai-element`, like:
+### **2. Add "if" Conditions for Context Awareness**
 
-```Python
-from askui import locators as loc
+To ensure reliable execution, include conditional prompts like _if_ statements. For example, only proceed with an action if specific fields (e.g., search bars) are empty. This approach prevents unintended overwrites or conflicts in native apps.
 
-agent.click(loc.AiElement("my-name"))
+Example:
+
+```
+agent.act("Click on Login button, if the screen does not change then that probably means that you forgot to enter the username and password, which is username: xyz and password: 123456")
 ```
 
-**Parameters:**
+This technique ensures the agent adapts dynamically to the application's state, improving robustness in automation workflows.
 
-- **Name** (Optional): The name for the screenshot file. If defined, indicates only one element is being captured. For multiple elements, you'll provide names individually.
-- **WorkspaceId** (Optional): Uses the Workspace ID from settings by default. Required if not in settings.
-- **AlwaysPreview** (Optional): Automatically opens preview without prompting. Cannot be used with NoPreview.
-- **NoPreview** (Optional): Skips the preview. Cannot be used with AlwaysPreview.
-- **OneShot** (Optional): Ends snipping after first successful AI Element creation.
-- **Annotate** (Optional): Takes a fullscreen capture for region annotation.
+### **3. Break Actions Into Step-by-Step Instructions**
 
-**Example Output:**
+Complex tasks can be simplified by breaking them into smaller steps. This makes debugging easier and enhances reliability by ensuring each step is executed sequentially.
 
-By implementing these techniques, you'll build **more reliable, flexible, and accurate** automation workflows that can handle complex UI interactions with confidence.
+Example:
+
+```
+agent.act("""
+Simulate a user doing the following actions:
+1. Click on the Textfield below text username
+2. Type in username: xyz
+3. Click on the Textfield below text password
+4. Type in password: 123456
+5. Click on the Login button
+""")
+```
+
+This approach is particularly useful for multi-step processes like form filling or playing games (e.g., Blackjack), where precision is critical.
+
+### **4. Add Verification Conditions for Stability**
+
+Verification conditions are crucial when dealing with dynamic or ambiguous application states. For example, you can instruct the agent to proceed only if certain fields (e.g., search bars) are empty or specific UI elements are visible.
+
+Example:
+
+```
+agent.act("""
+Simulate a user doing the following actions:
+1. Click on the Textfield below text username
+2. Type in username: xyz
+3. Click on the Textfield below text password
+4. Type in password: 123456
+5. Click on the Login button
+
+Only proceed if the search bar is empty.
+""")
+```
+
+This ensures that your automation script adapts dynamically to real-time application states, preventing errors like overwriting existing data.
+
+### **5. Use Multiple Approaches for Actions**
+
+Flexibility is key when automating tasks, especially for repetitive actions like deleting text. The AskUI Vision Agent allows you to use multiple approaches for the same action, ensuring compatibility across different scenarios.
+
+Example:
+
+```
+# Approach 1: Delete using backspace
+agent.act("Simulate deleting the text 'xyz' by pressing backspace")
+
+# Approach 2: Delete using right-click and delete option
+agent.act("Simulate deleting the text 'xyz' by right-clicking and pressing delete")
+
+# Approach 3: Delete using cmd+a and backspace
+agent.act("Simulate deleting the text 'xyz' by pressing command + a, and afterwards pressing backspace")
+```
+
+By combining multiple approaches, you increase flexibility and ensure that your automation script works across various environments and input methods.
