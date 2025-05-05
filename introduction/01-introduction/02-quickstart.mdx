@@ -11,6 +11,7 @@ In this quickstart tutorial, we'll guide you through creating your first automat
 
     <Accordion title="Windows">
       Download the appropriate installer for your system:
+
       - [AskUI Installer for AMD64](https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Win-AMD64-Web.exe)
       - [AskUI Installer for ARM64](https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Win-ARM64-Web.exe)
 
@@ -20,12 +21,14 @@ In this quickstart tutorial, we'll guide you through creating your first automat
       **⚠️ Warning:** Agent OS currently does not work on Wayland. Switch to XOrg to use it.
 
       For AMD64 systems:
+
       ```bash
       curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run
       bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-AMD64-Web.run
       ```
 
       For ARM64 systems:
+
       ```bash
       curl -L -o /tmp/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run https://files.askui.com/releases/Installer/Latest/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run
       bash /tmp/AskUI-Suite-Latest-User-Installer-Linux-ARM64-Web.run
@@ -45,25 +48,28 @@ In this quickstart tutorial, we'll guide you through creating your first automat
     pip install askui
     ```
 
-    **Note:** Requires Python version >=3.10.
+    **Note:** Requires Python version \>=3.10.
   </Step>
   <Step title="Set Up Authentication">
     Set up authentication with your chosen AI model provider:
 
     <Accordion title="AskUI">
       For macOS/Linux:
+
       ```bash
       export ASKUI_WORKSPACE_ID=<your-workspace-id>
       export ASKUI_TOKEN=<your-token>
       ```
-      
+
       For Windows PowerShell:
+
       ```powershell
       $env:ASKUI_WORKSPACE_ID="<your-workspace-id>"
       $env:ASKUI_TOKEN="<your-token>"
       ```
 
       For Windows Command Prompt:
+
       ```cmd
       set ASKUI_WORKSPACE_ID=<your-workspace-id>
       set ASKUI_TOKEN=<your-token>
@@ -71,16 +77,19 @@ In this quickstart tutorial, we'll guide you through creating your first automat
     </Accordion>
     <Accordion title="Anthropic">
       For macOS/Linux:
+
       ```bash
       export ANTHROPIC_API_KEY=<your-api-key>
       ```
-      
+
       For Windows PowerShell:
+
       ```powershell
       $env:ANTHROPIC_API_KEY="<your-api-key>"
       ```
 
       For Windows Command Prompt:
+
       ```cmd
       set ANTHROPIC_API_KEY=<your-api-key>
       ```
@@ -93,7 +102,7 @@ In this quickstart tutorial, we'll guide you through creating your first automat
     from askui import VisionAgent
     import logging
     from askui.reporting import SimpleHtmlReporter
-
+    
     # Initialize your agent with logging and reporting
     with VisionAgent(
         log_level=logging.DEBUG,
@@ -102,61 +111,43 @@ In this quickstart tutorial, we'll guide you through creating your first automat
         # Open Amazon website
         agent.tools.webbrowser.open_new("http://www.amazon.com")
         agent.wait(3)  # Wait for page to load
-
+    
         # Search for a product
         agent.click("Search Amazon input field")
         agent.type("nike shoes")
         agent.keyboard('enter')
         agent.wait(2)  # Wait for search results
-
-        # Select the first product
-        agent.act("""
-        You are testing amazon.com for functionality and have searched for nike shoes.
-        Simulate an online shopper:
-        Look for the first option which is below Results and click on the first picture from the left
-        """)
-        agent.wait(2)  # Wait for product page
-
-        # Add to cart
-        agent.click("Add to Cart")
-        agent.wait(2)  # Wait for cart update
-
-        # Go to cart
-        agent.act("""
-        You are testing amazon.com for functionality and have searched for nike shoes.
-        Simulate an online shopper:
-        Go to the cart
-        """)
-
-        # Verify cart contents
-        cart_status = agent.get("Is the shoe in the cart and is a value calculated?")
+    
+        # Verify page contents
+        page_status = agent.get("Are Nike shoes visible on the screen?")
         print(f"Cart Status: {cart_status}")
     ```
 
     Run the script:
+
     ```bash
     python amazon_shopping.py
     ```
 
     The script will:
+
     1. Open Amazon in your default browser
     2. Search for "nike shoes"
-    3. Select the first product
-    4. Add it to the cart
-    5. Verify the cart contents
-    6. Generate an HTML report of the automation
+    3. Verify the cart contents
+    4. Generate an HTML report of the automation
   </Step>
   <Step title="Understanding the Code">
     Let's break down the key components:
 
     1. **Agent Initialization**
+
        ```python
        with VisionAgent(log_level=logging.DEBUG, reporters=[SimpleHtmlReporter()]) as agent:
        ```
        - Creates a new agent with debug logging
        - Enables HTML reporting for better visibility
-
     2. **Basic Interactions**
+
        ```python
        agent.click("Search Amazon input field")
        agent.type("nike shoes")
@@ -164,21 +155,12 @@ In this quickstart tutorial, we'll guide you through creating your first automat
        ```
        - Uses natural language to find elements
        - Performs basic keyboard and mouse actions
+    3. **Information Extraction**
 
-    3. **Complex Actions**
        ```python
-       agent.act("""
-       You are testing amazon.com...
-       Simulate an online shopper:
-       Look for the first option...
-       """)
-       ```
-       - Uses AI to perform complex, multi-step actions
-       - Provides context for better decision making
-
-    4. **Information Extraction**
-       ```python
-       cart_status = agent.get("Is the shoe in the cart...")
+        # Verify page contents
+           page_status = agent.get("Are Nike shoes visible on the screen?")
+           print(f"Cart Status: {cart_status}")
        ```
        - Retrieves information from the UI
        - Uses natural language queries
@@ -189,7 +171,7 @@ In this quickstart tutorial, we'll guide you through creating your first automat
     ```yaml
     name: AskUI Automation
     on: [push]
-
+    
     jobs:
       test:
         runs-on: ubuntu-latest
