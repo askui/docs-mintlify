@@ -101,6 +101,7 @@ In this quickstart tutorial, we'll guide you through creating your first automat
     ```python
     from askui import VisionAgent
     import logging
+    from askui import locators as loc
     from askui.reporting import SimpleHtmlReporter
     
     # Initialize your agent with logging and reporting
@@ -113,14 +114,14 @@ In this quickstart tutorial, we'll guide you through creating your first automat
         agent.wait(3)  # Wait for page to load
     
         # Search for a product
-        agent.click("Search Amazon input field")
+        agent.click(loc.Element("textfield"))
         agent.type("nike shoes")
         agent.keyboard('enter')
         agent.wait(2)  # Wait for search results
     
         # Verify page contents
         page_status = agent.get("Are Nike shoes visible on the screen?")
-        print(f"Cart Status: {cart_status}")
+        print(f"Cart Status: {page_status}")
     ```
 
     Run the script:
@@ -149,7 +150,7 @@ In this quickstart tutorial, we'll guide you through creating your first automat
     2. **Basic Interactions**
 
        ```python
-       agent.click("Search Amazon input field")
+       agent.click(loc.Element("textfield"))
        agent.type("nike shoes")
        agent.keyboard('enter')
        ```
@@ -160,7 +161,7 @@ In this quickstart tutorial, we'll guide you through creating your first automat
        ```python
         # Verify page contents
            page_status = agent.get("Are Nike shoes visible on the screen?")
-           print(f"Cart Status: {cart_status}")
+           print(f"Cart Status: {page_status}")
        ```
        - Retrieves information from the UI
        - Uses natural language queries
