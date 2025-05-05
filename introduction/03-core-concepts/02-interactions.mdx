@@ -22,7 +22,6 @@ with VisionAgent() as agent:
     
     # Text input
     agent.type("myuser@example.com")  # Type text
-    agent.type("password123", interval=0.1)  # Type with delay
     
     # Mouse movement
     agent.mouse_move("Menu item")  # Move to element
@@ -48,20 +47,24 @@ with VisionAgent() as agent:
 ### Supported Keyboard Keys
 
 #### Modifier Keys
+
 - `alt`, `control`, `shift`, `command`
 - `left_control`, `right_control`
 - `left_alt`, `right_alt`
 - `left_shift`, `right_shift`
 
 #### Navigation Keys
+
 - Arrow keys: `up`, `down`, `left`, `right`
 - `home`, `end`, `pageup`, `pagedown`
 - `tab`, `enter`, `escape`
 
 #### Function Keys
+
 - `f1` through `f24` (except `f10`)
 
 #### Media Keys
+
 - `audio_mute`, `audio_vol_up`, `audio_vol_down`
 - `audio_play`, `audio_stop`, `audio_next`, `audio_prev`
 
@@ -136,17 +139,14 @@ with VisionAgent() as agent:
    - Use the simplest action that accomplishes your goal
    - Consider element state before interacting
    - Handle potential errors gracefully
-
 2. **Keyboard Operations**
    - Use modifier keys for shortcuts
    - Release keys after use
    - Use appropriate key combinations
-
 3. **Tool Usage**
    - Choose the appropriate tool for the task
    - Combine tools when needed
    - Follow tool-specific best practices
-
 4. **Information Extraction**
    - Use response schemas for structured data
    - Be specific in your queries
