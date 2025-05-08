@@ -66,10 +66,10 @@ with VisionAgent() as agent:
     password_field = loc.Element("textfield").right_of(password_label)
     
     # Find text below a heading
-    submit_text = loc.Element("text").below(loc.Text("Complete Registration"))
+    submit_text = loc.Element("text").below_of(loc.Text("Complete Registration"))
     
     # Find an element near another element
-    menu_item = loc.Text("Settings").near(loc.Image("user-icon.png"))
+    menu_item = loc.Text("Settings").nearest_to(loc.Image("user-icon.png"))
 ```
 
 ### Available Locator Methods
@@ -128,16 +128,13 @@ with VisionAgent() as agent:
 1. **Start Simple**
    - Use natural language selection for basic cases
    - Only use locators when needed for precision
-
 2. **Be Specific**
    - Use clear, descriptive text for natural language selection
    - Combine multiple locators for unique identification
    - Use the correct element types with `Element()` locator
-
 3. **Handle Dynamic Content**
    - Use relative locators for elements that move
    - Consider AI Elements for complex visual patterns
-
 4. **Multi-Monitor Setup**
    - Test on each monitor to find the correct display number
    - Use consistent display settings across your team
