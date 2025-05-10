@@ -391,8 +391,9 @@
       "group": "Account & Settings",
       "pages": [
         "03-account/01-account-management/01-account-management",
-        "03-account/01-account-management/02-tokens",
-        "03-account/01-account-management/03-billing"
+        "03-account/01-account-management/02-members-management",
+        "03-account/01-account-management/03-tokens",
+        "03-account/01-account-management/04-billing"
       ]
     },
     {
