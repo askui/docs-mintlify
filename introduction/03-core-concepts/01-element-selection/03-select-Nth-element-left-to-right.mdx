@@ -7,6 +7,11 @@ description: "This example shows how you can find multiple elements on the scree
 
 <CodeGroup>
 
+```python The Agentic way
+agent.act('Wait for the Site to load, then Click on the 3 Chevron Icon from the left, below text "Payment Due Date"')
+```
+
+
 ```typescript TypeScript
 xit('Select nTh Element from left to right', async () => {
 
@@ -36,27 +41,54 @@ xit('Select nTh Element from left to right', async () => {
 
 Before doing anything, the test waits for 1 second to make sure the UI is rendered and stable.
 
-```typescript
+<CodeGroup>
+
+```python The Agentic way
+agent.act('Wait for the Site to load,...')
+```
+
+
+```typescript TypeScript
 await aui.waitFor(1000).exec(); 
 ```
+
+</CodeGroup>
 
 ### 2. Finds all matching elements
 
 We search the screen for **all elements** that match the given reference image:
 
-```typescript
+<CodeGroup>
+
+```python The Agentic way
+agent.act('...Click on the 3 Chevron Icon...')
+```
+
+
+```typescript TypeScript
 await aui.get().customElement({ customImage }).exec();
 ```
 
+</CodeGroup>
+
 This returns a list of matching elements.
 
-### 3. Sorts elements left to right
+### 3. Sorts elements top to bottom
 
-We sort the found elements by their vertical position on the screen (`ymin`):
+We sort the found elements by their horizontal position on the screen (`xmin`):
 
-```typescript
+<CodeGroup>
+
+```python The Agentic way
+agent.act('...Icon from the top...')
+```
+
+
+```typescript TypeScript
 .sort((element1, element2) => element1.bndbox.xmin - element2.bndbox.xmin)
 ```
+
+</CodeGroup>
 
 This ensures the topmost element is at index `0`, the second one at index `1`, and so on.
 
@@ -64,9 +96,19 @@ This ensures the topmost element is at index `0`, the second one at index `1`, a
 
 We pick the element at the desired index, move the mouse to its center, and click:
 
-```typescript
-await aui.moveMouse(Math.ceil((element.bndbox.xmax + element.bndbox.xmin) /2), Math.ceil((element.bndbox.ymax + element.bndbox.ymin) /2)).exec();
+<CodeGroup>
+
+```python The Agentic way
+agent.act('...Click,...below text "Payment Due Date"')
 ```
+
+
+```typescript TypeScript
+await aui.moveMouse(Math.ceil((element.bndbox.xmax + element.bndbox.xmin) /2), Math.ceil((element.bndbox.ymax + element.bndbox.ymin) /2)).exec();
+      await aui.mouseLeftClick().exec()
+```
+
+</CodeGroup>
 
 ## When to Use This
 
