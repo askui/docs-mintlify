@@ -43,7 +43,7 @@ It uses computer vision models to locate UI elements and execute actions on them
 ```python
 def act(
     goal: Annotated[str, Field(min_length=1)],
-    model: ModelComposition | str | None = None
+    model: str | None = None
 ) -> None
 ```
 
@@ -56,7 +56,7 @@ interface interactions.
 **Arguments**:
 
 - `goal` _str_ - A description of what the agent should achieve.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for achieving the `goal`.
+- `model` _str | None, optional_ - The composition or name of the model(s) to be used for achieving the `goal`.
   
 
 **Example**:
@@ -144,7 +144,7 @@ def get(
     query: Annotated[str, Field(min_length=1)],
     image: Optional[Img] = None,
     response_schema: Type[ResponseSchema] | None = None,
-    model: ModelComposition | str | None = None
+    model: str | None = None
 ) -> ResponseSchema | str
 ```
 
@@ -155,7 +155,7 @@ Retrieves information from an image (defaults to a screenshot of the current scr
 - `query` _str_ - The query describing what information to retrieve.
 - `image` _Img | None, optional_ - The image to extract information from. Defaults to a screenshot of the current screen. Can be a path to an image file, a PIL Image object or a data URL.
 - `response_schema` _Type[ResponseSchema] | None, optional_ - A Pydantic model class that defines the response schema. If not provided, returns a string.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for retrieving information from the screen or image using the `query`. Note: `response_schema` is not supported by all models.
+- `model` _str | None, optional_ - The composition or name of the model(s) to be used for retrieving information from the screen or image using the `query`. Note: `response_schema` is not supported by all models.
   
 
 **Returns**:
@@ -301,16 +301,18 @@ Simulates the release of a key.
 ```python
 def keyboard(
     key: PcKey | ModifierKey,
-    modifier_keys: Optional[list[ModifierKey]] = None
+    modifier_keys: Optional[list[ModifierKey]] = None,
+    repeat: Annotated[int, Field(gt=0)] = 1
 ) -> None
 ```
 
-Simulates pressing a key or key combination on the keyboard.
+Simulates pressing (and releasing) a key or key combination on the keyboard.
 
 **Arguments**:
 
 - `key` _PcKey | ModifierKey_ - The main key to press. This can be a letter, number, special character, or function key.
 - `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Common modifier keys include `'ctrl'`, `'alt'`, `'shift'`.
+- `repeat` _int, optional_ - The number of times to press (and release) the key. Must be greater than `0`. Defaults to `1`.
   
 
 **Example**:
@@ -323,6 +325,7 @@ Simulates pressing a key or key combination on the keyboard.
         agent.keyboard('enter')  # Press 'Enter' key
         agent.keyboard('v', ['control'])  # Press Ctrl+V (paste)
         agent.keyboard('s', ['control', 'shift'])  # Press Ctrl+Shift+S
+        agent.keyboard('a', repeat=2)  # Press 'a' key twice
     ```
 
 <a id="askui.VisionAgent.mouse_move"></a>

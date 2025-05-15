@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:45356422242daf196cd869bd0a5f7f94098884abed7ce2af49dd8765c8fb6d50"
+content_hash = "sha256:43e9f0744e667e754f96040edb83de08d13680840c534639e151eae82a77065e"
 
 [[metadata.targets]]
 requires_python = "==3.13.*"
@@ -63,7 +63,7 @@ files = [
 
 [[package]]
 name = "askui"
-version = "0.3.0"
+version = "0.4.0"
 requires_python = ">=3.10"
 summary = "Automate computer tasks in Python"
 groups = ["dev"]
@@ -87,8 +87,8 @@ dependencies = [
     "tenacity>=9.0.0",
 ]
 files = [
-    {file = "askui-0.3.0-py3-none-any.whl", hash = "sha256:06baf5135c663891f00638744693b0b82366c77254b20713a715676b96e6551d"},
-    {file = "askui-0.3.0.tar.gz", hash = "sha256:7f05645aa5188821d103ae9d9a0b76a3477e1e90af9500d197b18199ebf51cef"},
+    {file = "askui-0.4.0-py3-none-any.whl", hash = "sha256:f4456807521b02eea0a5ad1a5d3fd83fe74ec531884ba70beba40bdf967ceb25"},
+    {file = "askui-0.4.0.tar.gz", hash = "sha256:1576a9595142d4a41efa027be5fbee5ba3e56efcbdb89ac23717fcd424f580de"},
 ]
 
 [[package]]

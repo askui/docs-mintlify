@@ -75,9 +75,9 @@ contents = [
     "askui.tools.agent_os.AgentOs.*",
     "askui.tools.anthropic.base.ToolError",
     "askui.tools.anthropic.base.ToolResult",
-    "askui.tools.askui.askui_controller.ControllerServer.*",
     "askui.tools.askui.askui_controller.AskUiControllerServer.*",
     "askui.tools.askui.askui_controller.AskUiControllerClient.*",
+    "askui.tools.askui.exceptions.*",
 ]
 
 [[tool.pydoc-markdown.renderer.pages]]
@@ -93,11 +93,15 @@ contents = [
     "askui.tools.agent_os.PcKey",
     "askui.utils.image_utils.Img",
     "askui.exceptions.*",
-    "askui.models.askui.ai_element_utils.AiElementNotFound",
+    "askui.models.askui.exceptions.*", # added to `askui.exceptions`
+    "askui.models.askui.ai_element_utils.AiElementNotFound", # added to `askui.exceptions`
+    # AgentToolbox and ModelRouter (parameter of VisionAgent.__init__()) currently not included 
+    # as they are mainly used for internal testing and have a lot of dependencies which would
+    # bloat the docs
 ]
 
 [dependency-groups]
 dev = [
     "pydoc-markdown>=4.8.2",
-    "askui",
+    "askui>=0.4.0",
 ]
