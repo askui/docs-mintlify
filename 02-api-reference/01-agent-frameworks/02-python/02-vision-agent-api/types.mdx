@@ -17,6 +17,42 @@ Exception raised when an AI element is not found.
 - `name` _str_ - The name of the AI element that was not found.
 - `locations` _list[pathlib.Path]_ - The locations that were searched for the AI element.
 
+<a id="askui.exceptions.AskUiApiError"></a>
+
+## askui.exceptions.AskUiApiError
+
+```python
+class AskUiApiError(Exception)
+```
+
+Base exception for AskUI API errors.
+
+This exception is raised when there is an error communicating with the AskUI API.
+It serves as a base class for more specific API-related exceptions.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+
+<a id="askui.exceptions.AskUiApiRequestFailedError"></a>
+
+## askui.exceptions.AskUiApiRequestFailedError
+
+```python
+class AskUiApiRequestFailedError(AskUiApiError)
+```
+
+Exception raised when an API response is not as expected.
+
+This exception is raised when the API returns a response that cannot be processed
+or indicates an error condition. It includes the HTTP status code and error message
+from the API response.
+
+**Arguments**:
+
+- `status_code` _int_ - The HTTP status code from the API response.
+- `message` _str_ - The error message from the API response.
+
 <a id="askui.exceptions.AutomationError"></a>
 
 ## askui.exceptions.AutomationError
@@ -44,6 +80,52 @@ Exception raised when an element cannot be located.
 **Arguments**:
 
 - `message` _str_ - The error message.
+
+<a id="askui.exceptions.QueryNoResponseError"></a>
+
+## askui.exceptions.QueryNoResponseError
+
+```python
+class QueryNoResponseError(AutomationError)
+```
+
+Exception raised when a query does not return a response.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+- `query` _str_ - The query that was made.
+
+<a id="askui.exceptions.QueryUnexpectedResponseError"></a>
+
+## askui.exceptions.QueryUnexpectedResponseError
+
+```python
+class QueryUnexpectedResponseError(AutomationError)
+```
+
+Exception raised when a query returns an unexpected response.
+
+**Arguments**:
+
+- `message` _str_ - The error message.
+- `query` _str_ - The query that was made.
+- `response` _Any_ - The response that was received.
+
+<a id="askui.exceptions.ModelNotFoundError"></a>
+
+## askui.exceptions.ModelNotFoundError
+
+```python
+class ModelNotFoundError(AutomationError)
+```
+
+Exception raised when an invalid model is used.
+
+**Arguments**:
+
+- `model` _str | ModelComposition_ - The model that was used.
+- `model_type` _Literal["Act", "Grounding (locate)", "Query (get/extract)"]_ - The type of model that was used.
 
 <a id="askui.Img"></a>
 

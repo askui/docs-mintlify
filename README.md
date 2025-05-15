@@ -40,7 +40,7 @@ pdm add askui@<latest version>
 
 3. Generate Docs 
 ```
-pdm run docs:generate:api
+pdm run docs:api:generate
 ```
 
 4. Remove Old
