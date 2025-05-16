@@ -1,92 +1,150 @@
 ---
-title: "Selecting Elements"
-description: "On this page you will learn the different recommended practices"
+title: "Element Selection"
+description: "Learn how to find and select UI elements with AskUI's powerful selection capabilities"
 ---
 
-Selecting the right UI elements is crucial for creating reliable automation workflows. This guide provides strategies to improve accuracy and performance when interacting with UI elements.
+# Finding and Selecting UI Elements
 
-### Example: Amazon Automation
+AskUI provides multiple ways to find and select UI elements on your screen. This guide covers the different approaches, from simple text-based selection to advanced locator strategies.
+
+## Natural Language Selection
+
+The simplest way to interact with UI elements is using natural language descriptions. AskUI's Vision Agent understands everyday language to find elements on your screen.
 
 ```python
 from askui import VisionAgent
 
-# Initialize your agent context manager
 with VisionAgent() as agent:
-    # Use the webbrowser tool to start browsing
-    agent.tools.webbrowser.open_new("http://www.amazon.com")
-
-    agent.wait(3)
-    agent.click("Search Amazon.de inputfield")
-    agent.type("nike shoes")
-    agent.keyboard('enter')
-
-    agent.act("""
-    You are testing amazon.de for functionality and have searched for nike shoes.
-    Simulate a online shopper:
-
-    Look for the first option which is below Results and click on the first picture from the left
-
-    """)
-
-    agent.click("Add to Basket")
-
-    agent.act("""
-    You are testing amazon.de for functionality and have searched for nike shoes.
-    Simulate a online shopper:
-
-    Go to the basket
-    """)
-
-    basket_ver = agent.get("Is the shoe in the basket and is a value calculated?")
-    print(basket_ver)
+    # Find and click a button
+    agent.click("Login button")
+    
+    # Find and type in a text field
+    agent.type("myuser@example.com")
+    
+    # Find and hover over a menu item
+    agent.mouse_move("Settings menu")
 ```
 
-## Natural Language Element Selection
+### Benefits of Natural Language Selection
 
-AskUI's Vision Agent uses natural language prompts to identify and interact with UI elements on your screen. This approach offers several advantages:
+- **Intuitive**: Use everyday language to describe elements
+- **Context-Aware**: Understands elements based on their visual appearance and surroundings
+- **Flexible**: Works across different applications and interfaces
+- **Maintainable**: No need to update selectors when UI changes slightly
 
-- **Intuitive Descriptions**: Use everyday language to describe elements like "login button" or "search field"
-- **Contextual Understanding**: The agent understands elements based on their visual appearance and surrounding context
-- **Flexibility**: No need to learn complex selector syntax or DOM structures
+## Advanced Selection with Locators
 
-### How Natural Language Selection Works
+For more precise element selection, use AskUI's locator system to build sophisticated element selectors.
 
-When you provide a natural language prompt like "login button", the Vision Agent:
+### Basic Locators
 
-1. Captures the current screen state
-2. Analyzes the visual elements present
-3. Identifies the element that best matches your description
-4. Performs the requested action on that element
+```python
+from askui import locators as loc
+
+with VisionAgent() as agent:
+    # Find by text
+    agent.click(loc.Text("Submit"))
+    
+    # Find by element type
+    agent.click(loc.Element("textfield"))  # Find a text field
+    agent.click(loc.Element("text"))       # Find a text element
+    
+    # Find by image
+    agent.click(loc.Image("logo.png"))
+```
+
+### Relative Locators
+
+Build complex selectors by describing element relationships:
+
+```python
+from askui import locators as loc
+
+with VisionAgent() as agent:
+    # Find a text field next to a label
+    password_label = loc.Text("Password")
+    password_field = loc.Element("textfield").right_of(password_label)
+    
+    # Find text below a heading
+    submit_text = loc.Element("text").below_of(loc.Text("Complete Registration"))
+    
+    # Find an element near another element
+    menu_item = loc.Text("Settings").nearest_to(loc.Image("user-icon.png"))
+```
+
+### Available Locator Methods
+
+- `Text()`: Find elements by their text content
+- `Element()`: Find elements by their type:
+  - `"text"`: Text elements
+  - `"textfield"`: Input fields
+- `Image()`: Find elements by their visual appearance
+- `AiElement()`: Use AI-captured elements for reliable selection
+
+### Locator Relationships
+
+- `right_of()`: Element is to the right of another element
+- `left_of()`: Element is to the left of another element
+- `above()`: Element is above another element
+- `below()`: Element is below another element
+- `near()`: Element is near another element
+
+## Multi-Monitor Support
+
+When working with multiple monitors, specify which display to automate:
+
+```python
+with VisionAgent(display=1) as agent:  # Use primary display
+    agent.click("Element on first monitor")
+
+with VisionAgent(display=2) as agent:  # Use secondary display
+    agent.click("Element on second monitor")
+```
 
 ## AI Elements
 
-AI Elements allow you to capture and use specific visual elements from your screen for reliable automation.
-
-<Note>
-  Enable the AskUI Development Environment as described in the installation guide and activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
-</Note>
+For complex or dynamic elements, use AI Elements to capture and reuse specific visual elements:
 
 ```bash
-AskUI-NewAIElement
+# Capture elements from your screen
+AskUI-NewAiElement -Name "my-element-name"
 ```
 
-This command captures elements from your screen for use in AskUI workflows.
+Use captured AI Elements in your code:
+<CodeGroup>
 
-It then can be used by setting the model config to `askui-ai-element`, like:
+```python Vision Agent (Python)
+from askui import locators as loc
 
-```Python
-agent.click("ai-element-name", model_name="askui-ai-element")
+with VisionAgent() as agent:
+    agent.click(loc.AiElement("my-element-name"))
 ```
 
-**Parameters:**
+```python Typescript ADK
+ await aui.click().aiElement("my-element-name").exec()
+```
 
-- **Name** (Optional): The name for the screenshot file. If defined, indicates only one element is being captured. For multiple elements, you'll provide names individually.
-- **WorkspaceId** (Optional): Uses the Workspace ID from settings by default. Required if not in settings.
-- **AlwaysPreview** (Optional): Automatically opens preview without prompting. Cannot be used with NoPreview.
-- **NoPreview** (Optional): Skips the preview. Cannot be used with AlwaysPreview.
-- **OneShot** (Optional): Ends snipping after first successful AI Element creation.
-- **Annotate** (Optional): Takes a fullscreen capture for region annotation.
 
-**Example Output:**
+</CodeGroup>
 
-By implementing these techniques, you'll build **more reliable, flexible, and accurate** automation workflows that can handle complex UI interactions with confidence.
+<Note>
+  If you cannot use the AskUI-NewAIElement command, activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
+</Note>
+
+## Best Practices
+
+1. **Start Simple**
+   - Use natural language selection for basic cases
+   - Only use locators when needed for precision
+2. **Be Specific**
+   - Use clear, descriptive text for natural language selection
+   - Combine multiple locators for unique identification
+   - Use the correct element types with `Element()` locator
+3. **Handle Dynamic Content**
+   - Use relative locators for elements that move
+   - Consider AI Elements for complex visual patterns
+4. **Multi-Monitor Setup**
+   - Test on each monitor to find the correct display number
+   - Use consistent display settings across your team
+
+By following these guidelines, you'll create robust and maintainable element selection strategies for your automation workflows.

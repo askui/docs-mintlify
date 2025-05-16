@@ -75,7 +75,7 @@
       "group": "Introduction",
       "pages": [
         "introduction/01-introduction/01-overview",
-        "introduction/01-introduction/03-how-it-works"
+        "introduction/01-introduction/03-how-askui-works"
       ]
     },
     {
@@ -90,7 +90,8 @@
       "pages": [
         "introduction/03-core-concepts/01-element-selection",
         "introduction/03-core-concepts/02-interactions",
-        "introduction/03-core-concepts/03-agentic-mode"
+        "introduction/03-core-concepts/03-agentic-mode",
+        "introduction/03-core-concepts/04-reporting-logging"
       ]
     },
     {
@@ -148,7 +149,10 @@
       "group": "Python Vision Agent",
       "pages": [
         "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools"
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/types"
       ]
     },
     {

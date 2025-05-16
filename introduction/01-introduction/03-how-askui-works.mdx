@@ -1,0 +1,190 @@
+---
+title: "How AskUI Works"
+description: "Learn about AskUI's architecture and how it automates your UI interactions"
+---
+
+## Overview
+
+AskUI is a powerful UI automation framework that combines computer vision, natural language processing, and AI to interact with user interfaces. Here's how it works:
+
+## Core Components
+
+### 1. Vision Agent
+The Vision Agent is the main interface for interacting with UI elements. It combines several technologies:
+
+- **Computer Vision**: Analyzes screen content to identify UI elements
+- **Natural Language Processing**: Understands human-like commands
+- **AI Models**: Makes intelligent decisions about UI interactions
+
+```python
+from askui import VisionAgent
+
+# Initialize the agent with optional configuration
+with VisionAgent(
+    log_level="INFO",  # Set logging level
+    display=1,         # Use first display
+    model="askui"      # Use default model
+) as agent:
+    # Your automation code here
+    agent.click("login button")
+```
+
+### 2. Element Selection
+AskUI uses multiple approaches to find and interact with UI elements:
+
+- **Natural Language**: Describe elements in plain English
+  ```python
+  agent.click("submit button")
+  agent.type("john.doe")
+  ```
+
+- **Locators**: Build precise element selectors
+  ```python
+  from askui import locators as loc
+  
+  # Find by text
+  agent.click(loc.Text("Submit"))
+  
+  # Find by element type
+  agent.click(loc.Element("textfield"))  # Find a text field
+  agent.click(loc.Element("text"))       # Find a text element
+  
+  # Find by image
+  agent.click(loc.Image("logo.png"))
+  
+  # Use relative locators
+  password_label = loc.Text("Password")
+  password_field = loc.Element("textfield").right_of(password_label)
+  
+  # Find text below a heading
+  submit_text = loc.Element("text").below(loc.Text("Complete Registration"))
+  
+  # Find an element near another element
+  menu_item = loc.Text("Settings").near(loc.Image("user-icon.png"))
+  ```
+
+- **AI Elements**: Capture and reuse specific visual elements
+  ```bash
+  # Capture elements from your screen
+  AskUI-NewAIElement
+  ```
+
+  ```python
+  from askui import locators as loc
+
+  with VisionAgent() as agent:
+      agent.click(loc.AiElement("my-element-name"))
+  ```
+
+### 3. Interaction Methods
+
+AskUI provides various ways to interact with UI elements:
+
+- **Basic Actions**
+  ```python
+  # Click actions
+  agent.click("button")                    # Left click
+  agent.click("button", button="right")    # Right click
+  agent.click("button", repeat=2)          # Double click
+  
+  # Keyboard actions
+  agent.type("input field", "text")        # Type text
+  agent.keyboard('enter')                  # Press Enter
+  agent.key_down('shift')                  # Hold Shift
+  agent.key_up('shift')                    # Release Shift
+  
+  # Mouse actions
+  agent.mouse_move(100, 200)              # Move to coordinates
+  agent.mouse_scroll(0, 10)               # Scroll down
+  ```
+
+- **Complex Actions**
+  ```python
+  agent.act("""
+  You are testing a login form.
+  Enter the username "john.doe" and password "secret123"
+  Then click the login button
+  """)
+  ```
+
+- **Information Extraction**
+  ```python
+  # Get text content
+  text = agent.get("What is the error message?")
+  
+  # Get element location
+  point = agent.locate("submit button")
+  print(f"Element found at: {point}")
+  ```
+
+### 4. Tools and Utilities
+
+AskUI includes built-in tools for common tasks:
+
+- **Web Browser Control**
+  ```python
+  agent.tools.webbrowser.open_new("https://example.com")
+  ```
+
+- **OS Operations**
+  ```python
+  agent.tools.os.copy_to_clipboard("text")
+  agent.tools.os.paste_from_clipboard()
+  ```
+
+- **Multi-Monitor Support**
+  ```python
+  # Specify which display to use
+  agent.set_display(1)  # Use second display
+  ```
+
+## Workflow
+
+1. **Initialization**
+   - Load AI models
+   - Set up logging and reporting
+   - Configure environment
+
+2. **Element Detection**
+   - Capture screen content
+   - Analyze UI elements
+   - Match elements to commands
+
+3. **Action Execution**
+   - Plan the interaction
+   - Perform the action
+   - Verify the result
+
+4. **Error Handling**
+   - Detect failures
+   - Retry if needed
+   - Report issues
+
+## Best Practices
+
+1. **Element Selection**
+   - Use natural language for simple cases
+   - Use locators for precise control
+   - Capture elements for reuse
+
+2. **Performance**
+   - Add appropriate wait times
+   - Use efficient element selection
+   - Monitor response times
+
+3. **Reliability**
+   - Handle dynamic content
+   - Implement retry logic
+   - Use appropriate AI models
+
+4. **Maintenance**
+   - Keep element descriptions clear
+   - Document complex workflows
+   - Use version control
+
+## Next Steps
+
+- [Get Started](/introduction/02-getting-started/01-prerequisites) with AskUI
+- Learn about [Element Selection](/introduction/03-core-concepts/01-element-selection)
+- Explore [Available AI Models](/introduction/04-ai-models/01-grounding-models)
+- Read about [Best Practices](/introduction/03-core-concepts/03-agentic-mode) 
