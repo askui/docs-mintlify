@@ -8,7 +8,7 @@ description: "This example shows how you can find multiple elements on the scree
 <CodeGroup>
 
 ```python The Agentic way
-agent.act('Wait for the Site to load, then Click on the 3 Chevron Icon from the left, below text "Payment Due Date"')
+agent.act('Wait for the Site to load, then Click on the third Chevron Icon from the left, below text "Payment Due Date"')
 ```
 
 
@@ -18,7 +18,7 @@ xit('Select nTh Element from left to right', async () => {
     await aui.waitFor(1000).exec();
     
     async function clickOnTopNElement(customImage: string, index: number = 0){
-      const elements = (await aui.get().customElement({customImage: '/Users/ron.vancann/Desktop/Screenshot 2025-05-14 at 11.41.45.png'}).exec()).sort((element1, element2) => element1.bndbox.xmin - element2.bndbox.xmin)
+      const elements = (await aui.get().customElement({customImage: '/Users/Desktop/Screenshot 2025-05-14 at 11.41.45.png'}).exec()).sort((element1, element2) => element1.bndbox.xmin - element2.bndbox.xmin)
       if(elements.length == 0){
         throw Error("No Element found!")
       }
@@ -28,7 +28,7 @@ xit('Select nTh Element from left to right', async () => {
       await aui.mouseLeftClick().exec()
     }
 
-    await clickOnTopNElement("porsche-ep.png", 1);
+    await clickOnTopNElement("nthelement.png", 1);
 
   });
 ```
