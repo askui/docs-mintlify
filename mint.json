@@ -88,7 +88,14 @@
     {
       "group": "Core Concepts",
       "pages": [
-        "introduction/03-core-concepts/01-element-selection",
+        {
+          "group": "Element Selection",
+          "pages": [
+            "introduction/03-core-concepts/01-element-selection/01-element-selection",
+            "introduction/03-core-concepts/01-element-selection/02-select-Nth-element-top-to-bottom",
+            "introduction/03-core-concepts/01-element-selection/03-select-Nth-element-left-to-right"
+          ]
+        },
         "introduction/03-core-concepts/02-interactions",
         "introduction/03-core-concepts/03-agentic-mode",
         "introduction/03-core-concepts/04-reporting-logging"
