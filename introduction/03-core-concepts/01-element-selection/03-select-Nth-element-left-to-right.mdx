@@ -1,5 +1,5 @@
 ---
-title: "Selecting the Nth element on screen left to right"
+title: "Selecting the Nth Element on Screen Left to Right"
 description: "This example shows how you can find multiple elements on the screen using a reference image and click on a specific one based on its position from the left to the right. "
 ---
 
@@ -18,7 +18,7 @@ xit('Select nTh Element from left to right', async () => {
     await aui.waitFor(1000).exec();
     
     async function clickOnTopNElement(customImage: string, index: number = 0){
-      const elements = (await aui.get().customElement({customImage: '/Users/Desktop/Screenshot 2025-05-14 at 11.41.45.png'}).exec()).sort((element1, element2) => element1.bndbox.xmin - element2.bndbox.xmin)
+      const elements = (await aui.get().customElement({customImage: '/Screenshot.png'}).exec()).sort((element1, element2) => element1.bndbox.xmin - element2.bndbox.xmin)
       if(elements.length == 0){
         throw Error("No Element found!")
       }
@@ -44,7 +44,7 @@ Before doing anything, the test waits for 1 second to make sure the UI is render
 <CodeGroup>
 
 ```python The Agentic way
-agent.act('Wait for the Site to load,...')
+agent.act('Wait for the site to load,...')
 ```
 
 
@@ -61,7 +61,7 @@ We search the screen for **all elements** that match the given reference image:
 <CodeGroup>
 
 ```python The Agentic way
-agent.act('...Click on the 3 Chevron Icon...')
+agent.act('...Click on the third Chevron Icon...')
 ```
 
 
@@ -104,7 +104,7 @@ agent.act('...Click,...below text "Payment Due Date"')
 
 
 ```typescript TypeScript
-await aui.moveMouse(Math.ceil((element.bndbox.xmax + element.bndbox.xmin) /2), Math.ceil((element.bndbox.ymax + element.bndbox.ymin) /2)).exec();
+await aui.moveMouse(Math.ceil((element.bndbox.xmax + element.bndbox.xmin)/2), Math.ceil((element.bndbox.ymax + element.bndbox.ymin)/2)).exec();
       await aui.mouseLeftClick().exec()
 ```
 
