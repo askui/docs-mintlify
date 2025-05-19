@@ -1,0 +1,127 @@
+---
+title: "Selecting the Nth Element on Screen Top to Bottom"
+description: "This example shows how you can find multiple elements on the screen using a reference image and click on a specific one based on its position from the top to the bottom. "
+---
+
+## Example Code
+
+<CodeGroup>
+
+```python The Agentic way
+agent.act('Wait for the Site to load, then Click on the third Chevron Icon from the top, below text "Payment Due Date"')
+```
+
+
+```typescript TypeScript
+it('Select Nth Element from top to bottom', async () => {
+
+    await aui.waitFor(1000).exec();
+
+    async function clickOnTopNElement(customImage: string, index: number = 0){
+      const elements = (await aui.get().customElement({customImage: '/Screenshot.png'}).exec()).sort((element1, element2) => element1.bndbox.ymin - element2.bndbox.ymin)
+      if(elements.length == 0){
+        throw Error("No Element found!")
+      }
+      const element = elements[index]
+
+      await aui.moveMouse(Math.ceil((element.bndbox.xmax + element.bndbox.xmin) /2), Math.ceil((element.bndbox.ymax + element.bndbox.ymin) /2)).exec();
+      await aui.mouseLeftClick().exec()
+    }
+
+    await clickOnTopNElement("nthelement.png", <strong>1</strong>);
+
+  });
+```
+
+</CodeGroup>
+
+## What This Does
+
+### 1. Waits for UI to load
+
+Before doing anything, the test waits for one second to make sure the UI is rendered and stable.
+
+<CodeGroup>
+
+```python The Agentic way
+agent.act('Wait for the site to load,...')
+```
+
+
+```typescript TypeScript
+await aui.waitFor(1000).exec(); 
+```
+
+</CodeGroup>
+
+### 2. Finds all matching elements
+
+We search the screen for **all elements** that match the given reference image:
+
+<CodeGroup>
+
+```python The Agentic way
+agent.act('...Click on the third Chevron Icon...')
+```
+
+
+```typescript TypeScript
+await aui.get().customElement({ customImage }).exec();
+```
+
+</CodeGroup>
+
+This returns a list of matching elements.
+
+### 3. Sorts elements top to bottom
+
+We sort the found elements by their vertical position on the screen (`ymin`):
+
+<CodeGroup>
+
+```python The Agentic way
+agent.act('...Icon from the top...')
+```
+
+
+```typescript TypeScript
+.sort((e1, e2) => e1.bndbox.ymin - e2.bndbox.ymin); 
+```
+
+</CodeGroup>
+
+This ensures the topmost element is at index `0`, the second one at index `1`, and so on.
+
+### 4. Clicks on the selected element
+
+We pick the element at the desired index, move the mouse to its center, and click:
+
+<CodeGroup>
+
+```python The Agentic way
+agent.act('...Click,...below text "Payment Due Date"')
+```
+
+
+```typescript TypeScript
+await aui.moveMouse(
+  Math.ceil((element.bndbox.xmax + element.bndbox.xmin) / 2),
+  Math.ceil((element.bndbox.ymax + element.bndbox.ymin) / 2)
+).exec();
+```
+
+</CodeGroup>
+
+## When to Use This
+
+Use this approach if:
+
+- You want to interact with repeated elements (e.g., list items, buttons).
+- You need to click a specific one (e.g., the second, third, etc.).
+- The elements look identical or similar, and position is the only differentiator.
+
+## Tips
+
+- Make sure the reference image clearly captures the element.
+- Test with different screen resolutions or zoom settings to ensure consistency.
+- You can adjust the `index` parameter to click a different element.
