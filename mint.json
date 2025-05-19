@@ -392,8 +392,9 @@
       "pages": [
         "03-account/01-account-management/01-account-management",
         "03-account/01-account-management/02-members-management",
-        "03-account/01-account-management/03-tokens",
-        "03-account/01-account-management/04-billing"
+        "03-account/01-account-management/03-usage-billing-dashboard",
+        "03-account/01-account-management/04-tokens",
+        "03-account/01-account-management/05-billing"
       ]
     },
     {
