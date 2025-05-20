@@ -1,0 +1,403 @@
+---
+title: "WIP: Best Practices for Reliable Automation"
+description: "Provide guidelines on designing robust automation scripts, including error handling, retries, and validation steps"
+---
+
+
+
+### 1. Misspellings of Words
+
+The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
+
+| Expected (Truth) | OCR Output (Prediction) |
+| --- | --- |
+| `Hallo` | `HaII0` |
+
+### Solutions
+
+### 1. Re-Teach the OCR Model Using AskUI’s OCR Re-Teaching App
+
+You can directly correct OCR predictions and improve model accuracy by training your workspace-specific model.
+
+### Steps:
+
+1. Start the AskUI shell:
+    
+    ```bash
+    bash
+    
+    askui-shell
+    ```
+    
+2. Launch the OCR Teaching App:
+    
+    ```bash
+    bash
+    
+    AskUI-StartOCRTeaching
+    ```
+    
+3. Upload a screenshot containing the misclassified word (e.g., “Hallo”).
+4. Switch to **Character-Level Mode** for precise corrections.
+5. Select the wrongly detected word (`HaII0`) and replace it with the correct label: `Hallo`.
+6. Click **"Copy Model"** to copy the newly trained model ID.
+7. In your automation code (e.g., `askui-helper.ts`), update the `exec()` call to use the new model:
+
+```
+ts
+CopyEdit
+await aui.click().text("Hallo").exec([{
+    "task": "e2e_ocr",
+    "architecture": "easy_ocr",
+    "version": "1",
+    "interface": "online_learning",
+    "useCase": "<your-workspace-id>",
+    "tags": ["char_level"]
+}])
+
+```
+
+## Text Detection Issues
+
+### **Icon Text Merging**
+
+**Problem:** Sometimes, Text Detector/ annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
+
+**Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
+
+**✅ Expected Behavior**
+
+🖼️ *Icon and Text are detected separately:*
+
+![image.png](attachment:d0cea22a-f716-4e46-b3ca-07866a51513a:image.png)
+
+🧑 ✅ Name ✅  🤖 ✅ Role ✅
+
+👍 Works with `click().text("Name")` or `click().text("Name")`
+
+**❌ Actual Issue**
+
+🖼️ I*con and text are detected together:*
+
+![image.png](attachment:4c1589c9-31af-46bc-aa81-8530abefadf5:image.png)
+
+`🧑 Name` ❌  🤖 ✅ Role ✅
+
+👎 Can't find `click().text("Name")`.
+
+**Solutions:** 
+
+### Option 1: Re-Teach the OCR Model to ignore the icon.
+
+1. Start Re-Teachting App
+2. Teach the Text Recognition to ignore the icon
+3. Use the Custom Model.
+
+```yaml
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "<your-workspace-id>",
+        "tags": ["word_level"]
+    }])
+
+```
+
+### Option 2: Use Default Word-Level Detection (Best Practice)
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "00000000_0000_0000_0000_000000000000",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### Option 3: Use Custom Model Word-Level Detection
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "<your-workspace-id>",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.y.
+> 
+
+### Merged Texts
+
+**Problem:** Sometimes, Text Detector/ annotation tool, **merges two separate texts into one**, even though they look clearly split on screen.
+
+**Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
+
+**✅ Expected Behavior**
+
+🖼️ *Text fields detected separately:*
+
+![image.png](attachment:b6dd41f2-63e1-4fdb-9c50-33571a63c3e0:image.png)
+
+`Alice Johnson` ✅  Software Engineer ✅
+
+👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
+
+**❌ Actual Issue**
+
+🖼️ *Texts merged into one block:*
+
+![image.png](attachment:38923942-c474-4d0a-89ed-350cc168034b:image.png)
+
+`Alice Johnson Software Engineer`❌
+
+👎 Can't find either one on its own.
+
+**Solutions:** 
+
+### Option 1: Use Default Word-Level Detection (Best Practice)
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "00000000_0000_0000_0000_000000000000",
+        "tags": ["word_level"]
+    }])
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### Option 2: Use Custom Model Word-Level Detection
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "<your-workspace-id>",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### Option 3: Use Relative Positioning (Fallback)
+
+```tsx
+
+await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
+
+```
+
+> Useful when text detection still merges blocks. Navigates close enough to act anyway.
+> 
+
+### **Text Seperation**
+
+**Problem:** Sometimes, Text Detector/ annotation tool, septerates a text into **two texts**, even though they look clearly merged on screen.
+
+**Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as two words:
+
+**✅ Expected Behavior**
+
+🖼️ Words *are detected as one sentence:*
+
+![image.png](attachment:263d543a-fa41-42ee-8c33-73db69d84525:image.png)
+
+`Alice Johnson` ✅ 
+
+👍 Works with `text("Alice Johnson")`
+
+**❌ Actual Issue**
+
+🖼️ Words *are detected as seperated texts:*
+
+![image.png](attachment:1e50bb77-6b65-4f95-a16f-22baf51cb0ec:image.png)
+
+`Alice`❌ `Johnson`❌
+
+👎 Can't find either `text("Alice Johnson")` on its own.
+
+**Solutions:** 
+
+### Option 1: Use Default Word-Level Detection (Best Practice)
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "00000000_0000_0000_0000_000000000000",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### Option 2: Use Custom Model Word-Level Detection
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "<your-workspace-id>",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### **Vertical Text Merging**
+
+**Problem:** Sometimes, Text Detector/ annotation tool, merges two lines to one text, even though they look clearly as two lines on screen.
+
+**Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one:
+
+**✅ Expected Behavior**
+
+🖼️ Texts *are detected as two lines:*
+
+![image.png](attachment:43f0d240-8244-46db-a197-14970dae1a42:image.png)
+
+`Alice Johnson` ✅ 
+
+👍 Works with `text("Alice Johnson")`
+
+**❌ Actual Issue**
+
+🖼️ Texts *are detected as one text:*
+
+![image.png](attachment:9df90008-3f78-40cb-b9fa-ecb1288e5c93:image.png)
+
+`<no words recognized>`❌
+
+👎 Can't find either `text("Alice Johnson")` on its own.
+
+**Solutions:** 
+
+### Option 1: Use Default Word-Level Detection (Best Practice)
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "00000000_0000_0000_0000_000000000000",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### Option 2: Use Custom Model Word-Level Detection
+
+```tsx
+await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "<your-workspace-id>",
+        "tags": ["word_level"]
+    }])
+
+```
+
+> Breaks up merged strings into individual words.
+> 
+
+### **Single Character not Detected**
+
+**Problem:** Sometimes, Text Detector/ annotation tool, does not detect single charactors, even though they look clearly on screen.
+
+**Example:** Say you want to click **just the char** “3” - but OCR does not detects them:
+
+**✅ Expected Behavior**
+
+🖼️ Single chars are detected*:*
+
+![image.png](attachment:0507ec4b-e8d0-4fe9-923f-d21a273aa760:image.png)
+
+`1` ✅ `2` ✅ `3` ✅ 
+
+👍 Works with `text("2")`
+
+**❌ Actual Issue**
+
+🖼️ Char 2 is not detected*:*
+
+![image.png](attachment:9fc279f2-2a9b-4d9f-a17e-7ce7161572e1:image.png)
+
+`1` ✅ `2` ❌ `3` ✅ 
+
+👎 Can't find either `text("2")` on its own.
+
+**Solutions:** 
+
+### Option 1: AI Element
+
+1. Follow tutorial
+
+### **Text not Detected**
+
+**Problem:** Sometimes, for no apparent reason, Text Detector/ annotation tool does not detect a text, even though they see it clearly on screen.
+
+**Example:** Say you want to click **just the name** “Alice Johnson” field - but OCR does not detects the text at all:
+
+| Alice Johnson |
+| --- |
+
+**✅ Expected Behavior**
+
+🖼️ *Text was detected:*
+
+![image.png](attachment:263d543a-fa41-42ee-8c33-73db69d84525:image.png)
+
+`Alice Johnson` ✅ 
+
+👍 Works with `text("Alice Johnson")`
+
+**❌ Actual Issue**
+
+🖼️ *Text wasn’t detected*
+
+![image.png](attachment:63074214-cbcc-4b61-b746-ac9a50121f02:image.png)
+
+`Alice Johnson`❌
+
+👎 Can't find either `text("Alice Johnson")` on its own.
+
+**Solutions:** 
+
+### Option 1: AI Element
+
+1. Select the Text as AI Element
