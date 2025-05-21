@@ -54,15 +54,6 @@ await aui.click().text("Hallo").exec([{
 
 ## Text Detection Issues
 
-<Columns cols={2}>
-  <Card title="First Card">
-    Neque porro quisquam est qui dolorem ipsum quia dolor sit amet
-  </Card>
-  <Card title="Second Card">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  </Card>
-</Columns>
-
 ### **Icon Text Merging**
 
 **Problem:** Sometimes, Text Detector/ annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
@@ -73,31 +64,30 @@ await aui.click().text("Hallo").exec([{
   <Card title="First Card">
     ✅ Expected Behavior
 
-🖼️ _Icon and Text are detected separately:_
+    🖼️ *Icon and Text are detected separately:*
+    ![image.png](/IconTextMergingExpectedBehaviour1.png)
 
-🧑 ✅ Name ✅  🤖 ✅ Role ✅
+    🧑 ✅ Name ✅  🤖 ✅ Role ✅
 
-👍 Works with `click().text("Name")` or `click().text("Name")`
-
+    👍 Works with `click().text("Name")` or `click().text("Name")`
   </Card>
-  
+
   <Card title="Second Card">
     ❌ Actual Issue
 
-🖼️ I_con and text are detected together:_
+    🖼️ I\_con and text are detected together:\_
 
-`🧑 Name` ❌  🤖 ✅ Role ✅
+    `🧑 Name` ❌  🤖 ✅ Role ✅
 
-👎 Can't find `click().text("Name")`.
+    👎 Can't find `click().text("Name")`.
   </Card>
 </Columns>
 
-
 **❌ Actual Issue**
 
-🖼️ I_con and text are detected together:_
+🖼️ I_con and text are detected together:\_
 
-![image.png](attachment:4c1589c9-31af-46bc-aa81-8530abefadf5:image.png)
+
 
 `🧑 Name` ❌  🤖 ✅ Role ✅
 
