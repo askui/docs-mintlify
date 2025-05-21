@@ -61,8 +61,7 @@ await aui.click().text("Hallo").exec([{
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
 <Columns cols={2}>
-  <Card title="First Card">
-    ✅ Expected Behavior
+  <Card title="✅ Expected Behavior"
 
     🖼️ *Icon and Text are detected separately:*
     ![image.png](/IconTextMergingExpectedBehaviour1.png)
@@ -72,8 +71,7 @@ await aui.click().text("Hallo").exec([{
     👍 Works with `click().text("Name")` or `click().text("Name")`
   </Card>
 
-  <Card title="Second Card">
-    ❌ Actual Issue
+  <Card title="❌ Actual Issue">
 
     🖼️ I\_con and text are detected together:\_
     
