@@ -3,15 +3,13 @@ title: "WIP: Best Practices for Reliable Automation"
 description: "Provide guidelines on designing robust automation scripts, including error handling, retries, and validation steps"
 ---
 
-
-
 ### 1. Misspellings of Words
 
 The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
 
 | Expected (Truth) | OCR Output (Prediction) |
-| --- | --- |
-| `Hallo` | `HaII0` |
+| ---------------- | ----------------------- |
+| `Hallo`          | `HaII0`                 |
 
 ### Solutions
 
@@ -22,21 +20,19 @@ You can directly correct OCR predictions and improve model accuracy by training 
 ### Steps:
 
 1. Start the AskUI shell:
-    
-    ```bash
-    bash
-    
-    askui-shell
-    ```
-    
+
+   ```bash
+   bash
+   
+   askui-shell
+   ```
 2. Launch the OCR Teaching App:
-    
-    ```bash
-    bash
-    
-    AskUI-StartOCRTeaching
-    ```
-    
+
+   ```bash
+   bash
+   
+   AskUI-StartOCRTeaching
+   ```
 3. Upload a screenshot containing the misclassified word (e.g., “Hallo”).
 4. Switch to **Character-Level Mode** for precise corrections.
 5. Select the wrongly detected word (`HaII0`) and replace it with the correct label: `Hallo`.
@@ -54,7 +50,6 @@ await aui.click().text("Hallo").exec([{
     "useCase": "<your-workspace-id>",
     "tags": ["char_level"]
 }])
-
 ```
 
 ## Text Detection Issues
@@ -65,19 +60,33 @@ await aui.click().text("Hallo").exec([{
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
-**✅ Expected Behavior**
+<Columns cols={2}>
+  <Card title="First Card">
+    ✅ Expected Behavior
 
-🖼️ *Icon and Text are detected separately:*
-
-![image.png](attachment:d0cea22a-f716-4e46-b3ca-07866a51513a:image.png)
+🖼️ _Icon and Text are detected separately:_
 
 🧑 ✅ Name ✅  🤖 ✅ Role ✅
 
 👍 Works with `click().text("Name")` or `click().text("Name")`
 
+  </Card>
+  
+  <Card title="Second Card">
+    ❌ Actual Issue
+
+🖼️ I_con and text are detected together:_
+
+`🧑 Name` ❌  🤖 ✅ Role ✅
+
+👎 Can't find `click().text("Name")`.
+  </Card>
+</Columns>
+
+
 **❌ Actual Issue**
 
-🖼️ I*con and text are detected together:*
+🖼️ I_con and text are detected together:_
 
 ![image.png](attachment:4c1589c9-31af-46bc-aa81-8530abefadf5:image.png)
 
@@ -85,7 +94,7 @@ await aui.click().text("Hallo").exec([{
 
 👎 Can't find `click().text("Name")`.
 
-**Solutions:** 
+**Solutions:**
 
 ### Option 1: Re-Teach the OCR Model to ignore the icon.
 
@@ -102,7 +111,6 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-
 ```
 
 ### Option 2: Use Default Word-Level Detection (Best Practice)
@@ -116,11 +124,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### Option 3: Use Custom Model Word-Level Detection
 
@@ -133,11 +139,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.y.
-> 
 
 ### Merged Texts
 
@@ -147,7 +151,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **✅ Expected Behavior**
 
-🖼️ *Text fields detected separately:*
+🖼️ _Text fields detected separately:_
 
 ![image.png](attachment:b6dd41f2-63e1-4fdb-9c50-33571a63c3e0:image.png)
 
@@ -157,7 +161,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **❌ Actual Issue**
 
-🖼️ *Texts merged into one block:*
+🖼️ _Texts merged into one block:_
 
 ![image.png](attachment:38923942-c474-4d0a-89ed-350cc168034b:image.png)
 
@@ -165,7 +169,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 👎 Can't find either one on its own.
 
-**Solutions:** 
+**Solutions:**
 
 ### Option 1: Use Default Word-Level Detection (Best Practice)
 
@@ -181,7 +185,6 @@ await aui.click().text("Alice Johnson").exec([{
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### Option 2: Use Custom Model Word-Level Detection
 
@@ -194,22 +197,18 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### Option 3: Use Relative Positioning (Fallback)
 
 ```tsx
 
 await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
-
 ```
 
 > Useful when text detection still merges blocks. Navigates close enough to act anyway.
-> 
 
 ### **Text Seperation**
 
@@ -219,7 +218,7 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 **✅ Expected Behavior**
 
-🖼️ Words *are detected as one sentence:*
+🖼️ Words _are detected as one sentence:_
 
 ![image.png](attachment:263d543a-fa41-42ee-8c33-73db69d84525:image.png)
 
@@ -229,7 +228,7 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 **❌ Actual Issue**
 
-🖼️ Words *are detected as seperated texts:*
+🖼️ Words _are detected as seperated texts:_
 
 ![image.png](attachment:1e50bb77-6b65-4f95-a16f-22baf51cb0ec:image.png)
 
@@ -237,7 +236,7 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 👎 Can't find either `text("Alice Johnson")` on its own.
 
-**Solutions:** 
+**Solutions:**
 
 ### Option 1: Use Default Word-Level Detection (Best Practice)
 
@@ -250,11 +249,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### Option 2: Use Custom Model Word-Level Detection
 
@@ -267,11 +264,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### **Vertical Text Merging**
 
@@ -281,7 +276,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **✅ Expected Behavior**
 
-🖼️ Texts *are detected as two lines:*
+🖼️ Texts _are detected as two lines:_
 
 ![image.png](attachment:43f0d240-8244-46db-a197-14970dae1a42:image.png)
 
@@ -291,7 +286,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **❌ Actual Issue**
 
-🖼️ Texts *are detected as one text:*
+🖼️ Texts _are detected as one text:_
 
 ![image.png](attachment:9df90008-3f78-40cb-b9fa-ecb1288e5c93:image.png)
 
@@ -299,7 +294,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 👎 Can't find either `text("Alice Johnson")` on its own.
 
-**Solutions:** 
+**Solutions:**
 
 ### Option 1: Use Default Word-Level Detection (Best Practice)
 
@@ -312,11 +307,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### Option 2: Use Custom Model Word-Level Detection
 
@@ -329,11 +322,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-
 ```
 
 > Breaks up merged strings into individual words.
-> 
 
 ### **Single Character not Detected**
 
@@ -343,7 +334,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **✅ Expected Behavior**
 
-🖼️ Single chars are detected*:*
+🖼️ Single chars are detected\*:\*
 
 ![image.png](attachment:0507ec4b-e8d0-4fe9-923f-d21a273aa760:image.png)
 
@@ -353,7 +344,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **❌ Actual Issue**
 
-🖼️ Char 2 is not detected*:*
+🖼️ Char 2 is not detected\*:\*
 
 ![image.png](attachment:9fc279f2-2a9b-4d9f-a17e-7ce7161572e1:image.png)
 
@@ -361,7 +352,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 👎 Can't find either `text("2")` on its own.
 
-**Solutions:** 
+**Solutions:**
 
 ### Option 1: AI Element
 
@@ -374,11 +365,11 @@ await aui.click().text("Alice Johnson").exec([{
 **Example:** Say you want to click **just the name** “Alice Johnson” field - but OCR does not detects the text at all:
 
 | Alice Johnson |
-| --- |
+| ------------- |
 
 **✅ Expected Behavior**
 
-🖼️ *Text was detected:*
+🖼️ _Text was detected:_
 
 ![image.png](attachment:263d543a-fa41-42ee-8c33-73db69d84525:image.png)
 
@@ -388,7 +379,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **❌ Actual Issue**
 
-🖼️ *Text wasn’t detected*
+🖼️ _Text wasn’t detected_
 
 ![image.png](attachment:63074214-cbcc-4b61-b746-ac9a50121f02:image.png)
 
@@ -396,7 +387,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 👎 Can't find either `text("Alice Johnson")` on its own.
 
-**Solutions:** 
+**Solutions:**
 
 ### Option 1: AI Element
 
