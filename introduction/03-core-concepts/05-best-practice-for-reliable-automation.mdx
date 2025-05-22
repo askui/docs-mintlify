@@ -81,80 +81,29 @@ await aui.click().text("Hallo").exec([{
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
-<Columns cols={2}>
-  <Card title="✅ Expected Behavior">
-    🖼️ *Icon and Text are detected separately:*
-    ![image.png](/IconTextMergingExpectedBehaviour1.png)
-
-    🧑 ✅ Name ✅  🤖 ✅ Role ✅
-
-    👍 Works with `click().text("Name")` or `click().text("Name")`
-  </Card>
-
-  <Card title="❌ Actual Issue">
-
-    🖼️ I\_con and text are detected together:\_
-    
-    ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
-
-    `🧑 Name` ❌  🤖 ✅ Role ✅
-
-    👎 Can't find `click().text("Name")`.
-  </Card>
-</Columns>
-
-
 
 <Columns cols={2}>
-
 <Card title="✅ Expected Behavior">
-
 🖼️ *Icon and Text are detected separately:*
-
 &nbsp;
-
 ![image.png](/IconTextMergingExpectedBehaviour1.png)
-
 &nbsp;
-
 🧑 ✅ Name ✅  🤖 ✅ Role ✅
-
 &nbsp;
-
 👍 Works with `click().text("Name")` or `click().text("Name")`
 
 </Card>
-
 <Card title="❌ Actual Issue">
-
 🖼️ *Icon and text are detected together:*
-
 &nbsp;
-
 ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
-
 &nbsp;
-
 `🧑 Name` ❌  🤖 ✅ Role ✅
-
 &nbsp;
-
 👎 Can't find `click().text("Name")`.
-
 </Card>
-
 </Columns>
 
-
-**❌ Actual Issue**
-
-
-
-🖼️ I_con and text are detected together:\_
-
-`🧑 Name` ❌  🤖 ✅ Role ✅
-
-👎 Can't find `click().text("Name")`.
 
 **Solutions:**
 
