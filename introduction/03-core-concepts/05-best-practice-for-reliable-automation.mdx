@@ -283,46 +283,53 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as two words:
 
 <Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ✅ Expected Behavior
-  </div>
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Words are detected as one sentence:</em>
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/TextSeparationExpectedBehaviour.png)
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `Alice Johnson` ✅
-    </span>
-  </div>
-  <div>
-    👍 Works with `text("Alice Johnson")`
-  </div>
-</Card>
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ❌ Actual Issue
-  </div>
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Words are detected as separated texts:</em>
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/TextSeparationAcctualIssue.png)
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `Alice`❌ `Johnson`❌
-    </span>
-  </div>
-  <div>
-    👎 Can't find either `text("Alice Johnson")` on its own.
-  </div>
-</Card>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Words are detected as one sentence:</em>
+    </div>
 
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/TextSeparationExpectedBehaviour.png)
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `Alice Johnson` ✅
+      </span>
+    </div>
+
+    <div>
+      👍 Works with `text("Alice Johnson")`
+    </div>
+  </Card>
+
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Words are detected as separated texts:</em>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/TextSeparationAcctualIssue.png)
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `Alice`❌ `Johnson`❌
+      </span>
+    </div>
+
+    <div>
+      👎 Can't find either `text("Alice Johnson")` on its own.
+    </div>
+  </Card>
 </Columns>
 
 **Solutions:**
@@ -367,7 +374,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 🖼️ Texts _are detected as two lines:_
 
-![image.png](attachment:43f0d240-8244-46db-a197-14970dae1a42:image.png)
+![image.png](/VerticalTextMergingExpectedBehaviour.png)
 
 `Alice Johnson` ✅ 
 
@@ -377,7 +384,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 🖼️ Texts _are detected as one text:_
 
-![image.png](attachment:9df90008-3f78-40cb-b9fa-ecb1288e5c93:image.png)
+![image.png](/VerticalTextMergingActualIssue.png)
 
 `<no words recognized>`❌
 
