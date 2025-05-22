@@ -186,21 +186,17 @@ await aui.click().text("Alice Johnson").exec([{
     <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
       ✅ Expected Behavior
     </div>
-
     <div style={{ marginBottom: '8px' }}>
       🖼️ <em>Text fields detected separately:</em>
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       ![image.png](/MergedTextExpectedBehaviour.png)
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
         `Alice Johnson` ✅  Software Engineer ✅
       </span>
     </div>
-
     <div>
       👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
     </div>
@@ -277,21 +273,17 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
     <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
       ✅ Expected Behavior
     </div>
-
     <div style={{ marginBottom: '8px' }}>
       🖼️ <em>Words are detected as one sentence:</em>
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       ![image.png](/TextSeparationExpectedBehaviour.png)
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
         `Alice Johnson` ✅
       </span>
     </div>
-
     <div>
       👍 Works with `text("Alice Johnson")`
     </div>
@@ -301,15 +293,12 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
     <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
       ❌ Actual Issue
     </div>
-
     <div style={{ marginBottom: '8px' }}>
       🖼️ <em>Words are detected as separated texts:</em>
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       ![image.png](/TextSeparationAcctualIssue.png)
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
         `Alice`❌ `Johnson`❌
@@ -338,7 +327,6 @@ await aui.click().text("Alice Johnson").exec([{
 ```
 
 ### Option 2: Use Custom Model Word-Level Detection
-
 ```tsx
 await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
@@ -361,21 +349,17 @@ await aui.click().text("Alice Johnson").exec([{
     <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
       ✅ Expected Behavior
     </div>
-
     <div style={{ marginBottom: '8px' }}>
       🖼️ <em>Texts are detected as two lines:</em>
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       ![image.png](/VerticalTextMergingExpectedBehaviour.png)
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
         `Alice Johnson` ✅
       </span>
     </div>
-
     <div>
       👍 Works with `text("Alice Johnson")`
     </div>
@@ -385,21 +369,17 @@ await aui.click().text("Alice Johnson").exec([{
     <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
       ❌ Actual Issue
     </div>
-
     <div style={{ marginBottom: '8px' }}>
       🖼️ <em>Texts are detected as one text:</em>
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       ![image.png](/VerticalTextMergingActualIssue.png)
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
         `<no words recognized>`❌
       </span>
     </div>
-
     <div>
       👎 Can't find either `text("Alice Johnson")` on its own.
     </div>
@@ -438,7 +418,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 **Problem:** Sometimes, Text Detector/ annotation tool, does not detect single charactors, even though they look clearly on screen.
 
-**Example:** Say you want to click **just the char** “3” - but OCR does not detects them:
+**Example:** Say you want to click **just the charachter “2” - but OCR does not detects them:
 
 <Columns cols={2}>
   <Card>
@@ -498,7 +478,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 ### **Text not Detected**
 
-**Problem:** Sometimes, for no apparent reason, Text Detector/ annotation tool does not detect a text, even though they see it clearly on screen.
+**Problem:** Sometimes, for no apparent reason, Text Detector/ annotation tool does not detect a text, even though you can see it clearly on screen.
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field - but OCR does not detects the text at all:
 
