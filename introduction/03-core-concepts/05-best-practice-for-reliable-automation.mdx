@@ -81,58 +81,54 @@ await aui.click().text("Hallo").exec([{
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
 <Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ✅ Expected Behavior
-  </div>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Icon and Text are detected separately:</em>
+    </div>
 
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Icon and Text are detected separately:</em>
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/IconTextMergingExpectedBehaviour1.png)
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/IconTextMergingExpectedBehaviour1.png)
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        🧑 ✅ Name ✅  🤖 ✅ Role ✅
+      </span>
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      🧑 ✅ Name ✅  🤖 ✅ Role ✅
-    </span>
-  </div>
+    <div>
+      👍 Works with `click().text("Name")` or `click().text("Name")`
+    </div>
+  </Card>
 
-  <div>
-    👍 Works with `click().text("Name")` or `click().text("Name")`
-  </div>
-</Card>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ❌ Actual Issue
-  </div>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Icon and text are detected together:</em>
+    </div>
 
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Icon and text are detected together:</em>
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `🧑 Name` ❌  🤖 ✅ Role ✅
+      </span>
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `🧑 Name` ❌  🤖 ✅ Role ✅
-    </span>
-  </div>
-
-  <div>
-    👎 Can't find `click().text("Name")`.
-  </div>
-</Card>
-
+    <div>
+      👎 Can't find `click().text("Name")`.
+    </div>
+  </Card>
 </Columns>
-
-
 
 **Solutions:**
 
@@ -190,59 +186,54 @@ await aui.click().text("Alice Johnson").exec([{
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
 <Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ✅ Expected Behavior
-  </div>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Text fields detected separately:</em>
+    </div>
 
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Text fields detected separately:</em>
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/MergedTextExpectedBehaviour.png)
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/MergedTextExpectedBehaviour.png)
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `Alice Johnson` ✅  Software Engineer ✅
+      </span>
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `Alice Johnson` ✅  Software Engineer ✅
-    </span>
-  </div>
+    <div>
+      👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
+    </div>
+  </Card>
 
-  <div>
-    👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
-  </div>
-</Card>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ❌ Actual Issue
-  </div>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Texts merged into one block:</em>
+    </div>
 
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Texts merged into one block:</em>
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/MergedTextActualIssue.png)
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/MergedTextActualIssue.png)
-  </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `Alice Johnson Software Engineer`❌
+      </span>
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `Alice Johnson Software Engineer`❌
-    </span>
-  </div>
-
-  <div>
-    👎 Can't find either one on its own.
-  </div>
-</Card>
-
+    <div>
+      👎 Can't find either one on its own.
+    </div>
+  </Card>
 </Columns>
-
-
-
 
 **Solutions:**
 
@@ -285,7 +276,7 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 > Useful when text detection still merges blocks. Navigates close enough to act anyway.
 
-### **Text Seperation**
+### **Text Separation**
 
 **Problem:** Sometimes, Text Detector/ annotation tool, septerates a text into **two texts**, even though they look clearly merged on screen.
 
@@ -295,7 +286,7 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 🖼️ Words _are detected as one sentence:_
 
-![image.png](attachment:263d543a-fa41-42ee-8c33-73db69d84525:image.png)
+![image.png](/TextSeparationExpectedBehaviour.png)
 
 `Alice Johnson` ✅ 
 
@@ -305,7 +296,7 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 🖼️ Words _are detected as seperated texts:_
 
-![image.png](attachment:1e50bb77-6b65-4f95-a16f-22baf51cb0ec:image.png)
+![image.png](/TextSeparationAcctualIssue.png)
 
 `Alice`❌ `Johnson`❌
 
