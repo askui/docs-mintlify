@@ -10,8 +10,9 @@ Problem: The OCR model sometimes misreads characters, especially in certain font
 Example:
 
 <Columns cols={2}>
+
   <Card>
-    <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '2px', marginBottom: '12px' }}>
+    <div style={{ fontWeight: 'bold', paddingBottom: '2px', marginBottom: '12px' }}>
       Expected (Truth)
     </div>
 
@@ -21,7 +22,7 @@ Example:
   </Card>
 
   <Card>
-    <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '2px', marginBottom: '12px' }}>
+    <div style={{ fontWeight: 'bold', paddingBottom: '2px', marginBottom: '12px' }}>
       OCR Output (Prediction)
     </div>
 
@@ -29,7 +30,9 @@ Example:
       <code>HaII0</code>
     </div>
   </Card>
+
 </Columns>
+
 
 ### Solutions:
 
@@ -494,7 +497,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 ### Option 1: AI Element
 
-1. Follow tutorial
+1. Follow[ tutorial](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements)
 
 ### **Text not Detected**
 
@@ -556,4 +559,4 @@ await aui.click().text("Alice Johnson").exec([{
 
 ### Option 1: AI Element
 
-1. Select the Text as AI Element
+1. Select the Text as [AI Element](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements)
