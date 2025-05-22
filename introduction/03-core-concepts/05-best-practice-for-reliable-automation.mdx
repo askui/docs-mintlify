@@ -459,48 +459,54 @@ await aui.click().text("Alice Johnson").exec([{
 **Example:** Say you want to click **just the char** “3” - but OCR does not detects them:
 
 <Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ✅ Expected Behavior
-  </div>
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Single chars are detected:</em>
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/SingleCharacternotDetectedExpectedBehaviour.png)
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `1` ✅ `2` ✅ `3` ✅
-    </span>
-  </div>
-  <div>
-    👍 Works with `text("2")`
-  </div>
-</Card>
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ❌ Actual Issue
-  </div>
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Char 2 is not detected:</em>
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/SingleCharacternotDetectedActualIssue.png)
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `1` ✅ `2` ❌ `3` ✅
-    </span>
-  </div>
-  <div>
-    👎 Can't find either `text("2")` on its own.
-  </div>
-</Card>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Single chars are detected:</em>
+    </div>
 
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/SingleCharacternotDetectedExpectedBehaviour.png)
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `1` ✅ `2` ✅ `3` ✅
+      </span>
+    </div>
+
+    <div>
+      👍 Works with `text("2")`
+    </div>
+  </Card>
+
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Char 2 is not detected:</em>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/SingleCharacternotDetectedActualIssue.png)
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `1` ✅ `2` ❌ `3` ✅
+      </span>
+    </div>
+
+    <div>
+      👎 Can't find either `text("2")` on its own.
+    </div>
+  </Card>
 </Columns>
-
 
 **Solutions:**
 
@@ -521,7 +527,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 🖼️ _Text was detected:_
 
-![image.png](attachment:263d543a-fa41-42ee-8c33-73db69d84525:image.png)
+![image.png](/TextnotDetectedExpectedBehaviour.png)
 
 `Alice Johnson` ✅ 
 
@@ -531,7 +537,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 🖼️ _Text wasn’t detected_
 
-![image.png](attachment:63074214-cbcc-4b61-b746-ac9a50121f02:image.png)
+![image.png](/TextnotDetectedActualIssue.png)
 
 `Alice Johnson`❌
 
