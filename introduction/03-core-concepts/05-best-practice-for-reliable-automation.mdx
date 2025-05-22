@@ -370,25 +370,49 @@ await aui.click().text("Alice Johnson").exec([{
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one:
 
-**✅ Expected Behavior**
+<Columns cols={2}>
 
-🖼️ Texts _are detected as two lines:_
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ✅ Expected Behavior
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Texts are detected as two lines:</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/VerticalTextMergingExpectedBehaviour.png)
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice Johnson` ✅
+    </span>
+  </div>
+  <div>
+    👍 Works with `text("Alice Johnson")`
+  </div>
+</Card>
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ❌ Actual Issue
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Texts are detected as one text:</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/VerticalTextMergingActualIssue.png)
+  </div>
 
-![image.png](/VerticalTextMergingExpectedBehaviour.png)
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `<no words recognized>`❌
+    </span>
+  </div>
+  <div>
+    👎 Can't find either `text("Alice Johnson")` on its own.
+  </div>
+</Card>
+</Columns>
 
-`Alice Johnson` ✅ 
-
-👍 Works with `text("Alice Johnson")`
-
-**❌ Actual Issue**
-
-🖼️ Texts _are detected as one text:_
-
-![image.png](/VerticalTextMergingActualIssue.png)
-
-`<no words recognized>`❌
-
-👎 Can't find either `text("Alice Johnson")` on its own.
 
 **Solutions:**
 
