@@ -7,6 +7,15 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
 The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
 
+<Columns cols={2}>
+  <Card title="Expected (Truth)">
+    `Hallo`
+  </Card>
+  <Card title="OCR Output (Prediction)">
+    `HaII0` 
+  </Card>
+</Columns>
+
 | Expected (Truth) | OCR Output (Prediction) |
 | ---------------- | ----------------------- |
 | `Hallo`          | `HaII0`                 |
