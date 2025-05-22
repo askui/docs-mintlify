@@ -371,48 +371,54 @@ await aui.click().text("Alice Johnson").exec([{
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one:
 
 <Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
 
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ✅ Expected Behavior
-  </div>
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Texts are detected as two lines:</em>
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/VerticalTextMergingExpectedBehaviour.png)
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `Alice Johnson` ✅
-    </span>
-  </div>
-  <div>
-    👍 Works with `text("Alice Johnson")`
-  </div>
-</Card>
-<Card>
-  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
-    ❌ Actual Issue
-  </div>
-  <div style={{ marginBottom: '8px' }}>
-    🖼️ <em>Texts are detected as one text:</em>
-  </div>
-  <div style={{ marginBottom: '12px' }}>
-    ![image.png](/VerticalTextMergingActualIssue.png)
-  </div>
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Texts are detected as two lines:</em>
+    </div>
 
-  <div style={{ marginBottom: '12px' }}>
-    <span style={{ whiteSpace: 'nowrap' }}>
-      `<no words recognized>`❌
-    </span>
-  </div>
-  <div>
-    👎 Can't find either `text("Alice Johnson")` on its own.
-  </div>
-</Card>
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/VerticalTextMergingExpectedBehaviour.png)
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `Alice Johnson` ✅
+      </span>
+    </div>
+
+    <div>
+      👍 Works with `text("Alice Johnson")`
+    </div>
+  </Card>
+
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Texts are detected as one text:</em>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      ![image.png](/VerticalTextMergingActualIssue.png)
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        `<no words recognized>`❌
+      </span>
+    </div>
+
+    <div>
+      👎 Can't find either `text("Alice Johnson")` on its own.
+    </div>
+  </Card>
 </Columns>
-
 
 **Solutions:**
 
@@ -456,7 +462,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 🖼️ Single chars are detected\*:\*
 
-![image.png](attachment:0507ec4b-e8d0-4fe9-923f-d21a273aa760:image.png)
+![image.png](/SingleCharacternotDetectedExpectedBehaviour.png)
 
 `1` ✅ `2` ✅ `3` ✅ 
 
@@ -466,7 +472,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 🖼️ Char 2 is not detected\*:\*
 
-![image.png](attachment:9fc279f2-2a9b-4d9f-a17e-7ce7161572e1:image.png)
+![image.png](/SingleCharacternotDetectedActualIssue.png)
 
 `1` ✅ `2` ❌ `3` ✅ 
 
