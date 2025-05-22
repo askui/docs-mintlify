@@ -458,25 +458,49 @@ await aui.click().text("Alice Johnson").exec([{
 
 **Example:** Say you want to click **just the char** “3” - but OCR does not detects them:
 
-**✅ Expected Behavior**
+<Columns cols={2}>
 
-🖼️ Single chars are detected\*:\*
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ✅ Expected Behavior
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Single chars are detected:</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/SingleCharacternotDetectedExpectedBehaviour.png)
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `1` ✅ `2` ✅ `3` ✅
+    </span>
+  </div>
+  <div>
+    👍 Works with `text("2")`
+  </div>
+</Card>
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ❌ Actual Issue
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Char 2 is not detected:</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/SingleCharacternotDetectedActualIssue.png)
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `1` ✅ `2` ❌ `3` ✅
+    </span>
+  </div>
+  <div>
+    👎 Can't find either `text("2")` on its own.
+  </div>
+</Card>
 
-![image.png](/SingleCharacternotDetectedExpectedBehaviour.png)
+</Columns>
 
-`1` ✅ `2` ✅ `3` ✅ 
-
-👍 Works with `text("2")`
-
-**❌ Actual Issue**
-
-🖼️ Char 2 is not detected\*:\*
-
-![image.png](/SingleCharacternotDetectedActualIssue.png)
-
-`1` ✅ `2` ❌ `3` ✅ 
-
-👎 Can't find either `text("2")` on its own.
 
 **Solutions:**
 
