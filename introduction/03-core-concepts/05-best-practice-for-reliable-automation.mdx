@@ -106,6 +106,58 @@ await aui.click().text("Hallo").exec([{
 </Card>
 </Columns>
 
+<Columns cols={2}>
+
+<Card>
+  <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '12px' }}>
+    ✅ Expected Behavior
+  </div>
+
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Icon and Text are detected separately:</em>
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/IconTextMergingExpectedBehaviour1.png)
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      🧑 ✅ Name ✅  🤖 ✅ Role ✅
+    </span>
+  </div>
+
+  <div>
+    👍 Works with `click().text("Name")` or `click().text("Name")`
+  </div>
+</Card>
+
+<Card>
+  <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '12px' }}>
+    ❌ Actual Issue
+  </div>
+
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Icon and text are detected together:</em>
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `🧑 Name` ❌  🤖 ✅ Role ✅
+    </span>
+  </div>
+
+  <div>
+    👎 Can't find `click().text("Name")`.
+  </div>
+</Card>
+
+</Columns>
+
 
 **Solutions:**
 
