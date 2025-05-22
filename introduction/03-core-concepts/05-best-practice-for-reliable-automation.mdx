@@ -10,11 +10,11 @@ Problem: The OCR model sometimes misreads characters, especially in certain font
 Example:
 
 <Columns cols={2}>
-
   <Card>
     <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '2px', marginBottom: '12px' }}>
       Expected (Truth)
     </div>
+
     <div>
       <code>Hallo</code>
     </div>
@@ -24,13 +24,12 @@ Example:
     <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '2px', marginBottom: '12px' }}>
       OCR Output (Prediction)
     </div>
+
     <div>
       <code>HaII0</code>
     </div>
   </Card>
-
 </Columns>
-
 
 ### Solutions:
 
@@ -75,35 +74,33 @@ await aui.click().text("Hallo").exec([{
 
 ## 2. Text Detection Issues
 
-### Icon Text Merging**
+### Icon Text Merging\*\*
 
 **Problem:** Sometimes, Text Detector/annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
-
 <Columns cols={2}>
-<Card title="✅ Expected Behavior">
-🖼️ *Icon and Text are detected separately:*
-&nbsp;
-![image.png](/IconTextMergingExpectedBehaviour1.png)
-&nbsp;
-🧑 ✅ Name ✅  🤖 ✅ Role ✅
-&nbsp;
-👍 Works with `click().text("Name")` or `click().text("Name")`
+  <Card title="✅ Expected Behavior">
+    🖼️ *Icon and Text are detected separately:*
+     
+    ![image.png](/IconTextMergingExpectedBehaviour1.png)
+     
+    🧑 ✅ Name ✅  🤖 ✅ Role ✅
+     
+    👍 Works with `click().text("Name")` or `click().text("Name")`
+  </Card>
 
-</Card>
-<Card title="❌ Actual Issue">
-🖼️ *Icon and text are detected together:*
-&nbsp;
-![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
-&nbsp;
-`🧑 Name` ❌  🤖 ✅ Role ✅
-&nbsp;
-👎 Can't find `click().text("Name")`.
-</Card>
+  <Card title="❌ Actual Issue">
+    🖼️ *Icon and text are detected together:*
+     
+    ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
+     
+    `🧑 Name` ❌  🤖 ✅ Role ✅
+     
+    👎 Can't find `click().text("Name")`.
+  </Card>
 </Columns>
-
 
 **Solutions:**
 
@@ -163,22 +160,39 @@ await aui.click().text("Alice Johnson").exec([{
 **✅ Expected Behavior**
 
 🖼️ _Text fields detected separately:_
-
-![image.png](attachment:b6dd41f2-63e1-4fdb-9c50-33571a63c3e0:image.png)
-
+![image.png](/MergedTextExpectedBehaviour.png)
 `Alice Johnson` ✅  Software Engineer ✅
-
 👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
-
 **❌ Actual Issue**
-
 🖼️ _Texts merged into one block:_
-
-![image.png](attachment:38923942-c474-4d0a-89ed-350cc168034b:image.png)
-
+![image.png](/MergedTextActualIssue.png)
 `Alice Johnson Software Engineer`❌
-
 👎 Can't find either one on its own.
+
+<Columns cols={2}>
+<Card title="✅ Expected Behavior">
+🖼️ _Text fields detected separately:_
+&nbsp;
+![image.png](/MergedTextExpectedBehaviour.png)
+&nbsp;
+`Alice Johnson` ✅  Software Engineer ✅
+&nbsp;
+👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
+</Card>
+  
+<Card title="❌ Actual Issue">
+🖼️ _Texts merged into one block:_
+&nbsp;
+![image.png](/MergedTextActualIssue.png)
+&nbsp;
+`Alice Johnson Software Engineer`❌
+&nbsp;
+👎 Can't find either one on its own.
+</Card>
+
+</Columns>
+
+
 
 **Solutions:**
 
