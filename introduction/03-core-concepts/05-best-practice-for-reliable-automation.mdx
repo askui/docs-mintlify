@@ -82,34 +82,8 @@ await aui.click().text("Hallo").exec([{
 
 <Columns cols={2}>
 
-<Card title="✅ Expected Behavior">
-🖼️ *Icon and Text are detected separately:*
-&nbsp;
-![image.png](/IconTextMergingExpectedBehaviour1.png)
-&nbsp;
-<span style={{ whiteSpace: "nowrap" }}>
-🧑 ✅ Name ✅  🤖 ✅ Role ✅
-</span>
-&nbsp;
-👍 Works with `click().text("Name")` or `click().text("Name")`
-</Card>
-<Card title="❌ Actual Issue">
-🖼️ *Icon and text are detected together:*
-&nbsp;
-![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
-&nbsp;
-<span style={{ whiteSpace: "nowrap" }}>
-`🧑 Name` ❌  🤖 ✅ Role ✅
-</span>
-&nbsp;
-👎 Can't find `click().text("Name")`.
-</Card>
-</Columns>
-
-<Columns cols={2}>
-
 <Card>
-  <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '12px' }}>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
     ✅ Expected Behavior
   </div>
 
@@ -133,7 +107,7 @@ await aui.click().text("Hallo").exec([{
 </Card>
 
 <Card>
-  <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '12px' }}>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
     ❌ Actual Issue
   </div>
 
@@ -157,6 +131,7 @@ await aui.click().text("Hallo").exec([{
 </Card>
 
 </Columns>
+
 
 
 **Solutions:**
@@ -214,31 +189,54 @@ await aui.click().text("Alice Johnson").exec([{
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
-**✅ Expected Behavior**
-
 <Columns cols={2}>
-<Card title="✅ Expected Behavior">
-🖼️ _Text fields detected separately:_
-&nbsp;
-![image.png](/MergedTextExpectedBehaviour.png)
-&nbsp;
-<span style={{ whiteSpace: "nowrap" }}>
- `Alice Johnson` ✅  Software Engineer ✅
-</span>
-&nbsp;
-👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
+
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ✅ Expected Behavior
+  </div>
+
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Text fields detected separately:</em>
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/MergedTextExpectedBehaviour.png)
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice Johnson` ✅  Software Engineer ✅
+    </span>
+  </div>
+
+  <div>
+    👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
+  </div>
 </Card>
 
-<Card title="❌ Actual Issue">
-🖼️ _Texts merged into one block:_
-&nbsp;
-![image.png](/MergedTextActualIssue.png)
-&nbsp;
-<span style={{ whiteSpace: "nowrap" }}>
-  `Alice Johnson Software Engineer`❌
-</span>
-&nbsp;
-👎 Can't find either one on its own.
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ❌ Actual Issue
+  </div>
+
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Texts merged into one block:</em>
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/MergedTextActualIssue.png)
+  </div>
+
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice Johnson Software Engineer`❌
+    </span>
+  </div>
+
+  <div>
+    👎 Can't find either one on its own.
+  </div>
 </Card>
 
 </Columns>
