@@ -471,13 +471,11 @@ await aui.click().text("Alice Johnson").exec([{
     <div style={{ marginBottom: '12px' }}>
       ![image.png](/SingleCharacternotDetectedExpectedBehaviour.png)
     </div>
-
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
         `1` ✅ `2` ✅ `3` ✅
       </span>
     </div>
-
     <div>
       👍 Works with `text("2")`
     </div>
@@ -522,26 +520,52 @@ await aui.click().text("Alice Johnson").exec([{
 
 | Alice Johnson |
 | ------------- |
+<Columns cols={2}>
 
-**✅ Expected Behavior**
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ✅ Expected Behavior
+  </div>
 
-🖼️ _Text was detected:_
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Text was detected:</em>
+  </div>
 
-![image.png](/TextnotDetectedExpectedBehaviour.png)
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/TextnotDetectedExpectedBehaviour.png)
+  </div>
 
-`Alice Johnson` ✅ 
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice Johnson` ✅
+    </span>
+  </div>
+  <div>
+    👍 Works with `text("Alice Johnson")`
+  </div>
+</Card>
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ❌ Actual Issue
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Text wasn’t detected</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/TextnotDetectedActualIssue.png)
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice Johnson`❌
+    </span>
+  </div>
+  <div>
+    👎 Can't find either `text("Alice Johnson")` on its own.
+  </div>
+</Card>
 
-👍 Works with `text("Alice Johnson")`
+</Columns>
 
-**❌ Actual Issue**
-
-🖼️ _Text wasn’t detected_
-
-![image.png](/TextnotDetectedActualIssue.png)
-
-`Alice Johnson`❌
-
-👎 Can't find either `text("Alice Johnson")` on its own.
 
 **Solutions:**
 
