@@ -282,25 +282,48 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as two words:
 
-**✅ Expected Behavior**
+<Columns cols={2}>
 
-🖼️ Words _are detected as one sentence:_
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ✅ Expected Behavior
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Words are detected as one sentence:</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/TextSeparationExpectedBehaviour.png)
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice Johnson` ✅
+    </span>
+  </div>
+  <div>
+    👍 Works with `text("Alice Johnson")`
+  </div>
+</Card>
+<Card>
+  <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+    ❌ Actual Issue
+  </div>
+  <div style={{ marginBottom: '8px' }}>
+    🖼️ <em>Words are detected as separated texts:</em>
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    ![image.png](/TextSeparationAcctualIssue.png)
+  </div>
+  <div style={{ marginBottom: '12px' }}>
+    <span style={{ whiteSpace: 'nowrap' }}>
+      `Alice`❌ `Johnson`❌
+    </span>
+  </div>
+  <div>
+    👎 Can't find either `text("Alice Johnson")` on its own.
+  </div>
+</Card>
 
-![image.png](/TextSeparationExpectedBehaviour.png)
-
-`Alice Johnson` ✅ 
-
-👍 Works with `text("Alice Johnson")`
-
-**❌ Actual Issue**
-
-🖼️ Words _are detected as seperated texts:_
-
-![image.png](/TextSeparationAcctualIssue.png)
-
-`Alice`❌ `Johnson`❌
-
-👎 Can't find either `text("Alice Johnson")` on its own.
+</Columns>
 
 **Solutions:**
 
