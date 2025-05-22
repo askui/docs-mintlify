@@ -7,28 +7,28 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
 The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
 
-
- <Columns cols={2}>
+<Columns cols={2}>
 
   <Card>
-    <div style={{ borderBottom: '1px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '8px' }}>
-      <strong>Expected (Truth)</strong>
+    <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '12px' }}>
+      Expected (Truth)
     </div>
-    <div style={{ marginTop: '8px' }}>
+    <div>
       <code>Hallo</code>
     </div>
   </Card>
 
   <Card>
-    <div style={{ borderBottom: '1px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '8px' }}>
-      <strong>OCR Output (Prediction)</strong>
+    <div style={{ fontWeight: 'bold', borderBottom: '2px solid #ccc', display: 'inline-block', paddingBottom: '4px', marginBottom: '12px' }}>
+      OCR Output (Prediction)
     </div>
-    <div style={{ marginTop: '8px' }}>
+    <div>
       <code>HaII0</code>
     </div>
   </Card>
 
 </Columns>
+
 
 
 
