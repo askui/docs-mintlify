@@ -37,7 +37,7 @@ AskUI allows you to specify which model to use for each command by passing the `
 
 | Platform     | Available Models                                                                                                            |
 | :----------- | :-------------------------------------------------------------------------------------------------------------------------- |
-| AskUI        | `askui`, `askui-combo`, `askui-pta`, `askui-ocr`, `askui-ai-element`                                                                 |
+| AskUI        | `askui`, `askui-combo`, `askui-pta`, `askui-ocr`, `askui-ai-element`                                                        |
 | Anthropic    | `anthropic-claude-3-5-sonnet-20241022`                                                                                      |
 | Hugging Face | `AskUI/PTA-1`, `OS-Copilot/OS-Atlas-Base-7B`, `showlab/ShowUI-2B`, `Qwen/Qwen2-VL-2B-Instruct`, `Qwen/Qwen2-VL-7B-Instruct` |
 | Self-Hosted  | `UI-Tars`                                                                                                                   |
@@ -54,11 +54,11 @@ agent.click("search field", model="OS-Copilot/OS-Atlas-Base-7B")
 
 Before you can use different models, you need to authenticate with an AI Model Provider.
 
-| Provider           | AskUI                                               | Anthropic                                 |
-| ------------------ | --------------------------------------------------- | ----------------------------------------- |
-| ENV Variables      | `ASKUI_WORKSPACE_ID`, `ASKUI_TOKEN`                 | `ANTHROPIC_API_KEY`                       |
-| Supported Commands | `click()`, `get()`, `locate()`, `mouse_move()`      | all commands supported by AskUI + `act()` |
-| Description        | Faster Inference, European Server, Enterprise Ready | Supports complex actions                  |
+| Provider           | AskUI                                                 | Anthropic                                  |
+| ------------------ | ----------------------------------------------------- | ------------------------------------------ |
+| ENV Variables      | `ASKUI_WORKSPACE_ID`, `ASKUI_TOKEN`                   | `ANTHROPIC_API_KEY`                        |
+| Supported Commands | `click()`, `get()`, `locate()`, `mouse_move(), act()` | all commands supported by AskUI \+ `act()` |
+| Description        | Faster Inference, European Server, Enterprise Ready   | Supports complex actions                   |
 
 To get started, set the environment variables required to authenticate with your chosen model provider.
 
@@ -88,21 +88,21 @@ $env:ANTHROPIC_API_KEY="<your-api-key-here>"
 
 Supported commands are: `act()`, `click()`, `get()`, `locate()`, `mouse_move()`
 
-| Model Name                               | Info                                                                                                                                                  | Execution Speed        | Security                   | Cost                     | Reliability                          |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------- | ------------------------ | ------------------------------------ |
-| **anthropic-claude-3-5-sonnet-20241022** | The Computer Use model from Anthropic is a Large Action Model (LAM), which can autonomously achieve goals. e.g. "Book me a flight from Berlin to Rom" | Slow, '\>' 1s per step | Model hosting by Anthropic | High, up to 1,5$ per act | Not recommended for production usage |
+| Model Name                               | Info                                                                                                                                                  | Execution Speed        | Security                   | Cost                      | Reliability                          |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------- | ------------------------- | ------------------------------------ |
+| **anthropic-claude-3-5-sonnet-20241022** | The Computer Use model from Anthropic is a Large Action Model (LAM), which can autonomously achieve goals. e.g. "Book me a flight from Berlin to Rom" | Slow, '\>' 1s per step | Model hosting by Anthropic | High, up to 1,5\$ per act | Not recommended for production usage |
 
 ### AskUI AI Models
 
 Supported commands are: `click()`, `get()`, `locate()`, `mouse_move()`
 
-| Model Name           | Info                                                                                                                                                                                | Execution Speed             | Security                              | Cost                    | Reliability                                              |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------- | ----------------------- | -------------------------------------------------------- |
-| **askui**            | AskUI is a combination of all models below. You let AskUI decide which model to use based on the task so that you don't have to worry about selecting the right model, also supports `get()` | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05$ per step | Recommended for production usage, can be partially retrained |
-| **askui-pta**        | PTA-1 (Prompt-to-Automation) is a vision language model (VLM) trained by AskUI which to address all kinds of UI elements by a textual description e.g. "Login button", "Text login" | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05$ per step | Recommended for production usage, can be retrained       |
-| **askui-ocr**        | AskUI OCR is an OCR model trained to address texts on UI Screens e.g. "Login", "Search"                                                                                             | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05$ per step | Recommended for production usage, can be retrained       |
-| **askui-combo**      | AskUI Combo is an combination from the askui-pta and the askui-ocr model to improve the accuracy.                                                                                   | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05$ per step | Recommended for production usage, can be retrained       |
-| **askui-ai-element** | AskUI AI Element allows you to address visual elements like icons or images by demonstrating what you looking for. Therefore, you have to crop out the element and give it a name.  | Very fast, '\<'5ms per step | Secure hosting by AskUI or on-premise | Low, '\<'0.05$ per step | Recommended for production usage, cannot be retrained currently |
+| Model Name           | Info                                                                                                                                                                                         | Execution Speed             | Security                              | Cost                     | Reliability                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------- | ------------------------ | --------------------------------------------------------------- |
+| **askui**            | AskUI is a combination of all models below. You let AskUI decide which model to use based on the task so that you don't have to worry about selecting the right model, also supports `get()` | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05\$ per step | Recommended for production usage, can be partially retrained    |
+| **askui-pta**        | PTA-1 (Prompt-to-Automation) is a vision language model (VLM) trained by AskUI which to address all kinds of UI elements by a textual description e.g. "Login button", "Text login"          | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05\$ per step | Recommended for production usage, can be retrained              |
+| **askui-ocr**        | AskUI OCR is an OCR model trained to address texts on UI Screens e.g. "Login", "Search"                                                                                                      | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05\$ per step | Recommended for production usage, can be retrained              |
+| **askui-combo**      | AskUI Combo is an combination from the askui-pta and the askui-ocr model to improve the accuracy.                                                                                            | Fast, '\<'500ms per step    | Secure hosting by AskUI or on-premise | Low, '\<'0.05\$ per step | Recommended for production usage, can be retrained              |
+| **askui-ai-element** | AskUI AI Element allows you to address visual elements like icons or images by demonstrating what you looking for. Therefore, you have to crop out the element and give it a name.           | Very fast, '\<'5ms per step | Secure hosting by AskUI or on-premise | Low, '\<'0.05\$ per step | Recommended for production usage, cannot be retrained currently |
 
 ### Huggingface AI Models (Spaces API)
 
@@ -120,7 +120,7 @@ Note: No authentication required\! But rate-limited\!
 
 ### Self Hosted UI Models
 
-Supported commands are: `act()`, `click()`, `get()`, `locate()`, `mouse_move()` 
+Supported commands are: `act()`, `click()`, `get()`, `locate()`, `mouse_move()`
 
 | Model Name  | Info                                                                                                                        | Execution Speed       | Security    | Cost                       | Reliability                                         |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- | -------------------------- | --------------------------------------------------- |
