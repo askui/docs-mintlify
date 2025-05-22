@@ -77,7 +77,7 @@ await aui.click().text("Hallo").exec([{
 
 ## 2. Text Detection Issues
 
-###1. Icon Text Merging
+1. Icon Text Merging
 
 **Problem:** Sometimes, Text Detector/annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
 
@@ -178,7 +178,7 @@ await aui.click().text("Alice Johnson").exec([{
     }])
 ```
 
-### 2. Merged Texts
+2. Merged Texts
 
 **Problem:** Sometimes, Text Detector/ annotation tool, **merges two separate texts into one**, even though they look clearly split on screen.
 
@@ -269,7 +269,7 @@ await aui.click().text("Alice Johnson").exec([{
 await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 ```
 
-### **Text Separation**
+3.Text Separation**
 
 **Problem:** Sometimes, Text Detector/ annotation tool, septerates a text into **two texts**, even though they look clearly merged on screen.
 
@@ -353,7 +353,7 @@ await aui.click().text("Alice Johnson").exec([{
     }])
 ```
 
-### **Vertical Text Merging**
+4. Vertical Text Merging**
 
 **Problem:** Sometimes, Text Detector/ annotation tool, merges two lines to one text, even though they look clearly as two lines on screen.
 
@@ -437,7 +437,7 @@ await aui.click().text("Alice Johnson").exec([{
     }])
 ```
 
-### **Single Character not Detected**
+5. Single Character not Detected**
 
 **Problem:** Sometimes, Text Detector/ annotation tool, does not detect single charactors, even though they look clearly on screen.
 
@@ -499,7 +499,7 @@ await aui.click().text("Alice Johnson").exec([{
 
 1. Follow[ tutorial](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements)
 
-### **Text not Detected**
+6. Text not Detected**
 
 **Problem:** Sometimes, for no apparent reason, Text Detector/ annotation tool does not detect a text, even though you can see it clearly on screen.
 
