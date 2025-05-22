@@ -104,45 +104,47 @@ await aui.click().text("Hallo").exec([{
 </Columns>
 
 
+
 <Columns cols={2}>
 
-  <Card title="✅ Expected Behavior">
-    <div style={{ marginBottom: '12px' }}>
-      🖼️ <em>Icon and Text are detected separately:</em>
-    </div>
+<Card title="✅ Expected Behavior">
 
-    <div style={{ marginBottom: '12px' }}>
-      ![image.png](/IconTextMergingExpectedBehaviour1.png)
-    </div>
+🖼️ *Icon and Text are detected separately:*
 
-    <div style={{ marginBottom: '12px' }}>
-      🧑 ✅ Name ✅  🤖 ✅ Role ✅
-    </div>
+&nbsp;
 
-    <div>
-      👍 Works with `click().text("Name")` or `click().text("Name")`
-    </div>
-  </Card>
+![image.png](/IconTextMergingExpectedBehaviour1.png)
 
-  <Card title="❌ Actual Issue">
-    <div style={{ marginBottom: '12px' }}>
-      🖼️ <em>Icon and text are detected together:</em>
-    </div>
+&nbsp;
 
-    <div style={{ marginBottom: '12px' }}>
-      ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
-    </div>
+🧑 ✅ Name ✅  🤖 ✅ Role ✅
 
-    <div style={{ marginBottom: '12px' }}>
-      `🧑 Name` ❌  🤖 ✅ Role ✅
-    </div>
+&nbsp;
 
-    <div>
-      👎 Can't find `click().text("Name")`.
-    </div>
-  </Card>
+👍 Works with `click().text("Name")` or `click().text("Name")`
+
+</Card>
+
+<Card title="❌ Actual Issue">
+
+🖼️ *Icon and text are detected together:*
+
+&nbsp;
+
+![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
+
+&nbsp;
+
+`🧑 Name` ❌  🤖 ✅ Role ✅
+
+&nbsp;
+
+👎 Can't find `click().text("Name")`.
+
+</Card>
 
 </Columns>
+
 
 **❌ Actual Issue**
 
