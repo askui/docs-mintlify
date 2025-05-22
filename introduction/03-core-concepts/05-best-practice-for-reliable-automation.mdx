@@ -5,7 +5,9 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
 ### 1. Misspellings of Words
 
-The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
+Problem: The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
+
+Example:
 
 <Columns cols={2}>
 
@@ -30,7 +32,7 @@ The OCR model sometimes misreads characters, especially in certain fonts or nois
 </Columns>
 
 
-### Solutions
+### Solutions:
 
 ### Re-Teach the OCR Model Using AskUI’s OCR Re-Teaching App
 
@@ -71,11 +73,11 @@ await aui.click().text("Hallo").exec([{
 }])
 ```
 
-## Text Detection Issues
+## 2. Text Detection Issues
 
-### **Icon Text Merging**
+### Icon Text Merging**
 
-**Problem:** Sometimes, Text Detector/ annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
+**Problem:** Sometimes, Text Detector/annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
 
 **Example:** Say you want to click **just the name** “Alice Johnson” field or **just the position** field in a interface - but OCR detects them as one long string:
 
@@ -99,6 +101,47 @@ await aui.click().text("Hallo").exec([{
 
     👎 Can't find `click().text("Name")`.
   </Card>
+</Columns>
+
+
+<Columns cols={2}>
+
+  <Card title="✅ Expected Behavior">
+    <div style={{ marginBottom: '2px' }}>
+      🖼️ <em>Icon and Text are detected separately:</em>
+    </div>
+
+    <div style={{ marginBottom: '2px' }}>
+      ![image.png](/IconTextMergingExpectedBehaviour1.png)
+    </div>
+
+    <div style={{ marginBottom: '2px' }}>
+      🧑 ✅ Name ✅  🤖 ✅ Role ✅
+    </div>
+
+    <div>
+      👍 Works with `click().text("Name")` or `click().text("Name")`
+    </div>
+  </Card>
+
+  <Card title="❌ Actual Issue">
+    <div style={{ marginBottom: '2px' }}>
+      🖼️ <em>Icon and text are detected together:</em>
+    </div>
+
+    <div style={{ marginBottom: '2px' }}>
+      ![Icon Text Merging Expected Behaviour2.png](/images/IconTextMergingExpectedBehaviour2.png)
+    </div>
+
+    <div style={{ marginBottom: '2px' }}>
+      `🧑 Name` ❌  🤖 ✅ Role ✅
+    </div>
+
+    <div>
+      👎 Can't find `click().text("Name")`.
+    </div>
+  </Card>
+
 </Columns>
 
 **❌ Actual Issue**
