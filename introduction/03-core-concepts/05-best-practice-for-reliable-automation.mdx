@@ -3,14 +3,13 @@ title: "WIP: Best Practices for Reliable Automation"
 description: "Provide guidelines on designing robust automation scripts, including error handling, retries, and validation steps"
 ---
 
-### 1. Misspellings of Words
+# 1. Misspellings of Words
 
 Problem: The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
 
 Example:
 
 <Columns cols={2}>
-
   <Card>
     <div style={{ fontWeight: 'bold', paddingBottom: '2px', marginBottom: '12px' }}>
       Expected (Truth)
@@ -30,9 +29,7 @@ Example:
       <code>HaII0</code>
     </div>
   </Card>
-
 </Columns>
-
 
 ### Solutions:
 
@@ -75,9 +72,9 @@ await aui.click().text("Hallo").exec([{
 }])
 ```
 
-## 2. Text Detection Issues
+# 2. Text Detection Issues
 
-1. Icon Text Merging
+## 1. Icon Text Merging
 
 **Problem:** Sometimes, Text Detector/annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
 
@@ -178,7 +175,7 @@ await aui.click().text("Alice Johnson").exec([{
     }])
 ```
 
-2. Merged Texts
+## 2. Merged Texts
 
 **Problem:** Sometimes, Text Detector/ annotation tool, **merges two separate texts into one**, even though they look clearly split on screen.
 
@@ -269,7 +266,7 @@ await aui.click().text("Alice Johnson").exec([{
 await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 ```
 
-3.Text Separation**
+## 3.Text Separation
 
 **Problem:** Sometimes, Text Detector/ annotation tool, septerates a text into **two texts**, even though they look clearly merged on screen.
 
@@ -353,7 +350,7 @@ await aui.click().text("Alice Johnson").exec([{
     }])
 ```
 
-4. Vertical Text Merging**
+## 4. Vertical Text Merging
 
 **Problem:** Sometimes, Text Detector/ annotation tool, merges two lines to one text, even though they look clearly as two lines on screen.
 
@@ -437,7 +434,7 @@ await aui.click().text("Alice Johnson").exec([{
     }])
 ```
 
-5. Single Character not Detected**
+## 5. Single Character not Detected
 
 **Problem:** Sometimes, Text Detector/ annotation tool, does not detect single charactors, even though they look clearly on screen.
 
@@ -497,9 +494,9 @@ await aui.click().text("Alice Johnson").exec([{
 
 ### Option 1: AI Element
 
-1. Follow[ tutorial](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements)
+1.Follow[ tutorial](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements)
 
-6. Text not Detected**
+## 6. Text not Detected
 
 **Problem:** Sometimes, for no apparent reason, Text Detector/ annotation tool does not detect a text, even though you can see it clearly on screen.
 
