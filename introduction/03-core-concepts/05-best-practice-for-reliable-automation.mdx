@@ -159,38 +159,33 @@ await aui.click().text("Alice Johnson").exec([{
 
 **✅ Expected Behavior**
 
-🖼️ _Text fields detected separately:_
-![image.png](/MergedTextExpectedBehaviour.png)
-`Alice Johnson` ✅  Software Engineer ✅
-👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
-**❌ Actual Issue**
-🖼️ _Texts merged into one block:_
-![image.png](/MergedTextActualIssue.png)
-`Alice Johnson Software Engineer`❌
-👎 Can't find either one on its own.
-
 <Columns cols={2}>
 <Card title="✅ Expected Behavior">
 🖼️ _Text fields detected separately:_
 &nbsp;
 ![image.png](/MergedTextExpectedBehaviour.png)
 &nbsp;
-`Alice Johnson` ✅  Software Engineer ✅
+<span style={{ whiteSpace: "nowrap" }}>
+ `Alice Johnson` ✅  Software Engineer ✅
+</span>
 &nbsp;
 👍 Works with `text("Alice Johnson")` or `text("Software Engineer")`
 </Card>
-  
+
 <Card title="❌ Actual Issue">
 🖼️ _Texts merged into one block:_
 &nbsp;
 ![image.png](/MergedTextActualIssue.png)
 &nbsp;
-`Alice Johnson Software Engineer`❌
+<span style={{ whiteSpace: "nowrap" }}>
+  `Alice Johnson Software Engineer`❌
+</span>
 &nbsp;
 👎 Can't find either one on its own.
 </Card>
 
 </Columns>
+
 
 
 
