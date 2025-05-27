@@ -75,7 +75,8 @@
       "group": "Introduction",
       "pages": [
         "introduction/01-introduction/01-overview",
-        "introduction/01-introduction/03-how-askui-works"
+        "introduction/01-introduction/03-how-askui-works",
+        "introduction/01-introduction/04-examples"
       ]
     },
     {
