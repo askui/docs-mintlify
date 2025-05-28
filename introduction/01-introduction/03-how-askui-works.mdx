@@ -10,6 +10,7 @@ AskUI is a powerful UI automation framework that combines computer vision, natur
 ## Core Components
 
 ### 1. Vision Agent
+
 The Vision Agent is the main interface for interacting with UI elements. It combines several technologies:
 
 - **Computer Vision**: Analyzes screen content to identify UI elements
@@ -30,15 +31,17 @@ with VisionAgent(
 ```
 
 ### 2. Element Selection
+
 AskUI uses multiple approaches to find and interact with UI elements:
 
 - **Natural Language**: Describe elements in plain English
+
   ```python
   agent.click("submit button")
   agent.type("john.doe")
   ```
-
 - **Locators**: Build precise element selectors
+
   ```python
   from askui import locators as loc
   
@@ -62,16 +65,19 @@ AskUI uses multiple approaches to find and interact with UI elements:
   # Find an element near another element
   menu_item = loc.Text("Settings").near(loc.Image("user-icon.png"))
   ```
-
 - **AI Elements**: Capture and reuse specific visual elements
-  ```bash
+
+  ```powershell
+  # Optional, if you are not in the askui-shell (ADE)
+  askui-shell
+  
   # Capture elements from your screen
   AskUI-NewAIElement
   ```
 
   ```python
   from askui import locators as loc
-
+  
   with VisionAgent() as agent:
       agent.click(loc.AiElement("my-element-name"))
   ```
@@ -81,6 +87,7 @@ AskUI uses multiple approaches to find and interact with UI elements:
 AskUI provides various ways to interact with UI elements:
 
 - **Basic Actions**
+
   ```python
   # Click actions
   agent.click("button")                    # Left click
@@ -97,8 +104,8 @@ AskUI provides various ways to interact with UI elements:
   agent.mouse_move(100, 200)              # Move to coordinates
   agent.mouse_scroll(0, 10)               # Scroll down
   ```
-
 - **Complex Actions**
+
   ```python
   agent.act("""
   You are testing a login form.
@@ -106,8 +113,8 @@ AskUI provides various ways to interact with UI elements:
   Then click the login button
   """)
   ```
-
 - **Information Extraction**
+
   ```python
   # Get text content
   text = agent.get("What is the error message?")
@@ -122,17 +129,18 @@ AskUI provides various ways to interact with UI elements:
 AskUI includes built-in tools for common tasks:
 
 - **Web Browser Control**
+
   ```python
   agent.tools.webbrowser.open_new("https://example.com")
   ```
-
 - **OS Operations**
+
   ```python
   agent.tools.os.copy_to_clipboard("text")
   agent.tools.os.paste_from_clipboard()
   ```
-
 - **Multi-Monitor Support**
+
   ```python
   # Specify which display to use
   agent.set_display(1)  # Use second display
@@ -144,17 +152,14 @@ AskUI includes built-in tools for common tasks:
    - Load AI models
    - Set up logging and reporting
    - Configure environment
-
 2. **Element Detection**
    - Capture screen content
    - Analyze UI elements
    - Match elements to commands
-
 3. **Action Execution**
    - Plan the interaction
    - Perform the action
    - Verify the result
-
 4. **Error Handling**
    - Detect failures
    - Retry if needed
@@ -166,17 +171,14 @@ AskUI includes built-in tools for common tasks:
    - Use natural language for simple cases
    - Use locators for precise control
    - Capture elements for reuse
-
 2. **Performance**
    - Add appropriate wait times
    - Use efficient element selection
    - Monitor response times
-
 3. **Reliability**
    - Handle dynamic content
    - Implement retry logic
    - Use appropriate AI models
-
 4. **Maintenance**
    - Keep element descriptions clear
    - Document complex workflows
@@ -187,4 +189,4 @@ AskUI includes built-in tools for common tasks:
 - [Get Started](/introduction/02-getting-started/01-prerequisites) with AskUI
 - Learn about [Element Selection](/introduction/03-core-concepts/01-element-selection)
 - Explore [Available AI Models](/introduction/04-ai-models/01-grounding-models)
-- Read about [Best Practices](/introduction/03-core-concepts/03-agentic-mode) 
+- Read about [Best Practices](/introduction/03-core-concepts/03-agentic-mode)
