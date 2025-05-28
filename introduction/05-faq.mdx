@@ -279,6 +279,38 @@ Steps to unblock:
 5. Try again
 
 
+## ADE / askui-shell
+
+### How can I use dotenv instead of askui-shell for Access Token?
+
+If you prefer not to use the AskUI Shell, you can expose your ASKUI_WORKSPACE_ID and ASKUI_TOKEN via a .env file using [python-dotenv](https://pypi.org/project/python-dotenv/).
+
+**🛠 Setup Steps**
+1. Install the package:
+
+```bash
+pip install python-dotenv
+```
+2. Create a .env file in your project root:
+```env
+ASKUI_WORKSPACE_ID=<your workspace id>
+ASKUI_TOKEN=<your access token>
+```
+> Need a token? See: [Create Access Tokens](https://docs.askui.com/03-account/01-account-management/04-tokens#create-access-token)
+
+3. Load in Python:
+```python
+from dotenv import load_dotenv
+
+load_dotenv()
+
+...
+from askui import Vision Agent
+
+with VisionAgent() as agent:
+  ...
+
+```
 ## Agent OS
 
 ### Send Error Report to AskUI
