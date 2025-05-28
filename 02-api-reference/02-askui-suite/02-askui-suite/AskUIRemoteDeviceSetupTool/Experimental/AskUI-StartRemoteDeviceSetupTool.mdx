@@ -1,0 +1,62 @@
+---
+title: AskUI-StartRemoteDeviceSetupTool
+---
+
+
+### SYNOPSIS
+
+Uses the AskUI Remote Device Setup Tool to configure the device.
+
+### PARAMETERS
+
+- `-Help` | _&lt;SwitchParameter&gt;_ - Shows the help information for the tool. 
+- `-EnableBackgroundAutomation` | _&lt;SwitchParameter&gt;_ - Enables the background automation and returns success. 
+- `-DisableBackgroundAutomation` | _&lt;SwitchParameter&gt;_ - Disables the background automation and returns success. 
+- `-CheckBackgroundAutomation` | _&lt;SwitchParameter&gt;_ - Returns whether the background automation is enabled or not. 
+- `-FixBackgroundAutomation` | _&lt;SwitchParameter&gt;_ - Tries to fix the background automation setup and returns success. 
+- `-CheckOpenGL` | _&lt;SwitchParameter&gt;_ - Checks whether the required OpenGL version is available. 
+- `-ShowReturnCodes` | _&lt;SwitchParameter&gt;_ - Prints the return codes as a JSON formatted list. 
+- `-ConfigFile` | _&lt;String&gt;_ - Loads the configuration from specified file. 
+- `-ConfigJson` | _&lt;String&gt;_ - Loads the specified configuration as JSON.
+
+### NOTES
+
+This cmdlet is experimental and subject to change.
+This cmdlet is only available on Windows.
+Only one operation switch can be used at a time.
+Configuration parameters are optional and can be used with any operation.
+
+### EXAMPLES
+
+#### EXAMPLE 1
+
+Shows the help information for the tool.
+
+```powershell
+Start-AskUIRemoteDeviceSetupTool -Help
+```
+ 
+#### EXAMPLE 2
+
+Enables background automation.
+
+```powershell
+Start-AskUIRemoteDeviceSetupTool -EnableBackgroundAutomation
+```
+ 
+#### EXAMPLE 3
+
+Checks background automation status using a configuration file.
+
+```powershell
+Start-AskUIRemoteDeviceSetupTool -CheckBackgroundAutomation -ConfigFile "config.json"
+```
+ 
+#### EXAMPLE 4
+
+Checks OpenGL availability with a JSON configuration.
+
+```powershell
+Start-AskUIRemoteDeviceSetupTool -CheckOpenGL -ConfigJson '{"key": "value"}'
+```
+
