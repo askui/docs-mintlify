@@ -248,19 +248,19 @@ Then follow our [Getting Started Guide](https://docs.askui.com/introduction/01-i
 
 # 4. Common Errors & Troubleshooting
 
-
 ## Agent OS
 
 ### Send Error Report to AskUI
 
-This steps are describing how you can send an Error Report to AskUI.  
+This steps are describing how you can send an Error Report to AskUI.
 
 1. Start Terminal/Powershell/Console
 2. Enter `askui-shell`
 3. Enter `AskUI-ImportExperimentalCommands`
 4. Enter `AskUI-NewErrorReport` (See Logs below)
-    1. Press `n` for `Do you want to open the error report directory?`
-    2. Press `y` for `Do you approve the error report content?`
+   1. Press `n` for `Do you want to open the error report directory?`
+   2. Press `y` for `Do you approve the error report content?`
+
 ```bash
 (base) ADE C:\Users\AskUi\> AskUI-NewErrorReport
 Info:  Generating a new error report...
@@ -271,7 +271,8 @@ Info:  Error report with GUID '64284117-40ba-4a09-b451-9c75c1754f74' compressed 
 Info:  Submitting error report archive 'C:\Users\AskUi\.askui\ErrorReports\ErrorReport-64284117-40ba-4a09-b451-9c75c1754f74-2025-04-18T12_27.zip' ...
 Info:  Error report was submitted successfully.
 ```
-5. Send the `ErrorReport-<uui>-<date>.zip` from line `Info:  Submitting error report archive '...` to info@askui.com or an AskUI employee. 
+
+5. Send the `ErrorReport-<uui>-<date>.zip` from line `Info:  Submitting error report archive '...` to [info@askui.com](mailto:info@askui.com) or an AskUI employee.
 
 ---
 
@@ -308,16 +309,18 @@ The pricing for **act()** commands is determined by the **license agreement** fo
 
 ### Is AskUI secure?
 
-Yes. AskUI is built with security as a core principle. All automation processes run within your own infrastructure. Screenshots and input data remain local unless explicitly configured to be shared via cloud-based features.
+Yes. AskUI is designed with a strong focus on security, privacy, and compliance. All automation is executed **locally** within your own infrastructure, ensuring full control over your environment. **Screenshots and UI instructions are processed securely in the cloud by our AI model**, but are **never stored**—all processing is **transient** and limited strictly to the duration of the request.
+
+Our cloud infrastructure is **hosted within the European Union**, supporting compliance with **EU data protection laws**. AskUI is **ISO 27001 certified**, fully **GDPR compliant**, and regularly undergoes **independent penetration testing** to ensure a secure and robust platform.
 
 ### What are all the domains used by AskUI so I can whitelist them?
 
-* hub.askui.com
-* prod.askui.com
-* inference.askui.com
-* files.askui.com
-* tracking-cdn.askui.com
-* tracking.askui.com
+- hub.askui.com
+- prod.askui.com
+- inference.askui.com
+- files.askui.com
+- tracking-cdn.askui.com
+- tracking.askui.com
 
 ### Is AskUI hosting within the European Union?
 
