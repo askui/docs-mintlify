@@ -276,6 +276,97 @@ Info:  Error report was submitted successfully.
 
 ---
 
+## AskUI Shell
+
+### How can I set `askui-shell` as a custom terminal in VSCode?
+
+To configure **VS Code** to use a custom terminal like `askui-shell`, you can set the **Shell path** in the terminal settings. Here's how to do it:
+
+🔧 Steps to Set a Custom Terminal in Vscode
+
+1. Open VS Code.
+2. Go to **File \> Preferences \> Settings** (or press `Ctrl+,`).
+3. Click the **Open Settings (JSON)** icon in the top right corner.
+4. Paste the JSON below into your `settings.json` file.
+
+```json
+{
+    "terminal.integrated.profiles.windows": {
+        "askui-shell": {
+            "path": [
+                "${env:ASKUI_INSTALLATION_DIRECTORY}\\Tools\\askui-shell.cmd"
+            ],
+            "icon": "robot",
+            "overrideName": true,
+            "color": "terminal.ansiMagenta"
+        }
+    },
+    "terminal.integrated.profiles.osx": {
+        "askui-shell": {
+            "path": "/bin/zsh",
+            "args": [
+                "-l",
+                "-c",
+                "$ASKUI_INSTALLATION_DIRECTORY/Tools/askui-shell"
+            ],
+            "icon": "robot",
+            "overrideName": true,
+            "color": "terminal.ansiMagenta"
+        }
+    },
+    "terminal.integrated.profiles.linux": {
+        "askui-shell": {
+            "path": "/bin/bash",
+            "args": [
+                "-l",
+                "-c",
+                "$ASKUI_INSTALLATION_DIRECTORY/Tools/askui-shell"
+            ],
+            "icon": "robot",
+            "overrideName": true,
+            "color": "terminal.ansiMagenta"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "askui-shell",
+    "terminal.integrated.defaultProfile.linux": "askui-shell",
+    "terminal.integrated.defaultProfile.osx": "askui-shell"
+}
+```
+
+5. Save the file
+
+### How can I set `askui-shell` as a custom terminal in Pycharm?
+
+To configure **PyCharm** to use a custom terminal like `askui-shell`, you can set the **Shell path** in the terminal settings. Here's how to do it:
+
+**🔧 Steps to Set a Custom Terminal in PyCharm**
+
+1. Open Settings:
+   - Go to **File \> Settings** (or **PyCharm \> Preferences** on macOS).
+2. Navigate to Terminal Settings:
+   - Go to **Tools \> Terminal**.
+3. Set the Shell Path:
+   - In the **Shell path** field, enter the path to your `askui-shell` script.
+   - Example for **Windows**:
+
+     ```bash
+     "%ASKUI_INSTALLATION_DIRECTORY%\Tools\askui-shell.cmd"
+     ```
+   - Example for **macOS/Linux**:
+
+     ```bash
+     /bin/zsh -l -c "$ASKUI_INSTALLATION_DIRECTORY/Tools/askui-shell"
+     ```
+
+     Or if using bash:
+
+     ```
+     /bin/bash -l -c "$ASKUI_INSTALLATION_DIRECTORY/Tools/askui-shell"
+     ```
+4. Apply and Restart Terminal:
+   - Click **Apply** and **OK**.
+   - Open a new terminal tab in PyCharm to see the changes.
+
 # 5. Pricing Questions
 
 ### **What is an Ask?**
