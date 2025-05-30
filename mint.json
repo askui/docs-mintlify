@@ -220,6 +220,17 @@
           ]
         },
         {
+          "group": "AskUIRemoteDeviceSetupTool",
+          "pages": [
+            {
+              "group": "Experimental",
+              "pages": [
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSetupTool/Experimental/AskUI-StartRemoteDeviceSetupTool"
+              ]
+            }
+          ]
+        },
+        {
           "group": "AskUIRemoteDeviceSnippingTool",
           "pages": [
             {
