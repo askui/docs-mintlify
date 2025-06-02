@@ -160,8 +160,12 @@ await aui.click().text("Alice Johnson").exec([{
 
 ### Solution 3: Use Custom Model Word-Level Detection
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Vision Agent Code Snippet">
+    This accordion includes a code block and some explanation text.
+
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -169,7 +173,7 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-```
+    ```
 
 ## 2. Merged Texts
 
