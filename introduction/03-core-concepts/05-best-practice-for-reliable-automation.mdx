@@ -57,18 +57,23 @@ You can directly correct OCR predictions and improve model accuracy by training 
 6. Click **"Copy Model"** to copy the newly trained model ID.
 7. In your automation code (e.g., `askui-helper.ts`), update the `exec()` call to use the new model:
 
-```
-ts
-CopyEdit
-await aui.click().text("Hallo").exec([{
-    "task": "e2e_ocr",
-    "architecture": "easy_ocr",
-    "version": "1",
-    "interface": "online_learning",
-    "useCase": "<your-workspace-id>",
-    "tags": ["char_level"]
-}])
-```
+<AccordionGroup>
+  <Accordion title="Vision Agent – Character Level Example">
+    This example uses character-level OCR with AskUI Vision Agent.
+
+    ```ts
+    await aui.click().text("Hallo").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "<your-workspace-id>",
+        "tags": ["char_level"]
+    }])
+    
+    ```
+  </Accordion> 
+</AccordionGroup> 
 
 # 2. Text Detection Issues
 
@@ -134,21 +139,30 @@ await aui.click().text("Hallo").exec([{
 2. Teach the Text Recognition to ignore the icon
 3. Use the Custom Model.
 
-```yaml
-await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "<your-workspace-id>",
-        "tags": ["word_level"]
-    }])
-```
+<AccordionGroup>
+  <Accordion title="Vision Agent – YAML Block Example">
 
+    ```yaml
+    await aui.click().text("Alice Johnson").exec([{
+            "task": "e2e_ocr",
+            "architecture": "easy_ocr",
+            "version": "1",
+            "interface": "online_learning",
+            "useCase": "<your-workspace-id>",
+            "tags": ["word_level"]
+        }])
+    ```
+  </Accordion> 
+ </AccordionGroup> 
+    
 ## Solution 2: Use Default Word-Level Detection (Best Practice)
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Vision Agent – Production Workspace Example">
+    This example uses a specific workspace ID in a production-like scenario.
+
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -156,7 +170,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-```
+    ```
+  </Accordion> 
+</AccordionGroup> 
 
 ### Solution 3: Use Custom Model Word-Level Detection
 
@@ -174,6 +190,8 @@ await aui.click().text("Alice Johnson").exec([{
         "tags": ["word_level"]
     }])
     ```
+  </Accordion> 
+</AccordionGroup> 
 
 ## 2. Merged Texts
 
@@ -233,8 +251,10 @@ await aui.click().text("Alice Johnson").exec([{
 
 ## Solution 1: Use Default Word-Level Detection (Best Practice)
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Vision Agent – TSX Code Example">
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -242,12 +262,17 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-```
+    ```
+  </Accordion>
+</AccordionGroup>
+
 
 ## Solution 2: Use Custom Model Word-Level Detection
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Vision Agent – Click & OCR Example">
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -255,7 +280,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-```
+    ```
+  </Accordion>
+</AccordionGroup>
 
 ## Solution 3: Use Relative Positioning (Fallback)
 
@@ -322,8 +349,10 @@ await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
 
 ## Solution 1: Use Default Word-Level Detection (Best Practice)
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Use Default Word-Level Detection">
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -331,12 +360,16 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-```
+    ```
+  </Accordion>
+</AccordionGroup>
 
 ## Solution 2: Use Custom Model Word-Level Detection
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Use Custom Model Word-Level Detection">
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -344,8 +377,10 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-```
-
+    ```
+  </Accordion>
+</AccordionGroup>
+          
 ## 4. Vertical Text Merging
 
 **Problem:** Sometimes, Text Detector/ annotation tool, merges two lines to one text, even though they look clearly as two lines on screen.
@@ -404,8 +439,10 @@ await aui.click().text("Alice Johnson").exec([{
 
 ## Solution 1: Use Default Word-Level Detection (Best Practice)
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Vision Agent – Word-Level OCR (Static Workspace ID)">
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -413,12 +450,16 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "00000000_0000_0000_0000_000000000000",
         "tags": ["word_level"]
     }])
-```
+    ```
+  </Accordion>
+</AccordionGroup>
 
 ## Solution 2: Use Custom Model Word-Level Detection
 
-```tsx
-await aui.click().text("Alice Johnson").exec([{
+<AccordionGroup>
+  <Accordion title="Vision Agent – Word-Level OCR (Placeholder Workspace ID)">
+    ```tsx
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
@@ -426,7 +467,9 @@ await aui.click().text("Alice Johnson").exec([{
         "useCase": "<your-workspace-id>",
         "tags": ["word_level"]
     }])
-```
+    ```
+  </Accordion>
+</AccordionGroup>
 
 ## 5. Single Character not Detected
 
