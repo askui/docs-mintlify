@@ -25,7 +25,7 @@ Allows generating different reports simultaneously. Each message added will be f
 ```python
 def add_message(
     role: str,
-    content: Union[str, dict, list],
+    content: Union[str, dict[str, Any], list[Any]],
     image: Optional[Image.Image | list[Image.Image]] = None
 ) -> None
 ```
@@ -61,7 +61,7 @@ Defines the interface that all reporters must implement to be used with `askui.V
 ```python
 def add_message(
     role: str,
-    content: Union[str, dict, list],
+    content: Union[str, dict[str, Any], list[Any]],
     image: Optional[Image.Image | list[Image.Image]] = None
 ) -> None
 ```
@@ -71,8 +71,8 @@ Add a message to the report.
 **Arguments**:
 
 - `role` _str_ - The role of the message sender (e.g., `"User"`, `"Assistant"`, `"System"`)
-- `content` _Union[str, dict, list]_ - The message content, which can be a string, dictionary, or list, e.g. `'click 2x times on text "Edit"'`
-- `image` _Optional[PIL.Image.Image | list[PIL.Image.Image]], optional_ - PIL Image or list of PIL Images to include with the message
+- `content` _str | dict | list_ - The message content, which can be a string, dictionary, or list, e.g. `'click 2x times on text "Edit"'`
+- `image` _PIL.Image.Image | list[PIL.Image.Image], optional_ - PIL Image or list of PIL Images to include with the message
 
 <a id="askui.reporting.Reporter.generate"></a>
 
@@ -109,7 +109,7 @@ A reporter that generates HTML reports with conversation logs and system informa
 ```python
 def add_message(
     role: str,
-    content: Union[str, dict, list],
+    content: Union[str, dict[str, Any], list[Any]],
     image: Optional[Image.Image | list[Image.Image]] = None
 ) -> None
 ```

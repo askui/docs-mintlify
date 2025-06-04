@@ -35,22 +35,73 @@ pdm install
 
 2. Install newest version of askui-vision agent
 ```
-pdm add askui@<latest version>
+pdm add -d askui@<latest version>
 ```
 
 3. Generate Docs 
 ```
 pdm run docs:api:generate
 ```
+> [!NOTE]  
+> The generated docs will be under the `build` folder.
+> The generated docs are simple markdown files. Methods are not sorted alphabetically.
 
-4. Remove Old
-```
-rm -rf 02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/*
+
+> [!TIP]
+> - Generate docs without updating the `askui` library so you have the old version first
+> - Copy the `build` folder to -> `build_old`
+> - Update `askui` then generate docs again
+> - Now you can diff the new and old MD files
+> - And insert the diff into the MDX file.
+
+
+#### Adding new pages
+The Python files you want to generate a documentation for need to be registered in `pyproject.toml`.
+
+Example:
+```toml
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Retry"
+name = "retry"
+contents = [
+    "askui.retry.*",
+]
 ```
 
-4. Copy things manual over
+Then the `mint.json` needs to be updated to render new pages:
+Example:
+```diff
+    {
+      "group": "Python Vision Agent",
+      "pages": [
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
++       "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/retry",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
+        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/types"
+      ]
+    },
 ```
-cp  .....  02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/*
+
+For consistency remove the extra title from the generated file:
+
+```diff
+---
+title: Retry
+---
+
+- <a id="askui.retry"></a>
+
+- # askui.retry
+
+<a id="askui.retry.Retry"></a>
+
+## askui.retry.Retry
+
+```python
+class Retry(ABC)
+```
 ```
 
 ### API References -> Workspaces Service
