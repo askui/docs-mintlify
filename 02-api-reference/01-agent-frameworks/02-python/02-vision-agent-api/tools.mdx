@@ -175,6 +175,22 @@ Simulates releasing a mouse button.
 
 - `button` _Literal["left", "middle", "right"], optional_ - The mouse button to release. Defaults to `"left"`.
 
+<a id="askui.tools.agent_os.AgentOs.run_command"></a>
+
+#### run\_command
+
+```python
+def run_command(command: str, timeout_ms: int = 30000) -> None
+```
+
+Executes a shell command.
+
+**Arguments**:
+
+- `command` _str_ - The command to execute.
+- `timeout_ms` _int, optional_ - The timeout for command
+  execution in milliseconds. Defaults to `30000` (30 seconds).
+
 <a id="askui.tools.AgentOs.screenshot"></a>
 
 #### screenshot

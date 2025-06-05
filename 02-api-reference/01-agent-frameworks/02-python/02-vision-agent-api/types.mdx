@@ -2,6 +2,35 @@
 title: Types
 ---
 
+<a id="askui.ActModel"></a>
+
+## askui.ActModel
+
+```python
+class ActModel(abc.ABC)
+```
+
+Abstract base class for models that can execute autonomous actions.
+
+Models implementing this interface can be used with the `act()` method of
+`VisionAgent`
+to achieve goals through autonomous actions. These models analyze the screen and
+determine necessary steps to accomplish a given goal.
+
+**Example**:
+
+    ```python
+    from askui import ActModel, VisionAgent
+
+    class MyActModel(ActModel):
+        def act(self, goal: str, model_choice: str) -> None:
+            # Implement custom act logic
+            pass
+
+    with VisionAgent(models={"my-act": MyActModel()}) as agent:
+        agent.act("search for flights", model="my-act")
+    ```
+
 <a id="askui.exceptions.AiElementNotFound"></a>
 
 ## askui.exceptions.AiElementNotFound
@@ -127,6 +156,74 @@ Exception raised when an invalid model is used.
 - `model` _str | ModelComposition_ - The model that was used.
 - `model_type` _Literal["Act", "Grounding (locate)", "Query (get/extract)"]_ - The type of model that was used.
 
+<a id="askui.exceptions.ModelTypeMismatchError"></a>
+
+## askui.exceptions.ModelTypeMismatchError
+
+```python
+class ModelTypeMismatchError(ModelNotFoundError)
+```
+
+<a id="askui.GetModel"></a>
+
+## askui.GetModel
+
+```python
+class GetModel(abc.ABC)
+```
+
+Abstract base class for models that can extract information from images.
+
+Models implementing this interface can be used with the `get()` method of
+`VisionAgent`
+to extract information from screenshots or other images. These models analyze visual
+content and return structured or unstructured information based on queries.
+
+**Example**:
+
+    ```python
+    from askui import GetModel, VisionAgent, ResponseSchema, ImageSource
+    from typing import Type
+
+    class MyGetModel(GetModel):
+        def get(
+            self,
+            query: str,
+            image: ImageSource,
+            response_schema: Type[ResponseSchema] | None,
+            model_choice: str,
+        ) -> ResponseSchema | str:
+            # Implement custom get logic
+            return "Custom response"
+
+    with VisionAgent(models={"my-get": MyGetModel()}) as agent:
+        result = agent.get("what's on screen?", model="my-get")
+    ```
+
+<a id="askui.ImageSource"></a>
+
+## askui.ImageSource
+
+```python
+class ImageSource(RootModel)
+```
+
+A Pydantic model that represents an image source and provides methods to convert it to different formats.
+
+The model can be initialized with:
+- A PIL Image object
+- A file path (str or pathlib.Path)
+- A data URL string
+
+**Attributes**:
+
+- `root` _PILImage.Image_ - The underlying PIL Image object.
+  
+
+**Arguments**:
+
+- `root` _Img_ - The image source to load from.
+
 <a id="askui.Img"></a>
 
 ## askui.Img
@@ -141,6 +238,75 @@ Accepts:
 - `PIL.Image.Image`
 - Relative or absolute file path (`str` or `pathlib.Path`)
 - Data URL (e.g., `"data:image/png;base64,..."`)
+
+<a id="askui.LocateModel"></a>
+
+## askui.LocateModel
+
+```python
+class LocateModel(abc.ABC)
+```
+
+Abstract base class for models that can locate UI elements in images.
+
+Models implementing this interface can be used with the `click()`, `locate()`, and
+`mouse_move()` methods of `VisionAgent` to find UI elements on screen. These models
+analyze visual content to determine the coordinates of elements based on
+descriptions or locators.
+
+**Example**:
+
+    ```python
+    from askui import LocateModel, VisionAgent, Locator, ImageSource, Point
+    from askui.models import ModelComposition
+
+    class MyLocateModel(LocateModel):
+        def locate(
+            self,
+            locator: str | Locator,
+            image: ImageSource,
+            model_choice: ModelComposition | str,
+        ) -> Point:
+            # Implement custom locate logic
+            return (100, 100)
+
+    with VisionAgent(models={"my-locate": MyLocateModel()}) as agent:
+        agent.click("button", model="my-locate")
+    ```
+
+<a id="askui.Model"></a>
+
+## askui.Model
+
+```python
+Model = ActModel | GetModel | LocateModel
+```
+
+Union type of all abstract model classes.
+
+This type represents any model that can be used with `VisionAgent`, whether it's an
+`ActModel`, `GetModel`, or `LocateModel`. It's useful for type hints when you need to
+work with models in a generic way.
+
+<a id="askui.ModelChoice"></a>
+
+## askui.ModelChoice
+
+```python
+class ModelChoice(TypedDict)
+```
+
+Type definition for specifying different models for different tasks.
+
+This `TypedDict` allows you to specify different models for `act()`, `get()`, and
+`locate()` tasks when initializing `VisionAgent`. All fields are optional.
+
+**Attributes**:
+
+- `act` - Model name to use for `act()` commands
+- `get` - Model name to use for `get()` commands
+- `locate` - Model name or composition to use for `locate()`, `click()`, and
+  `mouse_move()` commands
 
 <a id="askui.ModelComposition"></a>
 
@@ -170,6 +336,43 @@ A definition of a model.
 - `interface` _str_ - The interface the model is trained for, e.g., `"online_learning"`
 - `use_case` _str, optional_ - The use case the model is trained for. In the case of workspace specific AskUI models, this is often the workspace id but with "-" replaced by "_". Defaults to `"00000000_0000_0000_0000_000000000000"` (custom null value).
 - `tags` _list[str], optional_ - Tags for identifying the model that cannot be represented by other properties, e.g., `["trained", "word_level"]`
+
+<a id="askui.ModelRegistry"></a>
+
+## askui.ModelRegistry
+
+```python
+ModelRegistry = dict[str, Model | Callable[[], Model]]
+```
+
+Type definition for model registry.
+
+A dictionary mapping model names to either model instances or factory functions (for
+lazy initialization on first use) that create model instances. Used to register custom
+models with `VisionAgent`.
+
+**Example**:
+
+    ```python
+    from askui import ModelRegistry, ActModel
+
+    class MyModel(ActModel):
+        def act(self, goal: str, model_choice: str) -> None:
+            pass
+
+    # Registry with model instance
+    registry: ModelRegistry = {
+        "my-model": MyModel()
+    }
+
+    # Registry with model factory
+    def create_model() -> ActModel:
+        return MyModel()
+
+    registry_with_factory: ModelRegistry = {
+        "my-model": create_model
+    }
+    ```
 
 <a id="askui.ModifierKey"></a>
 

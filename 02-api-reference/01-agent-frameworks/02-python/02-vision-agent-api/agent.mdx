@@ -19,10 +19,11 @@ It uses computer vision models to locate UI elements and execute actions on them
 
 - `log_level` _int | str, optional_ - The logging level to use. Defaults to `logging.INFO`.
 - `display` _int, optional_ - The display number to use for screen interactions. Defaults to `1`.
-- `model_router` _ModelRouter | None, optional_ - Custom model router instance. If `None`, a default one will be created.
 - `reporters` _list[Reporter] | None, optional_ - List of reporter instances for logging and reporting. If `None`, an empty list is used.
 - `tools` _AgentToolbox | None, optional_ - Custom toolbox instance. If `None`, a default one will be created with `AskUiControllerClient`.
-- `model` _ModelComposition | str | None, optional_ - The default composition or name of the model(s) to be used for vision tasks. Can be overridden by the `model` parameter in the `click()`, `get()`, `act()` etc. methods.
+- `model` _ModelChoice | ModelComposition | str | None, optional_ - The default choice or name of the model(s) to be used for vision tasks. Can be overridden by the `model` parameter in the `click()`, `get()`, `act()` etc. methods.
+- `retry` _Retry, optional_ - The retry instance to use for retrying failed actions. Defaults to `ConfigurableRetry` with exponential backoff. Currently only supported for `locate()` method.
+- `models` _ModelRegistry | None, optional_ - A registry of models to make available to the `VisionAgent` so that they can be selected using the `model` parameter of `VisionAgent` or the `model` parameter of its `click()`, `get()`, `act()` etc. methods. Entries in the registry override entries in the default model registry.
   
 
 **Example**:
@@ -142,9 +143,9 @@ Simulates a mouse click on the user interface element identified by the provided
 ```python
 def get(
     query: Annotated[str, Field(min_length=1)],
-    image: Optional[Img] = None,
     response_schema: Type[ResponseSchema] | None = None,
-    model: str | None = None
+    model: str | None = None,
+    image: Optional[Img] = None
 ) -> ResponseSchema | str
 ```
 
@@ -170,10 +171,10 @@ Retrieves information from an image (defaults to a screenshot of the current scr
 **Example**:
 
     ```python
-    from askui import JsonSchemaBase, VisionAgent
+    from askui import ResponseSchemaBase, VisionAgent
     from PIL import Image
 
-    class UrlResponse(JsonSchemaBase):
+    class UrlResponse(ResponseSchemaBase):
         url: str
 
     with VisionAgent() as agent:
@@ -206,42 +207,6 @@ Retrieves information from an image (defaults to a screenshot of the current scr
             "Rate the page design quality from 0 to 1",
             response_schema=float,
         )
-    ```
-
-<a id="askui.VisionAgent.locate"></a>
-
-#### locate
-
-```python
-def locate(
-    locator: str | Locator,
-    screenshot: Optional[Img] = None,
-    model: ModelComposition | str | None = None
-) -> Point
-```
-
-Locates the UI element identified by the provided locator.
-
-**Arguments**:
-
-- `locator` _str | Locator_ - The identifier or description of the element to locate.
-- `screenshot` _Img | None, optional_ - The screenshot to use for locating the element. Can be a path to an image file, a PIL Image object or a data URL. If `None`, takes a screenshot of the currently selected display.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element using the `locator`.
-  
-
-**Returns**:
-
-- `Point` - The coordinates of the element as a tuple (x, y).
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        point = agent.locate("Submit button")
-        print(f"Element found at coordinates: {point}")
     ```
 
 <a id="askui.VisionAgent.key_down"></a>
@@ -328,6 +293,68 @@ Simulates pressing (and releasing) a key or key combination on the keyboard.
         agent.keyboard('a', repeat=2)  # Press 'a' key twice
     ```
 
+<a id="askui.VisionAgent.locate"></a>
+
+#### locate
+
+```python
+def locate(
+    locator: str | Locator,
+    screenshot: Optional[Img] = None,
+    model: ModelComposition | str | None = None
+) -> Point
+```
+
+Locates the UI element identified by the provided locator.
+
+**Arguments**:
+
+- `locator` _str | Locator_ - The identifier or description of the element to locate.
+- `screenshot` _Img | None, optional_ - The screenshot to use for locating the element. Can be a path to an image file, a PIL Image object or a data URL. If `None`, takes a screenshot of the currently selected display.
+- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element using the `locator`.
+  
+
+**Returns**:
+
+- `Point` - The coordinates of the element as a tuple (x, y).
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        point = agent.locate("Submit button")
+        print(f"Element found at coordinates: {point}")
+    ```
+
+<a id="askui.VisionAgent.mouse_down"></a>
+
+#### mouse_down
+
+```python
+def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
+```
+
+Simulates the pressing of a mouse button.
+
+**Arguments**:
+
+- `button` _'left' | 'middle' | 'right', optional_ - The mouse button to be pressed. Defaults to `'left'`.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.mouse_down()  # Press the left mouse button
+        agent.mouse_down('right')  # Press the right mouse button
+        agent.mouse_down('middle')  # Press the middle mouse button
+    ```
+
 <a id="askui.VisionAgent.mouse_move"></a>
 
 #### mouse\_move
@@ -392,6 +419,32 @@ Simulates scrolling the mouse wheel by the specified horizontal and vertical amo
         agent.mouse_scroll(0, 10)  # Usually scrolls down 10 units
         agent.mouse_scroll(0, -5)  # Usually scrolls up 5 units
         agent.mouse_scroll(3, 0)   # Usually scrolls right 3 units
+    ```
+
+<a id="askui.VisionAgent.mouse_up"></a>
+
+#### mouse_up
+
+```python
+def mouse_up(button: Literal["left", "middle", "right"] = "left") -> None
+```
+
+Simulates the release of a mouse button.
+
+**Arguments**:
+
+- `button` _'left' | 'middle' | 'right', optional_ - The mouse button to be released. Defaults to `'left'`.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.mouse_up()  # Release the left mouse button
+        agent.mouse_up('right')  # Release the right mouse button
+        agent.mouse_up('middle')  # Release the middle mouse button
     ```
 
 <a id="askui.VisionAgent.type"></a>
