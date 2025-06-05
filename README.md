@@ -99,9 +99,6 @@ title: Retry
 
 ## askui.retry.Retry
 
-```python
-class Retry(ABC)
-```
 ```
 
 ### API References -> Workspaces Service
