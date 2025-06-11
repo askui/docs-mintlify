@@ -147,9 +147,19 @@ description: "Provide guidelines on designing robust automation scripts, includi
     1. Start Re-Teachting App
     2. Teach the Text Recognition to ignore the icon
     3. Use the Custom Model.
-
-    ```yaml
-    await aui.click().text("Alice Johnson").exec([{
+    <CodeGroup>
+      ```python Python
+        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
+            task="e2e_ocr",
+            architecture="easy_ocr",
+            version="1",
+            interface="online_learning",
+            useCase="<your-workspace-id>",
+            tags=["word_level"]
+        )]))
+      ```
+      ```typescript TypeScript
+        await aui.click().text("Alice Johnson").exec([{
             "task": "e2e_ocr",
             "architecture": "easy_ocr",
             "version": "1",
@@ -157,7 +167,8 @@ description: "Provide guidelines on designing robust automation scripts, includi
             "useCase": "<your-workspace-id>",
             "tags": ["word_level"]
         }])
-    ```
+      ```        
+    </CodeGroup>
   </Accordion> 
   <Accordion title="Use Default Word-Level Detection">
     This example uses a specific workspace ID in a production-like scenario.
