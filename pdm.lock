@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:e2404cc79e05b760a3d9449e2362134b001565b09dbd8e5c768e6c222fbbdb27"
+content_hash = "sha256:bf3ec28961261145be20da2641444130c9401a4ae2359e74f50299436f01d1ef"
 
 [[metadata.targets]]
 requires_python = "==3.13.*"
@@ -63,7 +63,7 @@ files = [
 
 [[package]]
 name = "askui"
-version = "0.5.2"
+version = "0.5.3"
 requires_python = ">=3.10"
 summary = "Automate computer tasks in Python"
 groups = ["dev"]
@@ -77,7 +77,7 @@ dependencies = [
     "openai>=1.61.1",
     "pillow>=11.0.0",
     "py-machineid>=0.7.0",
-    "pydantic-settings>=2.7.0",
+    "pydantic-settings>=2.9.1",
     "pydantic>=2.11.0",
     "pyperclip>=1.9.0",
     "python-dateutil>=2.9.0.post0",
@@ -87,8 +87,8 @@ dependencies = [
     "tenacity>=9.1.2",
 ]
 files = [
-    {file = "askui-0.5.2-py3-none-any.whl", hash = "sha256:32644491f0e6bf193aaf28078573e1b18d6359cfacdffccea887f149c117f636"},
-    {file = "askui-0.5.2.tar.gz", hash = "sha256:074969243ac0c5cd8d302cf9dded6044d099b0fde9d5e59c5eb48ee6ea800c18"},
+    {file = "askui-0.5.3-py3-none-any.whl", hash = "sha256:e38c9b6cfe0f0f93a643ec0a6b05696f7b60573f02ad7cf263eb28965d572abf"},
+    {file = "askui-0.5.3.tar.gz", hash = "sha256:0b19134cef784d8fd4bd05509a124c74fba18b95a2d7851177bac7c8aec1f9dc"},
 ]
 
 [[package]]

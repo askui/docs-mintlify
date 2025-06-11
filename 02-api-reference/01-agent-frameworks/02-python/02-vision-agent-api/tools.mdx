@@ -117,12 +117,12 @@ Simulates pressing and immediately releasing a keyboard key.
   press along with the main key. Defaults to `None`.
 - `count` _int, optional_ - The number of times to tap the key. Defaults to `1`.
 
-<a id="askui.tools.AgentOs.mouse"></a>
+<a id="askui.tools.agent_os.AgentOs.mouse_move"></a>
 
-#### mouse
+#### mouse\_move
 
 ```python
-def mouse(x: int, y: int) -> None
+def mouse_move(x: int, y: int) -> None
 ```
 
 Moves the mouse cursor to specified screen coordinates.
@@ -175,6 +175,19 @@ Simulates releasing a mouse button.
 
 - `button` _Literal["left", "middle", "right"], optional_ - The mouse button to release. Defaults to `"left"`.
 
+<a id="askui.tools.agent_os.AgentOs.poll_event"></a>
+
+#### poll\_event
+
+```python
+def poll_event() -> InputEvent | None
+```
+
+Poll for a single input event.
+
+IMPORTANT: This method is still experimental and may not work at all and may
+change in the future.
+
 <a id="askui.tools.agent_os.AgentOs.run_command"></a>
 
 #### run\_command
@@ -215,14 +228,40 @@ Captures a screenshot of the current display.
 #### set\_display
 
 ```python
-def set_display(displayNumber: int = 1) -> None
+def set_display(display: int = 1) -> None
 ```
 
 Sets the active display for screen interactions.
 
 **Arguments**:
 
-- `displayNumber` _int, optional_ - The display number to set as active. Defaults to `1`.
+- `display` _int, optional_ - The display ID to set as active.
+
+<a id="askui.tools.agent_os.AgentOs.start_listening"></a>
+
+#### start\_listening
+
+```python
+def start_listening() -> None
+```
+
+Start listening for mouse and keyboard events.
+
+IMPORTANT: This method is still experimental and may not work at all and may
+change in the future.
+
+<a id="askui.tools.agent_os.AgentOs.stop_listening"></a>
+
+#### stop\_listening
+
+```python
+def stop_listening() -> None
+```
+
+Stop listening for mouse and keyboard events.
+
+IMPORTANT: This method is still experimental and may not work at all and may
+change in the future.
 
 <a id="askui.tools.AgentOs.type"></a>
 
@@ -386,12 +425,12 @@ Press and immediately release a keyboard key.
   press along with the main key. Defaults to `None`.
 - `count` _int, optional_ - The number of times to tap the key. Defaults to `1`.
 
-<a id="askui.tools.askui.AskUiControllerClient.mouse"></a>
+<a id="askui.tools.askui.askui_controller.AskUiControllerClient.mouse_move"></a>
 
-#### mouse
+#### mouse\_move
 
 ```python
-def mouse(x: int, y: int) -> None
+def mouse_move(x: int, y: int) -> None
 ```
 
 Moves the mouse cursor to specified screen coordinates.
@@ -468,14 +507,14 @@ Captures a screenshot of the current display.
 #### set\_display
 
 ```python
-def set_display(displayNumber: int = 1) -> None
+def set_display(display: int = 1) -> None
 ```
 
 Sets the active display for screen interactions.
 
 **Arguments**:
 
-- `displayNumber` _int, optional_ - The display number to set as active. Defaults to `1`.
+- `display` _int, optional_ - The display ID to set as active.
 
 <a id="askui.tools.askui.AskUiControllerClient.type"></a>
 
@@ -570,6 +609,7 @@ Start the controller process.
 
 - `clean_up` _bool, optional_ - Whether to clean up existing processes (only on Windows) before starting. Defaults to `False`.
 
+
 <a id="askui.tools.askui.AskUiControllerServer.stop"></a>
 
 #### stop
@@ -583,6 +623,7 @@ Stop the controller process.
 **Arguments**:
 
 - `force` _bool, optional_ - Whether to forcefully terminate the process. Defaults to `False`.
+
 
 <a id="askui.tools.exceptions.ToolError"></a>
 
