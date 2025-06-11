@@ -132,7 +132,7 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
-        `🧑 Name` ❌  🤖 ✅ Role ✅
+        `🧑 Name` ❌  `🤖 Role` ✅
       </span>
     </div>
 
@@ -216,7 +216,7 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
     <div style={{ marginBottom: '12px' }}>
       <span style={{ whiteSpace: 'nowrap' }}>
-        `Alice Johnson` ✅  Software Engineer ✅
+        `Alice Johnson` ✅  `Software Engineer` ✅
       </span>
     </div>
 
@@ -280,8 +280,9 @@ description: "Provide guidelines on designing robust automation scripts, includi
   </Accordion>
 
   <Accordion title="Use relative anchore Element">
+    This command show how you can use an anchore element move the mouse over another element. 
     ```tsx
-      await aui.moveMouseRelativeTo(0, left).containsText("Name").exec()
+      await aui.moveMouseRelativeTo(100, 0).containsText("Name").exec()
     ```
   </Accordion>
 </AccordionGroup>
@@ -343,10 +344,10 @@ description: "Provide guidelines on designing robust automation scripts, includi
   </Card>
 </Columns>
 
-## Solution 1: Use Default Word-Level Detection (Best Practice)
+## Solution
 
 <AccordionGroup>
-  <Accordion title="Example: Re-Teach the OCR Model">
+  <Accordion title="Use Default Word-Level Detection (Best Practice)">
     ```tsx
     await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
@@ -358,12 +359,7 @@ description: "Provide guidelines on designing robust automation scripts, includi
     }])
     ```
   </Accordion>
-</AccordionGroup>
-
-## Solution 2: Use Custom Model Word-Level Detection
-
-<AccordionGroup>
-  <Accordion title="Example: Re-Teach the OCR Model">
+  <Accordion title="Use Custom Model Word-Level Detection">
     ```tsx
     await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
@@ -433,10 +429,10 @@ description: "Provide guidelines on designing robust automation scripts, includi
   </Card>
 </Columns>
 
-## Solution 1: Use Default Word-Level Detection (Best Practice)
+## Solution
 
 <AccordionGroup>
-  <Accordion title="Example: Re-Teach the OCR Model">
+  <Accordion title="Use Default Word-Level Detection (Best Practice)">
     ```tsx
     await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
@@ -448,12 +444,7 @@ description: "Provide guidelines on designing robust automation scripts, includi
     }])
     ```
   </Accordion>
-</AccordionGroup>
-
-## Solution 2: Use Custom Model Word-Level Detection
-
-<AccordionGroup>
-  <Accordion title="Example: Re-Teach the OCR Model">
+  <Accordion title="Use Custom Model Word-Level Detection">
     ```tsx
     await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
@@ -523,10 +514,14 @@ description: "Provide guidelines on designing robust automation scripts, includi
   </Card>
 </Columns>
 
-## Solution 1: AI Element
+## Solution
 
-\
-Follow[ tutorial](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements) here.
+<AccordionGroup>
+  <Accordion title="Use AI Element">
+    Follow [tutorial](https://docs.askui.com/introduction/03-core-concepts/01-element-selection/01-element-selection#ai-elements) here.
+  </Accordion>
+</AccordionGroup>
+
 
 ## 6. Text not Detected
 
