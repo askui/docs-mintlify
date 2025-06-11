@@ -3,7 +3,7 @@ title: "WIP: Best Practices for Reliable Automation"
 description: "Provide guidelines on designing robust automation scripts, including error handling, retries, and validation steps"
 ---
 
-# 1. Misspellings of Words
+# Misspellings of Words
 
 Problem: The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
 
@@ -75,9 +75,9 @@ You can directly correct OCR predictions and improve model accuracy by training 
   </Accordion> 
 </AccordionGroup> 
 
-# 2. Text Detection Issues
+# Text Detection Issues
 
-## 1. Icon Text Merging
+## Icon Text Merging
 
 **Problem:** Sometimes, Text Detector/annotation tool, **merges an icon and texts into one**, even though they look merged on screen.
 
@@ -133,14 +133,16 @@ You can directly correct OCR predictions and improve model accuracy by training 
   </Card>
 </Columns>
 
-## Solution 1: Re-Teach the OCR Model to ignore the icon.
+### Solution
 
-1. Start Re-Teachting App
-2. Teach the Text Recognition to ignore the icon
-3. Use the Custom Model.
 
 <AccordionGroup>
   <Accordion title="Example: Re-Teach the OCR Model">
+
+    
+    1. Start Re-Teachting App
+    2. Teach the Text Recognition to ignore the icon
+    3. Use the Custom Model.
 
     ```yaml
     await aui.click().text("Alice Johnson").exec([{
@@ -153,12 +155,9 @@ You can directly correct OCR predictions and improve model accuracy by training 
         }])
     ```
   </Accordion> 
- </AccordionGroup> 
-    
-## Solution 2: Use Default Word-Level Detection (Best Practice)
 
-<AccordionGroup>
-  <Accordion title="Example: Re-Teach the OCR Model">
+  
+  <Accordion title="Use Default Word-Level Detection">
     This example uses a specific workspace ID in a production-like scenario.
 
     ```tsx
@@ -171,13 +170,8 @@ You can directly correct OCR predictions and improve model accuracy by training 
         "tags": ["word_level"]
     }])
     ```
-  </Accordion> 
-</AccordionGroup> 
-
-### Solution 3: Use Custom Model Word-Level Detection
-
-<AccordionGroup>
-  <Accordion title="Example: Re-Teach the OCR Model">
+  </Accordion>
+  <Accordion title="Use Custom Model Word-Level Detection">
     This accordion includes a code block and some explanation text.
 
     ```tsx
@@ -191,6 +185,18 @@ You can directly correct OCR predictions and improve model accuracy by training 
     }])
     ```
   </Accordion> 
+ </AccordionGroup> 
+    
+## Solution 2: Use Default Word-Level Detection (Best Practice)
+
+<AccordionGroup>
+  
+</AccordionGroup> 
+
+### Solution 3: Use Custom Model Word-Level Detection
+
+<AccordionGroup>
+  
 </AccordionGroup> 
 
 ## 2. Merged Texts
