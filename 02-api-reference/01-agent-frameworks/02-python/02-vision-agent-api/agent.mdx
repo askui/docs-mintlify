@@ -43,8 +43,10 @@ It uses computer vision models to locate UI elements and execute actions on them
 
 ```python
 def act(
-    goal: Annotated[str, Field(min_length=1)],
-    model: str | None = None
+    goal: Annotated[str | list[MessageParam],
+                    Field(min_length=1)],
+    model: str | None = None,
+    on_message: OnMessageCb | None = None
 ) -> None
 ```
 
@@ -58,6 +60,12 @@ interface interactions.
 
 - `goal` _str_ - A description of what the agent should achieve.
 - `model` _str | None, optional_ - The composition or name of the model(s) to be used for achieving the `goal`.
+- `on_message` _OnMessageCb | None, optional_ - Callback for new messages. If it returns `None`, stops and does not add the message.
+  
+
+**Returns**:
+
+  None
   
 
 **Example**:
@@ -95,6 +103,8 @@ is split on spaces and executed as a subprocess.
     from askui import VisionAgent
 
     with VisionAgent() as agent:
+        agent.cli(fr'start "" "C:\Program Files\VideoLAN\VLC\vlc.exe"') # Start in VLC Non-Blocking
+        agent.cli(fr'"C:\Program Files\VideoLAN\VLC\vlc.exe"') # Start in VLC Blocking
         agent.cli("echo Hello World")  # Prints "Hello World"
         agent.cli("ls -la")  # Lists files in current directory with details
         agent.cli("python --version")  # Displays Python version

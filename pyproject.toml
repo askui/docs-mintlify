@@ -67,6 +67,12 @@ name = "reporting"
 contents = [
     "askui.reporting.*",
 ]
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Retry"
+name = "retry"
+contents = [
+    "askui.retry.*",
+]
 
 [[tool.pydoc-markdown.renderer.pages]]
 title = "Tools"
@@ -87,19 +93,21 @@ contents = [
     "askui.models.models.ActModel",
     "askui.models.models.GetModel",
     "askui.models.models.LocateModel",
+    "askui.models.openrouter.handler.OpenRouterGetModel",
+    "askui.models.openrouter.settings.OpenRouterSettings",
     "askui.models.models.Model",
-    "askui.models.models.ModelChoice",
+    "askui.models.models.ModelName",
     "askui.models.models.ModelComposition",
     "askui.models.models.ModelDefinition",
     "askui.models.models.ModelRegistry",
-    "askui.models.router.Point",
+    "askui.models.models.Point",
     "askui.models.types.response_schemas.ResponseSchema",
     "askui.models.types.response_schemas.ResponseSchemaBase",
     "askui.tools.agent_os.ModifierKey",
     "askui.tools.agent_os.PcKey",
     "askui.utils.image_utils.Img",
     "askui.utils.image_utils.ImageSource",
-    "askui.exceptions.*",
+    "askui.models.exceptions.*",
     "askui.models.askui.exceptions.*",                        # added to `askui.exceptions`
     "askui.models.askui.ai_element_utils.AiElementNotFound",  # added to `askui.exceptions`
     # AgentToolbox and ModelRouter (parameter of VisionAgent.__init__()) currently not included 
@@ -110,5 +118,5 @@ contents = [
 [dependency-groups]
 dev = [
     "pydoc-markdown>=4.8.2",
-    "askui>=0.5.2",
+    "askui>=0.5.3",
 ]

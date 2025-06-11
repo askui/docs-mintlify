@@ -12,20 +12,28 @@ class ActModel(abc.ABC)
 
 Abstract base class for models that can execute autonomous actions.
 
-Models implementing this interface can be used with the `act()` method of
-`VisionAgent`
-to achieve goals through autonomous actions. These models analyze the screen and
-determine necessary steps to accomplish a given goal.
+Models implementing this interface can be used with the `VisionAgent.act()`.
 
 **Example**:
 
     ```python
-    from askui import ActModel, VisionAgent
+    from askui import (
+        ActModel,
+        MessageParam,
+        OnMessageCb,
+        VisionAgent,
+    )
+    from typing_extensions import override
 
     class MyActModel(ActModel):
-        def act(self, goal: str, model_choice: str) -> None:
-            # Implement custom act logic
-            pass
+        @override
+        def act(
+            self,
+            messages: list[MessageParam],
+            model_choice: str,
+            on_message: OnMessageCb | None = None,
+        ) -> None:
+            pass  # implement action logic here
 
     with VisionAgent(models={"my-act": MyActModel()}) as agent:
         agent.act("search for flights", model="my-act")
@@ -288,25 +296,6 @@ This type represents any model that can be used with `VisionAgent`, whether it's
 `ActModel`, `GetModel`, or `LocateModel`. It's useful for type hints when you need to
 work with models in a generic way.
 
-<a id="askui.ModelChoice"></a>
-
-## askui.ModelChoice
-
-```python
-class ModelChoice(TypedDict)
-```
-
-Type definition for specifying different models for different tasks.
-
-This `TypedDict` allows you to specify different models for `act()`, `get()`, and
-`locate()` tasks when initializing `VisionAgent`. All fields are optional.
-
-**Attributes**:
-
-- `act` - Model name to use for `act()` commands
-- `get` - Model name to use for `get()` commands
-- `locate` - Model name or composition to use for `locate()`, `click()`, and
-  `mouse_move()` commands
 
 <a id="askui.ModelComposition"></a>
 
@@ -373,6 +362,41 @@ models with `VisionAgent`.
         "my-model": create_model
     }
     ```
+
+<a id="askui.models.ModelName"></a>
+
+## askui.models.ModelName
+
+```python
+class ModelName(str, Enum)
+```
+
+Enumeration of all available model names in AskUI.
+
+This enum provides type-safe access to model identifiers used throughout the
+library. Each model name corresponds to a specific AI model or model composition
+that can be used for different tasks like acting, getting information, or locating
+elements.
+
+<a id="askui.models.OpenRouterGetModel"></a>
+
+## askui.models.OpenRouterGetModel
+
+```python
+class OpenRouterGetModel(GetModel)
+```
+
+Get model for OpenRouter.
+
+<a id="askui.models.OpenRouterSettings"></a>
+
+## askui.models.OpenRouterSettings
+
+```python
+class OpenRouterSettings(BaseModel)
+```
+
+Settings for OpenRouter.
 
 <a id="askui.ModifierKey"></a>
 
@@ -515,9 +539,9 @@ PcKey = Literal[
 
 PC keys for keyboard actions.
 
-<a id="askui.Point"></a>
+<a id="askui.models.Point"></a>
 
-## askui.Point
+## askui.models.Point
 
 ```python
 Point = tuple[int, int]
