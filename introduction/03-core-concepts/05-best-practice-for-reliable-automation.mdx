@@ -31,6 +31,59 @@ Example:
   </Card>
 </Columns>
 
+
+<Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      ⵊ <em>Text is correctly spelled:</em>
+    </div>
+
+    <div>
+      <code>Hallo</code>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        ✅ Hallo ✅
+      </span>
+    </div>
+
+    <div>
+      👍 Works with `click().text("Hallo")` or `click().text("Hallo")`
+    </div>
+  </Card>
+
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      ⵊ <em>Text is misspelled</em>
+    </div>
+
+    <div>
+      <code>HaII0</code>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ whiteSpace: 'nowrap' }}>
+        ❌ `HaII0` ❌
+      </span>
+    </div>
+
+    <div>
+      👎 Can't find `click().text("Hallo")`. Because of recognition issues. (`l`->`I`and `o` -> `0`) 
+    </div>
+  </Card>
+</Columns>
+
+
+
 ## Solution 1: Re-Teach the OCR Model Using AskUI’s OCR Re-Teaching App
 
 You can directly correct OCR predictions and improve model accuracy by training your workspace-specific model.
