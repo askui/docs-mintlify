@@ -39,8 +39,6 @@ Please follow our official [installation guide](https://docs.askui.com/introduct
   - act-command supports hold & releas keyboard key `await aui.act("Can you select file 1, file 2, file 3")`
 - Includes the new AskUI UIController Version 0.15.0
   - Added hold & release keybord keys
-- 
-- AskUI Vision Agent: Changelog 0.4.7
 
 ## Removed
 
