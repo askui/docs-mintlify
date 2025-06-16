@@ -1,22 +1,22 @@
 <CodeGroup>
 ```python Python
-    agent.click("Hallo", model=ModelComposition([ModelDefinition(
+    agent.click("{click-word}", model=ModelComposition([ModelDefinition(
                 task="e2e_ocr",
                 architecture="easy_ocr",
                 version="1",
                 interface="online_learning",
-                useCase="<your-workspace-id>",
-                tags=["word_level"]
+                useCase="{workspace-id}",
+                tags=["{tag}"]
             )]))
     ```
     ```typescript TypeScript
-    await aui.click().text("Alice Johnson").exec([{
+    await aui.click().text("{click-word}").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
         "interface": "online_learning",
-        "useCase": "<your-workspace-id>",
-        "tags": ["word_level"]
+        "useCase": "{workspace-id}",
+        "tags": ["{tag}"]
     }])
     ```        
 </CodeGroup>
