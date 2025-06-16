@@ -173,16 +173,28 @@ description: "Provide guidelines on designing robust automation scripts, includi
   <Accordion title="Use Default Word-Level Detection">
     This example uses a specific workspace ID in a production-like scenario.
 
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "00000000_0000_0000_0000_000000000000",
-        "tags": ["word_level"]
-    }])
-    ```
+    <CodeGroup>
+      ```python Python
+        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
+            task="e2e_ocr",
+            architecture="easy_ocr",
+            version="1",
+            interface="online_learning",
+            useCase="00000000_0000_0000_0000_000000000000",
+            tags=["word_level"]
+        )]))
+      ```
+      ```tsx TypeScript
+      await aui.click().text("Alice Johnson").exec([{
+          "task": "e2e_ocr",
+          "architecture": "easy_ocr",
+          "version": "1",
+          "interface": "online_learning",
+          "useCase": "00000000_0000_0000_0000_000000000000",
+          "tags": ["word_level"]
+      }])
+      ```
+    </CodeGroup>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
     This accordion includes a code block and some explanation text.
@@ -260,16 +272,28 @@ description: "Provide guidelines on designing robust automation scripts, includi
 ### Solutions
 <AccordionGroup>
   <Accordion title="Use Default Word-Level Detection (Best Practice)">
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "00000000_0000_0000_0000_000000000000",
-        "tags": ["word_level"]
-    }])
-    ```
+    <CodeGroup>
+      ```python Python
+        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
+            task="e2e_ocr",
+            architecture="easy_ocr",
+            version="1",
+            interface="online_learning",
+            useCase="00000000_0000_0000_0000_000000000000",
+            tags=["word_level"]
+        )]))
+      ```
+      ```tsx TypeScript
+      await aui.click().text("Alice Johnson").exec([{
+          "task": "e2e_ocr",
+          "architecture": "easy_ocr",
+          "version": "1",
+          "interface": "online_learning",
+          "useCase": "00000000_0000_0000_0000_000000000000",
+          "tags": ["word_level"]
+      }])
+      ```
+    </CodeGroup>
   </Accordion>
 
   <Accordion title="Use Custom Model Word-Level Detection">
@@ -354,16 +378,28 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
 <AccordionGroup>
   <Accordion title="Use Default Word-Level Detection (Best Practice)">
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "00000000_0000_0000_0000_000000000000",
-        "tags": ["word_level"]
-    }])
-    ```
+    <CodeGroup>
+      ```python Python
+        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
+            task="e2e_ocr",
+            architecture="easy_ocr",
+            version="1",
+            interface="online_learning",
+            useCase="00000000_0000_0000_0000_000000000000",
+            tags=["word_level"]
+        )]))
+      ```
+      ```tsx TypeScript
+      await aui.click().text("Alice Johnson").exec([{
+          "task": "e2e_ocr",
+          "architecture": "easy_ocr",
+          "version": "1",
+          "interface": "online_learning",
+          "useCase": "00000000_0000_0000_0000_000000000000",
+          "tags": ["word_level"]
+      }])
+      ```
+    </CodeGroup>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
     ```tsx
@@ -439,16 +475,28 @@ description: "Provide guidelines on designing robust automation scripts, includi
 
 <AccordionGroup>
   <Accordion title="Use Default Word-Level Detection (Best Practice)">
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "00000000_0000_0000_0000_000000000000",
-        "tags": ["word_level"]
-    }])
-    ```
+    <CodeGroup>
+      ```python Python
+        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
+            task="e2e_ocr",
+            architecture="easy_ocr",
+            version="1",
+            interface="online_learning",
+            useCase="00000000_0000_0000_0000_000000000000",
+            tags=["word_level"]
+        )]))
+      ```
+      ```tsx TypeScript
+      await aui.click().text("Alice Johnson").exec([{
+          "task": "e2e_ocr",
+          "architecture": "easy_ocr",
+          "version": "1",
+          "interface": "online_learning",
+          "useCase": "00000000_0000_0000_0000_000000000000",
+          "tags": ["word_level"]
+      }])
+      ```
+    </CodeGroup>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
     ```tsx
