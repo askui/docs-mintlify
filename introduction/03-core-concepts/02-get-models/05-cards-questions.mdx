@@ -12,10 +12,13 @@ class Card(ResponseSchemaBase):
     title: str
     description: str
     date: str = Field(description="The date in ISO format, e.g., '2023-10-01T12:00:00Z'")
+    selected: bool  # Indicates whether the card is currently selected or active
 
 class Cards(ResponseSchemaBase):
     cards: List[Card]
 ```
+
+The `selected` field indicates whether the card is currently selected or active in the UI. This can be useful for tracking user interactions or highlighting the current context.
 
 Then, use the agent to extract all cards from your application:
 
@@ -39,32 +42,38 @@ The extracted output would look like:
     {
       "title": "QA Agent with Pytest",
       "description": "This agent contains a Pytest QA Agent.",
-      "date": "2025-05-28T00:00:00Z"
+      "date": "2025-05-28T00:00:00Z",
+      "selected": false
     },
     {
       "title": "Basic Vision Agent",
       "description": "This agent contains a basic Python Vision Agent.",
-      "date": "2025-05-28T00:00:00Z"
-    },
-    {
-      "title": "Tic Tac Toe Vision Agent",
-      "description": "This agent contains a basic Python Vision Agent that plays Tic Tac Toe.",
-      "date": "2025-05-28T00:00:00Z"
-    },
-    {
-      "title": "Web Scraping Agent",
-      "description": "This agent contains a AskUI Web Scraping Agent. It scrapes data from a website and stores it in a text file.",
-      "date": "2025-05-28T00:00:00Z"
+      "date": "2025-05-28T00:00:00Z",
+      "selected": true
     },
     {
       "title": "Plc Application Vision Agent",
       "description": "This agent contains a basic Python Vision Agent that interacts with a PLC application.",
-      "date": "2025-05-28T00:00:00Z"
+      "date": "2025-05-28T00:00:00Z",
+      "selected": false
+    },
+    {
+      "title": "Tic Tac Toe Vision Agent",
+      "description": "This agent contains a basic Python Vision Agent that plays Tic Tac Toe.",
+      "date": "2025-05-28T00:00:00Z",
+      "selected": false
+    },
+    {
+      "title": "Web Scraping Agent",
+      "description": "This agent contains a AskUI Web Scraping Agent. It scrapes data from a website and stores it in a text file.",
+      "date": "2025-05-28T00:00:00Z",
+      "selected": false
     },
     {
       "title": "PDF to Excel Agent",
       "description": "This agent takes pdfs from a folder and converts them into an excel file. Extracted information can be changed in the prompt.",
-      "date": "2025-05-28T00:00:00Z"
+      "date": "2025-05-28T00:00:00Z",
+      "selected": false
     }
   ]
 }
