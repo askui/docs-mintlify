@@ -1,0 +1,25 @@
+**Steps:**
+1. Open AskUI Shell
+```bash
+askui-shell
+```
+2. Create a new AI Element
+```bash
+# Capture elements from your screen
+AskUI-NewAiElement -Name "my-element-name"
+```
+3. Use captured AI Elements in your code:
+<CodeGroup>
+
+```python Python
+from askui import locators as loc
+...
+with VisionAgent() as agent:
+    agent.click(loc.AiElement("my-element-name"))
+```
+
+```python Typescript
+ await aui.click().aiElement("my-element-name").exec()
+```
+
+</CodeGroup>
