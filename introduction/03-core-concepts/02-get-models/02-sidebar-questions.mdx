@@ -1,0 +1,63 @@
+---
+title: "Extracting Sidebars"
+description: "Extract sidebar structure from your application"
+---
+
+You can use the agent to extract structured sidebar information from your application UI. This is useful for validating navigation, generating documentation, or automating UI tests.
+
+To do this, define a response schema that models the sidebar structure. For example:
+
+```python
+class SidebarItem(ResponseSchemaBase):
+    name: str
+    children: List["SidebarItem"]
+
+class Sidebare(ResponseSchemaBase):
+    sidebar: List["SidebarItem"]
+```
+
+Then, use the agent to extract the sidebar below a specific section, such as "Introduction":
+
+```python
+with VisionAgent() as agent:
+    result = agent.get(
+        "Can you extract me the sidebar below section 'Introduction'?",
+        response_schema=Sidebare
+    )
+    print(result.model_dump_json(indent=2))
+```
+
+**Example**
+
+Suppose you have the following sidebar in your application:
+
+![AskUI Documentation Sidebar](images/simple_website.png)
+
+The extracted output would look like:
+
+```json
+{
+  "sidebar": [
+    {
+      "name": "Overview",
+      "children": []
+    },
+    {
+      "name": "How AskUI Works",
+      "children": []
+    },
+    {
+      "name": "Example Automations",
+      "children": []
+    }
+  ]
+}
+```
+
+This approach allows you to retrieve the sidebar as a structured JSON object, making it easy to inspect or use in further automation.
+
+> **Tip:**  
+> Adjust the schema to match your sidebar’s structure, and use clear instructions to get accurate results.
+
+
+
