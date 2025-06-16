@@ -102,7 +102,8 @@
           "pages": [
             "introduction/03-core-concepts/02-get-models/01-yes-no-questions",
             "introduction/03-core-concepts/02-get-models/02-sidebar-questions",
-            "introduction/03-core-concepts/02-get-models/03-tabs-questions"
+            "introduction/03-core-concepts/02-get-models/03-tabs-questions",
+            "introduction/03-core-concepts/02-get-models/04-table-questions"
           ]
         },
         "introduction/03-core-concepts/03-interactions",
