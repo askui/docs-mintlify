@@ -6,8 +6,6 @@ import CustomWordLevelModelOnStepLevel from '/snippets/custom-word-level-model-o
     
 # Misspellings of Words
 
-<CustomWordLevelModelOnStepLevel/>
-
 **Problem:** The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
 
 **Example:**
@@ -77,6 +75,10 @@ import CustomWordLevelModelOnStepLevel from '/snippets/custom-word-level-model-o
     6. Click **"Copy Model"** to copy the newly trained model ID.
     7. In your automation code, update on model config on global level or on step level to use the new model:
 
+    <CustomWordLevelModelOnStepLevel click-word="Hello" workspace-id="<your-workspace-id>" tag="trained"/>
+    
+    TEst
+    
     <CodeGroup>
       ```python Python
         # Gloabl Level Model Configutaion
