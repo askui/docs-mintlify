@@ -1,0 +1,24 @@
+
+<CodeGroup>
+
+```python Python
+    agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
+                task="e2e_ocr",
+                architecture="easy_ocr",
+                version="1",
+                interface="online_learning",
+                useCase="00000000_0000_0000_0000_000000000000",
+                tags=["word_level"]
+            )]))
+    ```
+    ```typescript TypeScript
+    await aui.click().text("Alice Johnson").exec([{
+        "task": "e2e_ocr",
+        "architecture": "easy_ocr",
+        "version": "1",
+        "interface": "online_learning",
+        "useCase": "00000000_0000_0000_0000_000000000000",
+        "tags": ["word_level"]
+    }])
+    ```        
+</CodeGroup>

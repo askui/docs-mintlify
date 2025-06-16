@@ -6,6 +6,7 @@ import ModelCompositionSentenceLevelOnGlobalLevel from '/snippets/model-composit
 import ModelCompositionSentenceLevelOnStepLevel from '/snippets/model-composition-sentence-level-on-step-level.mdx';
 import ModelCompositionWordLevelOnGlobalLevel from '/snippets/model-composition-word-level-on-global-level.mdx';
 import ModelCompositionWordLevelOnStepLevel from '/snippets/model-composition-word-level-on-step-level.mdx';
+import ModelCompositionDefaultWordLevelOnStepLevel from '/snippets/model-composition-default-word-level-on-step-level.mdx';
     
 # Misspellings of Words
 
@@ -289,28 +290,7 @@ import ModelCompositionWordLevelOnStepLevel from '/snippets/model-composition-wo
 ### Solutions
 <AccordionGroup>
   <Accordion title="Use Default Word-Level Detection (Best Practice)">
-    <CodeGroup>
-      ```python Python
-        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
-            task="e2e_ocr",
-            architecture="easy_ocr",
-            version="1",
-            interface="online_learning",
-            useCase="00000000_0000_0000_0000_000000000000",
-            tags=["word_level"]
-        )]))
-      ```
-      ```tsx TypeScript
-      await aui.click().text("Alice Johnson").exec([{
-          "task": "e2e_ocr",
-          "architecture": "easy_ocr",
-          "version": "1",
-          "interface": "online_learning",
-          "useCase": "00000000_0000_0000_0000_000000000000",
-          "tags": ["word_level"]
-      }])
-      ```
-    </CodeGroup>
+    <ModelCompositionDefaultWordLevelOnStepLevel/>
   </Accordion>
 
   <Accordion title="Use Custom Model Word-Level Detection">
@@ -395,28 +375,7 @@ import ModelCompositionWordLevelOnStepLevel from '/snippets/model-composition-wo
 
 <AccordionGroup>
   <Accordion title="Use Default Word-Level Detection (Best Practice)">
-    <CodeGroup>
-      ```python Python
-        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
-            task="e2e_ocr",
-            architecture="easy_ocr",
-            version="1",
-            interface="online_learning",
-            useCase="00000000_0000_0000_0000_000000000000",
-            tags=["word_level"]
-        )]))
-      ```
-      ```tsx TypeScript
-      await aui.click().text("Alice Johnson").exec([{
-          "task": "e2e_ocr",
-          "architecture": "easy_ocr",
-          "version": "1",
-          "interface": "online_learning",
-          "useCase": "00000000_0000_0000_0000_000000000000",
-          "tags": ["word_level"]
-      }])
-      ```
-    </CodeGroup>
+    <ModelCompositionDefaultWordLevelOnStepLevel/>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
     ```tsx
@@ -492,28 +451,7 @@ import ModelCompositionWordLevelOnStepLevel from '/snippets/model-composition-wo
 
 <AccordionGroup>
   <Accordion title="Use Default Word-Level Detection (Best Practice)">
-    <CodeGroup>
-      ```python Python
-        agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
-            task="e2e_ocr",
-            architecture="easy_ocr",
-            version="1",
-            interface="online_learning",
-            useCase="00000000_0000_0000_0000_000000000000",
-            tags=["word_level"]
-        )]))
-      ```
-      ```tsx TypeScript
-      await aui.click().text("Alice Johnson").exec([{
-          "task": "e2e_ocr",
-          "architecture": "easy_ocr",
-          "version": "1",
-          "interface": "online_learning",
-          "useCase": "00000000_0000_0000_0000_000000000000",
-          "tags": ["word_level"]
-      }])
-      ```
-    </CodeGroup>
+    <ModelCompositionDefaultWordLevelOnStepLevel/>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
     ```tsx
