@@ -2,6 +2,7 @@
 title: "Element Selection General"
 description: "Learn how to find and select UI elements with AskUI's powerful selection capabilities"
 ---
+import NewAIElement from '/snippets/new-ai-element.mdx';
 
 # Finding and Selecting UI Elements
 
@@ -105,31 +106,8 @@ with VisionAgent(display=2) as agent:  # Use secondary display
 
 For complex or dynamic elements, use AI Elements to capture and reuse specific visual elements:
 
-```bash
-# Capture elements from your screen
-AskUI-NewAiElement -Name "my-element-name"
-```
+</NewAIElement>
 
-Use captured AI Elements in your code:
-<CodeGroup>
-
-```python Vision Agent (Python)
-from askui import locators as loc
-
-with VisionAgent() as agent:
-    agent.click(loc.AiElement("my-element-name"))
-```
-
-```python Typescript ADK
- await aui.click().aiElement("my-element-name").exec()
-```
-
-
-</CodeGroup>
-
-<Note>
-  If you cannot use the AskUI-NewAIElement command, activate experimental commands by running `AskUI-ImportExperimentalCommands` in your terminal.
-</Note>
 
 ## Best Practices
 
