@@ -101,11 +101,12 @@
           "group": "Get Questions",
           "pages": [
             "introduction/03-core-concepts/02-get-models/01-yes-no-questions",
+            "introduction/03-core-concepts/02-get-models/06-text-questions",
+            "introduction/03-core-concepts/02-get-models/07-number-questions",
             "introduction/03-core-concepts/02-get-models/02-sidebar-questions",
             "introduction/03-core-concepts/02-get-models/03-tabs-questions",
             "introduction/03-core-concepts/02-get-models/04-table-questions",
-            "introduction/03-core-concepts/02-get-models/05-cards-questions",
-            "introduction/03-core-concepts/02-get-models/06-text-questions"
+            "introduction/03-core-concepts/02-get-models/05-cards-questions"
           ]
         },
         "introduction/03-core-concepts/03-interactions",
