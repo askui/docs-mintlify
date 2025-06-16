@@ -2,7 +2,8 @@
 title: "Best Practices for UIDT-1 Locator Reliable Automation"
 description: "Provide guidelines on designing robust automation scripts, including error handling, retries, and validation steps"
 ---
-
+import CustomWordLevelModelOnStepLevel 'snippets/custom-word-level-model-on-step-level.mdx';
+    
 # Misspellings of Words
 
 **Problem:** The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
@@ -270,28 +271,7 @@ description: "Provide guidelines on designing robust automation scripts, includi
     </CodeGroup>
   </Accordion> 
   <Accordion title="Use Custom Model Word-Level Detection">
-
-    ```python Python
-        agent.click("Hallo", model=ModelComposition([ModelDefinition(
-                    task="e2e_ocr",
-                    architecture="easy_ocr",
-                    version="1",
-                    interface="online_learning",
-                    useCase="<your-workspace-id>",
-                    tags=["word_level"]
-                )]))
-      ```
-      ```typescript TypeScript
-        await aui.click().text("Alice Johnson").exec([{
-            "task": "e2e_ocr",
-            "architecture": "easy_ocr",
-            "version": "1",
-            "interface": "online_learning",
-            "useCase": "<your-workspace-id>",
-            "tags": ["word_level"]
-        }])
-      ```        
-    </CodeGroup>
+    <CustomWordLevelModelOnStepLevel/>
   </Accordion> 
  </AccordionGroup> 
 
