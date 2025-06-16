@@ -2,7 +2,10 @@
 title: "Best Practices for UIDT-1 Locator Reliable Automation"
 description: "Provide guidelines on designing robust automation scripts, including error handling, retries, and validation steps"
 ---
-import CustomWordLevelModelOnStepLevel from '/snippets/custom-word-level-model-on-step-level.mdx';
+import ModelCompositionSentenceLevelOnGlobalLevel from '/snippets/model-composition-sentence-level-on-global-level.mdx';
+import ModelCompositionSentenceLevelOnStepLevel from '/snippets/model-composition-sentence-level-on-step-level.mdx';
+import ModelCompositionWordLevelOnGlobalLevel from '/snippets/model-composition-word-level-on-global-level.mdx';
+import ModelCompositionWordLevelOnStepLevel from '/snippets/model-composition-word-level-on-step-level.mdx';
     
 # Misspellings of Words
 
@@ -75,64 +78,11 @@ import CustomWordLevelModelOnStepLevel from '/snippets/custom-word-level-model-o
     6. Click **"Copy Model"** to copy the newly trained model ID.
     7. In your automation code, update on model config on global level or on step level to use the new model:
 
-    <CustomWordLevelModelOnStepLevel clickWord="Hello" workspaceId="<your-workspace-id>" tag="trained"/>
-    
-    TEst
-    
-    <CodeGroup>
-      ```python Python
-        # Gloabl Level Model Configutaion
-        with VisionAgent(model= {
-            "locate": ModelComposition([ModelDefinition(
-                    task="e2e_ocr",
-                    architecture="easy_ocr",
-                    version="1",
-                    interface="online_learning",
-                    useCase="<your-workspace-id>",
-                    tags=["trained"]
-                )])
-        }) as agent:
-          ...
+    Global Level Model Composition
+    <ModelCompositionSentenceLevelOnGlobalLevel/>
 
-        # Step Level Model Configution
-        agent.click("Hallo", model=ModelComposition([ModelDefinition(
-                    task="e2e_ocr",
-                    architecture="easy_ocr",
-                    version="1",
-                    interface="online_learning",
-                    useCase="<your-workspace-id>",
-                    tags=["trained"]
-                )]))
-      ```
-      ```typescript TypeScript
-        // askui-helper.ts | Global Level Model Configutaion
-        ...
-        aui = await UiControlClient.build({
-            ...
-            modelComposition: [{
-                    "task": "e2e_ocr",
-                    "architecture": "easy_ocr",
-                    "version": "1",
-                    "interface": "online_learning",
-                    "useCase": "<your-workspace-id>",
-                    "tags": ["trained"]
-                }]
-        });
-
-        ...
-
-        // Step Level Model Configuration
-
-        await aui.click().text("Alice Johnson").exec([{
-            "task": "e2e_ocr",
-            "architecture": "easy_ocr",
-            "version": "1",
-            "interface": "online_learning",
-            "useCase": "<your-workspace-id>",
-            "tags": ["trained"]
-        }])
-      ```        
-    </CodeGroup>
+    Step Level Model Composition
+    <ModelCompositionSentenceLevelOnStepLevel/>
   </Accordion> 
 </AccordionGroup> 
 

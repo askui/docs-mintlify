@@ -1,0 +1,32 @@
+
+<CodeGroup>
+
+```python Python
+    with VisionAgent(model= {
+        "locate": ModelComposition([ModelDefinition(
+                task="e2e_ocr",
+                architecture="easy_ocr",
+                version="1",
+                interface="online_learning",
+                useCase="<your-workspace-id>",
+                tags=["trained"]
+            )])
+    }) as agent:
+    ```
+    ```typescript TypeScript
+        // askui-helper.ts | Global Level Model Configutaion
+        ...
+        aui = await UiControlClient.build({
+            ...
+            modelComposition: [{
+                    "task": "e2e_ocr",
+                    "architecture": "easy_ocr",
+                    "version": "1",
+                    "interface": "online_learning",
+                    "useCase": "<your-workspace-id>",
+                    "tags": ["trained"]
+                }]
+        });
+        ...
+    ```        
+</CodeGroup>

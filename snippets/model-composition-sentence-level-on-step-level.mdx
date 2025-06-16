@@ -1,29 +1,24 @@
 
-Test: {clickWord} {workspaceId} {tag}
 <CodeGroup>
 
-$('```python')
-{clickWord}
-$('```')
-
 ```python Python
-    agent.click("{click-word}", model=ModelComposition([ModelDefinition(
+    agent.click("Alice Johnson", model=ModelComposition([ModelDefinition(
                 task="e2e_ocr",
                 architecture="easy_ocr",
                 version="1",
                 interface="online_learning",
-                useCase="{workspace-id}",
-                tags=["{tag}"]
+                useCase="<your-workspce-id>",
+                tags=["trained"]
             )]))
     ```
     ```typescript TypeScript
-    await aui.click().text("{click-word}").exec([{
+    await aui.click().text("Alice Johnson").exec([{
         "task": "e2e_ocr",
         "architecture": "easy_ocr",
         "version": "1",
         "interface": "online_learning",
-        "useCase": "{workspace-id}",
-        "tags": ["{tag}"]
+        "useCase": "<your-workspce-id>",
+        "tags": ["trained"]
     }])
     ```        
 </CodeGroup>
