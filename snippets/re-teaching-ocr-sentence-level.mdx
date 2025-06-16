@@ -1,0 +1,28 @@
+import ModelCompositionSentenceLevelOnGlobalLevel from '/snippets/model-composition-sentence-level-on-global-level.mdx';
+import ModelCompositionSentenceLevelOnStepLevel from '/snippets/model-composition-sentence-level-on-step-level.mdx';
+
+You can directly correct OCR predictions and improve OCR model accuracy by training your workspace-specific model.
+    
+    **Steps:**
+
+    1. Start the AskUI shell:
+       ```bash
+       askui-shell
+       ```
+    2. Launch the OCR Teaching App:
+    
+       ```bash       
+       AskUI-StartOCRTeaching
+       ```
+    3. Upload a screenshot containing the misclassified word (e.g., “Hallo”).
+    4. Switch to **Trained Model** for precise corrections.
+    5. Select the wrongly detected word (`HaII0`) and replace it with the correct label: `Hallo`.
+    6. Press the **Train Correction**
+    6. Click **"Copy Model"** to copy the newly trained model ID.
+    7. In your automation code, update on model config on global level or on step level to use the new model:
+
+    Global Level Model Composition
+    <ModelCompositionSentenceLevelOnGlobalLevel/>
+
+    Step Level Model Composition
+    <ModelCompositionSentenceLevelOnStepLevel/>
