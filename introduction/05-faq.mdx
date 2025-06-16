@@ -345,6 +345,20 @@ Info:  Error report was submitted successfully.
 
 ---
 
+### Error: ButtonEvent down failed: Access is denied (Windows only)
+
+AskUI Agent OS has not the right to send button events like left click to the Screen. This is eather the **Lock Screen** or the **RDP Client** does not allow this. 
+
+**Lock Screen:** In the case of the Lock Screen askUI can not do anything. Because the lock screen is owned (and has privileges of) SYSTEM therefore the controller is not able / allowed to click anymore.
+
+**RDP Client**: Default behavior of minimizing the RDP client is to set the (remote) user to idle which has the effect that no UI interaction is possible / allowed. The workaround for this is to set a registry entry on the client machine (the one using RDP, not the host that gets connected to):
+
+```
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Terminal Server Client
+DWORD RemoteDesktop_SuppressWhenMinimized 2
+```
+---
+
 ## AskUI Shell
 
 ### How can I set `askui-shell` as a custom terminal in VSCode?
