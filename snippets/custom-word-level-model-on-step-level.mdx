@@ -1,6 +1,11 @@
 
-Test: {click-word} {workspace-id} {tag}
+Test: {clickWord} {workspaceId} {tag}
 <CodeGroup>
+
+$('```python')
+{clickWord}
+$('```')
+
 ```python Python
     agent.click("{click-word}", model=ModelComposition([ModelDefinition(
                 task="e2e_ocr",
