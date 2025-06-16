@@ -97,10 +97,16 @@
             "introduction/03-core-concepts/01-element-selection/03-select-Nth-element-left-to-right"
           ]
         },
-        "introduction/03-core-concepts/02-interactions",
-        "introduction/03-core-concepts/03-agentic-mode",
-        "introduction/03-core-concepts/04-reporting-logging",
-        "introduction/03-core-concepts/05-best-practice-for-reliable-automation"
+        {
+          "group": "Get Questions",
+          "pages": [
+            "introduction/03-core-concepts/02-get-models/01-yes-no-questions"
+          ]
+        },
+        "introduction/03-core-concepts/03-interactions",
+        "introduction/03-core-concepts/04-agentic-mode",
+        "introduction/03-core-concepts/05-reporting-logging",
+        "introduction/03-core-concepts/06-best-practice-for-reliable-automation"
       ]
     },
     {
