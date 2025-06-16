@@ -347,16 +347,19 @@ Info:  Error report was submitted successfully.
 
 ### Error: ButtonEvent down failed: Access is denied (Windows only)
 
-AskUI Agent OS has not the right to send button events like left click to the Screen. This is eather the **Lock Screen** or the **RDP Client** does not allow this. 
+The AskUI Agent OS may be unable to send button events (like left-clicks) to the screen in certain situations. This typically occurs when either the **Lock Screen** is active or the **RDP client** is minimized.
 
-**Lock Screen:** In the case of the Lock Screen askUI can not do anything. Because the lock screen is owned (and has privileges of) SYSTEM therefore the controller is not able / allowed to click anymore.
+**Lock Screen:** If the machine is on the Lock Screen, AskUI cannot interact with it. This is because the lock screen is controlled by the SYSTEM process, which has higher privileges than the AskUI controller. As a result, clicking is no longer possible.
 
-**RDP Client**: Default behavior of minimizing the RDP client is to set the (remote) user to idle which has the effect that no UI interaction is possible / allowed. The workaround for this is to set a registry entry on the client machine (the one using RDP, not the host that gets connected to):
+**Remote Desktop (RDP):** When using Remote Desktop (RDP), minimizing the RDP client on the local machine sets the remote session to an idle state, preventing any UI interactions. This is standard behavior.
 
+To work around this RDP limitation, you can set the following registry key on the client machine (not the remote host):
 ```
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Terminal Server Client
 DWORD RemoteDesktop_SuppressWhenMinimized 2
 ```
+This change keeps the remote session active and allows AskUI to continue sending interactions, even when the RDP window is minimized.
+
 ---
 
 ## AskUI Shell
