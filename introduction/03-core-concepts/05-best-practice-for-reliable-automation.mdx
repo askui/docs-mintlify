@@ -7,7 +7,7 @@ import ModelCompositionSentenceLevelOnStepLevel from '/snippets/model-compositio
 import ModelCompositionWordLevelOnGlobalLevel from '/snippets/model-composition-word-level-on-global-level.mdx';
 import ModelCompositionWordLevelOnStepLevel from '/snippets/model-composition-word-level-on-step-level.mdx';
 import ModelCompositionDefaultWordLevelOnStepLevel from '/snippets/model-composition-default-word-level-on-step-level.mdx';
-    
+
 # Misspellings of Words
 
 **Problem:** The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.
@@ -225,8 +225,8 @@ import ModelCompositionDefaultWordLevelOnStepLevel from '/snippets/model-composi
       ```        
     </CodeGroup>
   </Accordion> 
-  <Accordion title="Use Custom Model Word-Level Detection">
-    <CustomWordLevelModelOnStepLevel/>
+  <Accordion title="Use Custom Model Word-Level Detection"> 
+    <ModelCompositionWordLevelOnStepLevel/> 
   </Accordion> 
  </AccordionGroup> 
 
@@ -294,16 +294,7 @@ import ModelCompositionDefaultWordLevelOnStepLevel from '/snippets/model-composi
   </Accordion>
 
   <Accordion title="Use Custom Model Word-Level Detection">
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "<your-workspace-id>",
-        "tags": ["word_level"]
-    }])
-    ```
+    <ModelCompositionWordLevelOnStepLevel/> 
   </Accordion>
 
   <Accordion title="Use relative anchore Element">
@@ -378,16 +369,7 @@ import ModelCompositionDefaultWordLevelOnStepLevel from '/snippets/model-composi
     <ModelCompositionDefaultWordLevelOnStepLevel/>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "<your-workspace-id>",
-        "tags": ["word_level"]
-    }])
-    ```
+    <ModelCompositionWordLevelOnStepLevel/> 
   </Accordion>
 </AccordionGroup>
           
@@ -454,16 +436,7 @@ import ModelCompositionDefaultWordLevelOnStepLevel from '/snippets/model-composi
     <ModelCompositionDefaultWordLevelOnStepLevel/>
   </Accordion>
   <Accordion title="Use Custom Model Word-Level Detection">
-    ```tsx
-    await aui.click().text("Alice Johnson").exec([{
-        "task": "e2e_ocr",
-        "architecture": "easy_ocr",
-        "version": "1",
-        "interface": "online_learning",
-        "useCase": "<your-workspace-id>",
-        "tags": ["word_level"]
-    }])
-    ```
+    <ModelCompositionWordLevelOnStepLevel/> 
   </Accordion>
 </AccordionGroup>
 
