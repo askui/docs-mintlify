@@ -1,0 +1,138 @@
+---
+title: "Interact with Elements"
+description: "Learn how to interact with UI elements using AskUI's powerful tools and actions"
+---
+
+Once you've selected an element, you can interact with it using AskUI's comprehensive set of actions and tools. This guide covers the different ways to interact with elements, from basic clicks to complex keyboard operations.
+
+## Basic Actions
+
+The most common actions for interacting with elements using [`click()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#click), [`type()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#type), and [`mouse_move()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#mouse_move):
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    # Click actions
+    agent.click("Login button")  # Single click - see click() API reference
+    agent.click("Submit", button="right")  # Right click
+    agent.click("Open", button="middle")  # Middle click
+    
+    # Text input
+    agent.type("myuser@example.com")  # Type text
+    
+    # Mouse movement
+    agent.mouse_move("Menu item")  # Move to element
+    agent.mouse_move(100, 200)  # Move to coordinates
+```
+
+## Keyboard Operations
+
+Control keyboard input for complex interactions using [`keyboard()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#keyboard):
+
+```python
+with VisionAgent() as agent:
+    # Basic keyboard input
+    agent.keyboard("enter")  # Press Enter
+    agent.keyboard("tab")  # Press Tab
+    
+    # Keyboard shortcuts
+    agent.keyboard("a", modifier_keys=["control"])  # Ctrl+A
+    agent.keyboard("c", modifier_keys=["control"])  # Ctrl+C
+    agent.keyboard("v", modifier_keys=["control"])  # Ctrl+V
+```
+
+### Supported Keyboard Keys
+
+#### Modifier Keys
+
+- `alt`, `control`, `shift`, `command`
+- `left_control`, `right_control`
+- `left_alt`, `right_alt`
+- `left_shift`, `right_shift`
+
+#### Navigation Keys
+
+- Arrow keys: `up`, `down`, `left`, `right`
+- `home`, `end`, `pageup`, `pagedown`
+- `tab`, `enter`, `escape`
+
+#### Function Keys
+
+- `f1` through `f24` (except `f10`)
+
+#### Media Keys
+
+- `audio_mute`, `audio_vol_up`, `audio_vol_down`
+- `audio_play`, `audio_stop`, `audio_next`, `audio_prev`
+
+## Built-in Tools
+
+AskUI provides several built-in tools for different types of interactions:
+
+### OS Tools
+
+Control operating system-level operations:
+
+```python
+with VisionAgent() as agent:
+    # Keyboard operations
+    agent.tools.os.keyboard_tap("a", modifier_keys=["control"])
+    agent.tools.os.keyboard_release()
+    
+    # Mouse operations
+    agent.tools.os.mouse(100, 100)  # Move to coordinates
+    agent.tools.os.click("left", 2)  # Double click
+```
+
+### Web Browser Tools
+
+Control web browser operations:
+
+```python
+with VisionAgent() as agent:
+    # Open new browser window
+    agent.tools.webbrowser.open_new("https://askui.com")
+    
+    # Open in new tab
+    agent.tools.webbrowser.open_new_tab("https://docs.askui.com")
+```
+
+### Clipboard Tools
+
+Manage clipboard operations:
+
+```python
+with VisionAgent() as agent:
+    # Copy and paste
+    agent.tools.clipboard.copy("Text to copy")
+    result = agent.tools.clipboard.paste()
+```
+
+## Information Extraction
+
+Use the [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get) method to extract information from the screen:
+
+```python
+with VisionAgent() as agent:
+    # Get text content
+    url = agent.get("What is the current URL?")
+    
+    # Get structured data using response schema
+    from askui import ResponseSchemaBase
+    
+    class UserInfo(ResponseSchemaBase):
+        username: str
+        is_online: bool
+    
+    user_info = agent.get(
+        "What is the username and online status?",
+        response_schema=UserInfo
+    )
+```
+
+## Next Steps
+
+- Learn about [extracting data](/02-how-to-guides/05-build-ai-agents/02-extract-data) from UI elements
+- Explore [working with forms](/02-how-to-guides/05-build-ai-agents/04-work-with-forms)
+- Review [best practices for interactions](/03-explanation/02-best-practices/03-interactions)

@@ -1,0 +1,205 @@
+---
+title: Select UI Elements
+description: How to select and interact with UI elements using AskUI
+---
+
+This guide shows you how to select and interact with UI elements using AskUI's Vision Agent.
+
+## Natural Language Selection
+
+The simplest way to select elements is using natural language with the [`click()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#click) method:
+
+```python
+from askui import Agent
+
+agent = Agent()
+agent.start()
+
+# Click using natural language
+agent.click("Submit button")  # See click() API reference
+agent.click("the red delete icon")
+agent.click("menu in the top right corner")
+```
+
+## Using Locators for Precision
+
+For more precise selection, use locators:
+
+```python
+from askui import Agent, locators as loc
+
+agent = Agent()
+agent.start()
+
+# Select by text
+agent.click(loc.Text("Submit"))
+
+# Select by element type
+agent.type_text("john@example.com", loc.Element("textfield"))
+
+# Select by custom AI element
+agent.click(loc.AiElement("shopping cart icon"))
+```
+
+## Relative Positioning
+
+Find elements based on their position relative to other elements:
+
+```python
+# Click the textfield to the right of "Username"
+agent.click(
+    loc.Element("textfield").right_of(loc.Text("Username"))
+)
+
+# Select button below specific text
+agent.click(
+    loc.Element("button").below(loc.Text("Terms and Conditions"))
+)
+
+# Find element nearest to another
+agent.click(
+    loc.Text("Edit").nearest_to(loc.Text("Profile Settings"))
+)
+```
+
+## Handling Multiple Elements
+
+When multiple similar elements exist:
+
+```python
+# Select the first matching element
+agent.click(loc.Text("Delete").first())
+
+# Select by index (0-based)
+agent.click(loc.Element("button").at_index(2))
+
+# Select within a specific area
+agent.click(
+    loc.Text("Submit").within(loc.Element("form"))
+)
+```
+
+## Multi-Monitor Support
+
+For systems with multiple displays:
+
+```python
+# Specify display number (0-based)
+agent.click("Submit", display=1)
+
+# Or with locators
+agent.click(loc.Text("Submit"), display=0)
+```
+
+## Common Patterns
+
+### Login Form
+```python
+# Fill username
+agent.type_text(
+    "user@example.com",
+    loc.Element("textfield").right_of(loc.Text("Email"))
+)
+
+# Fill password
+agent.type_text(
+    "password123",
+    loc.Element("textfield").right_of(loc.Text("Password"))
+)
+
+# Click submit
+agent.click(loc.Element("button").with_text("Sign In"))
+```
+
+### Navigation Menu
+```python
+# Click hamburger menu
+agent.click(loc.AiElement("hamburger menu"))
+
+# Select menu item
+agent.click(loc.Text("Settings").below(loc.Text("Dashboard")))
+```
+
+### Table Interaction
+```python
+# Click edit button in specific row
+agent.click(
+    loc.Text("Edit").right_of(loc.Text("John Doe"))
+)
+```
+
+## Common Patterns
+
+### Selecting Nth Element (Top to Bottom)
+
+When you have multiple similar elements and need to select a specific one based on its position from top to bottom:
+
+```python
+# The Agentic way
+agent.act('Click on the third Chevron Icon from the top, below text "Payment Due Date"')
+```
+
+```typescript
+// TypeScript approach
+async function clickOnTopNElement(customImage: string, index: number = 0){
+  const elements = (await aui.get().customElement({customImage: customImage}).exec())
+    .sort((element1, element2) => element1.bndbox.ymin - element2.bndbox.ymin)
+  
+  if(elements.length == 0){
+    throw Error("No Element found!")
+  }
+  const element = elements[index]
+
+  await aui.moveMouse(
+    Math.ceil((element.bndbox.xmax + element.bndbox.xmin) / 2), 
+    Math.ceil((element.bndbox.ymax + element.bndbox.ymin) / 2)
+  ).exec();
+  await aui.mouseLeftClick().exec()
+}
+
+// Click the second element from top
+await clickOnTopNElement("nthelement.png", 1);
+```
+
+### Selecting Nth Element (Left to Right)
+
+For selecting elements based on their horizontal position:
+
+```python
+# The Agentic way
+agent.act('Click on the third Chevron Icon from the left, below text "Payment Due Date"')
+```
+
+```typescript
+// TypeScript approach
+async function clickOnLeftNElement(customImage: string, index: number = 0){
+  const elements = (await aui.get().customElement({customImage: customImage}).exec())
+    .sort((element1, element2) => element1.bndbox.xmin - element2.bndbox.xmin)
+  
+  if(elements.length == 0){
+    throw Error("No Element found!")
+  }
+  const element = elements[index]
+
+  await aui.moveMouse(
+    Math.ceil((element.bndbox.xmax + element.bndbox.xmin) / 2), 
+    Math.ceil((element.bndbox.ymax + element.bndbox.ymin) / 2)
+  ).exec();
+  await aui.mouseLeftClick().exec()
+}
+
+// Click the second element from left
+await clickOnLeftNElement("nthelement.png", 1);
+```
+
+## Troubleshooting
+
+<Card title="Element Selection Issues?" icon="question-circle" href="/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr">
+  Having trouble finding elements or getting wrong selections? Check our comprehensive troubleshooting guide for element detection, OCR issues, and performance optimization tips.
+</Card>
+
+## Next Steps
+
+- Learn about [extracting data](/02-how-to-guides/05-build-ai-agents/02-extract-text) from selected elements
+- Explore [advanced interaction patterns](/03-explanation/02-core-concepts/03-interactions)
+- Read about [best practices](/03-explanation/02-core-concepts/06-best-practice-for-reliable-automation)

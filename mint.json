@@ -35,12 +35,8 @@
   },
   "tabs": [
     {
-      "name": "API Reference & Extensibility",
-      "url": "02-api-reference"
-    },
-    {
-      "name": "Account & Settings",
-      "url": "03-account"
+      "name": "Reference",
+      "url": "04-reference"
     }
   ],
   "anchors": [
@@ -48,16 +44,6 @@
       "name": "TypeScript Docs",
       "icon": "code",
       "url": "https://docs-ts.askui.com"
-    },
-    {
-      "name": "Status Page",
-      "icon": "signal",
-      "url": "https://status.askui.com"
-    },
-    {
-      "name": "Trust Center",
-      "icon": "book-open-cover",
-      "url": "https://trust.askui.com/"
     },
     {
       "name": "Community",
@@ -72,112 +58,134 @@
   ],
   "navigation": [
     {
-      "group": "Introduction",
+      "group": "Documentation",
       "pages": [
-        "introduction/01-introduction/01-overview",
-        "introduction/01-introduction/03-how-askui-works",
-        "introduction/01-introduction/04-examples"
+        "index"
       ]
     },
     {
-      "group": "Getting Started",
+      "group": "Tutorial",
       "pages": [
-        "introduction/02-getting-started/01-prerequisites",
-        "introduction/01-introduction/02-quickstart"
-      ]
-    },
-    {
-      "group": "Core Concepts",
-      "pages": [
+        "01-tutorials/tutorials-overview",
+        "01-tutorials/00-installation",
+        "01-tutorials/01-your-first-agent",
         {
-          "group": "Element Selection",
+          "group": "Example Automations",
           "pages": [
-            "introduction/03-core-concepts/01-element-selection/01-element-selection",
-            "introduction/03-core-concepts/01-element-selection/02-select-Nth-element-top-to-bottom",
-            "introduction/03-core-concepts/01-element-selection/03-select-Nth-element-left-to-right"
+            "01-tutorials/example-automations/00-overview",
+            "01-tutorials/example-automations/01-online-casino",
+            "01-tutorials/example-automations/02-plc-water-tank",
+            "01-tutorials/example-automations/03-tic-tac-toe",
+            "01-tutorials/example-automations/04-android-automation",
+            "01-tutorials/example-automations/05-infotainment-systems",
+            "01-tutorials/example-automations/06-web-shopping"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "group": "How-to Guides",
+      "pages": [
+        "02-how-to-guides/how-to-overview",
         {
-          "group": "Get Questions",
+          "group": "Build AI Agents",
           "pages": [
-            "introduction/03-core-concepts/02-get-models/01-yes-no-questions",
-            "introduction/03-core-concepts/02-get-models/06-text-questions",
-            "introduction/03-core-concepts/02-get-models/07-number-questions",
-            "introduction/03-core-concepts/02-get-models/02-sidebar-questions",
-            "introduction/03-core-concepts/02-get-models/03-tabs-questions",
-            "introduction/03-core-concepts/02-get-models/04-table-questions",
-            "introduction/03-core-concepts/02-get-models/05-cards-questions"
-          ]
-        },
-        "introduction/03-core-concepts/03-interactions",
-        "introduction/03-core-concepts/04-agentic-mode",
-        "introduction/03-core-concepts/05-reporting-logging",
-        "introduction/03-core-concepts/06-best-practice-for-reliable-automation"
-      ]
-    },
-    {
-      "group": "Model Usage & Configuration",
-      "pages": [
-        "introduction/04-ai-models/01-grounding-models",
-        "introduction/05-askui-suite/03-reteaching"
-      ]
-    },
-    {
-      "group": "AskUI Suite",
-      "pages": [
-        "introduction/05-askui-suite/01-commands",
-        "introduction/05-askui-suite/04-proxy"
-      ]
-    },
-  
-    {
-      "group": "Integrations & Advanced Usage",
-      "pages": [
-        "introduction/07-integrations/01-github",
-        "introduction/07-integrations/02-gitlab",
-        "introduction/07-integrations/03-azure",
-        "introduction/07-integrations/07-sso"
-      ]
-    },
-    {
-      "group": "Updates & Glossary",
-      "pages": [
-        "introduction/04-glossary",
-        {
-          "group": "Release Notes",
-          "pages": [
+            "02-how-to-guides/05-build-ai-agents/00-build-ai-agents-overview",
+            "02-how-to-guides/05-build-ai-agents/01-act-towards-goal",
+            "02-how-to-guides/05-build-ai-agents/02-select-elements",
             {
-              "group": "AskUI Suite",
+              "group": "Extract Data from UI",
               "pages": [
-                "introduction/09-release-notes/01-askui-suite/askui-suite-25-6-2-release-notes-link",
-                "introduction/09-release-notes/01-askui-suite/askui-suite-25-6-1-release-notes-link",
-                "introduction/09-release-notes/01-askui-suite/askui-suite-25-4-1-release-notes-link",
-                "introduction/09-release-notes/01-askui-suite/askui-suite-25-3-1-release-notes-link",
-                "introduction/09-release-notes/01-askui-suite/askui-suite-25-2-1-release-notes-link",
-                "introduction/09-release-notes/01-askui-suite/askui-suite-old-release-notes"
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/overview",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/yes-no-questions",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/text-extraction",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/numbers",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/tables",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/lists-navigation",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/tabs",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/cards",
+                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/complex-structures"
               ]
             },
-            {
-              "group": "AskUI Frameworks",
-              "pages": [
-                "introduction/09-release-notes/02-agent-frameworks/python-vision-agent-release-notes",
-                "introduction/09-release-notes/02-agent-frameworks/typescirpt-adk-release-notes"
-              ]
-            }
-            ]
-        }, 
-        "introduction/05-faq"
+            "02-how-to-guides/05-build-ai-agents/05-work-with-forms",
+            "02-how-to-guides/05-build-ai-agents/06-interact-with-elements",
+            "02-how-to-guides/06-configure-different-models"
+          ]
+        },
+        {
+          "group": "Account Management",
+          "pages": [
+            "02-how-to-guides/01-account-management/01-account-management",
+            "02-how-to-guides/01-account-management/02-members-management",
+            "02-how-to-guides/01-account-management/03-usage-billing-dashboard",
+            "02-how-to-guides/01-account-management/04-tokens",
+            "02-how-to-guides/01-account-management/05-billing"
+          ]
+        },
+        {
+          "group": "Integrations",
+          "pages": [
+            "02-how-to-guides/02-integrations/01-github",
+            "02-how-to-guides/02-integrations/02-gitlab",
+            "02-how-to-guides/02-integrations/03-azure",
+            "02-how-to-guides/02-integrations/06-reporters",
+            "02-how-to-guides/02-integrations/07-sso"
+          ]
+        },
+        {
+          "group": "Troubleshooting",
+          "pages": [
+            "02-how-to-guides/04-troubleshooting/00-troubleshooting-overview",
+            "02-how-to-guides/04-troubleshooting/01-installation-and-setup-issues",
+            "02-how-to-guides/04-troubleshooting/02-network-and-connectivity",
+            "02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr",
+            "02-how-to-guides/04-troubleshooting/04-data-extraction",
+            "02-how-to-guides/04-troubleshooting/05-runtime-and-environment-errors",
+            "02-how-to-guides/04-troubleshooting/06-reporting-bugs-and-getting-help",
+            "02-how-to-guides/04-troubleshooting/08-known-issues"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Understanding AskUI",
+      "pages": [
+        "03-explanation/explanation-overview",
+        {
+          "group": "Foundations",
+          "pages": [
+            "03-explanation/01-foundations/01-foundations-overview",
+            "03-explanation/01-foundations/02-core-components",
+            "03-explanation/01-foundations/03-workflow",
+            "03-explanation/01-foundations/04-ai-models"
+          ]
+        },
+        {
+          "group": "Best Practices",
+          "pages": [
+            "03-explanation/02-best-practices/04-agentic-mode",
+            "03-explanation/02-best-practices/01-element-selection/01-element-selection",
+            "03-explanation/02-best-practices/03-interactions",
+            "03-explanation/02-best-practices/05-reporting-logging",
+            "03-explanation/02-best-practices/06-improve-model-performance"
+          ]
+        },
+        "03-explanation/04-faq/faq",
+        "03-explanation/05-glossary"
       ]
     },
     {
       "group": "Python Vision Agent",
       "pages": [
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/retry",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
-        "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/types"
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/retry",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/types",
+        "04-reference/system-requirements",
+        "04-reference/network-requirements",
+        "04-reference/ai-models"
       ]
     },
     {
@@ -189,36 +197,36 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-TestConnection",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-AddPlugin",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-TestConnection",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-AddPlugin",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
               ]
             },
             {
               "group": "Debug",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
               ]
             },
             {
               "group": "Experimental",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-NewErrorReport",
-                "02-api-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-NewErrorReport",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
               ]
             }
           ]
@@ -229,7 +237,7 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Public/AskUI-StartOCRTeaching"
+                "04-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Public/AskUI-StartOCRTeaching"
               ]
             }
           ]
@@ -240,7 +248,7 @@
             {
               "group": "Experimental",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSetupTool/Experimental/AskUI-StartRemoteDeviceSetupTool"
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSetupTool/Experimental/AskUI-StartRemoteDeviceSetupTool"
               ]
             }
           ]
@@ -251,11 +259,11 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-OpenAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-RemoveAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-ShowAIElement",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAnnotationsForTraining"
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-OpenAIElement",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-RemoveAIElement",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-ShowAIElement",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAnnotationsForTraining"
               ]
             }
           ]
@@ -266,12 +274,12 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
               ]
             }
           ]
@@ -282,8 +290,8 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
               ]
             }
           ]
@@ -294,10 +302,10 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
-                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
-                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
-                "02-api-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
+                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
+                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
+                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
+                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
               ]
             }
           ]
@@ -308,11 +316,11 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
-                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
-                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
-                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
-                "02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
+                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
+                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
+                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
+                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
+                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
               ]
             }
           ]
@@ -323,9 +331,9 @@
             {
               "group": "Public",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
-                "02-api-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StartController",
-                "02-api-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
+                "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
+                "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StartController",
+                "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
               ]
             }
           ]
@@ -338,106 +346,119 @@
         {
           "group": "Access Tokens",
           "pages": [
-            "02-api-reference/07-workspace-service/access-tokens/create-access-token",
-            "02-api-reference/07-workspace-service/access-tokens/delete-access-token",
-            "02-api-reference/07-workspace-service/access-tokens/list-access-tokens",
-            "02-api-reference/07-workspace-service/access-tokens/lookup-global-access-token-id",
-            "02-api-reference/07-workspace-service/access-tokens/lookup-workspace-access-token-id"
+            "04-reference/07-workspace-service/access-tokens/create-access-token",
+            "04-reference/07-workspace-service/access-tokens/delete-access-token",
+            "04-reference/07-workspace-service/access-tokens/list-access-tokens",
+            "04-reference/07-workspace-service/access-tokens/lookup-global-access-token-id",
+            "04-reference/07-workspace-service/access-tokens/lookup-workspace-access-token-id"
           ]
         },
         {
           "group": "Agent Executions",
           "pages": [
-            "02-api-reference/07-workspace-service/agent-executions/create-agent-execution",
-            "02-api-reference/07-workspace-service/agent-executions/list-agent-executions",
-            "02-api-reference/07-workspace-service/agent-executions/update-agent-execution"
+            "04-reference/07-workspace-service/agent-executions/create-agent-execution",
+            "04-reference/07-workspace-service/agent-executions/list-agent-executions",
+            "04-reference/07-workspace-service/agent-executions/update-agent-execution"
           ]
         },
         {
           "group": "Agents",
           "pages": [
-            "02-api-reference/07-workspace-service/agents/create-agent",
-            "02-api-reference/07-workspace-service/agents/list-agents",
-            "02-api-reference/07-workspace-service/agents/update-agent"
+            "04-reference/07-workspace-service/agents/create-agent",
+            "04-reference/07-workspace-service/agents/list-agents",
+            "04-reference/07-workspace-service/agents/update-agent"
           ]
         },
         {
           "group": "Billing",
           "pages": [
-            "02-api-reference/07-workspace-service/billing/create-customer-portal-session",
-            "02-api-reference/07-workspace-service/billing/get-workspace-subscription"
+            "04-reference/07-workspace-service/billing/create-customer-portal-session",
+            "04-reference/07-workspace-service/billing/get-workspace-subscription"
           ]
         },
         {
           "group": "Files",
           "pages": [
-            "02-api-reference/07-workspace-service/files/delete-file",
-            "02-api-reference/07-workspace-service/files/list-files",
-            "02-api-reference/07-workspace-service/files/set-signed-cookies",
-            "02-api-reference/07-workspace-service/files/upload-file"
+            "04-reference/07-workspace-service/files/delete-file",
+            "04-reference/07-workspace-service/files/list-files",
+            "04-reference/07-workspace-service/files/set-signed-cookies",
+            "04-reference/07-workspace-service/files/upload-file"
           ]
         },
         {
           "group": "Runner Jobs",
           "pages": [
-            "02-api-reference/07-workspace-service/runner-jobs/complete",
-            "02-api-reference/07-workspace-service/runner-jobs/lease",
-            "02-api-reference/07-workspace-service/runner-jobs/ping"
+            "04-reference/07-workspace-service/runner-jobs/complete",
+            "04-reference/07-workspace-service/runner-jobs/lease",
+            "04-reference/07-workspace-service/runner-jobs/ping"
           ]
         },
         {
           "group": "Runs",
           "pages": [
-            "02-api-reference/07-workspace-service/runs/list-runs"
+            "04-reference/07-workspace-service/runs/list-runs"
           ]
         },
         {
           "group": "Schedules",
           "pages": [
-            "02-api-reference/07-workspace-service/schedules/create-schedule",
-            "02-api-reference/07-workspace-service/schedules/suspend-schedule"
+            "04-reference/07-workspace-service/schedules/create-schedule",
+            "04-reference/07-workspace-service/schedules/suspend-schedule"
           ]
         },
         {
           "group": "Usage",
           "pages": [
-            "02-api-reference/07-workspace-service/usage/list-usage-events"
+            "04-reference/07-workspace-service/usage/list-usage-events"
           ]
         },
         {
           "group": "Workspace Memberships",
           "pages": [
-            "02-api-reference/07-workspace-service/workspace-memberships/create-workspace-membership",
-            "02-api-reference/07-workspace-service/workspace-memberships/delete-workspace-membership",
-            "02-api-reference/07-workspace-service/workspace-memberships/list-workspace-memberships",
-            "02-api-reference/07-workspace-service/workspace-memberships/update-workspace-membership"
+            "04-reference/07-workspace-service/workspace-memberships/create-workspace-membership",
+            "04-reference/07-workspace-service/workspace-memberships/delete-workspace-membership",
+            "04-reference/07-workspace-service/workspace-memberships/list-workspace-memberships"
           ]
         },
         {
           "group": "Workspaces",
           "pages": [
-            "02-api-reference/07-workspace-service/workspaces/create-workspace",
-            "02-api-reference/07-workspace-service/workspaces/delete-workspaces",
-            "02-api-reference/07-workspace-service/workspaces/update-workspace-name"
+            "04-reference/07-workspace-service/workspaces/create-workspace",
+            "04-reference/07-workspace-service/workspaces/delete-workspace",
+            "04-reference/07-workspace-service/workspaces/update-workspace-name"
           ]
         }
       ]
     },
     {
-      "group": "Account & Settings",
+      "group": "Additional Resources",
       "pages": [
-        "03-account/01-account-management/01-account-management",
-        "03-account/01-account-management/02-members-management",
-        "03-account/01-account-management/03-usage-billing-dashboard",
-        "03-account/01-account-management/04-tokens",
-        "03-account/01-account-management/05-billing"
-      ]
-    },
-    {
-      "group": "Troubleshooting & Support",
-      "pages": [
-        "03-account/02-support/01-common-issues",
-        "03-account/02-support/03-feedback"
+        {
+          "group": "Release Notes",
+          "pages": [
+            "04-reference/06-release-notes/00-release-notes-overview",
+            {
+              "group": "AskUI Suite",
+              "pages": [
+                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-6-2-release-notes-link",
+                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-6-1-release-notes-link",
+                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-4-1-release-notes-link",
+                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-3-1-release-notes-link",
+                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-2-1-release-notes-link",
+                "04-reference/06-release-notes/01-askui-suite/askui-suite-old-release-notes"
+              ]
+            },
+            {
+              "group": "AskUI Frameworks",
+              "pages": [
+                "04-reference/06-release-notes/02-agent-frameworks/python-vision-agent-release-notes",
+                "04-reference/06-release-notes/02-agent-frameworks/typescirpt-adk-release-notes"
+              ]
+            }
+          ]
+        },
+        "04-reference/08-additional-resources/status-page",
+        "04-reference/08-additional-resources/trust-center"
       ]
     }
   ],

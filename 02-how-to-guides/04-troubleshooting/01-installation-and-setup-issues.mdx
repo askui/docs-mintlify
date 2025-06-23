@@ -1,0 +1,177 @@
+---
+title: Installation and Setup Issues
+description: Solutions for common installation and setup problems
+---
+
+This guide helps you resolve common installation and setup issues with AskUI.
+
+## Installation Errors
+
+### Mac Web Installer Crashes with `Killed: 9`
+
+If the AskUI installer crashes on macOS with a `Killed: 9` error, this is typically due to macOS security restrictions.
+
+**Solution:**
+1. Open System Preferences > Security & Privacy
+2. Click the lock to make changes
+3. Look for a message about the blocked installer
+4. Click "Open Anyway" or "Allow"
+5. Run the installer again
+
+If the issue persists:
+```bash
+# Remove quarantine attribute
+xattr -d com.apple.quarantine /path/to/installer
+```
+
+### Windows Long Path Support
+
+Some Windows systems have issues with long file paths during installation.
+
+**Solution:**
+1. Open `askui-shell` as Administrator
+2. Run: `AskUI-EnableLongPath`
+3. Restart your system
+4. Try the installation again
+
+To verify long path support:
+```powershell
+AskUI-TestLongPathSupport
+```
+
+## IDE Integration
+
+### VSCode Custom Terminal Setup
+
+To use `askui-shell` as your default terminal in VSCode:
+
+1. Open VS Code Settings (Ctrl+,)
+2. Click "Open Settings (JSON)" icon
+3. Add this configuration:
+
+```json
+{
+    "terminal.integrated.profiles.windows": {
+        "askui-shell": {
+            "path": [
+                "${env:USERPROFILE}\\AppData\\Local\\Programs\\askui\\askui-shell\\AskUI-Shell.exe"
+            ],
+            "args": ["-ExecutionPolicy", "Bypass", "-NoExit", "-NoLogo"],
+            "icon": "terminal-powershell"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "askui-shell"
+}
+```
+
+For macOS/Linux:
+```json
+{
+    "terminal.integrated.profiles.osx": {
+        "askui-shell": {
+            "path": "/usr/local/bin/askui-shell"
+        }
+    },
+    "terminal.integrated.defaultProfile.osx": "askui-shell"
+}
+```
+
+### PyCharm Terminal Setup
+
+1. Go to Settings > Tools > Terminal
+2. Set Shell path to:
+   - Windows: `%USERPROFILE%\AppData\Local\Programs\askui\askui-shell\AskUI-Shell.exe`
+   - macOS/Linux: `/usr/local/bin/askui-shell`
+3. Apply and restart PyCharm
+
+## Environment Configuration
+
+### Using .env Files Instead of askui-shell
+
+If you prefer not to use askui-shell, you can configure credentials via environment files:
+
+1. Install python-dotenv:
+```bash
+pip install python-dotenv
+```
+
+2. Create `.env` file in your project root:
+```env
+ASKUI_WORKSPACE_ID=<your workspace id>
+ASKUI_TOKEN=<your access token>
+```
+
+3. Load in your Python script:
+```python
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+from askui import Agent
+
+# Credentials are loaded from .env automatically
+agent = Agent()
+agent.start()
+```
+
+<Note>
+Need tokens? See [Create Access Tokens](/02-how-to-guides/01-account-management/04-tokens)
+</Note>
+
+## Python Environment Issues
+
+### Virtual Environment Setup
+
+Always use a virtual environment to avoid conflicts:
+
+```bash
+# Create virtual environment
+python -m venv askui_env
+
+# Activate (Windows)
+askui_env\Scripts\activate
+
+# Activate (macOS/Linux)
+source askui_env/bin/activate
+
+# Install AskUI
+pip install askui
+```
+
+### Managing Multiple Python Versions
+
+Use askui-shell to manage Python environments:
+
+```powershell
+# Create new environment
+AskUI-NewPythonEnvironment -Name "myproject"
+
+# List environments
+AskUI-ShowPythonEnvironments
+
+# Activate environment
+AskUI-EnablePythonEnvironment -Name "myproject"
+```
+
+## Verification Steps
+
+After installation, verify everything works:
+
+1. Open askui-shell
+2. Run: `AskUI-TestConnection`
+3. Check versions: `AskUI-ShowVersions`
+
+If tests fail, see [Network and Connectivity](/02-how-to-guides/04-troubleshooting/02-network-and-connectivity) guide.
+
+## Common Installation Locations
+
+- **Windows**: `%USERPROFILE%\AppData\Local\Programs\askui`
+- **macOS**: `/Applications/AskUI` or `/usr/local/bin/askui-shell`
+- **Linux**: `/opt/askui` or `/usr/local/bin/askui-shell`
+
+## Next Steps
+
+- Installation successful? Start with our [Quickstart Guide](/01-tutorials/01-quickstart)
+- Having network issues? See [Network and Connectivity](/02-how-to-guides/04-troubleshooting/02-network-and-connectivity)
+- Need help? [Report an issue](/02-how-to-guides/04-troubleshooting/06-reporting-bugs-and-getting-help)

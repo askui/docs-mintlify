@@ -1,0 +1,95 @@
+---
+title: "Agentic Mode"
+description: "Best practices for using goal-based automation with AskUI"
+---
+
+Agentic mode allows your automation to operate at a higher level of abstraction by giving the AI agent a goal to accomplish rather than specifying individual steps. This enables more flexible and powerful automations that can adapt to changing interfaces and solve complex tasks.
+
+<Info>
+For practical examples and basic usage of the `act()` command, see the [Act towards goal](/02-how-to-guides/05-build-ai-agents/01-act-towards-goal) guide.
+</Info>
+
+## Understanding Agentic Mode
+
+Unlike single-step commands that perform specific actions (like clicking a button or typing text), agentic mode lets you describe what you want to accomplish, and the AI agent figures out how to achieve it.
+
+### Key Benefits
+
+- **Goal-oriented automation**: Focus on what you want to achieve, not how to achieve it
+- **Adaptability**: Agents can navigate changing UIs and unexpected scenarios
+- **Reduced maintenance**: Less need to update scripts when interfaces change
+- **Complex task handling**: Accomplish multi-step workflows with a single instruction
+
+## Prompting Best Practices
+
+### **1. Use "simulate" for Enhanced Stability**
+
+When using the Act command, the keyword _simulate_ can improve stability and accuracy. It mimics user interactions more precisely, ensuring that actions like typing or clicking are performed as a real user would.
+
+Example:
+
+```
+agent.act("simulate a user clicking into the textfield and typing username: xyz and password: 123456")
+```
+
+By simulating actions rather than directly executing them, you reduce errors caused by UI inconsistencies or timing issues.
+
+### **2. Add "if" Conditions for Context Awareness**
+
+To ensure reliable execution, include conditional prompts like _if_ statements. For example, only proceed with an action if specific fields (e.g., search bars) are empty. This approach prevents unintended overwrites or conflicts in native apps.
+
+Example:
+
+```
+agent.act("Click on Login button, if the screen does not change then that probably means that you forgot to enter the username and password, which is username: xyz and password: 123456")
+```
+
+This technique ensures the agent adapts dynamically to the application's state, improving robustness in automation workflows.
+
+### **3. Break Actions Into Step-by-Step Instructions**
+
+Complex tasks can be simplified by breaking them into smaller steps. This makes debugging easier and enhances reliability by ensuring each step is executed sequentially. This approach is particularly useful for multi-step processes like form filling or playing games (e.g., Blackjack), where precision is critical.
+
+<Note>
+For more examples of step-by-step instructions, see the [Act towards goal guide](/02-how-to-guides/05-build-ai-agents/01-act-towards-goal#use-step-by-step-instructions).
+</Note>
+
+### **4. Add Verification Conditions for Stability**
+
+Verification conditions are crucial when dealing with dynamic or ambiguous application states. For example, you can instruct the agent to proceed only if certain fields (e.g., search bars) are empty or specific UI elements are visible.
+
+Example:
+
+```
+agent.act("""
+Simulate a user doing the following actions:
+1. Click on the Textfield below text username
+2. Type in username: xyz
+3. Click on the Textfield below text password
+4. Type in password: 123456
+5. Click on the Login button
+
+Only proceed if the search bar is empty.
+""")
+```
+
+This ensures that your automation script adapts dynamically to real-time application states, preventing errors like overwriting existing data.
+
+### **5. Use Multiple Approaches for Actions**
+
+Flexibility is key when automating tasks, especially for repetitive actions like deleting text. The AskUI Vision Agent allows you to use multiple approaches for the same action, ensuring compatibility across different scenarios.
+
+Example:
+
+```
+# Approach 1: Delete using backspace
+agent.act("Simulate deleting the text 'xyz' by pressing backspace")
+
+# Approach 2: Delete using right-click and delete option
+agent.act("Simulate deleting the text 'xyz' by right-clicking and pressing delete")
+
+# Approach 3: Delete using cmd+a and backspace
+agent.act("Simulate deleting the text 'xyz' by pressing command + a, and afterwards pressing backspace")
+```
+
+By combining multiple approaches, you increase flexibility and ensure that your automation script works across various environments and input methods.

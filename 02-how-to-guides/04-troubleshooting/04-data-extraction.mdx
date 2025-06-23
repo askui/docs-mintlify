@@ -1,0 +1,323 @@
+---
+title: Data Extraction Issues
+description: Solutions for problems with agent.get() and data extraction
+---
+
+This guide helps you resolve issues when extracting data from your UI using AskUI's `get()` method.
+
+## Empty or None Results
+
+When `agent.get()` returns empty or None values unexpectedly:
+
+### Common Causes and Solutions
+
+#### 1. Elements Not Visible
+```python
+# Check visibility first
+is_visible = agent.get("Is the data table visible?", response_schema=bool)
+
+if not is_visible:
+    # Scroll or navigate to make it visible
+    agent.scroll(direction="down", amount=500)
+```
+
+#### 2. Page Not Fully Loaded
+```python
+import time
+
+# Wait for dynamic content
+time.sleep(2)
+
+# Or check for loading indicators
+while agent.get("Is there a loading spinner?", response_schema=bool):
+    time.sleep(0.5)
+```
+
+#### 3. Question Too Vague
+```python
+# Too vague
+data = agent.get("What's the price?", response_schema=float)
+
+# More specific
+data = agent.get("What is the total price in the checkout summary?", response_schema=float)
+```
+
+## Type Errors
+
+When response schema doesn't match actual data:
+
+### Debugging Schema Mismatches
+
+```python
+# Start with generic extraction to see structure
+raw_data = agent.get("What data is shown in the table?", response_schema=str)
+print(f"Raw data: {raw_data}")
+
+# Then design your schema
+from pydantic import BaseModel
+from typing import Optional
+
+class FlexibleModel(BaseModel):
+    name: str
+    value: Optional[float] = None  # Make fields optional
+    status: Optional[str] = None
+```
+
+### Common Type Issues
+
+#### Numbers vs Strings
+```python
+# If numbers might have units or symbols
+price_text = agent.get("What is the price text?", response_schema=str)
+price_value = float(price_text.replace("$", "").replace(",", ""))
+```
+
+#### Lists vs Single Items
+```python
+from typing import List, Union
+
+# Handle both single and multiple results
+result = agent.get(
+    "What items are shown?", 
+    response_schema=Union[str, List[str]]
+)
+
+# Normalize to list
+items = [result] if isinstance(result, str) else result
+```
+
+### Using Optional Fields
+
+```python
+from typing import Optional
+from pydantic import BaseModel
+
+class UserData(BaseModel):
+    name: str
+    email: str
+    phone: Optional[str] = None  # Might not exist
+    address: Optional[str] = None
+```
+
+## Table Extraction Issues
+
+### Partial Table Data
+
+When only getting part of a table:
+
+```python
+# Solution 1: Ensure full visibility
+agent.get("Is the entire table visible?", response_schema=bool)
+
+# Solution 2: Extract in chunks
+def extract_full_table(agent):
+    all_rows = []
+    page = 1
+    
+    while True:
+        rows = agent.get(
+            f"Extract visible table rows on page {page}",
+            response_schema=List[dict]
+        )
+        all_rows.extend(rows)
+        
+        has_more = agent.get("Is there a next page button?", response_schema=bool)
+        if not has_more:
+            break
+            
+        agent.click("Next")
+        page += 1
+    
+    return all_rows
+```
+
+### Misaligned Columns
+
+When table structure doesn't match expectations:
+
+```python
+# Solution 1: Flexible schema
+from typing import Dict, Any
+
+# Extract as dictionaries first
+raw_table = agent.get(
+    "Extract table as list of dictionaries",
+    response_schema=List[Dict[str, Any]]
+)
+
+# Solution 2: Validate and clean
+def clean_table_data(rows):
+    cleaned = []
+    for row in rows:
+        # Handle missing or extra columns
+        cleaned_row = {
+            'name': row.get('name', 'Unknown'),
+            'value': row.get('value', 0),
+            'status': row.get('status', 'N/A')
+        }
+        cleaned.append(cleaned_row)
+    return cleaned
+```
+
+## Form Data Extraction
+
+### Getting Current Form Values
+
+```python
+from pydantic import BaseModel
+from typing import Optional
+
+class FormState(BaseModel):
+    # Define expected fields
+    username: Optional[str] = None
+    email: Optional[str] = None
+    newsletter: Optional[bool] = None
+
+# Extract all at once
+form_data = agent.get(
+    "Extract all form field values",
+    response_schema=FormState
+)
+
+# Handle missing fields gracefully
+if form_data.email is None:
+    print("Email field not found or empty")
+```
+
+### Checkbox and Radio States
+
+```python
+# For single checkbox
+is_checked = agent.get(
+    "Is the 'Accept terms' checkbox checked?",
+    response_schema=bool
+)
+
+# For radio groups
+selected_option = agent.get(
+    "Which payment method radio button is selected?",
+    response_schema=str
+)
+```
+
+
+## Complex Data Structures
+
+### Nested Data Extraction
+
+```python
+from typing import List
+from pydantic import BaseModel
+
+class OrderItem(BaseModel):
+    name: str
+    quantity: int
+    price: float
+
+class Order(BaseModel):
+    order_id: str
+    items: List[OrderItem]
+    total: float
+
+# Extract nested structure
+order_data = agent.get(
+    "Extract the complete order details including all items",
+    response_schema=Order
+)
+```
+
+### Dynamic Schemas
+
+When structure varies:
+```python
+from typing import Dict, Any
+
+# Use dict for unknown structure
+dynamic_data = agent.get(
+    "Extract all visible data",
+    response_schema=Dict[str, Any]
+)
+
+# Process based on what's found
+if 'table' in dynamic_data:
+    process_table(dynamic_data['table'])
+elif 'list' in dynamic_data:
+    process_list(dynamic_data['list'])
+```
+
+## Debugging Strategies
+
+### Progressive Extraction
+
+Start simple and build up:
+```python
+# Step 1: Check what's there
+content = agent.get("What content is visible?", response_schema=str)
+
+# Step 2: Check structure
+has_table = agent.get("Is there a table?", response_schema=bool)
+has_form = agent.get("Is there a form?", response_schema=bool)
+
+# Step 3: Extract based on findings
+if has_table:
+    data = agent.get("Extract table data", response_schema=List[dict])
+```
+
+### Logging Extraction Attempts
+
+```python
+import logging
+
+def safe_extract(agent, question, schema, default=None):
+    try:
+        result = agent.get(question, response_schema=schema)
+        logging.info(f"Extracted: {question} -> {result}")
+        return result
+    except Exception as e:
+        logging.error(f"Failed to extract: {question} - {e}")
+        return default
+```
+
+## Common Patterns
+
+### Retry with Fallbacks
+
+```python
+def extract_with_fallback(agent, strategies):
+    """Try multiple extraction strategies"""
+    for question, schema in strategies:
+        try:
+            return agent.get(question, response_schema=schema)
+        except Exception:
+            continue
+    return None
+
+# Usage
+price = extract_with_fallback(agent, [
+    ("What is the total price?", float),
+    ("What is the price amount?", str),
+    ("What number is shown for the total?", str)
+])
+```
+
+### Validation After Extraction
+
+```python
+def validate_extraction(data, expected_fields):
+    """Ensure extracted data has required fields"""
+    missing = []
+    for field in expected_fields:
+        if not hasattr(data, field) or getattr(data, field) is None:
+            missing.append(field)
+    
+    if missing:
+        raise ValueError(f"Missing fields: {missing}")
+    
+    return data
+```
+
+## Next Steps
+
+- Element selection issues? See [Element Detection and OCR](/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr)
+- Form-specific problems? Check the [Work with Forms](/02-how-to-guides/05-build-ai-agents/04-work-with-forms) guide
+- Need help? [Report an issue](/02-how-to-guides/04-troubleshooting/06-reporting-bugs-and-getting-help)

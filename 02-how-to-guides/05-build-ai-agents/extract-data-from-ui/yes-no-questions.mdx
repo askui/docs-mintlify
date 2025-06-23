@@ -1,0 +1,123 @@
+---
+title: Yes/No Questions
+description: Get boolean answers about UI state and conditions
+---
+
+Use boolean response schemas to check UI states, verify conditions, and make decisions in your automation flows.
+
+## Basic Usage
+
+```python
+from askui import Agent
+
+agent = Agent()
+agent.start()
+
+# Check UI state
+is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
+is_visible = agent.get("Is the submit button visible?", response_schema=bool)
+has_error = agent.get("Are there any error messages?", response_schema=bool)
+```
+
+## Common Use Cases
+
+### Login State Detection
+```python
+# Check if user is logged in
+if agent.get("Is the user logged in?", response_schema=bool):
+    agent.click("Logout")
+else:
+    agent.click("Login")
+```
+
+### Form Validation
+```python
+# Check for validation errors before submission
+has_errors = agent.get("Are there any validation errors shown?", response_schema=bool)
+is_complete = agent.get("Are all required fields filled?", response_schema=bool)
+
+if not has_errors and is_complete:
+    agent.click("Submit")
+```
+
+### Element State Verification
+```python
+# Check button states
+is_enabled = agent.get("Is the submit button enabled?", response_schema=bool)
+is_selected = agent.get("Is the checkbox checked?", response_schema=bool)
+is_expanded = agent.get("Is the dropdown menu open?", response_schema=bool)
+```
+
+### Content Verification
+```python
+# Verify expected content
+has_results = agent.get("Are there search results displayed?", response_schema=bool)
+has_notifications = agent.get("Are there any unread notifications?", response_schema=bool)
+has_data = agent.get("Is there data in the table?", response_schema=bool)
+```
+
+## Using with Assertions
+
+For testing scenarios, combine boolean questions with assertions:
+
+```python
+# Test that login was successful
+assert agent.get("Is the dashboard visible?", response_schema=bool), "Dashboard should be visible after login"
+
+# Verify error handling
+agent.click("Submit")  # Submit empty form
+assert agent.get("Are validation errors displayed?", response_schema=bool), "Validation errors should appear"
+
+# Check element states
+assert not agent.get("Is the submit button enabled?", response_schema=bool), "Submit should be disabled with empty form"
+```
+
+## Best Practices
+
+1. **Be Specific**: Ask precise questions about what you're checking
+   ```python
+   # Good - specific
+   is_error = agent.get("Is there a red error message below the email field?", response_schema=bool)
+   
+   # Less specific
+   is_error = agent.get("Is there an error?", response_schema=bool)
+   ```
+
+2. **Use for Control Flow**: Boolean questions are perfect for conditional logic
+   ```python
+   if agent.get("Is the cookie banner visible?", response_schema=bool):
+       agent.click("Accept cookies")
+   
+   # Continue with main flow
+   ```
+
+3. **Combine Multiple Checks**: Use multiple boolean questions for complex validations
+   ```python
+   can_proceed = all([
+       agent.get("Is the form completely filled?", response_schema=bool),
+       agent.get("Is the terms checkbox checked?", response_schema=bool),
+       not agent.get("Are there any validation errors?", response_schema=bool)
+   ])
+   ```
+
+## Common Question Patterns
+
+### Visibility Questions
+- "Is the [element] visible?"
+- "Can you see the [element]?"
+- "Is [element] displayed on the screen?"
+
+### State Questions
+- "Is the [button] enabled/disabled?"
+- "Is the [checkbox] checked/unchecked?"
+- "Is the [toggle] on/off?"
+
+### Content Questions
+- "Are there any [items] in the [container]?"
+- "Is the [text] present on the page?"
+- "Does the page contain [content]?"
+
+### Layout Questions
+- "Is [element A] above/below [element B]?"
+- "Are the [elements] aligned?"
+- "Is the [sidebar] expanded/collapsed?"

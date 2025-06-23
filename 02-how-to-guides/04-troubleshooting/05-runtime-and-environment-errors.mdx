@@ -1,0 +1,315 @@
+---
+title: Runtime and Environment Errors  
+description: Solutions for runtime errors and environment configuration issues
+---
+
+This guide helps you resolve runtime errors and environment-related issues when using AskUI.
+
+## Python Vision Agent Errors
+
+### Session Info Doesn't Match Error
+
+**Error Message:**
+```
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+status = StatusCode.PERMISSION_DENIED
+details = "Session info doesn't match."
+```
+
+**Cause:** This happens when there's a mismatch between your client session and the AskUI Controller session.
+
+**Solution:**
+1. Open Terminal/PowerShell
+2. Enter `askui-shell`
+3. Import debug commands:
+   ```powershell
+   AskUI-ImportDebugCommands
+   ```
+4. Stop all running controllers:
+   ```powershell
+   AskUI-StopProcess -All
+   ```
+5. Try your script again
+
+### Controller Connection Issues
+
+**Symptoms:**
+- Timeout errors when starting agent
+- "Cannot connect to controller" messages
+
+**Solutions:**
+
+1. **Verify controller is running:**
+   ```powershell
+   # In askui-shell
+   AskUI-ShowControllers
+   ```
+
+2. **Start controller if needed:**
+   ```powershell
+   AskUI-StartController
+   ```
+
+3. **Check controller logs:**
+   ```powershell
+   AskUI-ShowProcess
+   ```
+
+## Environment Configuration
+
+### Python Path Issues
+
+**Problem:** Python packages not found or wrong Python version used.
+
+**Solutions:**
+
+1. **Use askui-shell Python environments:**
+   ```powershell
+   # Create dedicated environment
+   AskUI-NewPythonEnvironment -Name "myproject"
+   
+   # Activate it
+   AskUI-EnablePythonEnvironment -Name "myproject"
+   
+   # Verify
+   AskUI-ShowInstalledPythonPackageVersion -PackageName "askui"
+   ```
+
+2. **Use virtual environments:**
+   ```bash
+   # Create virtual environment
+   python -m venv askui_env
+   
+   # Activate (Windows)
+   askui_env\Scripts\activate
+   
+   # Activate (macOS/Linux)  
+   source askui_env/bin/activate
+   ```
+
+### Credential Configuration Errors
+
+**Problem:** Missing or invalid workspace credentials.
+
+**Solutions:**
+
+1. **Using askui-shell (recommended):**
+   - Credentials are automatically loaded
+   - Run `AskUI-ShowSettings` to verify
+
+2. **Using .env files:**
+   ```python
+   # Install python-dotenv
+   pip install python-dotenv
+   
+   # Create .env file
+   ASKUI_WORKSPACE_ID=your_workspace_id
+   ASKUI_TOKEN=your_token
+   
+   # Load in script
+   from dotenv import load_dotenv
+   load_dotenv()
+   ```
+
+3. **Direct environment variables:**
+   ```bash
+   export ASKUI_WORKSPACE_ID=your_workspace_id
+   export ASKUI_TOKEN=your_token
+   ```
+
+## Memory and Performance Issues
+
+### High Memory Usage
+
+**Symptoms:**
+- System slowdown during automation
+- Out of memory errors
+
+**Solutions:**
+
+1. **Close agents properly:**
+   ```python
+   # Always use context manager
+   with Agent() as agent:
+       # Your automation
+       pass
+   # Agent automatically closed
+   
+   # Or explicitly close
+   agent = Agent()
+   try:
+       # Your automation
+       pass
+   finally:
+       agent.stop()
+   ```
+
+2. **Limit concurrent agents:**
+   ```python
+   # Run agents sequentially instead of parallel
+   for task in tasks:
+       with Agent() as agent:
+           process_task(agent, task)
+   ```
+
+### Slow Startup Times
+
+**Known Issue:** ADE/Controller startup can be slow on some systems.
+
+**Workarounds:**
+
+1. **Keep controller running:**
+   ```powershell
+   # Start once and leave running
+   AskUI-StartController
+   ```
+
+2. **Pre-warm the system:**
+   ```python
+   # Initialize once at start
+   def initialize_askui():
+       with Agent() as agent:
+           agent.get("Test", response_schema=str)
+   
+   # Run at application start
+   initialize_askui()
+   ```
+
+## Platform-Specific Issues
+
+### Windows Service Errors
+
+**Problem:** Controller fails to start as Windows service.
+
+**Solutions:**
+
+1. **Run as administrator:**
+   - Right-click askui-shell
+   - Select "Run as Administrator"
+
+2. **Check Windows Defender:**
+   - Add AskUI to exclusions
+   - Path: `%USERPROFILE%\AppData\Local\Programs\askui`
+
+### macOS Security Blocks
+
+**Problem:** macOS blocks AskUI from running.
+
+**Solutions:**
+
+1. **Grant permissions:**
+   ```bash
+   # Remove quarantine
+   xattr -d com.apple.quarantine /path/to/askui
+   ```
+
+2. **System Preferences:**
+   - Security & Privacy > Privacy > Accessibility
+   - Add AskUI Controller
+
+### Linux Permission Errors
+
+**Problem:** Permission denied errors.
+
+**Solutions:**
+
+1. **Fix permissions:**
+   ```bash
+   chmod +x /opt/askui/bin/*
+   ```
+
+2. **Add user to required groups:**
+   ```bash
+   sudo usermod -a -G input $USER
+   ```
+
+## Process Management
+
+### Zombie Processes
+
+**Problem:** Old controller processes not cleaning up.
+
+**Solutions:**
+
+1. **Clean up all processes:**
+   ```powershell
+   # In askui-shell
+   AskUI-ImportDebugCommands
+   AskUI-StopProcess -All
+   ```
+
+2. **Manual cleanup (if needed):**
+   ```bash
+   # Find askui processes
+   ps aux | grep askui
+   
+   # Kill specific process
+   kill -9 <PID>
+   ```
+
+### Port Conflicts
+
+**Problem:** Controller can't start due to port in use.
+
+**Default Ports:**
+- Controller: 6769
+- UI Controller: 9000
+
+**Solutions:**
+
+1. **Find conflicting process:**
+   ```bash
+   # Windows
+   netstat -ano | findstr :6769
+   
+   # macOS/Linux
+   lsof -i :6769
+   ```
+
+2. **Configure different port:**
+   ```python
+   agent = Agent(controller_port=6770)
+   ```
+
+## Debugging Runtime Issues
+
+### Enable Debug Logging
+
+```python
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+# Now run your agent
+with Agent() as agent:
+    agent.click("Button")  # Will show debug info
+```
+
+### Capture System Information
+
+```powershell
+# In askui-shell
+AskUI-ShowVersions > system_info.txt
+AskUI-ShowSettings >> system_info.txt
+AskUI-ShowProcess >> system_info.txt
+```
+
+### Common Error Patterns
+
+| Error | Likely Cause | Solution |
+|-------|--------------|----------|
+| `Session doesn't match` | Stale controller | Restart controller |
+| `Connection refused` | Controller not running | Start controller |
+| `Permission denied` | Insufficient privileges | Run as admin/sudo |
+| `Module not found` | Wrong Python env | Check virtual env |
+| `Token invalid` | Expired credentials | Refresh token |
+
+## Next Steps
+
+- Installation issues? See [Installation and Setup](/02-how-to-guides/04-troubleshooting/01-installation-and-setup-issues)
+- Network problems? Check [Network and Connectivity](/02-how-to-guides/04-troubleshooting/02-network-and-connectivity)
+- Need to report a bug? Visit [Reporting Bugs](/02-how-to-guides/04-troubleshooting/06-reporting-bugs-and-getting-help)

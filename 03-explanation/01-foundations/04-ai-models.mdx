@@ -1,0 +1,87 @@
+---
+title: "AI Model Architecture"
+description: "Understanding AskUI's multi-layered AI system and how different models work together"
+---
+
+## Why Multiple Models?
+
+AskUI uses different AI models for different tasks instead of one large model for everything. This is because UI automation requires several distinct capabilities:
+
+- **Computer vision** to see what's on screen
+- **Natural language understanding** to interpret instructions
+- **Planning** to break down complex tasks
+- **Precise interaction** to click and type accurately
+
+Different AI models are better at different tasks, so AskUI combines specialized models rather than trying to make one model do everything.
+
+## The Three Model Types
+
+### 1. Grounding Models
+**What they do**: Find and interact with UI elements
+
+Grounding models analyze screenshots to locate buttons, text fields, and other UI elements. They also execute mouse clicks and keyboard input.
+
+**Tasks:**
+- Identify UI elements from screenshots
+- Determine element locations and boundaries
+- Execute clicks, typing, and other interactions
+
+**Models used:**
+- **UIDT-1**: Locates elements on screen
+- **PTA-1**: Takes text descriptions and finds matching UI elements
+
+### 2. Query Models
+**What they do**: Answer questions and make decisions
+
+Query models process natural language and generate responses. They understand context and can reason about what actions to take.
+
+**Tasks:**
+- Interpret user instructions
+- Answer questions about screen content
+- Make decisions about next steps
+
+**Models used:**
+- **GPT-4**: General language understanding and reasoning
+- **Computer Use**: Anthropic's model for computer interaction tasks
+
+### 3. Large Action Models (LAMs)
+**What they do**: Plan and coordinate multi-step tasks
+
+Large Action Models take high-level goals and break them into sequences of actions. They coordinate the other models and handle errors.
+
+**Tasks:**
+- Break down complex goals into steps
+- Decide which model to use for each step
+- Handle failures and retry logic
+- Monitor progress and adjust plans
+
+**Models used:**
+- **Computer Use**: Plans and executes computer tasks
+- **UI-Tars**: Specialized for UI automation workflows
+
+## How They Work Together
+
+When you give AskUI a task:
+
+1. **Large Action Model** creates a plan with specific steps
+2. **Query Models** interpret any unclear instructions
+3. **Grounding Models** execute each individual action
+4. **Large Action Model** checks results and continues or adjusts the plan
+
+For example, with "Book a flight from Berlin to Rome":
+1. LAM plans: open travel site → search flights → select options → book
+2. Grounding model clicks on flight search
+3. Query model interprets "Berlin" and "Rome" as departure/destination
+4. Grounding model fills in the form fields
+5. LAM monitors progress and handles any errors
+
+## Model Capabilities
+
+| **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | **Online Trainable** |
+| :----------------- | :------------- | :------------------------------------- | :------------ | :------------------- |
+| Grounding          | UIDT-1         | Locate elements & understand screen    | No            | Partial              |
+| Grounding          | PTA-1          | Convert prompts into one-click actions | No            | Yes                  |
+| Query              | GPT-4          | Understand & respond to user queries   | Yes           | No                   |
+| Query              | Computer Use   | Understand & respond to user queries   | Yes           | No                   |
+| Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No                   |
+| Large Action (act) | UI-Tars        | Plan and execute full workflows        | Yes           | No                   |

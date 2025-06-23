@@ -1,0 +1,285 @@
+---
+title: Work with Forms
+description: How to fill out and validate forms using AskUI
+---
+
+This guide shows you how to interact with forms, fill fields, and validate submissions using AskUI.
+
+## Basic Form Filling
+
+```python
+from askui import Agent, locators as loc
+
+agent = Agent()
+agent.start()
+
+# Fill form fields
+agent.type_text(
+    "john.doe@example.com",
+    loc.Element("textfield").right_of(loc.Text("Email"))
+)
+
+agent.type_text(
+    "SecurePass123!",
+    loc.Element("textfield").right_of(loc.Text("Password"))
+)
+
+# Check checkbox
+agent.click(loc.Element("checkbox").right_of(loc.Text("Remember me")))  # See click() API reference
+
+# Submit form
+agent.click("Submit")
+```
+
+## Form Validation
+
+Check for errors before and after submission using [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get):
+
+```python
+# Fill form
+agent.type_text("invalidemail", loc.Element("textfield").right_of(loc.Text("Email")))
+
+# Check for inline validation
+has_error = agent.get(  # See get() API reference
+    "Is there an email validation error shown?",
+    response_schema=bool
+)
+
+if has_error:
+    error_msg = agent.get(
+        "What is the email error message?",
+        response_schema=str
+    )
+    print(f"Validation error: {error_msg}")
+    
+    # Fix the error
+    agent.clear(loc.Element("textfield").right_of(loc.Text("Email")))
+    agent.type_text("valid@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+```
+
+## Multi-Step Forms
+
+Navigate through wizard-style forms:
+
+```python
+from pydantic import BaseModel
+
+class FormStep(BaseModel):
+    current_step: int
+    total_steps: int
+    step_name: str
+
+# Step 1: Personal Information
+agent.type_text("John", loc.Element("textfield").right_of(loc.Text("First Name")))
+agent.type_text("Doe", loc.Element("textfield").right_of(loc.Text("Last Name")))
+agent.click("Next")
+
+# Check progress
+progress = agent.get(
+    "What is the current form step?",
+    response_schema=FormStep
+)
+print(f"On step {progress.current_step} of {progress.total_steps}: {progress.step_name}")
+
+# Step 2: Contact Details
+agent.type_text("john@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+agent.type_text("+1234567890", loc.Element("textfield").right_of(loc.Text("Phone")))
+agent.click("Next")
+
+# Step 3: Review and Submit
+is_correct = agent.get(
+    "Does the summary show 'John Doe' and 'john@example.com'?",
+    response_schema=bool
+)
+
+if is_correct:
+    agent.click("Submit")
+else:
+    agent.click("Back")
+```
+
+## Dynamic Forms
+
+Handle forms that change based on selections:
+
+```python
+# Select dropdown option
+agent.click(loc.Element("dropdown").right_of(loc.Text("Country")))
+agent.click("United States")
+
+# Check if state field appeared
+has_state_field = agent.get(
+    "Is there a State field visible?",
+    response_schema=bool
+)
+
+if has_state_field:
+    agent.click(loc.Element("dropdown").right_of(loc.Text("State")))
+    agent.click("California")
+```
+
+## File Uploads
+
+Handle file upload fields:
+
+```python
+# Click upload button
+agent.click(loc.Element("button").with_text("Choose File"))
+
+# Type file path in system dialog
+agent.type_text("/path/to/document.pdf")
+agent.key("Return")  # Press Enter
+
+# Verify upload
+file_uploaded = agent.get(
+    "Is 'document.pdf' shown as uploaded?",
+    response_schema=bool
+)
+```
+
+## Form Data Extraction
+
+Extract form data for verification:
+
+```python
+from typing import Dict, Any
+
+class FormData(BaseModel):
+    name: str
+    email: str
+    phone: str
+    newsletter: bool
+    country: str
+
+# Extract all form values
+current_data = agent.get(
+    "Extract all the form field values",
+    response_schema=FormData
+)
+
+# Verify before submission
+print(f"About to submit: {current_data.model_dump()}")
+```
+
+## Complex Form Patterns
+
+### Address Autocomplete
+```python
+# Start typing address
+agent.type_text(
+    "123 Main",
+    loc.Element("textfield").right_of(loc.Text("Address"))
+)
+
+# Wait for suggestions
+import time
+time.sleep(1)
+
+# Check if suggestions appeared
+has_suggestions = agent.get(
+    "Are address suggestions visible?",
+    response_schema=bool
+)
+
+if has_suggestions:
+    # Click first suggestion
+    agent.click(loc.Text("123 Main Street, New York, NY"))
+```
+
+### Date Pickers
+```python
+# Click date field
+agent.click(loc.Element("textfield").right_of(loc.Text("Date of Birth")))
+
+# Navigate calendar
+current_month = agent.get(
+    "What month is shown in the calendar?",
+    response_schema=str
+)
+
+# Navigate to correct month
+while current_month != "March 2024":
+    agent.click(loc.AiElement("calendar previous month button"))
+    current_month = agent.get(
+        "What month is shown in the calendar?",
+        response_schema=str
+    )
+
+# Select date
+agent.click("15")
+```
+
+### Radio Button Groups
+```python
+# Select from radio group
+agent.click(
+    loc.Element("radio").right_of(loc.Text("Premium Plan"))
+)
+
+# Verify selection
+selected_plan = agent.get(
+    "Which plan is selected?",
+    response_schema=str
+)
+```
+
+## Form Testing Patterns
+
+### Required Field Validation
+```python
+# Try submitting empty form
+agent.click("Submit")
+
+# Get all error messages
+errors = agent.get(
+    "What are all the error messages shown?",
+    response_schema=List[str]
+)
+
+# Fill required fields based on errors
+for error in errors:
+    if "email" in error.lower():
+        agent.type_text("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+    elif "name" in error.lower():
+        agent.type_text("Test User", loc.Element("textfield").right_of(loc.Text("Name")))
+```
+
+### Form Reset
+```python
+# Fill some fields
+agent.type_text("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+
+# Reset form
+agent.click("Reset")
+
+# Verify fields are empty
+is_empty = agent.get(
+    "Are all form fields empty?",
+    response_schema=bool
+)
+```
+
+## Best Practices
+
+1. **Always validate before submission**
+2. **Handle both client and server validation**
+3. **Clear fields before re-entering data**
+4. **Wait for dynamic content to load**
+5. **Extract and verify data before final submission**
+
+## Troubleshooting
+
+<CardGroup cols={2}>
+  <Card title="Form Element Issues?" icon="edit" href="/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr">
+    Can't find form fields or having selection issues? Our element detection guide covers field identification and interaction problems.
+  </Card>
+  <Card title="Form Data Extraction?" icon="download" href="/02-how-to-guides/04-troubleshooting/04-data-extraction">
+    Need help extracting form values or validation states? Check our data extraction troubleshooting guide for form-specific solutions.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+- Learn about [handling popups and modals](/03-explanation/02-core-concepts/03-interactions)
+- Explore [advanced patterns](/03-explanation/02-core-concepts/06-best-practice-for-reliable-automation)
+- See [element selection guide](/02-how-to-guides/05-build-ai-agents/01-select-elements)

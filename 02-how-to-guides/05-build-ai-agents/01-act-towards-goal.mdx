@@ -1,0 +1,65 @@
+---
+title: Act towards goal
+description: Use the act() command to accomplish tasks with natural language
+---
+
+The [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#act) command lets you describe what you want to achieve in natural language, and the AI agent figures out how to do it.
+
+## Basic Usage
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.act("click the login button")
+```
+
+## Complex Tasks
+
+```python
+# Multi-step workflow
+agent.act("book a flight from Berlin to Paris in January")
+
+# Form filling
+agent.act("fill out the registration form with name John Doe and email john@example.com")
+
+# Navigation and data extraction
+agent.act("go to the products page and tell me the price of the first laptop")
+```
+
+## Practical Examples
+
+### E-commerce
+```python
+agent.act("""
+Purchase a blue t-shirt:
+1. Search for blue t-shirt
+2. Select size medium
+3. Add to cart
+4. Proceed to checkout
+""")
+```
+
+### Data Collection
+```python
+result = agent.act("extract all email addresses from this page")
+print(result)
+```
+
+## When to Use act()
+
+Use [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#act) when you want to:
+- Quickly prototype an automation
+- Handle complex multi-step workflows
+- Work with UIs that change frequently
+- Let the AI figure out the best approach
+
+For more control over individual steps, see the guides on [selecting elements](./01-select-elements) and [extracting data](./02-extract-data).
+
+## Learn More
+
+For advanced prompting techniques and best practices, see [Agentic Mode Best Practices](/03-explanation/02-best-practices/04-agentic-mode) which covers:
+- Using "simulate" for enhanced stability
+- Adding verification conditions
+- Working with multiple approaches for actions
+- Handling complex conditional logic
