@@ -83,9 +83,9 @@ else:
 
 ### Dashboard Metrics
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 
-class Metrics(BaseModel):
+class Metrics(ResponseSchemaBase):
     total_users: int
     active_sessions: int
     revenue: float
@@ -99,7 +99,7 @@ dashboard = agent.get(
 
 ### Search Results
 ```python
-class SearchResult(BaseModel):
+class SearchResult(ResponseSchemaBase):
     title: str
     url: str
     description: str
@@ -134,7 +134,7 @@ results = agent.get(
    ```python
    from typing import Optional
    
-   class UserProfile(BaseModel):
+   class UserProfile(ResponseSchemaBase):
        name: str
        email: str
        phone: Optional[str] = None

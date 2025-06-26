@@ -54,10 +54,10 @@ raw_data = agent.get("What data is shown in the table?", response_schema=str)
 print(f"Raw data: {raw_data}")
 
 # Then design your schema
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import Optional
 
-class FlexibleModel(BaseModel):
+class FlexibleModel(ResponseSchemaBase):
     name: str
     value: Optional[float] = None  # Make fields optional
     status: Optional[str] = None
@@ -90,9 +90,9 @@ items = [result] if isinstance(result, str) else result
 
 ```python
 from typing import Optional
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 
-class UserData(BaseModel):
+class UserData(ResponseSchemaBase):
     name: str
     email: str
     phone: Optional[str] = None  # Might not exist
@@ -164,10 +164,10 @@ def clean_table_data(rows):
 ### Getting Current Form Values
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import Optional
 
-class FormState(BaseModel):
+class FormState(ResponseSchemaBase):
     # Define expected fields
     username: Optional[str] = None
     email: Optional[str] = None
@@ -207,14 +207,14 @@ selected_option = agent.get(
 
 ```python
 from typing import List
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 
-class OrderItem(BaseModel):
+class OrderItem(ResponseSchemaBase):
     name: str
     quantity: int
     price: float
 
-class Order(BaseModel):
+class Order(ResponseSchemaBase):
     order_id: str
     items: List[OrderItem]
     total: float

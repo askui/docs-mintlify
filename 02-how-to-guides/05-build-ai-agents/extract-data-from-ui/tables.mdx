@@ -8,19 +8,19 @@ Tables are common UI elements for displaying structured data. Learn how to extra
 ## Basic Table Extraction
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import List
 from askui import Agent
 
 agent = Agent()
 agent.start()
 
-class TableRow(BaseModel):
+class TableRow(ResponseSchemaBase):
     name: str
     email: str
     status: str
 
-class Table(BaseModel):
+class Table(ResponseSchemaBase):
     rows: List[TableRow]
 
 # Extract entire table
@@ -41,10 +41,10 @@ Here's an example of extracting data from a model comparison table:
 ![Model Comparison Table](images/table_website.png)
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import List
 
-class ModelComparison(BaseModel):
+class ModelComparison(ResponseSchemaBase):
     model_name: str
     infor: str  # Description/Information
     execution_speed: str
@@ -81,7 +81,7 @@ headers = agent.get(
 # Create a dynamic model based on headers
 from typing import Dict
 
-class DynamicRow(BaseModel):
+class DynamicRow(ResponseSchemaBase):
     data: Dict[str, str]
 
 # Extract rows with dynamic schema
@@ -95,7 +95,7 @@ rows = agent.get(
 
 ### Financial Data Tables
 ```python
-class Transaction(BaseModel):
+class Transaction(ResponseSchemaBase):
     date: str
     description: str
     amount: float
@@ -113,7 +113,7 @@ total_received = sum(t.amount for t in transactions if t.amount > 0)
 
 ### Inventory Tables
 ```python
-class InventoryItem(BaseModel):
+class InventoryItem(ResponseSchemaBase):
     product_name: str
     sku: str
     quantity: int
@@ -131,7 +131,7 @@ low_stock = [item for item in inventory if item.quantity < 10]
 
 ### Performance Metrics Tables
 ```python
-class PerformanceMetric(BaseModel):
+class PerformanceMetric(ResponseSchemaBase):
     metric_name: str
     current_value: float
     target_value: float
@@ -151,11 +151,11 @@ issues = [m for m in metrics if m.status == "Below Target"]
 
 ### Nested Data
 ```python
-class SubItem(BaseModel):
+class SubItem(ResponseSchemaBase):
     name: str
     value: str
 
-class ComplexRow(BaseModel):
+class ComplexRow(ResponseSchemaBase):
     id: int
     category: str
     details: List[SubItem]
@@ -169,7 +169,7 @@ complex_data = agent.get(
 
 ### Tables with Merged Cells
 ```python
-class GroupedData(BaseModel):
+class GroupedData(ResponseSchemaBase):
     group_name: str
     items: List[Dict[str, str]]
 
@@ -195,7 +195,7 @@ grouped_table = agent.get(
    ```python
    from typing import Optional
    
-   class TableRow(BaseModel):
+   class TableRow(ResponseSchemaBase):
        name: str
        email: str
        phone: Optional[str] = None  # Might be empty
@@ -203,7 +203,7 @@ grouped_table = agent.get(
 
 3. **Type Conversion**: Specify correct types for numeric columns
    ```python
-   class DataRow(BaseModel):
+   class DataRow(ResponseSchemaBase):
        product: str
        quantity: int  # Will convert "5" to 5
        price: float   # Will convert "$9.99" to 9.99

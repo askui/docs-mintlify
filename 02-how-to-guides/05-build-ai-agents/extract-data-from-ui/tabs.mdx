@@ -8,14 +8,14 @@ Tabs are common UI patterns for organizing content. Learn how to extract tab inf
 ## Basic Tab Extraction
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import List
 from askui import Agent
 
 agent = Agent()
 agent.start()
 
-class TabInfo(BaseModel):
+class TabInfo(ResponseSchemaBase):
     name: str
     is_active: bool
     has_notifications: bool = False
@@ -40,7 +40,7 @@ For tabs that might have multiple labels or states:
 ```python
 from typing import List
 
-class Tab(BaseModel):
+class Tab(ResponseSchemaBase):
     name: List[str]  # Can have multiple text elements
     active: bool
 
@@ -79,7 +79,7 @@ if current_tab != target_tab:
 ### Tab Content Validation
 ```python
 # Extract tabs with content status
-class TabWithContent(BaseModel):
+class TabWithContent(ResponseSchemaBase):
     name: str
     is_active: bool
     has_content: bool
@@ -101,7 +101,7 @@ for tab in tabs_info:
 
 ### Browser-Style Tabs
 ```python
-class BrowserTab(BaseModel):
+class BrowserTab(ResponseSchemaBase):
     title: str
     url: str
     is_active: bool
@@ -121,7 +121,7 @@ for tab in browser_tabs:
 
 ### Dashboard Tabs
 ```python
-class DashboardTab(BaseModel):
+class DashboardTab(ResponseSchemaBase):
     name: str
     icon: str
     is_active: bool
@@ -141,7 +141,7 @@ for tab in tabs_with_updates:
 
 ### Nested Tab Groups
 ```python
-class TabGroup(BaseModel):
+class TabGroup(ResponseSchemaBase):
     group_name: str
     tabs: List[TabInfo]
     active_tab_index: int
@@ -246,7 +246,7 @@ Extracting tabs from a documentation site:
 
 ```python
 # Extract documentation tabs
-class DocTab(BaseModel):
+class DocTab(ResponseSchemaBase):
     section_name: str
     is_active: bool
     has_subnav: bool

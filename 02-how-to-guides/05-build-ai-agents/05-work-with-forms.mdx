@@ -62,9 +62,9 @@ if has_error:
 Navigate through wizard-style forms:
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 
-class FormStep(BaseModel):
+class FormStep(ResponseSchemaBase):
     current_step: int
     total_steps: int
     step_name: str
@@ -144,7 +144,7 @@ Extract form data for verification:
 ```python
 from typing import Dict, Any
 
-class FormData(BaseModel):
+class FormData(ResponseSchemaBase):
     name: str
     email: str
     phone: str

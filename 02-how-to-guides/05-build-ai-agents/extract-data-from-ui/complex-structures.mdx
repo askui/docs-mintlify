@@ -10,7 +10,7 @@ For sophisticated UIs, you'll need to extract complex, nested data structures. T
 Create models that reflect your UI's data hierarchy:
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import List, Optional, Dict
 from datetime import datetime
 from askui import Agent
@@ -18,18 +18,18 @@ from askui import Agent
 agent = Agent()
 agent.start()
 
-class Address(BaseModel):
+class Address(ResponseSchemaBase):
     street: str
     city: str
     state: str
     zip_code: str
 
-class ContactInfo(BaseModel):
+class ContactInfo(ResponseSchemaBase):
     email: str
     phone: Optional[str] = None
     address: Optional[Address] = None
 
-class User(BaseModel):
+class User(ResponseSchemaBase):
     id: int
     name: str
     role: str
@@ -49,18 +49,18 @@ user_data = agent.get(
 Extract form data along with validation information:
 
 ```python
-class FieldValidation(BaseModel):
+class FieldValidation(ResponseSchemaBase):
     is_valid: bool
     error_message: Optional[str] = None
 
-class FormField(BaseModel):
+class FormField(ResponseSchemaBase):
     field_name: str
     field_type: str  # "text", "email", "select", etc.
     value: Optional[str] = None
     is_required: bool
     validation: FieldValidation
 
-class Form(BaseModel):
+class Form(ResponseSchemaBase):
     form_name: str
     fields: List[FormField]
     can_submit: bool
@@ -83,14 +83,14 @@ if invalid_fields:
 For multi-step forms or wizards:
 
 ```python
-class WizardStep(BaseModel):
+class WizardStep(ResponseSchemaBase):
     step_number: int
     title: str
     is_completed: bool
     is_current: bool
     fields: List[FormField]
 
-class WizardState(BaseModel):
+class WizardState(ResponseSchemaBase):
     total_steps: int
     current_step: int
     steps: List[WizardStep]
@@ -118,7 +118,7 @@ from typing import Any
 
 def create_dynamic_model(fields: List[str]):
     """Create a Pydantic model with dynamic fields"""
-    class DynamicModel(BaseModel):
+    class DynamicModel(ResponseSchemaBase):
         data: Dict[str, Any]
         
         class Config:
@@ -145,12 +145,12 @@ extracted_data = agent.get(
 Complex e-commerce data extraction:
 
 ```python
-class ProductVariant(BaseModel):
+class ProductVariant(ResponseSchemaBase):
     size: Optional[str] = None
     color: Optional[str] = None
     material: Optional[str] = None
 
-class CartItem(BaseModel):
+class CartItem(ResponseSchemaBase):
     product_id: str
     product_name: str
     variant: ProductVariant
@@ -159,13 +159,13 @@ class CartItem(BaseModel):
     subtotal: float
     discounts: List[str] = []
 
-class ShippingOption(BaseModel):
+class ShippingOption(ResponseSchemaBase):
     method: str
     price: float
     estimated_days: int
     is_selected: bool
 
-class Cart(BaseModel):
+class Cart(ResponseSchemaBase):
     items: List[CartItem]
     subtotal: float
     tax: float
@@ -189,12 +189,12 @@ assert abs(calculated_subtotal - cart_data.subtotal) < 0.01
 Extract complex project data:
 
 ```python
-class TaskAssignee(BaseModel):
+class TaskAssignee(ResponseSchemaBase):
     name: str
     avatar_url: str
     email: str
 
-class Task(BaseModel):
+class Task(ResponseSchemaBase):
     id: str
     title: str
     status: str
@@ -204,14 +204,14 @@ class Task(BaseModel):
     tags: List[str]
     completion_percentage: int
 
-class ProjectPhase(BaseModel):
+class ProjectPhase(ResponseSchemaBase):
     name: str
     status: str
     tasks: List[Task]
     start_date: str
     end_date: str
 
-class Project(BaseModel):
+class Project(ResponseSchemaBase):
     name: str
     description: str
     phases: List[ProjectPhase]
@@ -238,12 +238,12 @@ for phase in project.phases:
 For nested discussions or comments:
 
 ```python
-class CommentAuthor(BaseModel):
+class CommentAuthor(ResponseSchemaBase):
     name: str
     avatar: str
     role: Optional[str] = None
 
-class Comment(BaseModel):
+class Comment(ResponseSchemaBase):
     id: str
     author: CommentAuthor
     content: str
@@ -251,7 +251,7 @@ class Comment(BaseModel):
     likes: int
     replies: List['Comment'] = []  # Recursive reference
 
-class Discussion(BaseModel):
+class Discussion(ResponseSchemaBase):
     title: str
     original_post: Comment
     total_replies: int
@@ -274,7 +274,7 @@ total_comments = count_comments(discussion.original_post)
 1. **Start Simple, Then Expand**: Build your model incrementally
    ```python
    # Start with basic model
-   class BasicProduct(BaseModel):
+   class BasicProduct(ResponseSchemaBase):
        name: str
        price: float
    
@@ -282,7 +282,7 @@ total_comments = count_comments(discussion.original_post)
    basic = agent.get("Extract product", response_schema=BasicProduct)
    
    # Then expand to complex model
-   class DetailedProduct(BaseModel):
+   class DetailedProduct(ResponseSchemaBase):
        name: str
        price: float
        variants: List[ProductVariant]
@@ -294,7 +294,7 @@ total_comments = count_comments(discussion.original_post)
    ```python
    from pydantic import validator
    
-   class ValidatedData(BaseModel):
+   class ValidatedData(ResponseSchemaBase):
        email: str
        age: int
        
@@ -313,7 +313,7 @@ total_comments = count_comments(discussion.original_post)
 
 3. **Handle Partial Data**: Use Optional fields for data that might not exist
    ```python
-   class RobustModel(BaseModel):
+   class RobustModel(ResponseSchemaBase):
        # Required fields
        id: str
        name: str
@@ -337,13 +337,13 @@ raw_data = agent.get(
 print("Raw data:", raw_data)
 
 # 2. Test with simpler schema
-class SimpleVersion(BaseModel):
+class SimpleVersion(ResponseSchemaBase):
     basic_field: str
 
 simple = agent.get("Extract basic info", response_schema=SimpleVersion)
 
 # 3. Gradually add complexity
-class ComplexVersion(BaseModel):
+class ComplexVersion(ResponseSchemaBase):
     basic_field: str
     nested_data: Dict[str, Any]
     # Add more fields incrementally

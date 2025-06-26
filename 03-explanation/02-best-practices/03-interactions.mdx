@@ -160,7 +160,7 @@ email = agent.get("What is the email?", response_schema=str)
 role = agent.get("What is the role?", response_schema=str)
 
 # Efficient - single extraction
-class UserInfo(BaseModel):
+class UserInfo(ResponseSchemaBase):
     name: str
     email: str
     role: str

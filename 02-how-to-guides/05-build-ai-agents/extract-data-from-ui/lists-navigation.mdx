@@ -32,10 +32,10 @@ nav_links = agent.get(
 Extract sidebar items with their active states:
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import List
 
-class SidebarItem(BaseModel):
+class SidebarItem(ResponseSchemaBase):
     label: str
     icon: str
     is_active: bool
@@ -58,10 +58,10 @@ For nested navigation structures like documentation sidebars:
 ![Sidebar Example](images/simple_website.png)
 
 ```python
-from pydantic import BaseModel
+from askui import ResponseSchemaBase
 from typing import List, Optional
 
-class SidebarItem(BaseModel):
+class SidebarItem(ResponseSchemaBase):
     name: str
     children: List['SidebarItem'] = []  # Recursive reference
 
@@ -85,7 +85,7 @@ print_tree(sidebar_structure)
 Extract dropdown menu options:
 
 ```python
-class DropdownOption(BaseModel):
+class DropdownOption(ResponseSchemaBase):
     label: str
     value: str
     is_selected: bool = False
@@ -118,7 +118,7 @@ current_page = breadcrumbs[-1] if breadcrumbs else "Unknown"
 For complex multi-level navigation:
 
 ```python
-class MenuItem(BaseModel):
+class MenuItem(ResponseSchemaBase):
     label: str
     url: Optional[str] = None
     submenu: List['MenuItem'] = []
@@ -144,7 +144,7 @@ def find_expanded(items: List[MenuItem]) -> List[str]:
 
 ### File Explorer Trees
 ```python
-class FileNode(BaseModel):
+class FileNode(ResponseSchemaBase):
     name: str
     type: str  # "file" or "folder"
     is_expanded: bool = False
@@ -164,7 +164,7 @@ def count_files(node: FileNode) -> int:
 
 ### Category Lists
 ```python
-class Category(BaseModel):
+class Category(ResponseSchemaBase):
     name: str
     count: int
     is_selected: bool
@@ -180,7 +180,7 @@ total_items = sum(cat.count for cat in categories)
 
 ### Navigation with Icons
 ```python
-class NavItem(BaseModel):
+class NavItem(ResponseSchemaBase):
     label: str
     icon_name: str
     badge_count: Optional[int] = None
@@ -216,7 +216,7 @@ with_notifications = [item for item in nav_items if item.badge_count]
 
 3. **State Preservation**: Track which items are expanded/selected
    ```python
-   class NavigationState(BaseModel):
+   class NavigationState(ResponseSchemaBase):
        expanded_paths: List[str]
        selected_item: str
        
@@ -251,7 +251,7 @@ api_section = find_section(docs_nav, "API Reference")
 
 ### E-commerce Categories
 ```python
-class ProductCategory(BaseModel):
+class ProductCategory(ResponseSchemaBase):
     name: str
     subcategories: List[str]
     product_count: int
