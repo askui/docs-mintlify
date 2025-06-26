@@ -1,0 +1,434 @@
+---
+title: 'IDE Setup for AskUI Development'
+description: 'Configure your development environment with the right tools and extensions for optimal AskUI automation development'
+---
+
+A properly configured development environment significantly improves productivity when working with AskUI. This guide covers setting up Visual Studio Code with the essential extensions and configurations for AskUI development.
+
+## Prerequisites
+
+- [Visual Studio Code](https://code.visualstudio.com/) installed
+- Node.js (v18 or higher)
+- AskUI project initialized
+
+## Essential VSCode Extensions
+
+### Required Extensions
+
+Install these extensions for the best AskUI development experience:
+
+**1. Jest Runner**
+- **Extension ID**: `firsttris.vscode-jest-runner`
+- **Purpose**: Run individual tests directly from the editor
+- **Features**: 
+  - Run/Debug buttons appear above test functions
+  - Execute single tests without running the entire suite
+  - Integrated debugging support
+
+**2. ESLint**
+- **Extension ID**: `dbaeumer.vscode-eslint`
+- **Purpose**: Code quality and error detection
+- **AskUI Benefits**:
+  - Detects missing `.exec()` calls
+  - Enforces coding standards
+  - Shows AskUI-specific linting rules
+
+**3. Live Preview**
+- **Extension ID**: `ms-vscode.live-server`
+- **Purpose**: View AskUI annotations and reports directly in VSCode
+- **Features**:
+  - Preview HTML annotation files
+  - View Allure reports without external browser
+  - Live reload for development
+
+### Automatic Extension Installation
+
+Create a `.vscode/extensions.json` file in your project root:
+
+```json
+{
+    "recommendations": [
+        "firsttris.vscode-jest-runner",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.live-server",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-typescript-next"
+    ]
+}
+```
+
+When team members open the project, VSCode will prompt them to install the recommended extensions.
+
+## VSCode Configuration
+
+### Project Settings
+
+Create a `.vscode/settings.json` file with AskUI-optimized settings:
+
+```json
+{
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "terminal.integrated.profiles.windows": {
+        "AskUI Shell": {
+            "path": "cmd.exe",
+            "args": ["/c", "askui-shell"]
+        }
+    },
+    "eslint.validate": [
+        "javascript",
+        "typescript"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "jest.autoRun": "off",
+    "jest.showCoverageOnLoad": false,
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/allure-results": true,
+        "**/allure-report": true,
+        "**/.askui/cache": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/allure-results": true,
+        "**/allure-report": true
+    }
+}
+```
+
+### Key Configuration Benefits
+
+**Terminal Integration**: Sets up AskUI Shell as a terminal profile
+**ESLint Auto-fix**: Automatically fixes common issues on save
+**File Exclusions**: Hides generated files from search and explorer
+**Jest Configuration**: Optimizes Jest Runner behavior
+
+## Development Workflow Setup
+
+### Running Tests in VSCode
+
+With Jest Runner installed, you'll see **Run** and **Debug** buttons above your test functions:
+
+```typescript
+// purchase-flow.test.ts
+describe('Purchase Flow', () => {
+    it('should complete standard user purchase', async () => {
+        // Run | Debug buttons appear here ↑
+        await loginPage.login(testData.users.standard);
+        await inventoryPage.addItemToCart('Sauce Labs Backpack');
+        await checkoutPage.completeCheckout(testData.checkout.validInfo);
+        
+        await expect(confirmationPage.isDisplayed()).resolves.toBe(true);
+    });
+});
+```
+
+### Using the Integrated Terminal
+
+1. **Open AskUI Shell Terminal**:
+   - Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
+   - Type "Terminal: Select Default Profile"
+   - Choose "AskUI Shell"
+
+2. **Common Commands**:
+   ```bash
+   # Start AskUI services
+   askui-startcontroller
+   
+   # Run all tests
+   askui-runproject
+   
+   # Run specific test file
+   npx jest path/to/test.test.ts --config jest.config.ts
+   ```
+
+## Code Quality Setup
+
+### ESLint Configuration
+
+Create or update your `.eslintrc.json` for AskUI projects:
+
+```json
+{
+    "extends": [
+        "@typescript-eslint/recommended",
+        "plugin:jest/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "jest"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/prefer-to-have-length": "warn"
+    },
+    "env": {
+        "jest": true,
+        "node": true,
+        "es6": true
+    }
+}
+```
+
+### TypeScript Configuration Optimization
+
+Update your `tsconfig.json` for better development experience:
+
+```json
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "lib": ["ES2020"],
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "removeComments": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"],
+            "@/pages/*": ["src/page-objects/*"],
+            "@/data/*": ["src/data/*"],
+            "@/helpers/*": ["src/helpers/*"]
+        }
+    },
+    "include": [
+        "src/**/*",
+        "tests/**/*",
+        "*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "allure-results",
+        "allure-report"
+    ]
+}
+```
+
+## Debugging Configuration
+
+### VSCode Debug Configuration
+
+Create a `.vscode/launch.json` file for debugging tests:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug AskUI Test",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "--runInBand",
+                "--no-cache",
+                "--config",
+                "jest.config.ts",
+                "${relativeFile}"
+            ],
+            "env": {
+                "NODE_ENV": "test"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "Debug Current Test File",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "--runInBand",
+                "--no-cache",
+                "--config",
+                "jest.config.ts",
+                "${fileBasenameNoExtension}"
+            ],
+            "env": {
+                "NODE_ENV": "test"
+            },
+            "console": "integratedTerminal"
+        }
+    ]
+}
+```
+
+### Debugging Best Practices
+
+1. **Set Breakpoints**: Click in the gutter next to line numbers
+2. **Use Debug Console**: Inspect variables and execute AskUI commands
+3. **Step Through Code**: Use F10 (step over) and F11 (step into)
+4. **Watch Variables**: Add expressions to the Watch panel
+
+## File Management
+
+### Workspace Organization
+
+Organize your VSCode workspace effectively:
+
+```json
+// workspace.code-workspace
+{
+    "folders": [
+        {
+            "name": "Main Project",
+            "path": "."
+        },
+        {
+            "name": "Documentation",
+            "path": "./docs"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/node_modules": true,
+            "**/dist": true,
+            "**/.git": true
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "firsttris.vscode-jest-runner",
+            "dbaeumer.vscode-eslint",
+            "ms-vscode.live-server"
+        ]
+    }
+}
+```
+
+### File Association
+
+Configure file associations for better syntax highlighting:
+
+```json
+// In settings.json
+{
+    "files.associations": {
+        "*.askui": "typescript",
+        "*.test.ts": "typescript",
+        "*.spec.ts": "typescript"
+    }
+}
+```
+
+## Productivity Features
+
+### Code Snippets
+
+Create custom snippets for common AskUI patterns:
+
+```json
+// .vscode/snippets.json
+{
+    "AskUI Click Text": {
+        "prefix": "aui-click-text",
+        "body": [
+            "await aui.click().text('${1:text}').exec();"
+        ],
+        "description": "Click on text element"
+    },
+    "AskUI Type": {
+        "prefix": "aui-type",
+        "body": [
+            "await aui.type('${1:text}').exec();"
+        ],
+        "description": "Type text"
+    },
+    "AskUI Wait For": {
+        "prefix": "aui-wait",
+        "body": [
+            "await aui.waitFor(${1:1000}).exec();"
+        ],
+        "description": "Wait for specified time"
+    },
+    "Test Block": {
+        "prefix": "askui-test",
+        "body": [
+            "it('${1:should do something}', async () => {",
+            "    ${2:// Test implementation}",
+            "});"
+        ],
+        "description": "Create test block"
+    }
+}
+```
+
+### Keyboard Shortcuts
+
+Add custom shortcuts for common actions:
+
+```json
+// keybindings.json
+[
+    {
+        "key": "ctrl+shift+t",
+        "command": "jest-runner.run-file",
+        "when": "editorTextFocus && resourceExtname == '.ts'"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "jest-runner.debug-file",
+        "when": "editorTextFocus && resourceExtname == '.ts'"
+    }
+]
+```
+
+## Troubleshooting Common Issues
+
+### Jest Runner Not Working
+
+If Jest Runner buttons don't appear:
+
+1. **Check Jest Configuration**: Ensure `jest.config.ts` is properly configured
+2. **Verify File Patterns**: Jest Runner looks for `*.test.ts` or `*.spec.ts` files
+3. **Reload Window**: Sometimes VSCode needs a reload to recognize Jest tests
+
+### ESLint Not Running
+
+If ESLint isn't showing errors:
+
+1. **Check ESLint Installation**: Ensure ESLint is installed in your project
+2. **Verify Configuration**: Check `.eslintrc.json` exists and is valid
+3. **Enable Auto-fix**: Add ESLint auto-fix on save to settings
+
+### Terminal Issues
+
+If AskUI Shell doesn't work in terminal:
+
+1. **Check Path**: Ensure AskUI is properly installed and in PATH
+2. **Use Full Path**: Specify full path to `askui-shell` executable
+3. **Permission Issues**: On macOS/Linux, ensure execute permissions
+
+<Card title="Complete IDE Setup Example" icon="github" href="https://github.com/askui/AskUI-Best-Practices">
+  See a fully configured VSCode setup in our example repository, including all configuration files and recommended extensions.
+</Card>
+
+## Next Steps
+
+- Set up [Allure reporting integration](/02-how-to-guides/02-integrations/11-allure-reporting)
+- Learn about [running and debugging tests](/02-how-to-guides/05-build-ai-agents/08-running-and-debugging-tests)
+- Explore [project structure best practices](/03-explanation/02-best-practices/07-project-structure)

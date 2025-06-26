@@ -107,6 +107,9 @@
               ]
             },
             "02-how-to-guides/05-build-ai-agents/06-interact-with-elements",
+            "02-how-to-guides/05-build-ai-agents/07-managing-credentials",
+            "02-how-to-guides/05-build-ai-agents/08-running-and-debugging-tests",
+            "02-how-to-guides/05-build-ai-agents/09-handling-dynamic-ui",
             "02-how-to-guides/06-configure-different-models"
           ]
         },
@@ -127,7 +130,9 @@
             "02-how-to-guides/02-integrations/02-gitlab",
             "02-how-to-guides/02-integrations/03-azure",
             "02-how-to-guides/02-integrations/06-reporters",
-            "02-how-to-guides/02-integrations/07-sso"
+            "02-how-to-guides/02-integrations/07-sso",
+            "02-how-to-guides/02-integrations/10-ide-setup",
+            "02-how-to-guides/02-integrations/11-allure-reporting"
           ]
         },
         {
@@ -161,11 +166,18 @@
         {
           "group": "Best Practices",
           "pages": [
-            "03-explanation/02-best-practices/04-agentic-mode",
-            "03-explanation/02-best-practices/01-element-selection/01-element-selection",
-            "03-explanation/02-best-practices/03-interactions",
-            "03-explanation/02-best-practices/05-reporting-logging",
-            "03-explanation/02-best-practices/06-improve-model-performance"
+            {
+              "group": "Project Organization",
+              "pages": [
+                "03-explanation/02-best-practices/02-project-organization/project-structure",
+                "03-explanation/02-best-practices/02-project-organization/test-organization"
+              ]
+            },
+            "03-explanation/02-best-practices/agentic-mode",
+            "03-explanation/02-best-practices/element-selection",
+            "03-explanation/02-best-practices/interactions",
+            "03-explanation/02-best-practices/reporting-logging",
+            "03-explanation/02-best-practices/improve-model-performance"
           ]
         },
         "03-explanation/04-faq/faq",

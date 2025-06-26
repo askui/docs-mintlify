@@ -1,0 +1,532 @@
+---
+title: 'Running and Debugging Tests'
+description: 'Master different approaches to executing AskUI tests and debugging issues in your automation projects'
+---
+
+Effective test execution and debugging are essential skills for maintaining reliable AskUI automation. This guide covers various execution strategies, debugging techniques, and troubleshooting approaches.
+
+## Test Execution Methods
+
+### Using AskUI Shell
+
+The recommended approach for running AskUI tests:
+
+```bash
+# Start AskUI services
+askui-shell
+askui-startcontroller
+
+# Run all tests
+askui-runproject
+
+# Alternative: using npm scripts
+npm run askui
+```
+
+**Benefits:**
+- Proper AskUI environment setup
+- Automatic service management
+- Optimized for AskUI workflows
+
+### Using Jest Directly
+
+For more control over test execution:
+
+```bash
+# Run all tests
+npx jest --config jest.config.ts
+
+# Run specific test file
+npx jest login.test.ts --config jest.config.ts
+
+# Run tests matching pattern
+npx jest --testNamePattern="login" --config jest.config.ts
+
+# Run with verbose output
+npx jest --verbose --config jest.config.ts
+```
+
+### IDE Integration (VSCode)
+
+With Jest Runner extension installed:
+
+1. **Individual Test Execution**
+   - Click "Run" button above test functions
+   - Right-click test and select "Run Jest"
+   - Use keyboard shortcut (if configured)
+
+2. **Debug Mode**
+   - Click "Debug" button above test functions
+   - Set breakpoints in your code
+   - Use VSCode debugger features
+
+## Jest Configuration for Testing
+
+### Optimal Jest Settings
+
+Configure Jest for AskUI projects:
+
+```typescript
+// jest.config.ts
+export default {
+  preset: 'ts-jest',
+  testEnvironment: '@askui/jest-allure-circus',
+  setupFilesAfterEnv: ['<rootDir>/src/setup/test-setup.ts'],
+  
+  // Test discovery
+  testMatch: [
+    "**/*.test.ts",
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[tj]s?(x)"
+  ],
+  
+  // File extensions
+  moduleFileExtensions: ['ts', 'js', 'json'],
+  
+  // TypeScript transformation
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest'
+  },
+  
+  // Timeouts
+  testTimeout: 60000,
+  
+  // Parallel execution
+  maxWorkers: 1, // Important: AskUI tests should run sequentially
+  
+  // Coverage
+  collectCoverageFrom: [
+    'src/**/*.{ts,js}',
+    '!src/**/*.d.ts',
+    '!src/setup/**'
+  ],
+  
+  // Retry configuration
+  retryTimes: 2,
+  
+  // Verbose output
+  verbose: true,
+  
+  // Clear mocks
+  clearMocks: true,
+  
+  // Module path mapping
+  moduleNameMapping: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/pages/(.*)$': '<rootDir>/src/page-objects/$1',
+    '^@/data/(.*)$': '<rootDir>/src/data/$1'
+  }
+};
+```
+
+### Test Setup Configuration
+
+Create a comprehensive test setup file:
+
+```typescript
+// src/setup/test-setup.ts
+import { EnvironmentValidator } from '../utils/env-validator';
+import { logger } from '../logging/allure-logger';
+
+// Validate environment before tests run
+beforeAll(() => {
+    try {
+        EnvironmentValidator.validate();
+        logger.info('Environment validation successful');
+    } catch (error) {
+        logger.error('Environment validation failed', error);
+        throw error;
+    }
+});
+
+// Global test timeout
+jest.setTimeout(60000);
+
+// Global error handler
+process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Unhandled Rejection at:', { promise, reason });
+});
+
+// Custom matchers (optional)
+expect.extend({
+    toBeDisplayedWithin(received: Promise<boolean>, timeout: number) {
+        return {
+            message: () => `Expected element to be displayed within ${timeout}ms`,
+            pass: false // Implementation would go here
+        };
+    }
+});
+```
+
+## Selective Test Execution
+
+### Running Specific Tests
+
+**Focus on specific test suites:**
+```typescript
+describe.only('Critical Path Tests', () => {
+    it('should complete user login', async () => {
+        // This test will run
+    });
+});
+
+describe('Other Tests', () => {
+    it('should do something else', async () => {
+        // This test will be skipped
+    });
+});
+```
+
+**Skip test suites during development:**
+```typescript
+describe.skip('Slow Integration Tests', () => {
+    it('should perform complex workflow', async () => {
+        // This test will be skipped
+    });
+});
+```
+
+**Conditional test execution:**
+```typescript
+const runSlowTests = process.env.RUN_SLOW_TESTS === 'true';
+
+(runSlowTests ? describe : describe.skip)('Performance Tests', () => {
+    it('should handle large datasets', async () => {
+        // Runs only when RUN_SLOW_TESTS=true
+    });
+});
+```
+
+### Using Test Tags
+
+Organize tests with tags for selective execution:
+
+```typescript
+// Tag tests with naming conventions
+describe('[SMOKE] Core Navigation', () => {
+    it('should navigate between pages', async () => {
+        // Smoke test implementation
+    });
+});
+
+describe('[REGRESSION] Complex Workflows', () => {
+    it('should handle edge cases', async () => {
+        // Regression test implementation
+    });
+});
+
+describe('[API] Backend Integration', () => {
+    it('should sync with API', async () => {
+        // API integration test
+    });
+});
+```
+
+Run tagged tests:
+```bash
+# Run only smoke tests
+npx jest --testNamePattern="SMOKE" --config jest.config.ts
+
+# Run everything except API tests
+npx jest --testNamePattern="^(?!.*API).*" --config jest.config.ts
+```
+
+## Advanced Execution Strategies
+
+### Parallel vs Sequential Execution
+
+**Sequential Execution (Recommended for AskUI):**
+```typescript
+// jest.config.ts
+export default {
+  maxWorkers: 1, // Run tests one at a time
+  runInBand: true // Force sequential execution
+};
+```
+
+**Controlled Parallel Execution:**
+```typescript
+// For tests that can run in parallel
+describe('Independent Unit Tests', () => {
+    // These can run in parallel safely
+});
+
+// For tests that need isolation
+describe.serial('UI Integration Tests', () => {
+    // These must run sequentially
+});
+```
+
+### Test Sharding
+
+Split tests across multiple runners for CI/CD:
+
+```bash
+# Split tests into 4 shards and run shard 1
+npx jest --shard=1/4 --config jest.config.ts
+
+# Environment variable approach
+JEST_SHARD=1/4 npm test
+```
+
+## Debugging Techniques
+
+### Debug Mode Setup
+
+**VSCode Debug Configuration:**
+```json
+// .vscode/launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug AskUI Test",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "--runInBand",
+                "--no-cache",
+                "--config",
+                "jest.config.ts",
+                "${relativeFile}"
+            ],
+            "env": {
+                "NODE_ENV": "test",
+                "DEBUG": "true"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "timeout": 120000
+        }
+    ]
+}
+```
+
+### Debugging Best Practices
+
+**1. Strategic Breakpoints**
+```typescript
+it('should complete checkout process', async () => {
+    await loginPage.login(testData.users.standard);
+    
+    // Breakpoint here to inspect state
+    debugger;
+    
+    await inventoryPage.addItemToCart('backpack');
+    
+    // Another breakpoint to check cart state
+    debugger;
+    
+    await checkoutPage.completeCheckout(testData.checkout.validInfo);
+});
+```
+
+**2. Console Debugging**
+```typescript
+// Enhanced logging for debugging
+const debugLog = (message: string, data?: any) => {
+    if (process.env.DEBUG === 'true') {
+        console.log(`🐛 DEBUG: ${message}`, data || '');
+    }
+};
+
+it('should handle dynamic content', async () => {
+    debugLog('Starting dynamic content test');
+    
+    const elements = await aui.get().text('Dynamic Text').exec();
+    debugLog('Found elements', { count: elements.length, elements });
+    
+    if (elements.length === 0) {
+        debugLog('No elements found, taking screenshot');
+        // Screenshot logic here
+    }
+});
+```
+
+**3. Step-by-Step Execution**
+```typescript
+// Use the step function from logger for detailed tracking
+it('should complete purchase workflow', async () => {
+    await logger.step('Navigate to login page', async () => {
+        await loginPage.navigate();
+        debugLog('Navigation completed');
+    });
+    
+    await logger.step('Perform login', async () => {
+        await loginPage.login(user.username, user.password);
+        debugLog('Login attempted');
+    });
+    
+    await logger.step('Verify login success', async () => {
+        const isLoggedIn = await dashboardPage.isDisplayed();
+        debugLog('Login verification', { isLoggedIn });
+        expect(isLoggedIn).toBe(true);
+    });
+});
+```
+
+## Error Handling and Recovery
+
+### Comprehensive Error Handling
+
+```typescript
+// Utility function for robust test execution
+async function executeWithRetry<T>(
+    operation: () => Promise<T>,
+    maxRetries: number = 3,
+    delay: number = 1000
+): Promise<T> {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            return await operation();
+        } catch (error) {
+            logger.warning(`Attempt ${attempt} failed: ${error.message}`);
+            
+            if (attempt === maxRetries) {
+                logger.error('All retry attempts failed', error);
+                throw error;
+            }
+            
+            await aui.waitFor(delay).exec();
+        }
+    }
+    throw new Error('This should never be reached');
+}
+
+// Usage in tests
+it('should handle flaky interactions', async () => {
+    await executeWithRetry(async () => {
+        await aui.click().text('Sometimes Flaky Button').exec();
+    }, 3, 1000);
+});
+```
+
+### Error Recovery Patterns
+
+```typescript
+// Cleanup after failed tests
+afterEach(async () => {
+    if (expect.getState().assertionCalls === 0) {
+        // Test failed without assertions
+        logger.warning('Test completed without assertions');
+    }
+    
+    // Always cleanup browser state
+    try {
+        await aui.pressKey('escape').exec(); // Close any popups
+        await aui.waitFor(500).exec();
+    } catch (error) {
+        logger.info('Cleanup completed with warnings');
+    }
+});
+```
+
+## Performance Optimization
+
+### Speed Optimization Techniques
+
+```typescript
+// Use keyboard shortcuts for faster execution
+await aui.pressKey('enter').exec(); // Faster than clicking
+await aui.pressKey('tab').exec(); // Navigate between fields
+await aui.pressTwoKeys('ctrl', 'a').exec(); // Select all text
+
+// Batch expectations for better performance
+await Promise.all([
+    aui.expect().text('Username').exists(),
+    aui.expect().text('Password').exists(),
+    aui.expect().button('Login').exists()
+]);
+
+// Minimize wait times
+await aui.waitFor(100).exec(); // Use minimal waits
+```
+
+### Resource Management
+
+```typescript
+// Monitor memory usage
+afterEach(async () => {
+    const memUsage = process.memoryUsage();
+    if (memUsage.heapUsed > 100 * 1024 * 1024) { // 100MB
+        logger.warning('High memory usage detected', {
+            heapUsed: `${Math.round(memUsage.heapUsed / 1024 / 1024)}MB`,
+            heapTotal: `${Math.round(memUsage.heapTotal / 1024 / 1024)}MB`
+        });
+    }
+});
+```
+
+## CI/CD Integration
+
+### Package.json Scripts
+
+```json
+{
+  "scripts": {
+    "test": "jest --config jest.config.ts",
+    "test:watch": "jest --watch --config jest.config.ts",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config jest.config.ts",
+    "test:smoke": "jest --testNamePattern='SMOKE' --config jest.config.ts",
+    "test:regression": "jest --testNamePattern='REGRESSION' --config jest.config.ts",
+    "test:single": "jest --testNamePattern",
+    "clean": "rimraf allure-results allure-report",
+    "clean:test": "npm run clean && npm test"
+  }
+}
+```
+
+### GitHub Actions Example
+
+```yaml
+# .github/workflows/test.yml
+name: AskUI Test Suite
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2, 3, 4]
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run tests (shard ${{ matrix.shard }})
+        env:
+          JEST_SHARD: ${{ matrix.shard }}/4
+        run: npm test
+        
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-${{ matrix.shard }}
+          path: allure-results/
+```
+
+<Card title="Complete Test Execution Setup" icon="github" href="https://github.com/askui/AskUI-Best-Practices">
+  See a comprehensive test execution and debugging setup in our example repository, including Jest configuration, debug setups, and various execution strategies.
+</Card>
+
+## Next Steps
+
+- Learn about [handling dynamic UI elements](/02-how-to-guides/05-build-ai-agents/09-handling-dynamic-ui)
+- Explore [test organization best practices](/03-explanation/02-best-practices/08-test-organization)
+- Set up [comprehensive reporting](/02-how-to-guides/02-integrations/11-allure-reporting)

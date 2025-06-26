@@ -1,0 +1,89 @@
+- Preparing local Mintlify instance...
+⚠ An update is available. Run `index.js update` to update to the latest version.
+✔ Local Mintlify instance is ready. Launching your site...
+Your local preview is available at http://localhost:3000
+Press Ctrl+C any time to stop the local preview.
+
+warn - No utility classes were detected in your source files. If this is unexpected, double-check the `content` option in your Tailwind CSS configuration.
+warn - https://tailwindcss.com/docs/content-configuration
+Config edited
+Config edited
+Config edited
+Page edited:  03-explanation/02-best-practices/07-project-structure.mdx
+Page edited:  03-explanation/02-best-practices/07-project-structure.mdx
+Page edited:  03-explanation/02-best-practices/07-project-structure.mdx
+Page edited:  03-explanation/02-best-practices/07-project-structure.mdx
+Page edited:  03-explanation/02-best-practices/07-project-structure.mdx
+Page edited:  03-explanation/02-best-practices/08-test-organization.mdx
+Page edited:  03-explanation/02-best-practices/08-test-organization.mdx
+Page edited:  03-explanation/02-best-practices/08-test-organization.mdx
+Page deleted: 03-explanation/02-best-practices/07-project-structure.mdx
+⚠️   "03-explanation/02-best-practices/07-project-structure" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/02-project-organization/01-project-structure.mdx
+Page deleted: 03-explanation/02-best-practices/08-test-organization.mdx
+⚠️   "03-explanation/02-best-practices/07-project-structure" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/08-test-organization" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/02-project-organization/02-test-organization.mdx
+Config edited
+Page edited:  02-how-to-guides/02-integrations/10-ide-setup.mdx
+Page edited:  02-how-to-guides/02-integrations/11-allure-reporting.mdx
+Page edited:  02-how-to-guides/05-build-ai-agents/02-select-elements.mdx
+Page edited:  02-how-to-guides/05-build-ai-agents/02-select-elements.mdx
+Page edited:  02-how-to-guides/05-build-ai-agents/08-running-and-debugging-tests.mdx
+Page edited:  02-how-to-guides/05-build-ai-agents/07-managing-credentials.mdx
+Page edited:  02-how-to-guides/05-build-ai-agents/09-handling-dynamic-ui.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/02-test-organization.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/01-project-structure.mdx
+⚠️   "03-explanation/02-best-practices/02-project-organization/project-structure" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/02-project-organization/test-organization" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/agentic-mode" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/01-element-selection/element-selection" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/interactions" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/reporting-logging" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+Config edited
+Page deleted: 03-explanation/02-best-practices/02-project-organization/01-project-structure.mdx
+⚠️   "03-explanation/02-best-practices/02-project-organization/test-organization" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/agentic-mode" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/01-element-selection/element-selection" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/interactions" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/reporting-logging" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/02-project-organization/project-structure.mdx
+Page deleted: 03-explanation/02-best-practices/02-project-organization/02-test-organization.mdx
+⚠️   "03-explanation/02-best-practices/agentic-mode" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/01-element-selection/element-selection" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/interactions" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/reporting-logging" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/02-project-organization/test-organization.mdx
+Page deleted: 03-explanation/02-best-practices/04-agentic-mode.mdx
+⚠️   "03-explanation/02-best-practices/01-element-selection/element-selection" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/interactions" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/reporting-logging" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/agentic-mode.mdx
+Page deleted: 03-explanation/02-best-practices/01-element-selection/01-element-selection.mdx
+⚠️   "03-explanation/02-best-practices/interactions" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/reporting-logging" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/01-element-selection/element-selection.mdx
+Page deleted: 03-explanation/02-best-practices/03-interactions.mdx
+⚠️   "03-explanation/02-best-practices/reporting-logging" is defined in the docs.json navigation but the file does not exist.
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/interactions.mdx
+Page deleted: 03-explanation/02-best-practices/05-reporting-logging.mdx
+⚠️   "03-explanation/02-best-practices/improve-model-performance" is defined in the docs.json navigation but the file does not exist.
+New page detected:  03-explanation/02-best-practices/reporting-logging.mdx
+Page deleted: 03-explanation/02-best-practices/06-improve-model-performance.mdx
+New page detected:  03-explanation/02-best-practices/improve-model-performance.mdx
+⚠️   "03-explanation/02-best-practices/element-selection" is defined in the docs.json navigation but the file does not exist.
+Config edited
+Page deleted: 03-explanation/02-best-practices/01-element-selection/element-selection.mdx
+New page detected:  03-explanation/02-best-practices/element-selection.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/project-structure.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/project-structure.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/project-structure.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/project-structure.mdx
+Page edited:  03-explanation/02-best-practices/02-project-organization/project-structure.mdx
+Invalid category

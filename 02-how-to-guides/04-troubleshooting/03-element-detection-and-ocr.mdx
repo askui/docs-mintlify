@@ -93,6 +93,100 @@ agent.click(
 
 ## OCR and Text Recognition Issues
 
+These specific OCR issues are commonly encountered in AskUI automations. Each solution is field-tested and proven effective.
+
+### Text Detection Failures Due to Linebreaks
+
+**Problem:** Text that appears as a single line on screen gets detected as two separate elements due to linebreaks, making exact text matching impossible.
+
+**Common Scenario:** A button with text "Web Automation" is detected as "Web" and "Automation" separately.
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Use containsText() for Partial Matching">
+    Target the beginning of the text to avoid linebreak issues:
+    
+    ```typescript
+    // Instead of exact match
+    await aui.click().text('Web Automation').exec();
+    
+    // Use partial match
+    await aui.click().text().containsText('Web Automation').exec();
+    ```
+  </Accordion>
+  
+  <Accordion title="Use AI Elements as Fallback">
+    For consistently problematic text elements:
+    
+    ```typescript
+    await aui.click().text('Web Automation')
+                     .or()
+                     .aiElement('web-automation-button')
+                     .exec();
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Text in Overlay Merges with Text Below
+
+**Problem:** Some overlays like dialogues don't have enough padding, so text under the overlay appears to merge with overlay text, making reliable targeting impossible.
+
+**Example:** A dialog box with "So it starts" appears over text "1lKBASDF Aeb567878", and OCR detects them as one merged string.
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Maximize Overlay if Possible">
+    Remove underlying text by maximizing the dialog:
+    
+    ```typescript
+    // Use keyboard shortcut to maximize dialog
+    await aui.pressTwoKeys('alt', 'space').exec();
+    await aui.pressKey('x').exec(); // Maximize
+    ```
+  </Accordion>
+  
+  <Accordion title="Use AI Element Fallback">
+    Combine text selection with AI element as backup:
+    
+    ```typescript
+    await aui.click().text('So it starts')
+                     .or()
+                     .aiElement('beginning-text')
+                     .exec();
+    ```
+  </Accordion>
+  
+  <Accordion title="Target Beginning of Text">
+    If exact location isn't important, target the start of the text:
+    
+    ```typescript
+    // For merged text "1lKBASDF Aeb567878"
+    // Target the first part only
+    await aui.click().text().containsText('1lKBASDF').exec();
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Missing Blank Spaces Between Text
+
+**Problem:** OCR sometimes fails to detect spaces between words, causing text matching failures.
+
+**Example:** "your name" is detected as "yourname".
+
+**Solution:**
+
+Use regex patterns to handle missing whitespace:
+
+```typescript
+// Use regex to handle optional whitespace
+await aui.click().text().withTextRegex('your[\\s]{0,1}name').exec();
+
+// More flexible pattern for multiple words
+await aui.click().text().withTextRegex('submit[\\s]{0,1}order').exec();
+```
+
 ### Misspellings and Character Confusion
 
 **Problem:** The OCR model sometimes misreads characters, especially in certain fonts or noisy images. This can result in words being misclassified or misspelled, which then causes the automation to fail when it searches for exact matches.

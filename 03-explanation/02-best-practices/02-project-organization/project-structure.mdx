@@ -1,0 +1,197 @@
+---
+title: 'Project Structure and Design Patterns'
+description: 'Learn how to organize your AskUI automation projects using proven design patterns like Page Object Model'
+---
+
+Organizing your AskUI automation project with the right structure and design patterns is crucial for maintainability, scalability, and team collaboration. This guide explains the key architectural decisions and patterns that will help you build robust automation suites.
+
+## Page Object Model (POM) Design Pattern
+
+The Page Object Model is a popular design pattern in UI automation that enhances maintainability and reduces code duplication. It's particularly effective for AskUI projects because it centralizes element interactions and workflows.
+
+### Core Principles
+
+**Separate Page-Specific Code**: Each page or screen of your application gets its own class (Page Object). This keeps code modular and well-organized.
+
+**Centralize Element Interactions**: All interactions with UI elements (buttons, forms, text) for a specific page are contained within that page's class.
+
+**Reusable Methods**: Common actions are encapsulated in methods that can be reused across different test scenarios.
+
+**Data Separation**: Test data is kept separate from test logic, making tests more maintainable and allowing for data-driven testing.
+
+### Benefits for AskUI Projects
+
+- **Reduced Maintenance**: When UI changes, you only need to update the Page Object, not every test
+- **Better AI Element Management**: Custom AI elements can be defined and managed per page
+- **Improved Readability**: Tests become more readable and express business workflows
+- **Team Collaboration**: Multiple team members can work on different pages simultaneously
+
+## Recommended Project Structure
+
+A well-organized AskUI project should separate concerns clearly and follow consistent naming conventions. Here's a proven directory structure that scales well for production automation projects:
+
+```
+your-askui-project/
+├── .askui/                              # AskUI Configuration
+│   └── Settings/                        # Framework settings
+├── .vscode/                             # IDE Configuration
+│   ├── extensions.json                  # Recommended extensions
+│   └── settings.json                    # IDE settings
+├── src/                                 # Main source directory
+│   ├── data_input/                      # Test data management
+│   │   └── test-data.ts                 # Centralized test data
+│   ├── helpers/                         # Utility functions
+│   │   └── askui-helper.ts              # AskUI-specific helpers
+│   ├── logging/                         # Logging configuration
+│   │   └── logger.ts                    # Custom logger implementation
+│   ├── page_workflows/                  # Page Object Model classes
+│   │   ├── login-page.ts                # Login interactions
+│   │   ├── inventory-page.ts            # Product listing interactions
+│   │   └── checkout-page.ts             # Checkout flow interactions
+│   ├── tests/                           # Test implementations
+│   │   ├── purchase-standard-user.test.ts # Happy path tests
+│   │   └── purchase-error-scenarios.test.ts # Error handling tests
+│   └── jest.config.ts                   # Test framework configuration
+├── reports/                             # Generated test reports
+├── .env                                 # Environment variables
+├── package.json                         # Project configuration
+└── tsconfig.json                        # TypeScript configuration
+```
+
+### Key Structure Principles
+
+**Separation of Concerns**: Each directory has a specific purpose to maintain clear boundaries between different aspects of your automation project.
+
+**Scalability**: The structure supports growth from simple scripts to complex test suites without major reorganization.
+
+**Team Collaboration**: Multiple developers can work on different areas (page objects, test data, utilities) without conflicts.
+
+## Naming Conventions
+
+Consistent naming conventions are crucial for maintainability and team collaboration:
+
+- **hot-dog-case** for test files: `purchase-error-user.test.ts`, `user-registration-flow.test.ts`
+- **snake_case** for directories: `data_input/`, `page_workflows/`, `test_reports/`
+- **camelCase** for variables and methods: `getUserCredentials()`, `testData`
+- **PascalCase** for classes and interfaces: `LoginPage`, `TestConfiguration`
+
+This mixed approach provides clear visual separation between different types of files and makes the codebase more navigable.
+
+## File Organization Patterns
+
+### Page Workflows Structure
+
+Each page workflow class should encapsulate all interactions for a specific page or screen. This creates a clear API for your tests and centralizes page-specific logic:
+
+```typescript
+// page_workflows/login-page.ts
+export class LoginPage {
+    // Navigation methods
+    async navigateToLogin(): Promise<void> {
+        await aui.execOnShell("start chrome https://app.example.com/login").exec();
+        await aui.waitFor(2000).exec();
+    }
+    
+    // Pre-condition checks
+    async isPageLoaded(): Promise<boolean> {
+        await aui.expect().text('Login').exists();
+        return true;
+    }
+    
+    // Primary interactions
+    async login(username: string, password: string): Promise<void> {
+        await aui.click().text('Username').exec();
+        await aui.type(username).exec();
+        
+        await aui.click().text('Password').exec();
+        await aui.type(password).exec();
+        
+        await aui.click().text('Login').exec();
+    }
+    
+    // Verification methods
+    async isLoginSuccessful(): Promise<boolean> {
+        // Check for successful login indicators
+        return true;
+    }
+}
+```
+
+### Test Data Management
+
+Centralize all test data in a dedicated directory to maintain consistency and enable easy updates across your entire test suite:
+
+```typescript
+// data_input/test-data.ts
+/**
+ * Centralized test data configuration
+ * Contains all test data including user credentials, application URLs, and test scenarios
+ */
+export const testData = {
+    // User accounts for different test scenarios
+    users: {
+        standard: { username: 'standard_user', password: 'secret_sauce' },
+        locked: { username: 'locked_user', password: 'secret_sauce' }
+    },
+    
+    // Application configuration
+    app: {
+        baseUrl: 'https://your-app.com/',
+        timeout: 30000
+    },
+    
+    // Form data for checkout flows
+    checkout: {
+        firstName: 'John',
+        lastName: 'Doe',
+        postalCode: '10000'
+    }
+};
+
+export default testData;
+```
+
+### Helper Functions
+
+Create reusable helper functions for common operations:
+
+```typescript
+// helpers/askui-helper.ts
+export class AskUIHelper {
+    static async waitForPageLoad(): Promise<void> {
+        // Common page load waiting logic
+    }
+    
+    static async handlePopups(): Promise<void> {
+        // Generic popup handling
+    }
+}
+```
+
+## Configuration Management
+
+### Environment-Specific Settings
+
+Use environment variables for configuration that changes between environments:
+
+- Development vs. Production URLs
+- Different user credentials
+- Feature flags
+- Timeout values
+
+### AskUI-Specific Configuration
+
+Organize AskUI settings in the `.askui/Settings/` directory:
+- Model configurations
+- Credential management
+- Custom element definitions
+
+<Card title="See It in Practice" icon="github" href="https://github.com/askui/AskUI-Best-Practices">
+  View a complete implementation of these principles in our SauceDemo example repository.
+</Card>
+
+## Next Steps
+
+- Learn how to [set up your IDE](/02-how-to-guides/02-integrations/10-ide-setup) for optimal AskUI development
+- Understand [credential management](/02-how-to-guides/05-build-ai-agents/07-managing-credentials) patterns
+- Explore [test organization strategies](/03-explanation/02-best-practices/08-test-organization)

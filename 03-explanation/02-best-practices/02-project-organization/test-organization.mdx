@@ -1,0 +1,390 @@
+---
+title: 'Test Organization and Management'
+description: 'Best practices for organizing, structuring, and managing your AskUI test suites for maximum maintainability and reliability'
+---
+
+Proper test organization is essential for maintaining large-scale AskUI automation projects. This guide covers best practices for structuring test suites, managing test data, handling errors, and ensuring reliable test execution.
+
+## Test Suite Organization
+
+### Test Categories
+
+Organize your tests into logical categories based on scope and purpose:
+
+**Smoke Tests**: Quick validation that core functionality works
+- Login/logout flows
+- Critical user journeys
+- Basic navigation
+
+**Integration Tests**: Verify component interactions
+- Multi-page workflows
+- Data flow between pages
+- API and UI integration
+
+**End-to-End Tests**: Complete business scenarios
+- Full user journeys
+- Complex multi-step processes
+- Cross-browser scenarios
+
+### Directory Structure
+
+Based on the actual AskUI-Best-Practices repository structure:
+
+```
+askui_example/
+├── folder_example/                      # Additional test examples
+│   ├── purchase-error-user.test.ts      # Error user flow examples
+│   └── purchase-performance-glitch-user.test.ts # Performance test examples
+├── my-first-askui-test-suite.test.ts    # Initial test suite example
+├── purchase-standard-problem-user.test.ts # Standard user purchase flow
+├── purchase-test-locked-user.test.ts    # Locked user flow tests
+├── data_input/                          # Test data management
+│   └── test-data.ts                     # Centralized test data
+├── page_workflows/                      # Page Object Model implementations
+│   ├── checkout-page.ts                 # Checkout page interactions
+│   ├── inventory-page.ts                # Product listing interactions
+│   ├── login-page.ts                    # Login page interactions
+│   └── product-page.ts                  # Product page interactions
+├── helpers/                             # Utility functions
+│   └── askui-helper.ts                  # AskUI-specific helpers
+├── logging/                             # Logging configuration
+│   └── logger.ts                        # Custom logger with Allure integration
+└── jest.config.ts                       # Jest configuration
+```
+
+### Test Organization Patterns
+
+**Main Test Directory**: All tests are organized within `askui_example/`
+
+**Test Categories**:
+- **Root level tests**: Primary workflows (`purchase-standard-problem-user.test.ts`, `purchase-test-locked-user.test.ts`)
+- **folder_example/**: Additional test scenarios and edge cases
+- **my-first-askui-test-suite.test.ts**: Starter template for new users
+
+## Test Setup and Teardown
+
+### Clean Environment Strategy
+
+Following the proven pattern from the AskUI-Best-Practices repository:
+
+```typescript
+describe('Purchase Flow Tests', () => {
+    beforeEach(async () => {
+        // Start fresh Chrome instance
+        await aui.execOnShell("start chrome").exec();
+        await aui.waitFor(1000).exec();
+        
+        // Navigate to application
+        await aui.execOnShell("start chrome https://www.saucedemo.com").exec();
+        await aui.waitFor(2000).exec();
+    });
+
+    afterEach(async () => {
+        // Close current browser instance
+        await aui.pressTwoKeys('alt', 'f4').exec();
+        await aui.waitFor(500).exec();
+    });
+
+    afterAll(async () => {
+        // Final cleanup - ensure no browsers left open
+        // Additional cleanup logic if needed
+    });
+});
+```
+
+**Real-world Implementation**: This structure ensures:
+- Clean environment for each test
+- Proper resource cleanup  
+- No cross-test contamination
+- Efficient resource management
+
+### Benefits of Clean Environment
+
+- **Isolation**: Each test runs independently
+- **Consistency**: Predictable starting conditions
+- **Reliability**: No cross-test contamination
+- **Resource Management**: Proper cleanup prevents memory leaks
+
+## Error Handling Patterns
+
+### Defensive Programming
+
+Implement robust error handling to make tests more reliable:
+
+```typescript
+// Error message verification with timeout
+async verifyErrorMessage(expectedMessage: string): Promise<void> {
+    try {
+        await aui.expect().text(expectedMessage).exists().exec();
+        logger.info(`Error message verified: ${expectedMessage}`);
+    } catch (error) {
+        logger.error(`Failed to verify error message: ${expectedMessage}`);
+        throw error;
+    }
+}
+
+// Conditional element handling
+async handleDynamicButton(): Promise<void> {
+    const addToCartButton = await aui.get().text('Add to cart').exec();
+    const removeButton = await aui.get().text('Remove').exec();
+    
+    if (addToCartButton.length > 0) {
+        await aui.click().text('Add to cart').exec();
+        logger.info('Clicked Add to cart button');
+    } else if (removeButton.length > 0) {
+        await aui.click().text('Remove').exec();
+        logger.info('Clicked Remove button');
+    } else {
+        throw new Error('Neither Add to cart nor Remove button found');
+    }
+}
+```
+
+### Retry Mechanisms
+
+Implement smart retry logic for flaky operations:
+
+```typescript
+async retryOperation<T>(
+    operation: () => Promise<T>,
+    maxRetries: number = 3,
+    delay: number = 1000
+): Promise<T> {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            return await operation();
+        } catch (error) {
+            if (attempt === maxRetries) {
+                throw error;
+            }
+            logger.warn(`Attempt ${attempt} failed, retrying in ${delay}ms`);
+            await aui.waitFor(delay).exec();
+        }
+    }
+    throw new Error('Max retries exceeded');
+}
+```
+
+## Data Management Strategies
+
+### Centralized Test Data
+
+Keep all test data in centralized, maintainable files:
+
+```typescript
+// data/test-scenarios.ts
+export const testScenarios = {
+    users: {
+        standard: {
+            username: 'standard_user',
+            password: 'secret_sauce',
+            expectedBehavior: 'successful_login'
+        },
+        locked: {
+            username: 'locked_user',
+            password: 'secret_sauce',
+            expectedBehavior: 'login_blocked',
+            expectedError: 'Epic sadface: Sorry, this user has been locked out.'
+        },
+        problemUser: {
+            username: 'problem_user',
+            password: 'secret_sauce',
+            expectedBehavior: 'ui_issues'
+        }
+    },
+    products: {
+        backpack: {
+            name: 'Sauce Labs Backpack',
+            price: '$29.99',
+            description: 'carry.allTheThings()'
+        }
+    },
+    checkout: {
+        validInfo: {
+            firstName: 'John',
+            lastName: 'Doe',
+            postalCode: '10000'
+        },
+        invalidInfo: {
+            firstName: '',
+            lastName: 'Doe',
+            postalCode: '10000'
+        }
+    }
+};
+```
+
+### Data-Driven Testing
+
+Use test data to drive multiple test scenarios:
+
+```typescript
+describe('User Login Tests', () => {
+    Object.entries(testScenarios.users).forEach(([userType, userData]) => {
+        it(`should handle ${userType} user login correctly`, async () => {
+            await loginPage.login(userData.username, userData.password);
+            
+            if (userData.expectedBehavior === 'successful_login') {
+                await expect(dashboardPage.isDisplayed()).resolves.toBe(true);
+            } else if (userData.expectedBehavior === 'login_blocked') {
+                await expect(loginPage.getErrorMessage()).resolves.toContain(userData.expectedError);
+            }
+        });
+    });
+});
+```
+
+## Test Execution Strategies
+
+### Selective Test Execution
+
+Use Jest's built-in features for flexible test execution:
+
+```typescript
+// Skip tests during development
+describe.skip('Slow Integration Tests', () => {
+    // These tests won't run
+});
+
+// Focus on specific tests
+describe.only('Critical Path Tests', () => {
+    // Only these tests will run
+});
+
+// Conditional test execution
+const runSlowTests = process.env.RUN_SLOW_TESTS === 'true';
+
+(runSlowTests ? describe : describe.skip)('Performance Tests', () => {
+    // Runs only when environment variable is set
+});
+```
+
+### Test Categorization with Tags
+
+Use describe blocks and naming conventions to categorize tests:
+
+```typescript
+// Tag tests with prefixes
+describe('[SMOKE] Core Navigation', () => {
+    it('should navigate to main sections', async () => {
+        // Test implementation
+    });
+});
+
+describe('[INTEGRATION] User Registration Flow', () => {
+    it('should complete user registration', async () => {
+        // Test implementation
+    });
+});
+
+describe('[E2E] Complete Purchase Journey', () => {
+    it('should complete end-to-end purchase', async () => {
+        // Test implementation
+    });
+});
+```
+
+## Logging and Debugging
+
+### Structured Logging
+
+Implement consistent logging throughout your tests:
+
+```typescript
+class TestLogger {
+    static stepStart(step: string): void {
+        console.log(`🚀 Starting: ${step}`);
+        allure.step(step, () => {});
+    }
+    
+    static stepSuccess(step: string): void {
+        console.log(`✅ Completed: ${step}`);
+    }
+    
+    static stepError(step: string, error: Error): void {
+        console.error(`❌ Failed: ${step} - ${error.message}`);
+        allure.attachment('Error Details', error.stack || error.message, 'text/plain');
+    }
+    
+    static info(message: string): void {
+        console.log(`ℹ️  ${message}`);
+    }
+    
+    static debug(message: string, data?: any): void {
+        if (process.env.DEBUG === 'true') {
+            console.log(`🐛 DEBUG: ${message}`, data || '');
+        }
+    }
+}
+```
+
+### Test Documentation
+
+Document test intentions and complex logic:
+
+```typescript
+describe('Shopping Cart Functionality', () => {
+    it('should handle concurrent cart modifications', async () => {
+        // This test verifies that the cart handles multiple rapid additions
+        // without losing items or displaying incorrect totals
+        // See: https://github.com/company/app/issues/1234
+        
+        TestLogger.stepStart('Adding multiple items rapidly');
+        
+        // Implementation with detailed comments for complex logic
+        await Promise.all([
+            cartPage.addItem('backpack'),
+            cartPage.addItem('bike-light'),
+            cartPage.addItem('t-shirt')
+        ]);
+        
+        TestLogger.stepSuccess('Items added successfully');
+    });
+});
+```
+
+## Performance Considerations
+
+### Test Execution Speed
+
+Optimize test execution time:
+
+```typescript
+// Use keyboard shortcuts for faster navigation
+await aui.pressKey('enter').exec();  // Faster than clicking
+await aui.pressKey('pagedown').exec();  // Faster than scrolling
+
+// Reduce unnecessary waits
+await aui.waitFor(100).exec();  // Minimal wait instead of arbitrary delays
+
+// Batch similar operations
+await Promise.all([
+    aui.expect().text('Username').exists(),
+    aui.expect().text('Password').exists(),
+    aui.expect().button('Login').exists()
+]);
+```
+
+### Resource Management
+
+Monitor and manage system resources:
+
+```typescript
+// Monitor memory usage in long-running test suites
+afterEach(async () => {
+    const memUsage = process.memoryUsage();
+    if (memUsage.heapUsed > 100 * 1024 * 1024) { // 100MB threshold
+        TestLogger.debug('High memory usage detected', memUsage);
+    }
+});
+```
+
+<Card title="See It in Practice" icon="github" href="https://github.com/askui/AskUI-Best-Practices">
+  View complete test organization examples in our SauceDemo reference implementation.
+</Card>
+
+## Next Steps
+
+- Learn about [handling dynamic UI elements](/02-how-to-guides/05-build-ai-agents/09-handling-dynamic-ui)
+- Set up [comprehensive reporting](/02-how-to-guides/02-integrations/11-allure-reporting)
+- Explore [running and debugging tests](/02-how-to-guides/05-build-ai-agents/08-running-and-debugging-tests)

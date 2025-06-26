@@ -87,6 +87,52 @@ agent.tools.os.set_display(1)  # Use primary display
 agent.click(loc.Text("Submit"))
 ```
 
+## Performance Tips
+
+### Use Keyboard Shortcuts
+
+Keyboard shortcuts are faster and more reliable than clicking:
+
+```typescript
+// Faster than clicking
+await aui.pressKey('enter').exec();
+await aui.pressKey('tab').exec();
+await aui.pressTwoKeys('ctrl', 'a').exec(); // Select all
+
+// Navigation shortcuts
+await aui.pressKey('pagedown').exec();
+await aui.pressKey('home').exec();
+```
+
+### Minimize Wait Times
+
+Use optimal wait times for better performance:
+
+```typescript
+// Use minimal waits
+await aui.waitFor(100).exec(); // Instead of arbitrary long delays
+
+// Wait for specific conditions
+await aui.waitUntil(aui.expect().text('Swag Labs').exists());
+```
+
+### Batch Element Checks
+
+Check multiple elements in parallel when possible:
+
+```typescript
+// Check multiple elements at once
+await Promise.all([
+    aui.expect().text('Username').exists(),
+    aui.expect().text('Password').exists(),
+    aui.expect().button('Login').exists()
+]);
+```
+
+<Card title="Complete Element Selection Examples" icon="github" href="https://github.com/askui/AskUI-Best-Practices">
+  See real-world element selection patterns and techniques in our production example repository, including text handling, icon selection, and form interactions.
+</Card>
+
 ## Troubleshooting
 
 <Card title="Element Selection Issues?" icon="question-circle" href="/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr">
@@ -95,6 +141,6 @@ agent.click(loc.Text("Submit"))
 
 ## Next Steps
 
-- Learn about [extracting data](/02-how-to-guides/05-build-ai-agents/02-extract-text) from selected elements
-- Explore [advanced interaction patterns](/03-explanation/02-core-concepts/03-interactions)
-- Read about [best practices](/03-explanation/02-core-concepts/06-best-practice-for-reliable-automation)
+- Learn about [handling dynamic UI elements](/02-how-to-guides/05-build-ai-agents/09-handling-dynamic-ui)
+- Explore [working with forms](/02-how-to-guides/05-build-ai-agents/05-work-with-forms)
+- Read about [interaction best practices](/03-explanation/02-best-practices/03-interactions)

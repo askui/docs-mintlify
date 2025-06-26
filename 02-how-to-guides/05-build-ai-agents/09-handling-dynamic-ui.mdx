@@ -1,0 +1,670 @@
+---
+title: 'Handling Dynamic UI Elements'
+description: 'Master techniques for dealing with changing UI elements, popups, and conditional content in your AskUI automations'
+---
+
+Real-world applications often have dynamic UI elements that change based on user state, time, or random conditions. This guide covers proven strategies for handling these challenging scenarios in AskUI automations.
+
+## Understanding Dynamic UI Challenges
+
+### Common Dynamic UI Scenarios
+
+**Random Popups**: Modal dialogs that appear unpredictably
+- Cookie consent banners
+- Promotional popups
+- Survey requests
+- Update notifications
+
+**State-Dependent Elements**: UI that changes based on application state
+- Different button labels ("Add to Cart" vs "Remove")
+- Conditional form fields
+- User role-based content
+
+**Time-Based Changes**: Elements that appear or disappear over time
+- Loading indicators
+- Temporary messages
+- Session timeouts
+
+**Layout Variations**: UI that renders differently across sessions
+- A/B testing variations
+- Responsive design changes
+- Browser-specific rendering
+
+## Conditional Element Detection
+
+### Check if Element Exists
+
+Use AskUI's `get()` method to detect element presence:
+
+```typescript
+// Basic existence check
+async function isElementPresent(selector: string): Promise<boolean> {
+    try {
+        const elements = await aui.get().text(selector).exec();
+        return elements.length > 0;
+    } catch (error) {
+        return false;
+    }
+}
+
+// Usage in tests
+const hasAddToCartButton = await isElementPresent('Add to cart');
+if (hasAddToCartButton) {
+    await aui.click().text('Add to cart').exec();
+} else {
+    // Handle alternative scenario
+    await aui.click().text('Remove').exec();
+}
+```
+
+### Robust Element Detection
+
+Create a utility class for advanced element detection:
+
+```typescript
+// src/utils/element-detector.ts
+export class ElementDetector {
+    static async waitForAnyElement(
+        selectors: string[],
+        timeout: number = 10000
+    ): Promise<string | null> {
+        const startTime = Date.now();
+        
+        while (Date.now() - startTime < timeout) {
+            for (const selector of selectors) {
+                try {
+                    const elements = await aui.get().text(selector).exec();
+                    if (elements.length > 0) {
+                        return selector;
+                    }
+                } catch {
+                    // Continue checking other selectors
+                }
+            }
+            await aui.waitFor(500).exec();
+        }
+        
+        return null; // No element found within timeout
+    }
+
+    static async waitForElementDisappear(
+        selector: string,
+        timeout: number = 10000
+    ): Promise<boolean> {
+        const startTime = Date.now();
+        
+        while (Date.now() - startTime < timeout) {
+            try {
+                const elements = await aui.get().text(selector).exec();
+                if (elements.length === 0) {
+                    return true; // Element has disappeared
+                }
+            } catch {
+                return true; // Element not found, considered disappeared
+            }
+            await aui.waitFor(500).exec();
+        }
+        
+        return false; // Element still present after timeout
+    }
+
+    static async getElementsWithFallback(
+        primarySelector: string,
+        fallbackSelectors: string[]
+    ): Promise<{ selector: string; elements: any[] } | null> {
+        // Try primary selector first
+        try {
+            const elements = await aui.get().text(primarySelector).exec();
+            if (elements.length > 0) {
+                return { selector: primarySelector, elements };
+            }
+        } catch {
+            // Continue to fallbacks
+        }
+
+        // Try fallback selectors
+        for (const selector of fallbackSelectors) {
+            try {
+                const elements = await aui.get().text(selector).exec();
+                if (elements.length > 0) {
+                    return { selector, elements };
+                }
+            } catch {
+                // Continue to next fallback
+            }
+        }
+
+        return null; // No elements found
+    }
+}
+```
+
+## Popup Management
+
+### Generic Popup Handler
+
+Create a comprehensive popup management system:
+
+```typescript
+// src/utils/popup-manager.ts
+export class PopupManager {
+    private static readonly COMMON_POPUP_DISMISSALS = [
+        'Close',
+        'Dismiss',
+        'Cancel',
+        'No Thanks',
+        'Skip',
+        'Later',
+        'Accept',
+        'OK',
+        '×',
+        'Got it'
+    ];
+
+    static async dismissAnyPopup(): Promise<boolean> {
+        logger.info('Attempting to dismiss any visible popups');
+        
+        // Try escape key first (fastest method)
+        try {
+            await aui.pressKey('escape').exec();
+            await aui.waitFor(1000).exec();
+            
+            // Check if popup was dismissed
+            const stillHasPopup = await this.detectPopup();
+            if (!stillHasPopup) {
+                logger.success('Popup dismissed with Escape key');
+                return true;
+            }
+        } catch {
+            // Escape didn't work, try other methods
+        }
+
+        // Try clicking common dismissal buttons
+        for (const dismissText of this.COMMON_POPUP_DISMISSALS) {
+            try {
+                const elements = await aui.get().text(dismissText).exec();
+                if (elements.length > 0) {
+                    await aui.click().text(dismissText).exec();
+                    await aui.waitFor(1000).exec();
+                    
+                    logger.success(`Popup dismissed by clicking "${dismissText}"`);
+                    return true;
+                }
+            } catch {
+                // Continue trying other dismissal methods
+            }
+        }
+
+        logger.warning('Could not dismiss popup automatically');
+        return false;
+    }
+
+    static async detectPopup(): Promise<boolean> {
+        const popupIndicators = [
+            'modal',
+            'dialog',
+            'popup',
+            'overlay',
+            'backdrop',
+            'Close',
+            'Dismiss'
+        ];
+
+        for (const indicator of popupIndicators) {
+            try {
+                const elements = await aui.get().text(indicator).exec();
+                if (elements.length > 0) {
+                    return true;
+                }
+            } catch {
+                // Continue checking
+            }
+        }
+
+        return false;
+    }
+
+    static async handleSpecificPopup(
+        popupIdentifier: string,
+        dismissalAction: () => Promise<void>
+    ): Promise<boolean> {
+        try {
+            const elements = await aui.get().text(popupIdentifier).exec();
+            if (elements.length > 0) {
+                logger.info(`Handling specific popup: ${popupIdentifier}`);
+                await dismissalAction();
+                return true;
+            }
+        } catch {
+            // Popup not present
+        }
+        
+        return false;
+    }
+}
+```
+
+### Popup Handling in Page Objects
+
+Integrate popup handling into your page objects:
+
+```typescript
+// src/page-objects/base-page.ts
+export abstract class BasePage {
+    protected async navigateWithPopupHandling(url: string): Promise<void> {
+        await aui.execOnShell(`start chrome ${url}`).exec();
+        await aui.waitFor(2000).exec();
+        
+        // Handle common popups after navigation
+        await PopupManager.dismissAnyPopup();
+        
+        // Wait for page to stabilize
+        await aui.waitFor(1000).exec();
+    }
+
+    protected async clickWithPopupHandling(selector: string): Promise<void> {
+        await aui.click().text(selector).exec();
+        await aui.waitFor(500).exec();
+        
+        // Check for popups after clicking
+        await PopupManager.dismissAnyPopup();
+    }
+
+    protected async handleCookieConsent(): Promise<void> {
+        const cookieActions = [
+            () => aui.click().text('Accept All').exec(),
+            () => aui.click().text('Accept Cookies').exec(),
+            () => aui.click().text('I Agree').exec(),
+            () => aui.click().text('Continue').exec()
+        ];
+
+        for (const action of cookieActions) {
+            try {
+                await action();
+                logger.success('Cookie consent handled');
+                return;
+            } catch {
+                // Try next action
+            }
+        }
+    }
+}
+```
+
+## State-Dependent UI Handling
+
+### Dynamic Button States
+
+Handle buttons that change based on application state:
+
+```typescript
+// src/utils/dynamic-button-handler.ts
+export class DynamicButtonHandler {
+    static async handleAddRemoveButton(itemName: string): Promise<'added' | 'removed' | 'error'> {
+        try {
+            // Check current state
+            const addButton = await aui.get().text('Add to cart').exec();
+            const removeButton = await aui.get().text('Remove').exec();
+            
+            if (addButton.length > 0) {
+                // Item not in cart, add it
+                await aui.click().text('Add to cart').exec();
+                logger.success(`Added ${itemName} to cart`);
+                return 'added';
+            } else if (removeButton.length > 0) {
+                // Item in cart, remove it
+                await aui.click().text('Remove').exec();
+                logger.success(`Removed ${itemName} from cart`);
+                return 'removed';
+            } else {
+                logger.error('Neither Add to cart nor Remove button found');
+                return 'error';
+            }
+        } catch (error) {
+            logger.error('Error handling add/remove button', error);
+            return 'error';
+        }
+    }
+
+    static async ensureItemInCart(itemName: string): Promise<boolean> {
+        const result = await this.handleAddRemoveButton(itemName);
+        
+        if (result === 'added') {
+            return true; // Successfully added
+        } else if (result === 'removed') {
+            // Item was removed, add it back
+            const secondResult = await this.handleAddRemoveButton(itemName);
+            return secondResult === 'added';
+        }
+        
+        return false; // Error occurred
+    }
+}
+```
+
+### Conditional Form Fields
+
+Handle forms with conditional fields:
+
+```typescript
+// src/utils/conditional-form-handler.ts
+export class ConditionalFormHandler {
+    static async fillFormWithConditionalFields(formData: any): Promise<void> {
+        // Always present fields
+        await this.fillRequiredFields(formData);
+        
+        // Conditional fields
+        await this.fillOptionalFields(formData);
+    }
+
+    private static async fillRequiredFields(formData: any): Promise<void> {
+        const requiredFields = [
+            { label: 'First Name', value: formData.firstName },
+            { label: 'Last Name', value: formData.lastName },
+            { label: 'Email', value: formData.email }
+        ];
+
+        for (const field of requiredFields) {
+            try {
+                await aui.click().text(field.label).exec();
+                await aui.type(field.value).exec();
+                logger.info(`Filled required field: ${field.label}`);
+            } catch (error) {
+                logger.error(`Failed to fill required field: ${field.label}`, error);
+                throw error;
+            }
+        }
+    }
+
+    private static async fillOptionalFields(formData: any): Promise<void> {
+        const optionalFields = [
+            { label: 'Phone Number', value: formData.phone },
+            { label: 'Company', value: formData.company },
+            { label: 'Address', value: formData.address }
+        ];
+
+        for (const field of optionalFields) {
+            if (!field.value) continue; // Skip if no value provided
+            
+            try {
+                const elements = await aui.get().text(field.label).exec();
+                if (elements.length > 0) {
+                    await aui.click().text(field.label).exec();
+                    await aui.type(field.value).exec();
+                    logger.info(`Filled optional field: ${field.label}`);
+                }
+            } catch {
+                logger.info(`Optional field not present or accessible: ${field.label}`);
+            }
+        }
+    }
+}
+```
+
+## Advanced Dynamic UI Patterns
+
+### Waiting for Dynamic Content
+
+Wait for content that loads asynchronously:
+
+```typescript
+// src/utils/dynamic-content-waiter.ts
+export class DynamicContentWaiter {
+    static async waitForContentLoad(
+        contentIndicator: string,
+        maxWaitTime: number = 30000
+    ): Promise<boolean> {
+        const startTime = Date.now();
+        
+        logger.info(`Waiting for content: ${contentIndicator}`);
+        
+        while (Date.now() - startTime < maxWaitTime) {
+            try {
+                // Check for content
+                const content = await aui.get().text(contentIndicator).exec();
+                if (content.length > 0) {
+                    logger.success(`Content loaded: ${contentIndicator}`);
+                    return true;
+                }
+                
+                // Check for loading indicators
+                const loadingIndicators = ['Loading...', 'Please wait', 'Fetching data'];
+                const hasLoadingIndicator = await ElementDetector.waitForAnyElement(loadingIndicators, 1000);
+                
+                if (hasLoadingIndicator) {
+                    logger.info('Loading indicator detected, continuing to wait');
+                }
+                
+                await aui.waitFor(1000).exec();
+            } catch {
+                // Continue waiting
+                await aui.waitFor(1000).exec();
+            }
+        }
+        
+        logger.warning(`Content did not load within ${maxWaitTime}ms: ${contentIndicator}`);
+        return false;
+    }
+
+    static async waitForAnyContent(
+        contentOptions: string[],
+        maxWaitTime: number = 30000
+    ): Promise<string | null> {
+        const startTime = Date.now();
+        
+        while (Date.now() - startTime < maxWaitTime) {
+            const foundContent = await ElementDetector.waitForAnyElement(contentOptions, 1000);
+            if (foundContent) {
+                return foundContent;
+            }
+            
+            await aui.waitFor(1000).exec();
+        }
+        
+        return null;
+    }
+}
+```
+
+### Handling A/B Testing Variations
+
+Manage different UI variations from A/B testing:
+
+```typescript
+// src/utils/ab-test-handler.ts
+export class ABTestHandler {
+    static async handleVariation(
+        variations: { [key: string]: () => Promise<void> }
+    ): Promise<string | null> {
+        for (const [variationName, handler] of Object.entries(variations)) {
+            try {
+                // Try to execute the variation-specific logic
+                await handler();
+                logger.success(`Successfully handled variation: ${variationName}`);
+                return variationName;
+            } catch (error) {
+                logger.info(`Variation ${variationName} not applicable`, error);
+                // Continue to next variation
+            }
+        }
+        
+        logger.warning('No variation handler succeeded');
+        return null;
+    }
+
+    static async detectAndHandleLoginVariations(): Promise<boolean> {
+        const variations = {
+            'standard_login': async () => {
+                await aui.click().text('Username').exec();
+                await aui.type('standard_user').exec();
+                await aui.click().text('Password').exec();
+                await aui.type('secret_sauce').exec();
+                await aui.click().text('Login').exec();
+            },
+            
+            'social_login': async () => {
+                await aui.click().text('Continue with Google').exec();
+                // Handle Google OAuth flow
+            },
+            
+            'email_login': async () => {
+                await aui.click().text('Email').exec();
+                await aui.type('user@example.com').exec();
+                await aui.click().text('Send Magic Link').exec();
+            }
+        };
+
+        const handledVariation = await this.handleVariation(variations);
+        return handledVariation !== null;
+    }
+}
+```
+
+## Integration with Page Objects
+
+### Dynamic Page Object Methods
+
+Create page object methods that handle dynamic UI:
+
+```typescript
+// src/page-objects/inventory-page.ts
+export class InventoryPage extends BasePage {
+    async addItemToCartWithDynamicHandling(itemName: string): Promise<boolean> {
+        try {
+            // Handle any popups first
+            await PopupManager.dismissAnyPopup();
+            
+            // Find the item
+            const itemFound = await DynamicContentWaiter.waitForContentLoad(itemName, 10000);
+            if (!itemFound) {
+                logger.error(`Item not found: ${itemName}`);
+                return false;
+            }
+
+            // Handle dynamic add/remove button
+            const result = await DynamicButtonHandler.ensureItemInCart(itemName);
+            
+            if (result) {
+                // Verify item was added
+                const cartCount = await this.getCartItemCount();
+                logger.success(`Item added to cart. Cart count: ${cartCount}`);
+                return true;
+            }
+            
+            return false;
+        } catch (error) {
+            logger.error(`Failed to add item to cart: ${itemName}`, error);
+            return false;
+        }
+    }
+
+    private async getCartItemCount(): Promise<number> {
+        try {
+            const cartBadge = await aui.get().text().containsText('cart').exec();
+            // Parse cart count from badge text
+            return cartBadge.length;
+        } catch {
+            return 0;
+        }
+    }
+
+    async handleFilterVariations(): Promise<void> {
+        const filterVariations = {
+            'dropdown_filter': async () => {
+                await aui.click().text('Filter').exec();
+                await aui.click().text('Price: Low to High').exec();
+            },
+            
+            'sidebar_filter': async () => {
+                await aui.click().text('Sort').exec();
+                await aui.click().text('Price ascending').exec();
+            },
+            
+            'button_filter': async () => {
+                await aui.click().text('Sort by Price').exec();
+            }
+        };
+
+        await ABTestHandler.handleVariation(filterVariations);
+    }
+}
+```
+
+## Best Practices
+
+### Error Recovery
+
+```typescript
+// Robust error recovery for dynamic UI
+export class ErrorRecoveryHandler {
+    static async recoverFromUnexpectedState(): Promise<void> {
+        logger.info('Attempting error recovery');
+        
+        // Step 1: Dismiss any popups
+        await PopupManager.dismissAnyPopup();
+        
+        // Step 2: Try to return to known state
+        try {
+            await aui.pressKey('escape').exec();
+            await aui.waitFor(1000).exec();
+        } catch {
+            // Escape didn't work
+        }
+        
+        // Step 3: Try to navigate to home page
+        try {
+            await aui.pressKey('home').exec();
+            await aui.waitFor(2000).exec();
+        } catch {
+            logger.warning('Could not recover to home page');
+        }
+        
+        // Step 4: Last resort - refresh page
+        try {
+            await aui.pressKey('f5').exec();
+            await aui.waitFor(5000).exec();
+            logger.info('Page refreshed for error recovery');
+        } catch {
+            logger.error('Error recovery failed');
+        }
+    }
+}
+```
+
+### Performance Considerations
+
+```typescript
+// Optimize dynamic UI handling for performance
+export class PerformanceOptimizer {
+    private static cache = new Map<string, boolean>();
+    
+    static async cachedElementCheck(selector: string, ttl: number = 5000): Promise<boolean> {
+        const cacheKey = `${selector}_${Date.now()}`;
+        
+        if (this.cache.has(selector)) {
+            const cached = this.cache.get(selector);
+            return cached!;
+        }
+        
+        const exists = await ElementDetector.isElementPresent(selector);
+        this.cache.set(selector, exists);
+        
+        // Clear cache after TTL
+        setTimeout(() => {
+            this.cache.delete(selector);
+        }, ttl);
+        
+        return exists;
+    }
+}
+```
+
+<Card title="Dynamic UI Handling Examples" icon="github" href="https://github.com/askui/AskUI-Best-Practices">
+  See comprehensive dynamic UI handling implementations in our example repository, including popup management, conditional content handling, and error recovery patterns.
+</Card>
+
+## Next Steps
+
+- Learn about [element selection best practices](/02-how-to-guides/05-build-ai-agents/02-select-elements)
+- Explore [troubleshooting techniques](/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr)
+- Set up [comprehensive test organization](/03-explanation/02-best-practices/08-test-organization)
