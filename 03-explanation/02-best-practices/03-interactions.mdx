@@ -128,15 +128,13 @@ product = agent.get(
 3. **Smart waits**: Wait for specific conditions
 
 ```python
-import time
-
 # Wait for element to appear
 for _ in range(10):
     try:
         agent.click("Dynamic Button")
         break
     except:
-        time.sleep(1)
+        agent.wait(1)
 ```
 
 ### Performance Optimization

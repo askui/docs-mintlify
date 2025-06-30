@@ -23,14 +23,12 @@ if not is_visible:
 
 #### 2. Page Not Fully Loaded
 ```python
-import time
-
 # Wait for dynamic content
-time.sleep(2)
+agent.wait(2)
 
 # Or check for loading indicators
 while agent.get("Is there a loading spinner?", response_schema=bool):
-    time.sleep(0.5)
+    agent.wait(0.5)
 ```
 
 #### 3. Question Too Vague

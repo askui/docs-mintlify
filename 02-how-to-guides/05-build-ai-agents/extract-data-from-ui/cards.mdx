@@ -306,7 +306,7 @@ upgrade_features = [f for f in features if f.requires_upgrade]
    initial_count = agent.get("How many cards are visible?", response_schema=int)
    
    agent.scroll("down", 500)
-   time.sleep(2)  # Wait for loading
+   agent.wait(2)  # Wait for loading
    
    new_count = agent.get("How many cards are visible?", response_schema=int)
    if new_count > initial_count:

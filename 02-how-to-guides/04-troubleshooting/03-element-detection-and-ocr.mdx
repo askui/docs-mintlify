@@ -599,8 +599,7 @@ agent.click(
   
   <Accordion title="Wait for Full Render">
     ```python
-    import time
-    time.sleep(2)  # Give UI time to fully render
+    agent.wait(2)  # Give UI time to fully render
     ```
   </Accordion>
   
@@ -697,17 +696,19 @@ def click_with_retry(agent, locator, max_attempts=3):
         except Exception as e:
             if attempt == max_attempts - 1:
                 raise
-            time.sleep(1)
+            agent.wait(1)
 ```
 
 ### Wait for Element
 ```python
+import time
+
 def wait_for_element(agent, text, timeout=10):
     start = time.time()
     while time.time() - start < timeout:
         if agent.get(f"Is '{text}' visible?", response_schema=bool):
             return True
-        time.sleep(0.5)
+        agent.wait(0.5)
     return False
 ```
 

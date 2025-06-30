@@ -172,8 +172,7 @@ agent.type_text(
 )
 
 # Wait for suggestions
-import time
-time.sleep(1)
+agent.wait(1)
 
 # Check if suggestions appeared
 has_suggestions = agent.get(
