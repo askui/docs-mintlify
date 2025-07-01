@@ -86,7 +86,7 @@ agent.click(loc.Text("Delete").last())
 agent.click(
     loc.Element("button")
         .with_text("Submit")
-        .below(loc.Text("Terms"))
+        .below_of(loc.Text("Terms"))
         .inside_of(loc.Element("form"))
 )
 ```
@@ -151,7 +151,7 @@ agent.click(
   <Accordion title="Use Fuzzy Matching">
     ```python
     # Use contains() for partial matches
-    agent.click(loc.Text().contains("Hel"))
+    agent.click(loc.Text().containing("Hel"))
     ```
   </Accordion>
   
@@ -313,7 +313,7 @@ agent.click(
     ```python
     # Use an anchor element to navigate
     agent.click(
-        loc.Element().right_of(loc.Text().contains("Name"))
+        loc.Element().right_of(loc.Text().containing("Name"))
     )
     ```
   </Accordion>
@@ -390,7 +390,7 @@ agent.click(
   <Accordion title="Use Proximity Selection">
     ```python
     # Click on text near another text
-    agent.click(loc.Text("Johnson").near(loc.Text("Alice")))
+    agent.click(loc.Text("Johnson").nearest_to(loc.Text("Alice")))
     ```
   </Accordion>
 </AccordionGroup>
