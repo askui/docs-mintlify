@@ -87,7 +87,7 @@ agent.click(
     loc.Element("button")
         .with_text("Submit")
         .below(loc.Text("Terms"))
-        .within(loc.Element("form"))
+        .inside_of(loc.Element("form"))
 )
 ```
 
@@ -662,7 +662,7 @@ agent.click(loc.Element("button").with_text("Submit"))
 ```python
 # Search within specific area
 form_area = loc.Element("form")
-agent.click(loc.Text("Submit").within(form_area))
+agent.click(loc.Text("Submit").inside_of(form_area))
 ```
 
 ## Debugging Tips

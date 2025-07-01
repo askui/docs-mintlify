@@ -69,7 +69,7 @@ agent.click(loc.Element("button").at_index(2))
 
 # Select within a specific area
 agent.click(
-    loc.Text("Submit").within(loc.Element("form"))
+    loc.Text("Submit").inside_of(loc.Element("form"))
 )
 ```
 
