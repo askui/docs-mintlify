@@ -53,10 +53,10 @@ AskUI uses multiple approaches to find and interact with UI elements:
   
   # Use relative locators
   password_label = loc.Text("Password")
-  password_field = loc.Element("textfield").right_of(password_label)
+  password_field = loc.Element().right_of(password_label)
   
   # Find text below a heading
-  submit_text = loc.Element("text").below(loc.Text("Complete Registration"))
+  submit_text = loc.Element().below(loc.Text("Complete Registration"))
   
   # Find an element near another element
   menu_item = loc.Text("Settings").near(loc.Image("user-icon.png"))

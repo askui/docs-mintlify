@@ -135,7 +135,7 @@ agent.click("Add to Cart button")
 agent.click(loc.Text("Search"))
 
 # Using relative positioning
-search_icon = loc.Element("icon").right_of(loc.Element("textfield"))
+search_icon = loc.Element().right_of(loc.Element("textfield"))
 agent.click(search_icon)
 ```
 

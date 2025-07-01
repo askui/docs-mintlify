@@ -71,14 +71,14 @@ agent.type("user@example.com", loc.Element("textfield"))
 agent.click("button below the form")
 
 # Locator
-agent.click(loc.Element("button").below(loc.Text("Login Form")))
+agent.click(loc.Element().below(loc.Text("Login Form")))
 ```
 
 ### Combining Strategies
 ```python
 # Precise selection with multiple criteria
 agent.click(
-    loc.Element("button")
+    loc.Element()
     .with_text("Submit")
     .right_of(loc.Text("Cancel"))
 )

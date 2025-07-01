@@ -870,7 +870,7 @@ Defines the element (located by *self*) to be the nearest to another element
     from askui import locators as loc
 
     # Returns textfield 1 because it is nearer to the text than textfield 2
-    textfield = loc.Element("textfield").nearest_to(loc.Text())
+    textfield = loc.Element().nearest_to(loc.Text())
     ```
 
 <a id="askui.locators.Relatable.or_"></a>

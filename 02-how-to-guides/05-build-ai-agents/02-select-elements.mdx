@@ -42,12 +42,12 @@ Find elements based on their position relative to other elements:
 ```python
 # Click the textfield to the right of "Username"
 agent.click(
-    loc.Element("textfield").right_of(loc.Text("Username"))
+    loc.Element().right_of(loc.Text("Username"))
 )
 
 # Select button below specific text
 agent.click(
-    loc.Element("button").below(loc.Text("Terms and Conditions"))
+    loc.Element().below(loc.Text("Terms and Conditions"))
 )
 
 # Find element nearest to another

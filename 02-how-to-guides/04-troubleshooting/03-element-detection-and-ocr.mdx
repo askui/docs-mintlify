@@ -42,7 +42,7 @@ from askui import locators as loc
 
 # Find element relative to others
 agent.click(
-    loc.Element("button").right_of(loc.Text("Username"))
+    loc.Element().right_of(loc.Text("Username"))
 )
 ```
 
@@ -231,7 +231,7 @@ agent.click(
     ```python
     # Click after the icon
     agent.click(
-        loc.Element("textfield").right_of(loc.Element("icon"))
+        loc.Element().right_of(loc.Element("icon"))
     )
     ```
   </Accordion>
@@ -313,7 +313,7 @@ agent.click(
     ```python
     # Use an anchor element to navigate
     agent.click(
-        loc.Element("textfield").right_of(loc.Text().contains("Name"))
+        loc.Element().right_of(loc.Text().contains("Name"))
     )
     ```
   </Accordion>

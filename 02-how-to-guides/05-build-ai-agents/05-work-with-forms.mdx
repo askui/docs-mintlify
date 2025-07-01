@@ -19,7 +19,7 @@ Check for errors before and after submission using [`get()`](/04-reference/01-ag
 
 ```python
 # Fill form
-agent.type("invalidemail", loc.Element("textfield").right_of(loc.Text("Email")))
+agent.type("invalidemail", loc.Element().right_of(loc.Text("Email")))
 
 # Check for inline validation
 has_error = agent.get(  # See get() API reference
@@ -35,8 +35,8 @@ if has_error:
     print(f"Validation error: {error_msg}")
     
     # Fix the error
-    agent.clear(loc.Element("textfield").right_of(loc.Text("Email")))
-    agent.type("valid@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+    agent.clear(loc.Element().right_of(loc.Text("Email")))
+    agent.type("valid@example.com", loc.Element().right_of(loc.Text("Email")))
 ```
 
 ## Multi-Step Forms
@@ -52,8 +52,8 @@ class FormStep(ResponseSchemaBase):
     step_name: str
 
 # Step 1: Personal Information
-agent.type("John", loc.Element("textfield").right_of(loc.Text("First Name")))
-agent.type("Doe", loc.Element("textfield").right_of(loc.Text("Last Name")))
+agent.type("John", loc.Element().right_of(loc.Text("First Name")))
+agent.type("Doe", loc.Element().right_of(loc.Text("Last Name")))
 agent.click("Next")
 
 # Check progress
@@ -64,8 +64,8 @@ progress = agent.get(
 print(f"On step {progress.current_step} of {progress.total_steps}: {progress.step_name}")
 
 # Step 2: Contact Details
-agent.type("john@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
-agent.type("+1234567890", loc.Element("textfield").right_of(loc.Text("Phone")))
+agent.type("john@example.com", loc.Element().right_of(loc.Text("Email")))
+agent.type("+1234567890", loc.Element().right_of(loc.Text("Phone")))
 agent.click("Next")
 
 # Step 3: Review and Submit
@@ -86,7 +86,7 @@ Handle forms that change based on selections:
 
 ```python
 # Select dropdown option
-agent.click(loc.Element("dropdown").right_of(loc.Text("Country")))
+agent.click(loc.Element().right_of(loc.Text("Country")))
 agent.click("United States")
 
 # Check if state field appeared
@@ -96,7 +96,7 @@ has_state_field = agent.get(
 )
 
 if has_state_field:
-    agent.click(loc.Element("dropdown").right_of(loc.Text("State")))
+    agent.click(loc.Element().right_of(loc.Text("State")))
     agent.click("California")
 ```
 
@@ -106,11 +106,11 @@ Handle file upload fields:
 
 ```python
 # Click upload button
-agent.click(loc.Element("button").with_text("Choose File"))
+agent.click("Choose File")
 
 # Type file path in system dialog
 agent.type("/path/to/document.pdf")
-agent.key("Return")  # Press Enter
+agent.key("enter")
 
 # Verify upload
 file_uploaded = agent.get(
@@ -150,7 +150,7 @@ print(f"About to submit: {current_data.model_dump()}")
 # Start typing address
 agent.type(
     "123 Main",
-    loc.Element("textfield").right_of(loc.Text("Address"))
+    loc.Element().right_of(loc.Text("Address"))
 )
 
 # Wait for suggestions
@@ -170,7 +170,7 @@ if has_suggestions:
 ### Date Pickers
 ```python
 # Click date field
-agent.click(loc.Element("textfield").right_of(loc.Text("Date of Birth")))
+agent.click(loc.Element().right_of(loc.Text("Date of Birth")))
 
 # Navigate calendar
 current_month = agent.get(
@@ -194,7 +194,7 @@ agent.click("15")
 ```python
 # Select from radio group
 agent.click(
-    loc.Element("radio").right_of(loc.Text("Premium Plan"))
+    loc.Element().right_of(loc.Text("Premium Plan"))
 )
 
 # Verify selection
@@ -220,15 +220,15 @@ errors = agent.get(
 # Fill required fields based on errors
 for error in errors:
     if "email" in error.lower():
-        agent.type("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+        agent.type("test@example.com", loc.Element().right_of(loc.Text("Email")))
     elif "name" in error.lower():
-        agent.type("Test User", loc.Element("textfield").right_of(loc.Text("Name")))
+        agent.type("Test User", loc.Element().right_of(loc.Text("Name")))
 ```
 
 ### Form Reset
 ```python
 # Fill some fields
-agent.type("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+agent.type("test@example.com", loc.Element().right_of(loc.Text("Email")))
 
 # Reset form
 agent.click("Reset")
