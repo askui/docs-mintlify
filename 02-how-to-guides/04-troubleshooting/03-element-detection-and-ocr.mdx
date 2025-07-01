@@ -48,9 +48,12 @@ agent.click(
 
 #### Check Multi-Monitor Setup
 ```python
-# Specify display for multi-monitor systems
-agent.click("Submit", display=0)  # Primary display
-agent.click("Submit", display=1)  # Secondary display
+# Set active display for multi-monitor systems
+agent.tools.os.set_display(1)  # Primary display
+agent.click("Submit")
+
+agent.tools.os.set_display(2)  # Secondary display
+agent.click("Submit")
 ```
 
 ## Wrong Element Selected

@@ -78,11 +78,13 @@ agent.click(
 For systems with multiple displays:
 
 ```python
-# Specify display number (0-based)
-agent.click("Submit", display=1)
+# Set display before interactions (1-based)
+agent.tools.os.set_display(2)  # Use second display
+agent.click("Submit")
 
 # Or with locators
-agent.click(loc.Text("Submit"), display=0)
+agent.tools.os.set_display(1)  # Use primary display
+agent.click(loc.Text("Submit"))
 ```
 
 ## Troubleshooting
