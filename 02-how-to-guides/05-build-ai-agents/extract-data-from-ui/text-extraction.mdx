@@ -13,74 +13,11 @@ from askui import Agent
 agent = Agent()
 agent.start()
 
-# Get any text from the screen
+agent.tools.webbrowser.open_new("http://www.example.com")
+agent.wait(3)
+
 text = agent.get("What is the main heading?", response_schema=str)
-
-# Get specific element text
-username = agent.get("What is the username shown?", response_schema=str)
-error_msg = agent.get("What is the error message?", response_schema=str)
-```
-
-## Common Use Cases
-
-### Form Field Values
-```python
-# Read current form values
-current_email = agent.get("What email is entered in the email field?", response_schema=str)
-selected_option = agent.get("What option is selected in the dropdown?", response_schema=str)
-```
-
-### Labels and Headings
-```python
-# Extract UI labels
-page_title = agent.get("What is the page title?", response_schema=str)
-section_heading = agent.get("What is the heading of the main section?", response_schema=str)
-button_text = agent.get("What text is on the submit button?", response_schema=str)
-```
-
-### Messages and Notifications
-```python
-# Read dynamic messages
-success_msg = agent.get("What is the success message shown?", response_schema=str)
-notification = agent.get("What is the notification text?", response_schema=str)
-status = agent.get("What is the current status displayed?", response_schema=str)
-```
-
-### Multiple Text Items
-```python
-from typing import List
-
-# Get multiple text items
-menu_items = agent.get("What are all the menu items?", response_schema=List[str])
-options = agent.get("What are all the dropdown options?", response_schema=List[str])
-error_messages = agent.get("What are all the error messages shown?", response_schema=List[str])
-```
-
-## Specific Examples
-
-### Reading User Information
-```python
-# Extract user profile data
-name = agent.get("What is the user's name displayed in the profile?", response_schema=str)
-email = agent.get("What email address is shown?", response_schema=str)
-role = agent.get("What is the user's role?", response_schema=str)
-
-print(f"User: {name} ({email}) - Role: {role}")
-```
-
-### Extracting Product Details
-```python
-# Get product information
-product_name = agent.get("What is the product name?", response_schema=str)
-price = agent.get("What is the price text shown?", response_schema=str)
-description = agent.get("What is the product description?", response_schema=str)
-```
-
-### Reading Table Headers
-```python
-# Extract table column names
-headers = agent.get("What are all the table column headers?", response_schema=List[str])
-print(f"Table columns: {', '.join(headers)}")
+print(f"main heading: {text}")
 ```
 
 ## Best Practices
@@ -111,33 +48,3 @@ print(f"Table columns: {', '.join(headers)}")
    price_text = agent.get("What is the price?", response_schema=str)
    price_value = float(price_text.replace("$", "").replace(",", ""))
    ```
-
-## Common Patterns
-
-### Dynamic Content Verification
-```python
-# Wait for and verify dynamic content
-welcome_msg = agent.get("What is the welcome message after login?", response_schema=str)
-assert "Welcome" in welcome_msg, "Should show welcome message after login"
-```
-
-### Conditional Actions Based on Text
-```python
-# Take action based on text content
-status = agent.get("What is the order status?", response_schema=str)
-
-if status == "Pending":
-    agent.click("Process Order")
-elif status == "Failed":
-    agent.click("Retry")
-```
-
-### Text Comparison
-```python
-# Compare displayed text with expected
-displayed_total = agent.get("What is the total amount shown?", response_schema=str)
-expected_total = "$150.00"
-
-if displayed_total != expected_total:
-    print(f"Total mismatch: expected {expected_total}, got {displayed_total}")
-```

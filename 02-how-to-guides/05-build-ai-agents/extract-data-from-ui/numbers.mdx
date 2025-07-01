@@ -8,102 +8,14 @@ Extract numeric values from your UI using integer and float response schemas. Th
 ## Basic Usage
 
 ```python
-from askui import Agent
+from askui import VisionAgent
 
-agent = Agent()
-agent.start()
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("http://www.example.com")
+    agent.wait(3)
 
-# Get single numbers
-price = agent.get("What is the total price?", response_schema=float)
-count = agent.get("How many items are in the cart?", response_schema=int)
-percentage = agent.get("What is the discount percentage?", response_schema=float)
-```
-
-## Integer vs Float
-
-Choose the appropriate numeric type based on your data:
-
-```python
-# Use int for counts and whole numbers
-item_count = agent.get("How many products are displayed?", response_schema=int)
-page_number = agent.get("What is the current page number?", response_schema=int)
-notifications = agent.get("How many unread notifications?", response_schema=int)
-
-# Use float for decimals, prices, percentages
-price = agent.get("What is the product price?", response_schema=float)
-rating = agent.get("What is the average rating?", response_schema=float)
-progress = agent.get("What is the completion percentage?", response_schema=float)
-```
-
-## Multiple Numbers
-
-Extract lists of numeric values:
-
-```python
-from typing import List
-
-# Get multiple numbers
-quantities = agent.get("What are all the quantities shown?", response_schema=List[int])
-prices = agent.get("What are all the product prices?", response_schema=List[float])
-scores = agent.get("What are the test scores displayed?", response_schema=List[int])
-```
-
-## Common Use Cases
-
-### Shopping Cart Analysis
-```python
-# Extract cart information
-item_count = agent.get("How many items are in the cart?", response_schema=int)
-subtotal = agent.get("What is the subtotal amount?", response_schema=float)
-tax = agent.get("What is the tax amount?", response_schema=float)
-total = agent.get("What is the total amount?", response_schema=float)
-
-# Verify calculations
-calculated_total = subtotal + tax
-assert abs(total - calculated_total) < 0.01, "Total calculation mismatch"
-```
-
-### Dashboard Metrics
-```python
-# Read dashboard statistics
-active_users = agent.get("How many active users are shown?", response_schema=int)
-revenue = agent.get("What is today's revenue?", response_schema=float)
-conversion_rate = agent.get("What is the conversion rate percentage?", response_schema=float)
-```
-
-### Pagination
-```python
-# Handle pagination
-current_page = agent.get("What is the current page number?", response_schema=int)
-total_pages = agent.get("What is the total number of pages?", response_schema=int)
-items_per_page = agent.get("How many items are shown per page?", response_schema=int)
-
-print(f"Page {current_page} of {total_pages}")
-```
-
-### Inventory Management
-```python
-# Check stock levels
-in_stock = agent.get("How many items are in stock?", response_schema=int)
-low_stock_threshold = 10
-
-if in_stock < low_stock_threshold:
-    agent.click("Reorder")
-    reorder_quantity = agent.get("What is the suggested reorder quantity?", response_schema=int)
-```
-
-## Specific Example: Counting Elements
-
-```python
-# Count various UI elements
-card_count = agent.get("How many cards are displayed?", response_schema=int)
-print(f"Found {card_count} cards")
-
-# Use the count for validation or iteration
-if card_count > 0:
-    for i in range(1, card_count + 1):
-        card_title = agent.get(f"What is the title of card number {i}?", response_schema=str)
-        print(f"Card {i}: {card_title}")
+    result = agent.get("How many headings do you see?", response_schema=int)
+    print(f"result: {result}")
 ```
 
 ## Best Practices
@@ -118,56 +30,10 @@ if card_count > 0:
    price = agent.get("What is the price?", response_schema=float)
    ```
 
-2. **Handle Zero and Negative Values**: Consider edge cases
-   ```python
-   balance = agent.get("What is the account balance?", response_schema=float)
-   
-   if balance < 0:
-       print("Account overdrawn!")
-   elif balance == 0:
-       print("Zero balance")
-   ```
-
-3. **Validate Numeric Ranges**: Check if values are within expected ranges
+2. **Validate Numeric Ranges**: Check if values are within expected ranges
    ```python
    percentage = agent.get("What is the progress percentage?", response_schema=float)
    
    # Validate percentage is between 0 and 100
    assert 0 <= percentage <= 100, f"Invalid percentage: {percentage}"
    ```
-
-## Common Patterns
-
-### Progress Tracking
-```python
-# Monitor task progress
-completed = agent.get("How many tasks are completed?", response_schema=int)
-total = agent.get("How many total tasks?", response_schema=int)
-percentage = (completed / total) * 100 if total > 0 else 0
-
-print(f"Progress: {completed}/{total} ({percentage:.1f}%)")
-```
-
-### Price Comparisons
-```python
-# Compare prices
-original_price = agent.get("What is the original price?", response_schema=float)
-sale_price = agent.get("What is the sale price?", response_schema=float)
-discount = original_price - sale_price
-discount_percent = (discount / original_price) * 100
-
-print(f"Save ${discount:.2f} ({discount_percent:.0f}% off)")
-```
-
-### Statistical Analysis
-```python
-# Gather numeric data for analysis
-values = agent.get("What are all the data values in the chart?", response_schema=List[float])
-
-if values:
-    avg = sum(values) / len(values)
-    max_val = max(values)
-    min_val = min(values)
-    
-    print(f"Average: {avg:.2f}, Range: {min_val} - {max_val}")
-```

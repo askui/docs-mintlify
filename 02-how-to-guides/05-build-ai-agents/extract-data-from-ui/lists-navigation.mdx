@@ -3,196 +3,29 @@ title: Lists & Navigation
 description: Extract sidebar items, menu options, and hierarchical navigation structures
 ---
 
-Navigation elements like sidebars, menus, and lists are essential UI components. Learn how to extract these structures, including nested hierarchies.
+Navigation elements like sidebars, menus, and lists are essential UI components. Learn how to extract these structures.
 
 ## Basic List Extraction
 
 ```python
-from typing import List
-from askui import Agent
-
-agent = Agent()
-agent.start()
-
-# Get simple lists
-menu_items = agent.get(
-    "What are all the menu items?",
-    response_schema=List[str]
-)
-
-# Get navigation links
-nav_links = agent.get(
-    "What are all the navigation links?",
-    response_schema=List[str]
-)
-```
-
-## Sidebar Navigation with State
-
-Extract sidebar items with their active states:
-
-```python
-from askui import ResponseSchemaBase
+from askui import VisionAgent, ResponseSchemaBase
 from typing import List
 
-class SidebarItem(ResponseSchemaBase):
-    label: str
-    icon: str
-    is_active: bool
-
-sidebar = agent.get(
-    "Extract the sidebar navigation items",
-    response_schema=List[SidebarItem]
-)
-
-# Find active item
-active_item = next((item for item in sidebar if item.is_active), None)
-if active_item:
-    print(f"Currently on: {active_item.label}")
-```
-
-## Hierarchical Navigation (Recursive)
-
-For nested navigation structures like documentation sidebars:
-
-![Sidebar Example](images/simple_website.png)
-
-```python
-from askui import ResponseSchemaBase
-from typing import List, Optional
 
 class SidebarItem(ResponseSchemaBase):
     name: str
-    children: List['SidebarItem'] = []  # Recursive reference
+    children: List["SidebarItem"]
 
-# Extract hierarchical structure
-sidebar_structure = agent.get(
-    "Can you extract me the sidebar below section 'Introduction'?",
-    response_schema=SidebarItem
-)
+class Sidebar(ResponseSchemaBase):
+    sidebar: List["SidebarItem"]
 
-# Print the structure
-def print_tree(item: SidebarItem, level: int = 0):
-    print("  " * level + item.name)
-    for child in item.children:
-        print_tree(child, level + 1)
 
-print_tree(sidebar_structure)
-```
-
-## Dropdown Menus
-
-Extract dropdown menu options:
-
-```python
-class DropdownOption(ResponseSchemaBase):
-    label: str
-    value: str
-    is_selected: bool = False
-
-# Get dropdown options
-options = agent.get(
-    "What are all the options in the country dropdown?",
-    response_schema=List[DropdownOption]
-)
-
-# Find selected option
-selected = next((opt for opt in options if opt.is_selected), None)
-```
-
-## Breadcrumb Navigation
-
-```python
-# Extract breadcrumb path
-breadcrumbs = agent.get(
-    "What is the breadcrumb navigation path?",
-    response_schema=List[str]
-)
-
-# Example result: ["Home", "Products", "Electronics", "Laptops"]
-current_page = breadcrumbs[-1] if breadcrumbs else "Unknown"
-```
-
-## Multi-Level Menus
-
-For complex multi-level navigation:
-
-```python
-class MenuItem(ResponseSchemaBase):
-    label: str
-    url: Optional[str] = None
-    submenu: List['MenuItem'] = []
-    is_expanded: bool = False
-
-# Extract entire menu structure
-menu_structure = agent.get(
-    "Extract the complete navigation menu structure",
-    response_schema=List[MenuItem]
-)
-
-# Find all expanded menus
-def find_expanded(items: List[MenuItem]) -> List[str]:
-    expanded = []
-    for item in items:
-        if item.is_expanded:
-            expanded.append(item.label)
-        expanded.extend(find_expanded(item.submenu))
-    return expanded
-```
-
-## Common Patterns
-
-### File Explorer Trees
-```python
-class FileNode(ResponseSchemaBase):
-    name: str
-    type: str  # "file" or "folder"
-    is_expanded: bool = False
-    children: List['FileNode'] = []
-
-file_tree = agent.get(
-    "Extract the file explorer structure",
-    response_schema=FileNode
-)
-
-# Count files
-def count_files(node: FileNode) -> int:
-    if node.type == "file":
-        return 1
-    return sum(count_files(child) for child in node.children)
-```
-
-### Category Lists
-```python
-class Category(ResponseSchemaBase):
-    name: str
-    count: int
-    is_selected: bool
-
-categories = agent.get(
-    "Extract all category filters with their counts",
-    response_schema=List[Category]
-)
-
-# Get total items across categories
-total_items = sum(cat.count for cat in categories)
-```
-
-### Navigation with Icons
-```python
-class NavItem(ResponseSchemaBase):
-    label: str
-    icon_name: str
-    badge_count: Optional[int] = None
-    is_active: bool = False
-
-nav_items = agent.get(
-    "Extract the navigation bar items",
-    response_schema=List[NavItem]
-)
-
-# Find items with notifications
-with_notifications = [item for item in nav_items if item.badge_count]
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
+    
+    result = agent.get("Can you extract me the sidebar?", response_schema=Sidebar)
+    print(result.model_dump_json(indent=2))
 ```
 
 ## Best Practices
@@ -206,61 +39,3 @@ with_notifications = [item for item in nav_items if item.badge_count]
    else:
        print(f"Found {len(items)} menu items")
    ```
-
-2. **Recursive Depth Limits**: For deeply nested structures, consider depth limits
-   ```python
-   def extract_limited_depth(max_depth: int = 3):
-       # Add depth checking in recursive extraction
-       pass
-   ```
-
-3. **State Preservation**: Track which items are expanded/selected
-   ```python
-   class NavigationState(ResponseSchemaBase):
-       expanded_paths: List[str]
-       selected_item: str
-       
-   state = agent.get(
-       "What is the current navigation state?",
-       response_schema=NavigationState
-   )
-   ```
-
-## Specific Examples
-
-### Documentation Sidebar
-```python
-# Extract documentation structure
-docs_nav = agent.get(
-    "Extract the documentation sidebar structure",
-    response_schema=List[SidebarItem]
-)
-
-# Find specific section
-def find_section(items: List[SidebarItem], target: str) -> Optional[SidebarItem]:
-    for item in items:
-        if target.lower() in item.name.lower():
-            return item
-        found = find_section(item.children, target)
-        if found:
-            return found
-    return None
-
-api_section = find_section(docs_nav, "API Reference")
-```
-
-### E-commerce Categories
-```python
-class ProductCategory(ResponseSchemaBase):
-    name: str
-    subcategories: List[str]
-    product_count: int
-
-categories = agent.get(
-    "Extract the product category navigation",
-    response_schema=List[ProductCategory]
-)
-
-# Find categories with most products
-top_categories = sorted(categories, key=lambda c: c.product_count, reverse=True)[:5]
-```

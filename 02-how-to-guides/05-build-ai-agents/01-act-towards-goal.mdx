@@ -8,42 +8,13 @@ The [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/ag
 ## Basic Usage
 
 ```python
-from askui import VisionAgent
+from askui import Agent
 
-with VisionAgent() as agent:
-    agent.act("click the login button")
-```
+with Agent() as agent:
+    agent.tools.webbrowser.open_new("https://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
 
-## Complex Tasks
-
-```python
-# Multi-step workflow
-agent.act("book a flight from Berlin to Paris in January")
-
-# Form filling
-agent.act("fill out the registration form with name John Doe and email john@example.com")
-
-# Navigation and data extraction
-agent.act("go to the products page and tell me the price of the first laptop")
-```
-
-## Practical Examples
-
-### E-commerce
-```python
-agent.act("""
-Purchase a blue t-shirt:
-1. Search for blue t-shirt
-2. Select size medium
-3. Add to cart
-4. Proceed to checkout
-""")
-```
-
-### Data Collection
-```python
-result = agent.act("extract all email addresses from this page")
-print(result)
+    agent.act("open the search field and search for agentic mode")
 ```
 
 ## When to Use act()

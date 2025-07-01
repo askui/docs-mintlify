@@ -10,25 +10,7 @@ This guide shows you how to interact with forms, fill fields, and validate submi
 ```python
 from askui import Agent, locators as loc
 
-agent = Agent()
-agent.start()
 
-# Fill form fields
-agent.type_text(
-    "john.doe@example.com",
-    loc.Element("textfield").right_of(loc.Text("Email"))
-)
-
-agent.type_text(
-    "SecurePass123!",
-    loc.Element("textfield").right_of(loc.Text("Password"))
-)
-
-# Check checkbox
-agent.click(loc.Element("checkbox").right_of(loc.Text("Remember me")))  # See click() API reference
-
-# Submit form
-agent.click("Submit")
 ```
 
 ## Form Validation

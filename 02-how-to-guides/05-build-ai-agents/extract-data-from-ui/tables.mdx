@@ -8,176 +8,23 @@ Tables are common UI elements for displaying structured data. Learn how to extra
 ## Basic Table Extraction
 
 ```python
-from askui import ResponseSchemaBase
+from askui import VisionAgent, ResponseSchemaBase
 from typing import List
-from askui import Agent
 
-agent = Agent()
-agent.start()
-
-class TableRow(ResponseSchemaBase):
-    name: str
-    email: str
-    status: str
+class Entry(ResponseSchemaBase):
+    company: str
+    contact: str
+    country: str
 
 class Table(ResponseSchemaBase):
-    rows: List[TableRow]
+    rows: List[Entry]
 
-# Extract entire table
-table_data = agent.get(
-    "Extract the user table data",
-    response_schema=Table
-)
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://www.w3schools.com/html/html_tables.asp")
+    agent.wait(3)  # Wait for page to load
 
-# Process the data
-for row in table_data.rows:
-    print(f"{row.name}: {row.status}")
-```
-
-## Real-World Example: Model Comparison Table
-
-Here's an example of extracting data from a model comparison table:
-
-![Model Comparison Table](images/table_website.png)
-
-```python
-from askui import ResponseSchemaBase
-from typing import List
-
-class ModelComparison(ResponseSchemaBase):
-    model_name: str
-    infor: str  # Description/Information
-    execution_speed: str
-    security: str
-    costs: str
-    reliability: str
-
-# Extract comparison data
-models = agent.get(
-    "Extract the model comparison table",
-    response_schema=List[ModelComparison]
-)
-
-# Analyze the data
-for model in models:
-    print(f"\n{model.model_name}:")
-    print(f"  Speed: {model.execution_speed}")
-    print(f"  Security: {model.security}")
-    print(f"  Cost: {model.costs}")
-    print(f"  Reliability: {model.reliability}")
-```
-
-## Dynamic Table Schemas
-
-For tables with unknown columns, extract headers first:
-
-```python
-# First, get the column headers
-headers = agent.get(
-    "What are the table column headers?",
-    response_schema=List[str]
-)
-
-# Create a dynamic model based on headers
-from typing import Dict
-
-class DynamicRow(ResponseSchemaBase):
-    data: Dict[str, str]
-
-# Extract rows with dynamic schema
-rows = agent.get(
-    "Extract all table rows as key-value pairs",
-    response_schema=List[DynamicRow]
-)
-```
-
-## Common Table Patterns
-
-### Financial Data Tables
-```python
-class Transaction(ResponseSchemaBase):
-    date: str
-    description: str
-    amount: float
-    balance: float
-
-transactions = agent.get(
-    "Extract the transaction history table",
-    response_schema=List[Transaction]
-)
-
-# Calculate totals
-total_spent = sum(t.amount for t in transactions if t.amount < 0)
-total_received = sum(t.amount for t in transactions if t.amount > 0)
-```
-
-### Inventory Tables
-```python
-class InventoryItem(ResponseSchemaBase):
-    product_name: str
-    sku: str
-    quantity: int
-    price: float
-    status: str
-
-inventory = agent.get(
-    "Extract the inventory table data",
-    response_schema=List[InventoryItem]
-)
-
-# Find low stock items
-low_stock = [item for item in inventory if item.quantity < 10]
-```
-
-### Performance Metrics Tables
-```python
-class PerformanceMetric(ResponseSchemaBase):
-    metric_name: str
-    current_value: float
-    target_value: float
-    variance: float
-    status: str
-
-metrics = agent.get(
-    "Extract the performance metrics table",
-    response_schema=List[PerformanceMetric]
-)
-
-# Identify underperforming metrics
-issues = [m for m in metrics if m.status == "Below Target"]
-```
-
-## Handling Complex Tables
-
-### Nested Data
-```python
-class SubItem(ResponseSchemaBase):
-    name: str
-    value: str
-
-class ComplexRow(ResponseSchemaBase):
-    id: int
-    category: str
-    details: List[SubItem]
-
-# For tables with expandable rows or nested data
-complex_data = agent.get(
-    "Extract the table including nested details",
-    response_schema=List[ComplexRow]
-)
-```
-
-### Tables with Merged Cells
-```python
-class GroupedData(ResponseSchemaBase):
-    group_name: str
-    items: List[Dict[str, str]]
-
-# Handle tables with category headers
-grouped_table = agent.get(
-    "Extract the grouped table data maintaining categories",
-    response_schema=List[GroupedData]
-)
+    result = agent.get("Can you extract me the table?", response_schema=Table)
+    print(result.model_dump_json(indent=2))
 ```
 
 ## Best Practices
@@ -191,66 +38,10 @@ grouped_table = agent.get(
    # Then design your model accordingly
    ```
 
-2. **Handle Optional Fields**: Some table cells might be empty
-   ```python
-   from typing import Optional
-   
-   class TableRow(ResponseSchemaBase):
-       name: str
-       email: str
-       phone: Optional[str] = None  # Might be empty
-   ```
-
-3. **Type Conversion**: Specify correct types for numeric columns
+2. **Type Conversion**: Specify correct types for numeric columns
    ```python
    class DataRow(ResponseSchemaBase):
        product: str
        quantity: int  # Will convert "5" to 5
        price: float   # Will convert "$9.99" to 9.99
    ```
-
-## Pagination Handling
-
-For tables with pagination:
-
-```python
-all_data = []
-page = 1
-
-while True:
-    # Extract current page data
-    page_data = agent.get(
-        "Extract the visible table rows",
-        response_schema=List[TableRow]
-    )
-    all_data.extend(page_data)
-    
-    # Check if there's a next page
-    has_next = agent.get("Is there a 'Next' button enabled?", response_schema=bool)
-    
-    if has_next:
-        agent.click("Next")
-        page += 1
-    else:
-        break
-
-print(f"Extracted {len(all_data)} total rows across {page} pages")
-```
-
-## Table Validation
-
-Verify extracted data integrity:
-
-```python
-# Extract table with validation
-table_data = agent.get("Extract the data table", response_schema=List[DataRow])
-
-# Validate completeness
-expected_rows = agent.get("How many rows are in the table?", response_schema=int)
-assert len(table_data) == expected_rows, f"Expected {expected_rows} rows, got {len(table_data)}"
-
-# Validate data consistency
-for row in table_data:
-    assert row.price > 0, f"Invalid price for {row.product}"
-    assert row.quantity >= 0, f"Invalid quantity for {row.product}"
-```

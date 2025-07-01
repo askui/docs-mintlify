@@ -8,200 +8,22 @@ Tabs are common UI patterns for organizing content. Learn how to extract tab inf
 ## Basic Tab Extraction
 
 ```python
-from askui import ResponseSchemaBase
-from typing import List
-from askui import Agent
-
-agent = Agent()
-agent.start()
-
-class TabInfo(ResponseSchemaBase):
-    name: str
-    is_active: bool
-    has_notifications: bool = False
-
-# Get all tabs
-tabs = agent.get(
-    "What tabs are available?",
-    response_schema=List[TabInfo]
-)
-
-# Get just the active tab
-active_tab = agent.get(
-    "Which tab is currently active?",
-    response_schema=str
-)
-```
-
-## Advanced Tab Schema
-
-For tabs that might have multiple labels or states:
-
-```python
+from askui import VisionAgent, ResponseSchemaBase
 from typing import List
 
 class Tab(ResponseSchemaBase):
-    name: List[str]  # Can have multiple text elements
+    name: List[str]
     active: bool
 
-# Extract tab information
-tabs = agent.get(
-    "Can you give me the names of the tabs?",
-    response_schema=List[Tab]
-)
+class TabBar(ResponseSchemaBase):
+    tabs: List[Tab]
 
-# Process tabs with multiple labels
-for tab in tabs:
-    tab_label = " ".join(tab.name)  # Combine multiple text elements
-    if tab.active:
-        print(f"Active tab: {tab_label}")
-    else:
-        print(f"Inactive tab: {tab_label}")
-```
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("http://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
 
-## Tab Navigation Patterns
-
-### Switching Between Tabs
-```python
-# Get current tab
-current_tab = agent.get("What tab is currently active?", response_schema=str)
-
-# Switch to a different tab
-target_tab = "Settings"
-if current_tab != target_tab:
-    agent.click(f"Click on the {target_tab} tab")
-    
-    # Verify tab switch
-    new_tab = agent.get("What tab is now active?", response_schema=str)
-    assert new_tab == target_tab, f"Failed to switch to {target_tab}"
-```
-
-### Tab Content Validation
-```python
-# Extract tabs with content status
-class TabWithContent(ResponseSchemaBase):
-    name: str
-    is_active: bool
-    has_content: bool
-    item_count: int = 0
-
-tabs_info = agent.get(
-    "Extract tab information including content status",
-    response_schema=List[TabWithContent]
-)
-
-# Navigate to tabs with content
-for tab in tabs_info:
-    if tab.has_content and not tab.is_active:
-        agent.click(f"Click on {tab.name} tab")
-        # Process tab content
-```
-
-## Common Tab Patterns
-
-### Browser-Style Tabs
-```python
-class BrowserTab(ResponseSchemaBase):
-    title: str
-    url: str
-    is_active: bool
-    can_close: bool
-    favicon: Optional[str] = None
-
-browser_tabs = agent.get(
-    "Extract all browser tab information",
-    response_schema=List[BrowserTab]
-)
-
-# Find and close inactive tabs
-for tab in browser_tabs:
-    if not tab.is_active and tab.can_close:
-        agent.click(f"Close the {tab.title} tab")
-```
-
-### Dashboard Tabs
-```python
-class DashboardTab(ResponseSchemaBase):
-    name: str
-    icon: str
-    is_active: bool
-    has_updates: bool
-    update_count: int = 0
-
-dashboard_tabs = agent.get(
-    "Extract dashboard tab information",
-    response_schema=List[DashboardTab]
-)
-
-# Check for tabs with updates
-tabs_with_updates = [tab for tab in dashboard_tabs if tab.has_updates]
-for tab in tabs_with_updates:
-    print(f"{tab.name} has {tab.update_count} updates")
-```
-
-### Nested Tab Groups
-```python
-class TabGroup(ResponseSchemaBase):
-    group_name: str
-    tabs: List[TabInfo]
-    active_tab_index: int
-
-# For interfaces with multiple tab groups
-tab_groups = agent.get(
-    "Extract all tab groups and their tabs",
-    response_schema=List[TabGroup]
-)
-
-# Navigate through tab groups
-for group in tab_groups:
-    active_tab = group.tabs[group.active_tab_index]
-    print(f"{group.group_name}: {active_tab.name} is active")
-```
-
-## Tab State Management
-
-### Tracking Tab History
-```python
-class TabNavigation:
-    def __init__(self, agent):
-        self.agent = agent
-        self.tab_history = []
-    
-    def switch_tab(self, tab_name: str):
-        current = self.agent.get("What tab is active?", response_schema=str)
-        self.tab_history.append(current)
-        self.agent.click(f"Click on {tab_name} tab")
-    
-    def go_back(self):
-        if self.tab_history:
-            previous_tab = self.tab_history.pop()
-            self.agent.click(f"Click on {previous_tab} tab")
-
-# Usage
-nav = TabNavigation(agent)
-nav.switch_tab("Settings")
-nav.switch_tab("Profile")
-nav.go_back()  # Returns to Settings
-```
-
-### Tab Validation
-```python
-def validate_tab_content(agent, expected_tabs: List[str]):
-    """Verify all expected tabs are present and accessible"""
-    actual_tabs = agent.get(
-        "What are all the tab names?",
-        response_schema=List[str]
-    )
-    
-    missing_tabs = set(expected_tabs) - set(actual_tabs)
-    if missing_tabs:
-        raise ValueError(f"Missing tabs: {missing_tabs}")
-    
-    # Test each tab is clickable
-    for tab_name in expected_tabs:
-        agent.click(f"Click on {tab_name} tab")
-        active = agent.get("What tab is active?", response_schema=str)
-        assert active == tab_name, f"Failed to activate {tab_name}"
+    result = agent.get("Can you extract me the tabs?", response_schema=TabBar)
+    print(result.model_dump_json(indent=2))
 ```
 
 ## Best Practices
@@ -239,33 +61,3 @@ def validate_tab_content(agent, expected_tabs: List[str]):
    agent.key("Ctrl+Tab")  # Next tab
    agent.key("Ctrl+Shift+Tab")  # Previous tab
    ```
-
-## Real-World Example
-
-Extracting tabs from a documentation site:
-
-```python
-# Extract documentation tabs
-class DocTab(ResponseSchemaBase):
-    section_name: str
-    is_active: bool
-    has_subnav: bool
-
-doc_tabs = agent.get(
-    "Extract the main documentation navigation tabs",
-    response_schema=List[DocTab]
-)
-
-# Navigate through documentation sections
-for tab in doc_tabs:
-    if not tab.is_active:
-        agent.click(f"Click on {tab.section_name}")
-        
-        if tab.has_subnav:
-            # Extract sub-navigation
-            subnav = agent.get(
-                "What are the sub-sections?",
-                response_schema=List[str]
-            )
-            print(f"{tab.section_name} has subsections: {subnav}")
-```

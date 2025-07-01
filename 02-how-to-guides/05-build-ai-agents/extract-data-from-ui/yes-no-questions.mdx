@@ -8,68 +8,16 @@ Use boolean response schemas to check UI states, verify conditions, and make dec
 ## Basic Usage
 
 ```python
-from askui import Agent
+from askui import VisionAgent
 
-agent = Agent()
-agent.start()
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("http://www.example.com")
+    agent.wait(3)  # Wait for page to load
 
-# Check UI state
-is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
-is_visible = agent.get("Is the submit button visible?", response_schema=bool)
-has_error = agent.get("Are there any error messages?", response_schema=bool)
-```
+    is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
+    assert is_loaded, "Page should be loaded"
 
-## Common Use Cases
-
-### Login State Detection
-```python
-# Check if user is logged in
-if agent.get("Is the user logged in?", response_schema=bool):
-    agent.click("Logout")
-else:
-    agent.click("Login")
-```
-
-### Form Validation
-```python
-# Check for validation errors before submission
-has_errors = agent.get("Are there any validation errors shown?", response_schema=bool)
-is_complete = agent.get("Are all required fields filled?", response_schema=bool)
-
-if not has_errors and is_complete:
-    agent.click("Submit")
-```
-
-### Element State Verification
-```python
-# Check button states
-is_enabled = agent.get("Is the submit button enabled?", response_schema=bool)
-is_selected = agent.get("Is the checkbox checked?", response_schema=bool)
-is_expanded = agent.get("Is the dropdown menu open?", response_schema=bool)
-```
-
-### Content Verification
-```python
-# Verify expected content
-has_results = agent.get("Are there search results displayed?", response_schema=bool)
-has_notifications = agent.get("Are there any unread notifications?", response_schema=bool)
-has_data = agent.get("Is there data in the table?", response_schema=bool)
-```
-
-## Using with Assertions
-
-For testing scenarios, combine boolean questions with assertions:
-
-```python
-# Test that login was successful
-assert agent.get("Is the dashboard visible?", response_schema=bool), "Dashboard should be visible after login"
-
-# Verify error handling
-agent.click("Submit")  # Submit empty form
-assert agent.get("Are validation errors displayed?", response_schema=bool), "Validation errors should appear"
-
-# Check element states
-assert not agent.get("Is the submit button enabled?", response_schema=bool), "Submit should be disabled with empty form"
+    print(f"is loaded: {is_loaded}")
 ```
 
 ## Best Practices
@@ -99,25 +47,3 @@ assert not agent.get("Is the submit button enabled?", response_schema=bool), "Su
        not agent.get("Are there any validation errors?", response_schema=bool)
    ])
    ```
-
-## Common Question Patterns
-
-### Visibility Questions
-- "Is the [element] visible?"
-- "Can you see the [element]?"
-- "Is [element] displayed on the screen?"
-
-### State Questions
-- "Is the [button] enabled/disabled?"
-- "Is the [checkbox] checked/unchecked?"
-- "Is the [toggle] on/off?"
-
-### Content Questions
-- "Are there any [items] in the [container]?"
-- "Is the [text] present on the page?"
-- "Does the page contain [content]?"
-
-### Layout Questions
-- "Is [element A] above/below [element B]?"
-- "Are the [elements] aligned?"
-- "Is the [sidebar] expanded/collapsed?"
