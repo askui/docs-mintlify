@@ -1,0 +1,126 @@
+---
+title: Current Known Issues
+description: Active issues and limitations in AskUI products
+---
+
+This page lists currently known issues and limitations in AskUI products. We update this list as issues are resolved or new ones are discovered.
+
+<Note>
+For solutions to common problems, see our [Troubleshooting Guides](/02-how-to-guides/04-troubleshooting/00-troubleshooting-overview).
+</Note>
+
+## AskUI Suite
+
+### Platform Limitations
+
+#### PxProxy - Windows Only
+- **Affected Versions**: All current versions
+- **Description**: PxProxy is available only for Windows AMD64 architecture
+- **Impact**: Users on macOS, Linux, or ARM architectures cannot use the local proxy feature
+- **Workaround**: Use alternative proxy solutions on non-Windows platforms
+
+#### TypeScript Project Limitation
+- **Affected Commands**: `AskUI-NewProject`, `AskUI-RunProject`
+- **Description**: These commands only support TypeScript projects
+- **Impact**: Python projects must be created and managed manually
+- **Workaround**: Use Python SDK directly with manual project setup
+
+### Performance Issues
+
+#### ADE Slower Startup Time
+- **Affected Versions**: 25.2.1 and later
+- **Description**: AskUI Development Environment (ADE) startup is slower than previous versions
+- **Impact**: Initial startup may take 10-30 seconds longer
+- **Workaround**: Keep ADE running to avoid repeated startup delays
+
+### Windows-Specific Issues
+
+#### Long Path Problems
+- **Affected Versions**: All Windows installations
+- **Description**: Windows users may encounter issues with paths exceeding 260 characters
+- **Impact**: Installation or file operations may fail
+- **Solution**: 
+  ```powershell
+  # In askui-shell as Administrator
+  AskUI-EnableLongPath
+  ```
+  Then restart your system.
+
+## Python Vision Agent
+
+### Session Management
+- **Issue**: "Session info doesn't match" errors
+- **Cause**: Controller session mismatch
+- **Solution**: See [Runtime Errors Guide](/02-how-to-guides/04-troubleshooting/05-runtime-and-environment-errors#session-info-doesnt-match-error)
+
+### Multi-Monitor Limitations
+- **Issue**: Limited support for systems with 3+ monitors
+- **Impact**: May not detect elements on monitors beyond the second
+- **Workaround**: Specify display parameter explicitly
+
+## Model Limitations
+
+### OCR Accuracy
+- **Issue**: Certain fonts or backgrounds reduce text recognition accuracy
+- **Affected**: Decorative fonts, low contrast text, complex backgrounds
+- **Solution**: See [OCR Troubleshooting](/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr#ocr-and-text-recognition-issues)
+
+### Dynamic Content
+- **Issue**: Rapidly changing content may not be captured accurately
+- **Impact**: Animations or live data might be missed
+- **Workaround**: Add delays or wait for stable state
+
+## Browser Compatibility
+
+### Chrome Extensions
+- **Issue**: Some Chrome extensions interfere with element detection
+- **Affected Extensions**: Ad blockers, dark mode extensions
+- **Workaround**: Disable extensions during automation
+
+### Safari on macOS
+- **Issue**: Limited accessibility permissions
+- **Impact**: Some elements may not be detectable
+- **Solution**: Grant full accessibility permissions in System Preferences
+
+## Enterprise Features
+
+### Proxy Authentication
+- **Issue**: NTLM/Kerberos proxy authentication requires additional setup
+- **Impact**: Direct connection through corporate proxies may fail
+- **Solution**: See [Network Configuration](/02-how-to-guides/04-troubleshooting/02-network-and-connectivity#ntlm-or-kerberos-proxy-setup)
+
+### Air-Gapped Environments
+- **Issue**: Offline installation requires manual dependency management
+- **Impact**: Standard installation procedures don't work
+- **Contact**: Enterprise support for offline installation packages
+
+## Mobile Testing
+
+### iOS Simulator
+- **Issue**: Text selection in iOS Simulator is unreliable
+- **Affected Versions**: iOS 15+
+- **Workaround**: Use real devices for text-heavy automation
+
+### Android Emulator
+- **Issue**: GPU acceleration conflicts on some systems
+- **Impact**: Visual detection may be slow or inaccurate
+- **Solution**: Disable GPU acceleration in emulator settings
+
+## Reporting New Issues
+
+Found an issue not listed here? Please:
+
+1. Check our [FAQ](/03-explanation/04-faq/faq) first
+2. Search [Discord](https://discord.gg/Gu35zMGxbx) for similar reports
+3. [Report the issue](/02-how-to-guides/04-troubleshooting/06-reporting-bugs-and-getting-help) with details
+
+## Issue Resolution Status
+
+We track issue resolution in our:
+- [Release Notes](/04-reference/06-release-notes/00-release-notes-overview) - For resolved issues
+- [Roadmap](https://askui.notion.site/1d519a9494f880c9ac14ddcd91653b54) - For planned fixes
+- [Status Page](https://status.askui.com) - For service-related issues
+
+<Info>
+This page is updated regularly. Last update: Check the git history for the most recent changes.
+</Info>

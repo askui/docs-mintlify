@@ -1,0 +1,47 @@
+---
+title: Table Data Extraction
+description: Extract structured data from tables in your UI
+---
+
+Tables are common UI elements for displaying structured data. Learn how to extract table data into structured Python objects using Pydantic models.
+
+## Basic Table Extraction
+
+```python
+from askui import VisionAgent, ResponseSchemaBase
+from typing import List
+
+class Entry(ResponseSchemaBase):
+    company: str
+    contact: str
+    country: str
+
+class Table(ResponseSchemaBase):
+    rows: List[Entry]
+
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://www.w3schools.com/html/html_tables.asp")
+    agent.wait(3)  # Wait for page to load
+
+    result = agent.get("Can you extract me the table?", response_schema=Table)
+    print(result.model_dump_json(indent=2))
+```
+
+## Best Practices
+
+1. **Match Schema to Table Structure**: Design your Pydantic model to match the actual table columns
+   ```python
+   # Look at the table first
+   headers = agent.get("What are the table headers?", response_schema=List[str])
+   print(f"Table columns: {headers}")
+   
+   # Then design your model accordingly
+   ```
+
+2. **Type Conversion**: Specify correct types for numeric columns
+   ```python
+   class DataRow(ResponseSchemaBase):
+       product: str
+       quantity: int  # Will convert "5" to 5
+       price: float   # Will convert "$9.99" to 9.99
+   ```

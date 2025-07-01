@@ -1,0 +1,115 @@
+---
+title: "Element Selection"
+description: "Best practices for finding and selecting UI elements with AskUI"
+---
+
+## Overview
+
+Element selection is at the core of UI automation with AskUI. Understanding when and how to use different selection strategies will make your automation more reliable and maintainable.
+
+## Natural Language vs Locators
+
+AskUI provides two main approaches to find and select UI elements on your screen:
+
+1. **Natural Language Selection**: Use everyday language to describe what you want to interact with
+2. **Locators**: Use precise, programmatic selectors for more control and reliability
+
+### Understanding the Difference
+
+**Natural Language Selection** is best when:
+- You want quick, readable automation scripts
+- The UI elements are easily describable
+- The exact text or element type might vary
+
+**Locators** are best when:
+- You need precise, deterministic selection
+- Multiple similar elements exist on screen
+- You need to use relative positioning
+
+## Best Practices
+
+### 1. Start Simple
+- Use natural language selection for basic cases
+- Only use locators when needed for precision
+
+### 2. Be Specific
+- Use clear, descriptive text for natural language selection
+- Combine multiple locators for unique identification
+- Use the correct element types with `Element()` locator
+
+### 3. Handle Dynamic Content
+- Use relative locators for elements that move
+- Consider AI Elements for complex visual patterns
+
+### 4. Multi-Monitor Setup
+- Test on each monitor to find the correct display number
+- Use consistent display settings across your team
+
+## Common Selection Strategies
+
+### Text-Based Selection
+```python
+# Natural language
+agent.click("Submit button")
+
+# Locator
+agent.click(loc.Text("Submit"))
+```
+
+### Element Type Selection
+```python
+# Natural language
+agent.type("user@example.com", "email field")
+
+# Locator
+agent.type("user@example.com", loc.Element("textfield"))
+```
+
+### Relative Positioning
+```python
+# Natural language
+agent.click("button below the form")
+
+# Locator
+agent.click(loc.Element().below_of(loc.Text("Login Form")))
+```
+
+### Combining Strategies
+```python
+# Precise selection with multiple criteria
+agent.click(
+    loc.Element()
+    .with_text("Submit")
+    .right_of(loc.Text("Cancel"))
+)
+```
+
+## Handling Edge Cases
+
+### Multiple Similar Elements
+When multiple elements match your selection criteria:
+- Use more specific descriptions or locators
+- Add relative positioning to narrow down the selection
+- Consider using index-based selection for lists
+
+### Dynamic Content
+For content that changes or loads dynamically:
+- Use element types rather than specific text when possible
+- Implement wait strategies for elements to appear
+- Use AI Elements for visual patterns that remain consistent
+
+### Cross-Platform Differences
+When automating across different platforms:
+- Test your selectors on all target platforms
+- Use element types that are consistent across platforms
+- Consider platform-specific fallback strategies
+
+## Performance Considerations
+
+- Natural language selection may be slightly slower but more flexible
+- Locators provide faster, more deterministic selection
+- Combine both approaches based on your specific needs
+
+For detailed technical information and code examples, see our [How-To Guide on Selecting UI Elements](/02-how-to-guides/05-build-ai-agents/02-select-elements).
+
+By following these guidelines, you'll create robust and maintainable element selection strategies for your automation workflows.

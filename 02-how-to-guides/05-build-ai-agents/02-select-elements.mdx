@@ -1,0 +1,100 @@
+---
+title: Select UI Elements
+description: How to select and interact with UI elements using AskUI
+---
+
+This guide shows you how to select and interact with UI elements using AskUI's Vision Agent.
+
+## Natural Language Selection
+
+The simplest way to select elements is using natural language with the [`click()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#click) method:
+
+```python
+from askui import Agent, locators as loc
+
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
+
+    # Click using natural language
+    agent.click("Login button")
+```
+
+## Using Locators for Precision
+
+For more precise selection, use locators:
+
+```python
+from askui import Agent, locators as loc
+
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
+   
+    agent.click(loc.Element("textfield"))
+    agent.type("Hello")
+```
+
+## Relative Positioning
+
+Find elements based on their position relative to other elements:
+
+```python
+# Click the textfield to the right of "Username"
+agent.click(
+    loc.Element().right_of(loc.Text("Username"))
+)
+
+# Select button below specific text
+agent.click(
+    loc.Element().below_of(loc.Text("Terms and Conditions"))
+)
+
+# Find element nearest to another
+agent.click(
+    loc.Text("Edit").nearest_to(loc.Text("Profile Settings"))
+)
+```
+
+## Handling Multiple Elements
+
+When multiple similar elements exist:
+
+```python
+# Select the first matching element
+agent.click(loc.Text("Delete").first())
+
+# Select by index (0-based)
+agent.click(loc.Element("button").at_index(2))
+
+# Select within a specific area
+agent.click(
+    loc.Text("Submit").inside_of(loc.Element("form"))
+)
+```
+
+## Multi-Monitor Support
+
+For systems with multiple displays:
+
+```python
+# Set display before interactions (1-based)
+agent.tools.os.set_display(2)  # Use second display
+agent.click("Submit")
+
+# Or with locators
+agent.tools.os.set_display(1)  # Use primary display
+agent.click(loc.Text("Submit"))
+```
+
+## Troubleshooting
+
+<Card title="Element Selection Issues?" icon="question-circle" href="/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr">
+  Having trouble finding elements or getting wrong selections? Check our comprehensive troubleshooting guide for element detection, OCR issues, and performance optimization tips.
+</Card>
+
+## Next Steps
+
+- Learn about [extracting data](/02-how-to-guides/05-build-ai-agents/02-extract-text) from selected elements
+- Explore [advanced interaction patterns](/03-explanation/02-core-concepts/03-interactions)
+- Read about [best practices](/03-explanation/02-core-concepts/06-best-practice-for-reliable-automation)

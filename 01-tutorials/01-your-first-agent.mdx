@@ -1,0 +1,206 @@
+---
+title: "Your First Agent"
+description: "Build your first automation agent with AskUI"
+---
+
+In this tutorial, you'll create your first AskUI agent that automates a real-world task: searching for products on Amazon.
+
+<Note>
+**Prerequisites**: Make sure you've completed the [installation](/01-tutorials/00-prerequisites) before starting this tutorial.
+</Note>
+
+## What You'll Build
+
+You'll create an agent that:
+1. Opens Amazon in a web browser
+2. Searches for a product
+3. Verifies the search results
+4. Generates a report of the automation
+
+## Building Your Agent
+
+<Steps>
+  <Step title="Create Your Agent Script">
+    Create a new Python file `amazon_shopping.py` and add the following code:
+
+    ```python
+    from askui import VisionAgent
+    import logging
+    from askui import locators as loc
+    from askui.reporting import SimpleHtmlReporter
+    
+    # Initialize your agent with logging and reporting
+    with VisionAgent(
+        log_level=logging.DEBUG,
+        reporters=[SimpleHtmlReporter()]
+    ) as agent:
+        # Open Amazon website
+        agent.tools.webbrowser.open_new("http://www.amazon.com")
+        agent.wait(3)  # Wait for page to load
+    
+        # Search for a product
+        agent.click(loc.Element("textfield"))
+        agent.type("nike shoes")
+        agent.keyboard('enter')
+        agent.wait(2)  # Wait for search results
+    
+        # Verify page contents
+        page_status = agent.get("Are Nike shoes visible on the screen?")
+        print(f"Cart Status: {page_status}")
+    ```
+
+    Run the script:
+
+    ```bash
+    python amazon_shopping.py
+    ```
+
+    The script will:
+
+    1. Open Amazon in your default browser
+    2. Search for "nike shoes"
+    3. Verify the cart contents
+    4. Generate an HTML report of the automation
+  </Step>
+  <Step title="Understanding Your Code">
+    Let's break down what each part does:
+
+    ### Agent Initialization
+    ```python
+    with VisionAgent(log_level=logging.DEBUG, reporters=[SimpleHtmlReporter()]) as agent:
+    ```
+    - Creates a vision agent that can see and interact with your screen
+    - Enables debug logging to see what's happening
+    - Sets up HTML reporting to review the automation later
+
+    ### Browser Control
+    ```python
+    agent.tools.webbrowser.open_new("http://www.amazon.com")
+    agent.wait(3)
+    ```
+    - Opens a new browser window with Amazon
+    - Waits for the page to load
+
+    ### Element Interaction
+    ```python
+    agent.click(loc.Element("textfield"))
+    agent.type("nike shoes")
+    agent.keyboard('enter')
+    ```
+    - Finds and clicks the search box
+    - Types the search query
+    - Presses Enter to search
+
+    ### Information Extraction
+    ```python
+    page_status = agent.get("Are Nike shoes visible on the screen?")
+    ```
+    - Uses AI to understand what's on the screen
+    - Returns a natural language response
+  </Step>
+  
+  <Step title="View the Report">
+    After running your agent, open the generated HTML report:
+    
+    ```bash
+    # The report will be in the same directory as your script
+    # Look for: report_YYYY-MM-DD_HH-MM-SS.html
+    ```
+    
+    The report shows:
+    - Screenshots of each step
+    - Actions performed
+    - Execution time
+    - Any errors encountered
+  </Step>
+</Steps>
+
+## Enhancing Your Agent
+
+Try these modifications to learn more:
+
+### 1. Add Product to Cart
+```python
+# After searching, click on the first product
+agent.click("first product image")
+agent.wait(2)
+
+# Add to cart
+agent.click("Add to Cart button")
+```
+
+### 2. Use Different Selectors
+```python
+# Using text locator
+agent.click(loc.Text("Search"))
+
+# Using relative positioning
+search_icon = loc.Element().right_of(loc.Element("textfield"))
+agent.click(search_icon)
+```
+
+### 3. Extract Product Information
+```python
+from askui import ResponseSchemaBase
+
+class ProductInfo(ResponseSchemaBase):
+    name: str
+    price: float
+    rating: float
+
+product = agent.get(
+    "What is the name, price, and rating of the first product?",
+    response_schema=ProductInfo
+)
+print(f"Found: {product.name} - ${product.price} ({product.rating} stars)")
+```
+
+## Common Issues and Solutions
+
+<AccordionGroup>
+  <Accordion title="Browser doesn't open">
+    - Check if you have a default browser set
+    - Try using a specific browser path
+    - Ensure AskUI Agent OS is running
+  </Accordion>
+  
+  <Accordion title="Element not found">
+    - Add wait times for dynamic content
+    - Use more specific locators
+    - Check if the element is visible on screen
+  </Accordion>
+  
+  <Accordion title="Script runs too fast">
+    - Add `agent.wait()` between actions
+    - Enable visual debugging with screenshots
+    - Use SimpleHTMLReporter
+  </Accordion>
+</AccordionGroup>
+
+## What You've Learned
+
+Congratulations! You've successfully:
+- ✅ Created your first AskUI agent
+- ✅ Automated browser interactions
+- ✅ Used AI to verify screen content
+- ✅ Generated automation reports
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Element Selection" icon="mouse-pointer" href="/02-how-to-guides/05-build-ai-agents/01-select-elements">
+    Learn advanced techniques for finding and selecting UI elements
+  </Card>
+  
+  <Card title="Data Extraction" icon="database" href="/02-how-to-guides/05-build-ai-agents/02-extract-data">
+    Extract structured data from any UI
+  </Card>
+  
+  <Card title="Configure AI Models" icon="robot" href="/02-how-to-guides/06-configure-different-models">
+    Use different AI models for specific tasks
+  </Card>
+  
+  <Card title="Best Practices" icon="star" href="/03-explanation/02-best-practices/01-element-selection/01-element-selection">
+    Learn patterns for reliable automation
+  </Card>
+</CardGroup>

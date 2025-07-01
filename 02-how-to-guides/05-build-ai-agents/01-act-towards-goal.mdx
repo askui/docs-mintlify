@@ -1,0 +1,36 @@
+---
+title: Act towards goal
+description: Use the act() command to accomplish tasks with natural language
+---
+
+The [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#act) command lets you describe what you want to achieve in natural language, and the AI agent figures out how to do it.
+
+## Basic Usage
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
+
+    agent.act("open the search field and search for agentic mode")
+```
+
+## When to Use act()
+
+Use [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#act) when you want to:
+- Quickly prototype an automation
+- Handle complex multi-step workflows
+- Work with UIs that change frequently
+- Let the AI figure out the best approach
+
+For more control over individual steps, see the guides on [selecting elements](./01-select-elements) and [extracting data](./02-extract-data).
+
+## Learn More
+
+For advanced prompting techniques and best practices, see [Agentic Mode Best Practices](/03-explanation/02-best-practices/04-agentic-mode) which covers:
+- Using "simulate" for enhanced stability
+- Adding verification conditions
+- Working with multiple approaches for actions
+- Handling complex conditional logic

@@ -1,0 +1,41 @@
+---
+title: Lists & Navigation
+description: Extract sidebar items, menu options, and hierarchical navigation structures
+---
+
+Navigation elements like sidebars, menus, and lists are essential UI components. Learn how to extract these structures.
+
+## Basic List Extraction
+
+```python
+from askui import VisionAgent, ResponseSchemaBase
+from typing import List
+
+
+class SidebarItem(ResponseSchemaBase):
+    name: str
+    children: List["SidebarItem"]
+
+class Sidebar(ResponseSchemaBase):
+    sidebar: List["SidebarItem"]
+
+
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("https://docs.askui.com")
+    agent.wait(3)  # Wait for page to load
+    
+    result = agent.get("Can you extract me the sidebar?", response_schema=Sidebar)
+    print(result.model_dump_json(indent=2))
+```
+
+## Best Practices
+
+1. **Handle Empty Lists**: Always check if lists are empty
+   ```python
+   items = agent.get("What are the menu items?", response_schema=List[str])
+   
+   if not items:
+       print("No menu items found")
+   else:
+       print(f"Found {len(items)} menu items")
+   ```

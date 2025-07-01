@@ -1,0 +1,155 @@
+---
+title: Extract Data from UI Overview
+description: Learn how to extract various types of data from UI elements using AskUI's get() method
+---
+
+This guide shows you how to extract different types of data from your UI using AskUI's [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get) method. Data extraction is a fundamental capability for building AI agents that can read and understand UI content.
+
+## Quick Start
+
+The [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get) method allows you to ask questions about your UI and receive structured responses:
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    # Basic text extraction
+    text = agent.get("What is the main heading?", response_schema=str)
+    
+    # Boolean questions
+    is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
+    
+    # Numeric values
+    count = agent.get("How many items are in the cart?", response_schema=int)
+```
+
+## Data Extraction Types
+
+<CardGroup cols={2}>
+  <Card title="Yes/No Questions" icon="circle-check" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/yes-no-questions">
+    Get boolean answers about UI state and conditions
+  </Card>
+  
+  <Card title="Text Extraction" icon="font" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/text-extraction">
+    Extract text content from UI elements
+  </Card>
+  
+  <Card title="Numbers" icon="hashtag" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/numbers">
+    Get numeric values like counts, prices, and metrics
+  </Card>
+  
+  <Card title="Tables" icon="table" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/tables">
+    Extract structured data from tables
+  </Card>
+  
+  <Card title="Lists & Navigation" icon="list" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/lists-navigation">
+    Extract sidebar items, menu options, and navigation structures
+  </Card>
+  
+  <Card title="Tabs" icon="folder-open" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/tabs">
+    Get information about tabs and their states
+  </Card>
+  
+  <Card title="Cards & Tiles" icon="square" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/cards">
+    Extract data from card layouts and tile grids
+  </Card>
+  
+</CardGroup>
+
+## Common Patterns
+
+### Form Validation
+```python
+with VisionAgent() as agent:
+    # Check form state before submission
+    has_errors = agent.get(
+        "Are there any validation errors?", 
+        response_schema=bool
+    )
+    
+    if not has_errors:
+        agent.click("Submit")
+    else:
+        error_messages = agent.get(
+            "What are the error messages?",
+            response_schema=List[str]
+        )
+        print(f"Fix these errors: {error_messages}")
+```
+
+### Dashboard Metrics
+```python
+from askui import ResponseSchemaBase
+
+class Metrics(ResponseSchemaBase):
+    total_users: int
+    active_sessions: int
+    revenue: float
+    growth_percentage: float
+
+with VisionAgent() as agent:
+    dashboard = agent.get(
+        "Extract the dashboard metrics",
+        response_schema=Metrics
+    )
+```
+
+### Search Results
+```python
+class SearchResult(ResponseSchemaBase):
+    title: str
+    url: str
+    description: str
+
+with VisionAgent() as agent:
+    results = agent.get(
+        "Get all search results",
+        response_schema=List[SearchResult]
+    )
+```
+
+## Best Practices
+
+1. **Be Specific**: More specific questions yield better results
+   ```python
+   # Good
+   price = agent.get("What is the total price in the checkout?", response_schema=float)
+   
+   # Less specific
+   price = agent.get("What's the price?", response_schema=float)
+   ```
+
+2. **Use Appropriate Types**: Match response schema to expected data
+   ```python
+   # For counts, use int
+   count = agent.get("How many notifications?", response_schema=int)
+   
+   # For prices, use float
+   price = agent.get("What's the price?", response_schema=float)
+   ```
+
+3. **Handle Missing Data**: Use Optional fields when data might not exist
+   ```python
+   from typing import Optional
+   
+   class UserProfile(ResponseSchemaBase):
+       name: str
+       email: str
+       phone: Optional[str] = None
+   ```
+
+## Troubleshooting
+
+<Card title="Data Extraction Issues?" icon="question-circle" href="/02-how-to-guides/04-troubleshooting/04-data-extraction">
+  Getting empty results or type errors? Our data extraction troubleshooting guide covers common problems and solutions for the `get()` method.
+</Card>
+
+<Card title="Performance Optimization" icon="rocket" href="/03-explanation/02-best-practices/03-interactions#data-extraction-performance">
+  Learn how to optimize data extraction performance with batch extraction and caching strategies.
+</Card>
+
+## Next Steps
+
+- Learn about [advanced interaction patterns](/03-explanation/02-best-practices/03-interactions)
+- Explore [best practices](/03-explanation/02-best-practices/04-agentic-mode)
+- See detailed examples for each data type in the sections above

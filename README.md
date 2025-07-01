@@ -1,12 +1,27 @@
-# AskUI Mintlify Docs
+# AskUI Documentation
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+This is the AskUI documentation. The documentation covers:
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+- Python Vision Agent
+- AskUI Suite
+- Workspaces Service API
+- AskUI Inference API
+
+## Documentation Structure
+
+We follow the [Diátaxis framework](https://diataxis.fr/) which organizes content into four distinct categories:
+
+### 1. Tutorials (Learning-oriented)
+Step-by-step lessons for users who want to learn by doing. Build skills and confidence through hands-on experience.
+
+### 2. How-to Guides (Goal-oriented)
+Practical steps to solve specific problems. Focused instructions for users who need to accomplish particular tasks.
+
+### 3. Explanation (Understanding-oriented)
+Conceptual discussions that provide context, background, and deeper understanding of how and why things work.
+
+### 4. Reference (Information-oriented)
+Technical specifications, API documentation, command references, and configuration options for quick lookup.
 
 
 
