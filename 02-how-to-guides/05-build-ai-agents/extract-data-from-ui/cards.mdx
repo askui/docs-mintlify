@@ -8,12 +8,8 @@ Card layouts are popular UI patterns for displaying grouped information. Learn h
 ## Basic Card Extraction
 
 ```python
-from askui import ResponseSchemaBase
+from askui import ResponseSchemaBase, VisionAgent
 from typing import List, Optional
-from askui import Agent
-
-agent = Agent()
-agent.start()
 
 class Card(ResponseSchemaBase):
     title: str
@@ -21,14 +17,15 @@ class Card(ResponseSchemaBase):
     button_text: str
     image_url: Optional[str] = None
 
-cards = agent.get(
-    "Extract all card information",
-    response_schema=List[Card]
-)
-
-# Process cards
-for card in cards:
-    print(f"{card.title}: {card.description}")
+with VisionAgent() as agent:
+    cards = agent.get(
+        "Extract all card information",
+        response_schema=List[Card]
+    )
+    
+    # Process cards
+    for card in cards:
+        print(f"{card.title}: {card.description}")
 ```
 
 ## Cards with Selection State
@@ -49,21 +46,22 @@ class SelectableCard(ResponseSchemaBase):
     selected: bool  # Track selection state
     date: str = Field(description="The date in ISO format, e.g., '2023-10-01T12:00:00Z'")
 
-# Extract cards with their selection states
-cards = agent.get(
-    "Extract all the cards information including which one is selected",
-    response_schema=List[SelectableCard]
-)
-
-# Find selected card
-selected_card = next((card for card in cards if card.selected), None)
-if selected_card:
-    print(f"Selected: {selected_card.title} - {selected_card.model}")
-
-# Count cards
-total_cards = len(cards)
-selected_count = sum(1 for card in cards if card.selected)
-print(f"{selected_count} of {total_cards} cards selected")
+with VisionAgent() as agent:
+    # Extract cards with their selection states
+    cards = agent.get(
+        "Extract all the cards information including which one is selected",
+        response_schema=List[SelectableCard]
+    )
+    
+    # Find selected card
+    selected_card = next((card for card in cards if card.selected), None)
+    if selected_card:
+        print(f"Selected: {selected_card.title} - {selected_card.model}")
+    
+    # Count cards
+    total_cards = len(cards)
+    selected_count = sum(1 for card in cards if card.selected)
+    print(f"{selected_count} of {total_cards} cards selected")
 ```
 
 ## Product Cards
@@ -81,17 +79,18 @@ class ProductCard(ResponseSchemaBase):
     in_stock: bool
     image_url: str
 
-products = agent.get(
-    "Extract all product cards",
-    response_schema=List[ProductCard]
-)
-
-# Find discounted products
-on_sale = [p for p in products if p.discount_percentage]
-print(f"{len(on_sale)} products on sale")
-
-# Find top-rated products
-top_rated = [p for p in products if p.rating >= 4.5]
+with VisionAgent() as agent:
+    products = agent.get(
+        "Extract all product cards",
+        response_schema=List[ProductCard]
+    )
+    
+    # Find discounted products
+    on_sale = [p for p in products if p.discount_percentage]
+    print(f"{len(on_sale)} products on sale")
+    
+    # Find top-rated products
+    top_rated = [p for p in products if p.rating >= 4.5]
 ```
 
 ## Dashboard Cards
@@ -107,17 +106,18 @@ class MetricCard(ResponseSchemaBase):
     time_period: str
     icon: Optional[str] = None
 
-dashboard_cards = agent.get(
-    "Extract all dashboard metric cards",
-    response_schema=List[MetricCard]
-)
-
-# Analyze performance
-improving = [m for m in dashboard_cards if m.change_direction == "up"]
-declining = [m for m in dashboard_cards if m.change_direction == "down"]
-
-print(f"Metrics improving: {len(improving)}")
-print(f"Metrics declining: {len(declining)}")
+with VisionAgent() as agent:
+    dashboard_cards = agent.get(
+        "Extract all dashboard metric cards",
+        response_schema=List[MetricCard]
+    )
+    
+    # Analyze performance
+    improving = [m for m in dashboard_cards if m.change_direction == "up"]
+    declining = [m for m in dashboard_cards if m.change_direction == "down"]
+    
+    print(f"Metrics improving: {len(improving)}")
+    print(f"Metrics declining: {len(declining)}")
 ```
 
 ## Grid Layouts
@@ -132,18 +132,19 @@ class GridCard(ResponseSchemaBase):
     width: int = 1  # Spans multiple columns
     height: int = 1  # Spans multiple rows
 
-grid_cards = agent.get(
-    "Extract the grid layout cards with their positions",
-    response_schema=List[GridCard]
-)
-
-# Reconstruct grid layout
-max_row = max(card.row for card in grid_cards)
-max_col = max(card.column for card in grid_cards)
-
-grid = [[None for _ in range(max_col + 1)] for _ in range(max_row + 1)]
-for card in grid_cards:
-    grid[card.row][card.column] = card.content
+with VisionAgent() as agent:
+    grid_cards = agent.get(
+        "Extract the grid layout cards with their positions",
+        response_schema=List[GridCard]
+    )
+    
+    # Reconstruct grid layout
+    max_row = max(card.row for card in grid_cards)
+    max_col = max(card.column for card in grid_cards)
+    
+    grid = [[None for _ in range(max_col + 1)] for _ in range(max_row + 1)]
+    for card in grid_cards:
+        grid[card.row][card.column] = card.content
 ```
 
 ## Interactive Cards
@@ -159,18 +160,19 @@ class InteractiveCard(ResponseSchemaBase):
     can_dismiss: bool = False
     is_expanded: bool = False
 
-cards = agent.get(
-    "Extract all interactive cards",
-    response_schema=List[InteractiveCard]
-)
-
-# Interact with cards
-for card in cards:
-    if not card.is_expanded:
-        agent.click(f"Expand the {card.title} card")
+with VisionAgent() as agent:
+    cards = agent.get(
+        "Extract all interactive cards",
+        response_schema=List[InteractiveCard]
+    )
     
-    # Perform primary action
-    agent.click(card.primary_action)
+    # Interact with cards
+    for card in cards:
+        if not card.is_expanded:
+            agent.click(f"Expand the {card.title} card")
+        
+        # Perform primary action
+        agent.click(card.primary_action)
 ```
 
 ## Card Filtering and Sorting
@@ -185,23 +187,24 @@ class FilterableCard(ResponseSchemaBase):
     date_created: str
     is_visible: bool
 
-all_cards = agent.get(
-    "Extract all cards including hidden ones",
-    response_schema=List[FilterableCard]
-)
-
-# Apply filters
-visible_cards = [c for c in all_cards if c.is_visible]
-
-# Group by category
-from collections import defaultdict
-by_category = defaultdict(list)
-for card in visible_cards:
-    by_category[card.category].append(card)
-
-# Find cards by tag
-def find_by_tag(cards: List[FilterableCard], tag: str):
-    return [c for c in cards if tag in c.tags]
+with VisionAgent() as agent:
+    all_cards = agent.get(
+        "Extract all cards including hidden ones",
+        response_schema=List[FilterableCard]
+    )
+    
+    # Apply filters
+    visible_cards = [c for c in all_cards if c.is_visible]
+    
+    # Group by category
+    from collections import defaultdict
+    by_category = defaultdict(list)
+    for card in visible_cards:
+        by_category[card.category].append(card)
+    
+    # Find cards by tag
+    def find_by_tag(cards: List[FilterableCard], tag: str):
+        return [c for c in cards if tag in c.tags]
 ```
 
 ## Common Patterns
@@ -217,14 +220,15 @@ class ArticleCard(ResponseSchemaBase):
     image_url: str
     category: str
 
-articles = agent.get(
-    "Extract all article cards",
-    response_schema=List[ArticleCard]
-)
-
-# Sort by date
-from datetime import datetime
-articles.sort(key=lambda x: datetime.fromisoformat(x.publish_date), reverse=True)
+with VisionAgent() as agent:
+    articles = agent.get(
+        "Extract all article cards",
+        response_schema=List[ArticleCard]
+    )
+    
+    # Sort by date
+    from datetime import datetime
+    articles.sort(key=lambda x: datetime.fromisoformat(x.publish_date), reverse=True)
 ```
 
 ### Team Member Cards
@@ -238,13 +242,14 @@ class TeamMemberCard(ResponseSchemaBase):
     avatar_url: str
     is_online: bool
 
-team = agent.get(
-    "Extract all team member cards",
-    response_schema=List[TeamMemberCard]
-)
-
-# Find online team members
-online_members = [m for m in team if m.is_online]
+with VisionAgent() as agent:
+    team = agent.get(
+        "Extract all team member cards",
+        response_schema=List[TeamMemberCard]
+    )
+    
+    # Find online team members
+    online_members = [m for m in team if m.is_online]
 ```
 
 ### Feature Cards
@@ -257,60 +262,64 @@ class FeatureCard(ResponseSchemaBase):
     requires_upgrade: bool
     documentation_link: Optional[str] = None
 
-features = agent.get(
-    "Extract all feature cards",
-    response_schema=List[FeatureCard]
-)
-
-# Identify upgrade opportunities
-upgrade_features = [f for f in features if f.requires_upgrade]
+with VisionAgent() as agent:
+    features = agent.get(
+        "Extract all feature cards",
+        response_schema=List[FeatureCard]
+    )
+    
+    # Identify upgrade opportunities
+    upgrade_features = [f for f in features if f.requires_upgrade]
 ```
 
 ## Best Practices
 
 1. **Handle Empty States**: Check for "no results" cards
    ```python
-   cards = agent.get("Extract all cards", response_schema=List[Card])
-   
-   if not cards:
-       # Check for empty state message
-       empty_message = agent.get(
-           "What does the empty state message say?",
-           response_schema=str
-       )
+   with VisionAgent() as agent:
+       cards = agent.get("Extract all cards", response_schema=List[Card])
+       
+       if not cards:
+           # Check for empty state message
+           empty_message = agent.get(
+               "What does the empty state message say?",
+               response_schema=str
+           )
    ```
 
 2. **Pagination for Card Grids**: Handle large collections
    ```python
-   all_cards = []
-   page = 1
-   
-   while True:
-       page_cards = agent.get(
-           "Extract visible cards on current page",
-           response_schema=List[Card]
-       )
-       all_cards.extend(page_cards)
+   with VisionAgent() as agent:
+       all_cards = []
+       page = 1
        
-       has_more = agent.get("Is there a 'Load More' button?", response_schema=bool)
-       if has_more:
-           agent.click("Load More")
-           page += 1
-       else:
-           break
+       while True:
+           page_cards = agent.get(
+               "Extract visible cards on current page",
+               response_schema=List[Card]
+           )
+           all_cards.extend(page_cards)
+           
+           has_more = agent.get("Is there a 'Load More' button?", response_schema=bool)
+           if has_more:
+               agent.click("Load More")
+               page += 1
+           else:
+               break
    ```
 
 3. **Dynamic Card Loading**: Handle lazy-loaded content
    ```python
-   # Scroll to load more cards
-   initial_count = agent.get("How many cards are visible?", response_schema=int)
-   
-   agent.scroll("down", 500)
-   agent.wait(2)  # Wait for loading
-   
-   new_count = agent.get("How many cards are visible?", response_schema=int)
-   if new_count > initial_count:
-       print(f"Loaded {new_count - initial_count} more cards")
+   with VisionAgent() as agent:
+       # Scroll to load more cards
+       initial_count = agent.get("How many cards are visible?", response_schema=int)
+       
+       agent.scroll("down", 500)
+       agent.wait(2)  # Wait for loading
+       
+       new_count = agent.get("How many cards are visible?", response_schema=int)
+       if new_count > initial_count:
+           print(f"Loaded {new_count - initial_count} more cards")
    ```
 
 ## Counting Cards Example
@@ -318,11 +327,12 @@ upgrade_features = [f for f in features if f.requires_upgrade]
 Simple card counting for validation:
 
 ```python
-# Count cards for summary
-card_count = agent.get("How many cards are displayed?", response_schema=int)
-print(f"Total cards: {card_count}")
-
-# Validate against extracted data
-extracted_cards = agent.get("Extract all cards", response_schema=List[Card])
-assert len(extracted_cards) == card_count, "Card count mismatch"
+with VisionAgent() as agent:
+    # Count cards for summary
+    card_count = agent.get("How many cards are displayed?", response_schema=int)
+    print(f"Total cards: {card_count}")
+    
+    # Validate against extracted data
+    extracted_cards = agent.get("Extract all cards", response_schema=List[Card])
+    assert len(extracted_cards) == card_count, "Card count mismatch"
 ```

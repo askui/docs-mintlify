@@ -19,7 +19,7 @@ Check for errors before and after submission using [`get()`](/04-reference/01-ag
 
 ```python
 # Fill form
-agent.type_text("invalidemail", loc.Element("textfield").right_of(loc.Text("Email")))
+agent.type("invalidemail", loc.Element("textfield").right_of(loc.Text("Email")))
 
 # Check for inline validation
 has_error = agent.get(  # See get() API reference
@@ -36,7 +36,7 @@ if has_error:
     
     # Fix the error
     agent.clear(loc.Element("textfield").right_of(loc.Text("Email")))
-    agent.type_text("valid@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+    agent.type("valid@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
 ```
 
 ## Multi-Step Forms
@@ -52,8 +52,8 @@ class FormStep(ResponseSchemaBase):
     step_name: str
 
 # Step 1: Personal Information
-agent.type_text("John", loc.Element("textfield").right_of(loc.Text("First Name")))
-agent.type_text("Doe", loc.Element("textfield").right_of(loc.Text("Last Name")))
+agent.type("John", loc.Element("textfield").right_of(loc.Text("First Name")))
+agent.type("Doe", loc.Element("textfield").right_of(loc.Text("Last Name")))
 agent.click("Next")
 
 # Check progress
@@ -64,8 +64,8 @@ progress = agent.get(
 print(f"On step {progress.current_step} of {progress.total_steps}: {progress.step_name}")
 
 # Step 2: Contact Details
-agent.type_text("john@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
-agent.type_text("+1234567890", loc.Element("textfield").right_of(loc.Text("Phone")))
+agent.type("john@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+agent.type("+1234567890", loc.Element("textfield").right_of(loc.Text("Phone")))
 agent.click("Next")
 
 # Step 3: Review and Submit
@@ -109,7 +109,7 @@ Handle file upload fields:
 agent.click(loc.Element("button").with_text("Choose File"))
 
 # Type file path in system dialog
-agent.type_text("/path/to/document.pdf")
+agent.type("/path/to/document.pdf")
 agent.key("Return")  # Press Enter
 
 # Verify upload
@@ -148,7 +148,7 @@ print(f"About to submit: {current_data.model_dump()}")
 ### Address Autocomplete
 ```python
 # Start typing address
-agent.type_text(
+agent.type(
     "123 Main",
     loc.Element("textfield").right_of(loc.Text("Address"))
 )
@@ -220,15 +220,15 @@ errors = agent.get(
 # Fill required fields based on errors
 for error in errors:
     if "email" in error.lower():
-        agent.type_text("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+        agent.type("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
     elif "name" in error.lower():
-        agent.type_text("Test User", loc.Element("textfield").right_of(loc.Text("Name")))
+        agent.type("Test User", loc.Element("textfield").right_of(loc.Text("Name")))
 ```
 
 ### Form Reset
 ```python
 # Fill some fields
-agent.type_text("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
+agent.type("test@example.com", loc.Element("textfield").right_of(loc.Text("Email")))
 
 # Reset form
 agent.click("Reset")

@@ -108,11 +108,11 @@ import os
 
 load_dotenv()
 
-from askui import Agent
+from askui import VisionAgent
 
 # Credentials are loaded from .env automatically
-agent = Agent()
-agent.start()
+with VisionAgent() as agent:
+    pass  # Your agent code here
 ```
 
 <Note>

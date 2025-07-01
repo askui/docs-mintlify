@@ -8,16 +8,14 @@ Extract text content from your UI using string response schemas. This is useful 
 ## Basic Usage
 
 ```python
-from askui import Agent
+from askui import VisionAgent
 
-agent = Agent()
-agent.start()
-
-agent.tools.webbrowser.open_new("http://www.example.com")
-agent.wait(3)
-
-text = agent.get("What is the main heading?", response_schema=str)
-print(f"main heading: {text}")
+with VisionAgent() as agent:
+    agent.tools.webbrowser.open_new("http://www.example.com")
+    agent.wait(3)
+    
+    text = agent.get("What is the main heading?", response_schema=str)
+    print(f"main heading: {text}")
 ```
 
 ## Best Practices

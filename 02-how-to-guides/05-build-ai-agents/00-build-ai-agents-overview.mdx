@@ -30,17 +30,15 @@ Before starting these guides, make sure you have:
 ## Quick Start
 
 ```python
-from askui import Agent
+from askui import VisionAgent
 
 # Initialize your agent
-agent = Agent()
-agent.start()
-
-# Your first element interaction
-agent.click("Login button")
-
-# Your first data extraction
-is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
+with VisionAgent() as agent:
+    # Your first element interaction
+    agent.click("Login button")
+    
+    # Your first data extraction
+    is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
 ```
 
 ## Guide Structure

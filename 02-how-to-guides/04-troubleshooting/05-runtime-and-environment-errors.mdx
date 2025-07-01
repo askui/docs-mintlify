@@ -130,25 +130,17 @@ details = "Session info doesn't match."
 1. **Close agents properly:**
    ```python
    # Always use context manager
-   with Agent() as agent:
+   with VisionAgent() as agent:
        # Your automation
        pass
    # Agent automatically closed
-   
-   # Or explicitly close
-   agent = Agent()
-   try:
-       # Your automation
-       pass
-   finally:
-       agent.stop()
    ```
 
 2. **Limit concurrent agents:**
    ```python
    # Run agents sequentially instead of parallel
    for task in tasks:
-       with Agent() as agent:
+       with VisionAgent() as agent:
            process_task(agent, task)
    ```
 
@@ -168,7 +160,7 @@ details = "Session info doesn't match."
    ```python
    # Initialize once at start
    def initialize_askui():
-       with Agent() as agent:
+       with VisionAgent() as agent:
            agent.get("Test", response_schema=str)
    
    # Run at application start
@@ -285,7 +277,7 @@ logging.basicConfig(
 )
 
 # Now run your agent
-with Agent() as agent:
+with VisionAgent() as agent:
     agent.click("Button")  # Will show debug info
 ```
 

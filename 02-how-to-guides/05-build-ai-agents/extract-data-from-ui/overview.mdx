@@ -10,19 +10,17 @@ This guide shows you how to extract different types of data from your UI using A
 The [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get) method allows you to ask questions about your UI and receive structured responses:
 
 ```python
-from askui import Agent
+from askui import VisionAgent
 
-agent = Agent()
-agent.start()
-
-# Basic text extraction
-text = agent.get("What is the main heading?", response_schema=str)
-
-# Boolean questions
-is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
-
-# Numeric values
-count = agent.get("How many items are in the cart?", response_schema=int)
+with VisionAgent() as agent:
+    # Basic text extraction
+    text = agent.get("What is the main heading?", response_schema=str)
+    
+    # Boolean questions
+    is_loaded = agent.get("Is the page fully loaded?", response_schema=bool)
+    
+    # Numeric values
+    count = agent.get("How many items are in the cart?", response_schema=int)
 ```
 
 ## Data Extraction Types
@@ -62,20 +60,21 @@ count = agent.get("How many items are in the cart?", response_schema=int)
 
 ### Form Validation
 ```python
-# Check form state before submission
-has_errors = agent.get(
-    "Are there any validation errors?", 
-    response_schema=bool
-)
-
-if not has_errors:
-    agent.click("Submit")
-else:
-    error_messages = agent.get(
-        "What are the error messages?",
-        response_schema=List[str]
+with VisionAgent() as agent:
+    # Check form state before submission
+    has_errors = agent.get(
+        "Are there any validation errors?", 
+        response_schema=bool
     )
-    print(f"Fix these errors: {error_messages}")
+    
+    if not has_errors:
+        agent.click("Submit")
+    else:
+        error_messages = agent.get(
+            "What are the error messages?",
+            response_schema=List[str]
+        )
+        print(f"Fix these errors: {error_messages}")
 ```
 
 ### Dashboard Metrics
@@ -88,10 +87,11 @@ class Metrics(ResponseSchemaBase):
     revenue: float
     growth_percentage: float
 
-dashboard = agent.get(
-    "Extract the dashboard metrics",
-    response_schema=Metrics
-)
+with VisionAgent() as agent:
+    dashboard = agent.get(
+        "Extract the dashboard metrics",
+        response_schema=Metrics
+    )
 ```
 
 ### Search Results
@@ -101,10 +101,11 @@ class SearchResult(ResponseSchemaBase):
     url: str
     description: str
 
-results = agent.get(
-    "Get all search results",
-    response_schema=List[SearchResult]
-)
+with VisionAgent() as agent:
+    results = agent.get(
+        "Get all search results",
+        response_schema=List[SearchResult]
+    )
 ```
 
 ## Best Practices

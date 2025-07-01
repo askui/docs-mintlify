@@ -8,9 +8,9 @@ The [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/ag
 ## Basic Usage
 
 ```python
-from askui import Agent
+from askui import VisionAgent
 
-with Agent() as agent:
+with VisionAgent() as agent:
     agent.tools.webbrowser.open_new("https://docs.askui.com")
     agent.wait(3)  # Wait for page to load
 
