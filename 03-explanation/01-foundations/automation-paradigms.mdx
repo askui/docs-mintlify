@@ -1,0 +1,77 @@
+---
+title: "Automation Paradigms"
+description: "Understand AskUI's single-step commands and agentic instruction approaches"
+---
+
+AskUI operates through two distinct paradigms that reflect different approaches to automation complexity. Understanding these paradigms helps explain why AskUI can handle both simple, deterministic tasks and complex, adaptive workflows.
+
+## Two Automation Paradigms
+
+### Single-Step Commands: Precision Automation
+
+Single-step commands represent the traditional automation approach where each interaction is explicitly defined and controlled. This paradigm treats automation as a series of precise, predictable actions.
+
+```python
+# Single-step approach: explicit control
+with VisionAgent() as agent:
+    agent.mouse_scroll(0, 10)
+    agent.type("john.doe")
+    agent.click("Submit button")
+```
+
+This approach excels when:
+- **Deterministic outcomes** are required
+- **Performance** is critical
+- **Debugging** needs to be precise
+- **Integration** with existing automation frameworks is necessary
+
+### Agentic Instructions: Intent-Based Automation
+
+Agentic instructions represent a paradigm shift toward goal-oriented automation where the agent interprets high-level intentions and determines the necessary steps independently.
+
+```python
+# Agentic approach: intent-based control
+with VisionAgent() as agent:
+    agent.act("Fill out the login form with username john.doe and submit it")
+    agent.act("Open the settings menu and navigate to display preferences")
+```
+
+This approach excels when:
+- **Adaptive behavior** is needed for changing interfaces
+- **Natural language** better expresses the desired outcome
+- **Complex workflows** involve decision-making
+- **Maintenance overhead** needs to be minimized
+
+## Paradigm Trade-offs and Implications
+
+The choice between single-step commands and agentic instructions reflects a fundamental tension in automation design between **control and convenience**.
+
+### Control vs. Convenience
+
+**Single-step commands** maximize control by requiring explicit specification of each action. This precision comes at the cost of verbosity and maintenance overhead when interfaces change.
+
+**Agentic instructions** maximize convenience by allowing natural language descriptions of desired outcomes. This simplicity comes at the cost of reduced predictability and debugging complexity.
+
+### Performance vs. Adaptability
+
+**Single-step commands** offer predictable performance characteristics because each action maps directly to a specific operation. The execution path is deterministic and can be optimized.
+
+**Agentic instructions** sacrifice some performance predictability for adaptability. The agent must interpret the instruction, plan a sequence of actions, and adapt to unexpected interface states.
+
+### When Paradigms Converge
+
+In practice, most automation workflows benefit from combining both paradigms. Critical operations might use single-step commands for reliability, while exploratory or setup tasks might use agentic instructions for flexibility.
+
+The paradigms also converge in error handling: both rely on AskUI's visual understanding to detect when actions succeed or fail, regardless of whether the action was explicitly specified or autonomously planned.
+
+## Execution Philosophy
+
+Regardless of paradigm, AskUI's execution follows a consistent philosophy: **visual understanding over structural assumptions**. Rather than relying on DOM selectors, accessibility labels, or API calls, both single-step commands and agentic instructions operate through visual analysis of the interface as it appears to users.
+
+This approach means that both paradigms work equally well with legacy applications, modern web interfaces, and mobile apps – any interface that can be visually perceived can be automated.
+
+## Next Steps
+
+- Review [Core Components](/03-explanation/01-foundations/core-components)
+- Learn about [Element Selection Best Practices](/03-explanation/02-best-practices/01-element-selection/01-element-selection)
+- Explore [AI Models](/03-explanation/03-ai-models/01-grounding-models)

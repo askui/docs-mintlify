@@ -153,11 +153,11 @@
         {
           "group": "Foundations",
           "pages": [
-            "03-explanation/01-foundations/01-foundations-overview",
-            "03-explanation/01-foundations/02-core-components",
-            "03-explanation/01-foundations/03-multi-platform-support",
-            "03-explanation/01-foundations/03-workflow",
-            "03-explanation/01-foundations/04-ai-models"
+            "03-explanation/01-foundations/foundations-overview",
+            "03-explanation/01-foundations/core-components",
+            "03-explanation/01-foundations/agent-types",
+            "03-explanation/01-foundations/automation-paradigms",
+            "03-explanation/01-foundations/ai-models"
           ]
         },
         {
