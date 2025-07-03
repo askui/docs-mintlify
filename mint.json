@@ -155,6 +155,7 @@
           "pages": [
             "03-explanation/01-foundations/01-foundations-overview",
             "03-explanation/01-foundations/02-core-components",
+            "03-explanation/01-foundations/03-multi-platform-support",
             "03-explanation/01-foundations/03-workflow",
             "03-explanation/01-foundations/04-ai-models"
           ]

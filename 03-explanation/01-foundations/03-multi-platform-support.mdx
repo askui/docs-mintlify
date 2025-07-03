@@ -1,0 +1,97 @@
+---
+title: "Multi-Platform Support"
+description: "Understand how AskUI supports different platforms through specialized agent types"
+---
+
+Multi-platform automation presents unique challenges that have shaped AskUI's architectural approach. Rather than building a single, monolithic agent that attempts to handle all platforms, AskUI employs specialized agent types that understand the distinct characteristics and interaction patterns of different environments.
+
+## The Multi-Platform Challenge
+
+Traditional automation tools often struggle with platform diversity because they apply a one-size-fits-all approach. Desktop applications behave differently from mobile apps, which behave differently from web applications. Each platform has its own:
+
+- **Interaction paradigms**: Desktop uses mouse and keyboard, mobile uses touch gestures, web applications combine both
+- **UI element hierarchies**: Desktop controls follow OS conventions, mobile apps use platform-specific widgets, web pages use DOM structures
+- **Performance characteristics**: Desktop apps run locally, mobile apps have resource constraints, web apps depend on network connectivity
+- **Security models**: Each platform has different access controls and permissions
+
+AskUI's response to this complexity is architectural specialization rather than generalization.
+
+## Agent Specialization Philosophy
+
+AskUI's multi-platform support is built on the principle that **platform-specific optimization outperforms universal compatibility**. This design philosophy manifests in several ways:
+
+### VisionAgent: The Desktop Generalist
+
+The VisionAgent embodies AskUI's approach to desktop automation by embracing the diversity of desktop environments. Unlike mobile platforms with standardized UI guidelines, desktop applications span decades of different UI frameworks, from native OS controls to modern web-based applications running in browsers.
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    # Seamlessly handles both desktop apps and web browsers
+    agent.click("file menu")
+    agent.type("username field", "john.doe")
+    agent.mouse_move("submit button")
+```
+
+The VisionAgent's design reflects this reality by:
+- **Accommodating multiple interaction models**: It seamlessly handles both traditional desktop applications and web-based interfaces
+- **Bridging platform boundaries**: The same agent can interact with native Windows applications, macOS apps, and web browsers
+- **Abstracting OS differences**: While maintaining platform-specific capabilities, it provides a consistent interface across Windows, macOS, and Linux
+
+### AndroidVisionAgent: The Mobile Specialist
+
+The AndroidVisionAgent represents a different design philosophy tailored to mobile's unique constraints and interaction patterns. Mobile automation requires understanding:
+
+- **Touch-centric interactions**: Mobile interfaces are designed for finger-based navigation, not cursor precision
+- **Context-aware behavior**: Mobile apps heavily rely on sensors, location, and device state
+- **Resource sensitivity**: Mobile automation must account for battery usage, network connectivity, and processing limitations
+- **Platform conventions**: Android's Material Design and navigation patterns differ fundamentally from desktop paradigms
+
+```python
+from askui import AndroidVisionAgent
+
+with AndroidVisionAgent() as agent:
+    # Touch-optimized interactions for mobile interfaces
+    agent.tap("settings")
+    agent.type("search field", "bluetooth")
+    agent.act("Navigate to bluetooth settings")
+```
+
+The AndroidVisionAgent's specialization allows it to work naturally within these constraints rather than fighting against them.
+
+## Design Trade-offs and Architectural Decisions
+
+The decision to create specialized agents rather than a unified interface represents a fundamental trade-off in automation architecture. This choice has several implications:
+
+### Specialization vs. Universality
+
+**Why specialization won**: Early automation tools attempted to create universal interfaces that could handle any platform. This approach consistently failed because:
+- Platform-specific optimizations became impossible
+- The lowest common denominator approach reduced effectiveness across all platforms
+- Maintaining compatibility with diverse platforms created complex, fragile code
+- Users ended up writing platform-specific code anyway to handle edge cases
+
+**The cost of specialization**: AskUI's approach requires users to understand which agent to use for which platform. This creates a learning curve but provides more reliable and efficient automation.
+
+### Consistency vs. Optimization
+
+AskUI balances consistency with optimization by maintaining **conceptual consistency** while allowing **implementation divergence**. Both agents share core concepts like `locate()`, `get()`, and `act()`, but their implementations are optimized for their respective platforms.
+
+This approach recognizes that while users want consistent mental models, the underlying platforms behave differently enough that forced API consistency would compromise effectiveness.
+
+### Platform Evolution and Future-Proofing
+
+The specialized agent architecture also considers how platforms evolve differently:
+
+- **Desktop platforms** are becoming more web-centric, with applications increasingly built on web technologies
+- **Mobile platforms** are moving toward more contextual, AI-driven interfaces
+- **Emerging platforms** like VR/AR, IoT devices, and voice interfaces have fundamentally different interaction paradigms
+
+By separating platform concerns into specialized agents, AskUI can evolve each agent independently as platforms change, without forcing artificial compatibility constraints.
+
+## Next Steps
+
+- Learn about the [Workflow](/03-explanation/01-foundations/03-workflow) to understand how these agents operate
+- Explore platform-specific [Best Practices](/03-explanation/02-best-practices/01-element-selection/01-element-selection) for effective automation
+- Read about [AI Models](/03-explanation/03-ai-models/01-grounding-models) to understand the intelligence behind multi-platform support
