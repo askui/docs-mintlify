@@ -55,17 +55,6 @@ agent.click("save button")
 - **Retry if needed**: Automatically retry failed actions based on configuration
 - **Report issues**: Log errors and generate reports for debugging
 
-```python
-# Built-in error handling with retry
-from askui import retry
-
-@retry(max_attempts=3, wait_time=2)
-def login():
-    agent.type("username field", "john.doe")
-    agent.type("password field", "secret123")
-    agent.click("login button")
-```
-
 ## Execution Flow
 
 Here's a visual representation of how AskUI processes a command:
