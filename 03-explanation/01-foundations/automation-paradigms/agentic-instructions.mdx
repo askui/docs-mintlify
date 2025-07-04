@@ -1,0 +1,31 @@
+---
+title: "Agentic Instructions"
+description: "The recommended approach for most automation tasks"
+---
+
+<Tip>**Agentic instructions are the recommended approach for most automation tasks.**</Tip>
+
+Instead of specifying each action, you describe what you want to accomplish. The agent figures out how to do it.
+
+## Philosophy of Agentic Instructions
+
+Agentic instructions operate on the principle of **intent-based automation**, where users describe what they want to accomplish rather than how to accomplish it. This approach provides:
+
+- **Natural Language Interface**: Communicate goals in human terms
+- **Adaptive Behavior**: Agents adjust to interface changes automatically
+- **Reduced Maintenance**: High-level instructions remain valid despite UI changes
+- **Complex Reasoning**: Agents can handle multi-step workflows autonomously
+
+```python
+# Agentic approach: intent-based control
+with VisionAgent() as agent:
+    agent.act("Fill out the login form with username john.doe and submit it")
+    agent.act("Navigate to the user profile settings")
+    agent.act("Update the display preferences to dark mode")
+```
+
+## Next Steps
+
+- Review **[Single-Step Commands](/03-explanation/01-foundations/automation-paradigms/single-step-commands)** for comparison
+- Explore **[Effective Agentic Instructions](/03-explanation/02-best-practices/04-agentic-mode)** for best practices
+- Learn about **[AI Models](/03-explanation/01-foundations/ai-models)** that power agentic reasoning

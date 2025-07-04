@@ -154,9 +154,16 @@
           "group": "Foundations",
           "pages": [
             "03-explanation/01-foundations/foundations-overview",
-            "03-explanation/01-foundations/core-components",
+            "03-explanation/01-foundations/agents",
             "03-explanation/01-foundations/agent-types",
-            "03-explanation/01-foundations/automation-paradigms",
+            {
+              "group": "Automation Paradigms",
+              "pages": [
+                "03-explanation/01-foundations/automation-paradigms/overview",
+                "03-explanation/01-foundations/automation-paradigms/agentic-instructions",
+                "03-explanation/01-foundations/automation-paradigms/single-step-commands"
+              ]
+            },
             "03-explanation/01-foundations/ai-models"
           ]
         },

@@ -1,0 +1,101 @@
+---
+title: "Agents"
+description: "Understand the foundational concept of agents in AskUI"
+---
+
+At the core of AskUI's architecture is the concept of **agents** - intelligent entities that understand, reason about, and interact with user interfaces on behalf of users. Agents represent a fundamental shift from traditional automation approaches by embedding intelligence directly into the automation process.
+
+## What Are Agents?
+
+An agent in AskUI is an autonomous system that combines multiple AI capabilities to interact with user interfaces:
+
+- **Visual Understanding**: Agents perceive and interpret UI elements through computer vision
+- **Contextual Reasoning**: They understand the purpose and relationships between interface elements
+- **Adaptive Behavior**: Agents adjust their actions based on changing interface states
+- **Goal-Oriented Operation**: They work toward completing user-specified objectives
+
+Unlike traditional automation scripts that follow rigid sequences, agents make intelligent decisions about how to achieve desired outcomes.
+
+## Why Agent-Based Automation?
+
+Traditional automation tools require brittle, precise instructions that break when interfaces change. AskUI's agent-based approach addresses these limitations:
+
+### Resilience to Interface Changes
+Agents understand the *purpose* of interface elements, not just their technical properties. When a button moves or changes appearance, agents can still locate and interact with it based on its function.
+
+### Natural Language Interface
+Agents bridge the gap between human intention and machine execution. Users can describe what they want to accomplish in natural language, and agents translate this into appropriate actions.
+
+### Contextual Understanding
+Agents maintain awareness of the current state of the interface and adapt their behavior accordingly. They can recognize when actions succeed or fail and adjust their approach.
+
+## Core Agent Lifecycle
+
+Every AskUI agent follows a consistent operational lifecycle:
+
+1. **Perception**: The agent captures and analyzes the current state of the interface
+2. **Understanding**: It interprets the visual information to identify elements and their relationships
+3. **Planning**: The agent determines the appropriate sequence of actions to achieve the goal
+4. **Execution**: It performs the planned actions on the interface
+5. **Verification**: The agent confirms whether actions succeeded and adjusts if necessary
+
+```python
+from askui import VisionAgent
+
+# Agent initialization creates the perception and reasoning systems
+with VisionAgent() as agent:
+    # Perception: Agent analyzes the current interface
+    # Understanding: Agent interprets the "login form" concept
+    # Planning: Agent determines the sequence of actions needed
+    # Execution: Agent performs the planned interactions
+    # Verification: Agent confirms successful completion
+    agent.act("Fill out the login form with username john.doe")
+```
+
+## Agent Capabilities
+
+AskUI agents possess several key capabilities that enable intelligent automation:
+
+### Visual Recognition
+Agents can identify and understand UI elements regardless of their underlying technology:
+- Native desktop applications
+- Web browsers and web applications
+- Mobile applications
+- Legacy systems without API access
+
+### Contextual Reasoning
+Agents understand the relationships between elements and can make inferences about interface behavior:
+- Recognizing form fields that belong together
+- Understanding navigation hierarchies
+- Identifying interactive vs. static elements
+
+### Error Recovery
+When actions don't produce expected results, agents can:
+- Retry operations with different approaches
+- Recognize error states and respond appropriately
+- Adapt to unexpected interface changes
+
+### Multi-Modal Interaction
+Agents can interact through multiple channels:
+- Visual element identification and interaction
+- Natural language command interpretation
+- Structured data extraction and analysis
+
+## Agent Intelligence
+
+The intelligence of AskUI agents comes from the integration of several AI technologies:
+
+- **Computer Vision Models**: For understanding visual interface elements
+- **Natural Language Processing**: For interpreting user instructions
+- **Reasoning Engines**: For planning and decision-making
+- **Behavioral Models**: For understanding typical interface interaction patterns
+
+This combination allows agents to operate at a level of abstraction that matches human understanding of interfaces.
+
+## Next Steps
+
+Understanding agents as the foundation of AskUI automation leads to several important concepts:
+
+- **[Agent Types](/03-explanation/01-foundations/agent-types)**: Different specialized agents for different platforms
+- **[Automation Paradigms](/03-explanation/01-foundations/automation-paradigms)**: How agents can operate in different modes
+- **[AI Models](/03-explanation/01-foundations/ai-models)**: The underlying intelligence that powers agent behavior
