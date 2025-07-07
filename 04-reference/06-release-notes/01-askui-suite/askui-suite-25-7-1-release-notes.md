@@ -1,4 +1,4 @@
-# AskUI Suite # AskUI Suite 25.7.1
+# AskUI Suite 25.7.1
 
 ## General
 
