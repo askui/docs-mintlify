@@ -21,7 +21,7 @@ You'll create an Android agent that:
 ## Android Setup Requirements
 
 Before building your agent, ensure you have:
-- Android Debug Bridge (ADB) installed and configured in your system's PATH. ADB is the command-line tool that lets your computer communicate with an Android device.
+- Android Debug Bridge (ADB) installed and configured in your system's PATH. ADB is the command-line tool that lets your computer communicate with an Android device. You can download it from the [Android SDK Platform Tools](https://developer.android.com/tools/releases/platform-tools).
 - An Android device with USB debugging enabled or an Android emulator running
 - The python-ppadb library, which is automatically installed as a dependency of askui
 
@@ -60,28 +60,8 @@ with AndroidVisionAgent(
     # To select a specific device if multiple are connected, use:
     # agent.set_device_by_serial_number("<your-device-serial>")
 
-    # Launch the Settings app using a shell command
-    print("Launching Settings app...")
-    agent.shell("am start -n com.android.settings/.Settings")
-    agent.wait(3)  # Wait for the app to load
+    agent.act("Open a browser and search for AskUI")
 
-    # Navigate to Wi-Fi settings
-    print("Tapping on 'Network & internet'...")
-    agent.tap("Network & internet")
-    agent.wait(2)
-
-    # Extract Wi-Fi status information
-    print("Checking Wi-Fi status...")
-    wifi_status = agent.get("What is the first item in this list?")
-    print(f"Top setting item: {wifi_status}")
-
-    # Go back to the previous screen
-    print("Going back...")
-    agent.key_tap('BACK')
-    agent.wait(1)
-    
-    # Go to the home screen
-    print("Going to home screen...")
     agent.key_tap('HOME')
 ```
 
@@ -124,40 +104,6 @@ agent.key_tap('HOME')
 ```
 - `key_tap()` simulates pressing hardware or special keys. It accepts any key from the `ANDROID_KEY` literal type, including `BACK`, `HOME`, `VOLUME_UP`, and `ENTER`
 </Step>
-
-<Step title="Advanced Android Automation">
-The `AndroidVisionAgent` supports various gestures. Here’s an example demonstrating how to perform a swipe and simulate a long press.
-
-```python
-from askui import AndroidVisionAgent
-import logging
-
-with AndroidVisionAgent(log_level=logging.DEBUG) as agent:
-    # Get screen dimensions for robust swipe coordinates
-    screen_size = agent.os.screenshot().size
-    center_x = screen_size[0] // 2
-    start_y = int(screen_size[1] * 0.8)
-    end_y = int(screen_size[1] * 0.2)
-    
-    # Swipe down to scroll a list
-    print("Scrolling down...")
-    agent.swipe(center_x, start_y, center_x, end_y, duration_in_ms=800)
-    agent.wait(1)
-
-    # A long press can be simulated with a swipe of 0 distance and a long duration
-    print("Simulating a long press...")
-    # First, locate the element to get its coordinates
-    element_coords = agent.locate("An item to long-press")
-    agent.swipe(
-        element_coords[0],
-        element_coords[1],
-        element_coords[0],
-        element_coords[1],
-        duration_in_ms=1500
-    )
-```
-</Step>
-</Steps>
 
 ## Platform-Specific Features
 
