@@ -159,9 +159,9 @@
             {
               "group": "Automation Paradigms",
               "pages": [
-                "03-explanation/01-foundations/automation-paradigms/overview",
-                "03-explanation/01-foundations/automation-paradigms/agentic-instructions",
-                "03-explanation/01-foundations/automation-paradigms/single-step-commands"
+                "03-explanation/01-foundations/automation-paradigms/01-overview",
+                "03-explanation/01-foundations/automation-paradigms/02-agentic-instructions",
+                "03-explanation/01-foundations/automation-paradigms/03-single-step-commands"
               ]
             },
             "03-explanation/01-foundations/ai-models"
