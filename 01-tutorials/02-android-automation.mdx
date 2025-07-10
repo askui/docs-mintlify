@@ -54,7 +54,6 @@ from askui.reporting import SimpleHtmlReporter
 
 # Initialize your Android agent with logging and reporting
 with AndroidVisionAgent(
-    log_level=logging.DEBUG,
     reporters=[SimpleHtmlReporter()]
 ) as agent:
     # The agent automatically connects to the first available device.
