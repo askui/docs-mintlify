@@ -18,16 +18,29 @@ Unlike traditional automation scripts that follow rigid sequences, agents make i
 
 ## Why Agent-Based Automation?
 
-Traditional automation tools require brittle, precise instructions that break when interfaces change. AskUI's agent-based approach addresses these limitations:
+Traditional automation tools assume applications behave predictably and deterministically. However, real-world applications are stateful and exhibit unpredictable behaviors that cannot be controlled. AskUI's agent-based approach addresses the fundamental challenge of dealing with stateful applications by mimicking human adaptability.
 
-### Resilience to Interface Changes
-Agents understand the *purpose* of interface elements, not just their technical properties. When a button moves or changes appearance, agents can still locate and interact with it based on its function.
+### Handling Unpredictable Application Behaviors
+
+Stateful applications present numerous challenges that traditional automation cannot handle:
+
+- **Variable Network Loading Times**: Applications may load quickly one moment and take several minutes the next, or fail entirely
+- **Hardware Dependencies**: Performance varies based on system resources, memory availability, and processing power
+- **External Application Interference**: Unexpected pop-ups from other applications (like Slack notifications) can disrupt workflows
+- **Random Dialog Appearances**: Applications may show different dialogs based on internal state or user history
+- **Inconsistent Loading Times**: The same operation might take 1 minute or 5 minutes depending on system conditions
+- **Pre-existing Test Data**: Applications may already contain data that affects subsequent operations
+
+### Human-Like Adaptability
+
+Since we cannot convert stateful applications into stateless ones, agents must deal with these situations like humans do. Agents continuously adapt their behavior based on what they observe, making real-time decisions about how to proceed when unexpected situations arise.
+
+### Action Validation and Recovery
+
+Agents can validate whether actions were successfully performed and recover from failures. For example, if an agent sends a scroll command but the mouse cursor wasn't in the scrollable area, the agent detects this failure, repositions the mouse, and performs the scroll action again.
 
 ### Natural Language Interface
-Agents bridge the gap between human intention and machine execution. Users can describe what they want to accomplish in natural language, and agents translate this into appropriate actions.
-
-### Contextual Understanding
-Agents maintain awareness of the current state of the interface and adapt their behavior accordingly. They can recognize when actions succeed or fail and adjust their approach.
+Agents bridge the gap between human intention and machine execution. Users can describe what they want to accomplish in natural language, and agents translate this into appropriate actions while handling the unpredictable nature of stateful applications.
 
 ## Core Agent Lifecycle
 
