@@ -34,46 +34,6 @@ Execute the test case "{test_case.title}" (ID: {test_case.test_case_id}) and cre
 - If blocked, try alternative approaches (scroll, different UI elements, etc.)
 - Never skip steps - document any failures and continue
 
-### 3. DOCUMENTATION REQUIREMENTS
-Create a markdown report at: `{folder_name}/{index + 1}_{test_case.test_case_id}.md`
-
-**Report Structure:**
-
-    # Test Case: {test_case.test_case_id} - {test_case.title}
-
-    ## Test Case Description
-    {test_case.title}
-
-    ## Pre-conditions
-    {test_case.pre_action}
-
-    ## Test Steps
-
-    ### Step X: [Action Description]
-    **Action:** [Detailed action performed]
-    **Expected Result:** [What should happen]
-    **Actual Result:** [What actually happened]
-    **Evidence:** ![Screenshot](./{index + 1}_{test_case.test_case_id}_images/[descriptive_filename].png)
-    **Status:** ✅ PASS / ❌ FAIL / ⚠️ BLOCKED
-    **Notes:** [Any additional observations or issues]
-
-    ## Overall Test Result
-    **Status:** ✅ PASS / ❌ FAIL / ⚠️ BLOCKED
-    **Execution Time:** [Start] - [End]
-    **Issues Encountered:** [List any problems]
-    **Notes:** [Final observations and recommendations]
-
-### 4. SCREENSHOT MANAGEMENT
-- Save all screenshots in: `{folder_name}/{index + 1}_{test_case.test_case_id}_images/`
-- Use descriptive filenames: `01_initial_screen.png`, `02_action_performed.png`, etc.
-- Don't forget to add the screenshots to the markdown file.
-- Add all screenshots to the markdown file.
-- Include screenshots for:
-  * Initial state
-  * After each significant action
-  * Error states or unexpected behavior
-  * Final state
-
 ### 5. ERROR HANDLING
 - **NEVER raise exceptions** - document all errors instead
 - If an action fails:
@@ -96,11 +56,6 @@ Create a markdown report at: `{folder_name}/{index + 1}_{test_case.test_case_id}
 - If the test is blocked, try to unblock it:
   * Max 3 attempts to unblock the test.
   * If the test is still blocked, mark the test as BLOCKED.
-  * Document the unblock attempt:
-    ### Unblock attempt X: [Unblock action Description]
-    **Evidence:** ![Screenshot](./{index + 1}_{test_case.test_case_id}_images/[descriptive_filename].png)
-    **Status:** ✅ Worked / ❌ Failed
-    **Notes:** [Any additional observations or issues]
 
 ### 7. QUALITY STANDARDS
 - Be thorough and methodical
