@@ -21,25 +21,6 @@ When interacting with UI elements in AskUI, following these best practices ensur
 - **Account for loading states** and dynamic content
 - **Handle overlapping elements** by being specific with locators
 
-### Error Handling
-
-```python
-from askui import VisionAgent, retry
-
-# Use retry decorator for critical actions
-@retry(max_attempts=3, wait_time=2)
-def click_critical_button(agent):
-    agent.click("Submit Order")
-
-# Handle specific error cases
-with VisionAgent() as agent:
-    try:
-        agent.click("Save")
-    except Exception as e:
-        # Log error and take alternative action
-        agent.get("What error message is displayed?")
-```
-
 ## Keyboard Operations
 
 ### Modifier Key Management

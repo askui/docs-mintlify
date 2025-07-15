@@ -69,6 +69,7 @@
         "01-tutorials/tutorials-overview",
         "01-tutorials/00-installation",
         "01-tutorials/01-your-first-agent",
+        "01-tutorials/02-android-automation",
         {
           "group": "Example Automations",
           "pages": [
@@ -152,16 +153,24 @@
         {
           "group": "Foundations",
           "pages": [
-            "03-explanation/01-foundations/01-foundations-overview",
-            "03-explanation/01-foundations/02-core-components",
-            "03-explanation/01-foundations/03-workflow",
-            "03-explanation/01-foundations/04-ai-models"
+            "03-explanation/01-foundations/foundations-overview",
+            "03-explanation/01-foundations/agents",
+            "03-explanation/01-foundations/agent-types",
+            {
+              "group": "Automation Paradigms",
+              "pages": [
+                "03-explanation/01-foundations/automation-paradigms/01-overview",
+                "03-explanation/01-foundations/automation-paradigms/02-agentic-instructions",
+                "03-explanation/01-foundations/automation-paradigms/03-single-step-commands"
+              ]
+            },
+            "03-explanation/01-foundations/ai-models"
           ]
         },
         {
           "group": "Best Practices",
           "pages": [
-            "03-explanation/02-best-practices/04-agentic-mode",
+            "03-explanation/02-best-practices/04-effective-agentic-instructions",
             "03-explanation/02-best-practices/01-element-selection/01-element-selection",
             "03-explanation/02-best-practices/03-interactions",
             "03-explanation/02-best-practices/05-reporting-logging",
@@ -458,7 +467,8 @@
           ]
         },
         "04-reference/08-additional-resources/status-page",
-        "04-reference/08-additional-resources/trust-center"
+        "04-reference/08-additional-resources/trust-center",
+        "04-reference/08-additional-resources/agentic-instructions-example"
       ]
     }
   ],

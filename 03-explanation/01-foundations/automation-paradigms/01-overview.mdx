@@ -1,0 +1,127 @@
+---
+title: "Automation Paradigms"
+description: "Understand AskUI's single-step commands and agentic instruction approaches"
+---
+
+AskUI operates through two distinct paradigms that reflect different approaches to automation complexity. Understanding these paradigms helps explain why AskUI can handle both fine-grained controlled tasks and complex, adaptive workflows.
+
+## Two Automation Paradigms
+
+### Agentic Instructions: Intent-Based Automation
+
+Agentic instructions let you describe what you want to accomplish in natural language. The agent interprets your goals and determines the necessary steps independently.
+
+```python
+# Agentic approach: intent-based control
+with VisionAgent() as agent:
+    agent.act("Fill out the login form with username john.doe and submit it")
+    agent.act("Open the settings menu and navigate to display preferences")
+```
+
+**Recommended for most use cases**:
+- **Natural language** describes what you want to accomplish
+- **Adaptive behavior** handles interface changes automatically
+- **Complex workflows** with multiple steps
+- **Reduced maintenance** as interfaces evolve
+
+<Tip>**Recommendation**: Use agentic instructions as your primary approach. Single-step commands serve as an escape hatch for cases where agentic instructions aren't reliable enough yet.</Tip>
+
+### Single-Step Commands: Fine-Grained Control
+
+Single-step commands represent the traditional automation approach where each interaction is explicitly defined and controlled. While AI models are still involved in understanding visual elements and executing commands, this paradigm provides explicit control over the automation workflow.
+
+```python
+# Single-step approach: explicit control
+with VisionAgent() as agent:
+    agent.mouse_scroll(0, 10)
+    agent.type("john.doe")
+    agent.click("Submit button")
+```
+
+Use this approach when:
+- **Agentic instructions fail** to handle specific cases reliably
+- **Fine-grained control** is absolutely necessary
+- **Debugging** specific interaction failures
+- **Legacy integrations** require explicit control
+
+## AI Models in Both Paradigms
+
+It's important to understand that **both paradigms rely on AI models** - the difference lies in how decisions are made, not whether AI is involved:
+
+### Shared AI Capabilities
+Both single-step commands and agentic instructions use AI for:
+
+- **Visual Understanding**: Models analyze screen content to locate specified elements
+- **Element Recognition**: AI identifies buttons, fields, and other UI components
+- **Natural Language Processing**: Models interpret descriptions like "submit button" or "username field"
+- **Adaptation**: Models handle minor visual variations in interface elements
+
+### Model Types
+
+AskUI leverages three distinct types of AI models that work together to enable both paradigms ([source](https://github.com/askui/vision-agent/blob/main/src/askui/models/models.py)):
+
+**LocateModel** (NL, Screenshot -> Model -> Point)
+- Find Text
+- Find Images / Icon  
+- Find Element Types (textfields)
+- Find Element Descriptions (Prompts)
+
+**GetModel** (NL, Image, Response Schema -> Model -> Structured Output)
+- Answer Yes/No questions
+- Extract structured data from interfaces
+- Validate interface states
+
+**ActModel** (Goal, Tools -> Model -> Sequence Of Actions)
+- Autonomous behavior planning
+- Multi-step workflow execution
+- Adaptive decision-making
+
+### The Key Difference
+
+```python
+# Agentic: AI controls both decision-making and execution
+agent.act("Log in with username john")  # AI decides sequence AND executes
+
+# Single-step: Developer controls decision-making, AI handles execution, deals with unexpected situations
+agent.click("username field")        # AI finds the username field
+agent.type("username field", "john") # AI locates and types in the field
+agent.click("submit button")         # AI locates and clicks the button
+```
+
+**Agentic instructions**: AI models handle both the decision-making (what actions to take) and the execution of those actions.
+
+**Single-step commands**: The developer decides what actions to take and in what order. AI models handle the execution of those specific actions.
+
+## Paradigm Trade-offs and Implications
+
+The choice between single-step commands and agentic instructions reflects a fundamental tension in automation design between **control and convenience**.
+
+### Control vs. Convenience
+
+**Agentic instructions** maximize convenience by allowing natural language descriptions of desired outcomes. This simplicity comes at the cost of reduced predictability and debugging complexity.
+
+**Single-step commands** maximize control by requiring explicit specification of each action. This precision comes at the cost of verbosity and maintenance overhead when interfaces change.
+
+### Reproducibility vs. Adaptability
+
+**Agentic instructions** sacrifice some reproducibility for adaptability. The agent must interpret the instruction, plan a sequence of actions, and adapt to unexpected interface states, which can lead to variation in execution paths.
+
+**Single-step commands** offer higher reproducibility because the decision-making is controlled by the developer. While AI models still handle execution, the workflow is more consistent across runs.
+
+### Combining Paradigms
+
+Start with agentic instructions for your automation workflows. Use single-step commands only when agentic instructions cannot handle specific cases reliably enough for your requirements.
+
+The paradigms also converge in error handling: both rely on AskUI's visual understanding to detect when actions succeed or fail, regardless of whether the action was explicitly specified or autonomously planned.
+
+## Execution Philosophy
+
+Regardless of paradigm, AskUI's execution follows a consistent philosophy: **visual understanding over structural assumptions**. Rather than relying on DOM selectors, accessibility labels, or API calls, both single-step commands and agentic instructions operate through visual analysis of the interface as it appears to users.
+
+This approach means that both paradigms work equally well with legacy applications, modern web interfaces, and mobile apps – any interface that can be visually perceived can be automated.
+
+## Next Steps
+
+- Learn about **[Agentic Instructions](/03-explanation/01-foundations/automation-paradigms/agentic-instructions)** for goal-oriented automation (recommended)
+- Explore **[Single-Step Commands](/03-explanation/01-foundations/automation-paradigms/single-step-commands)** for fine-grained control
+- Explore **[AI Models](/03-explanation/01-foundations/ai-models)** that power both paradigms

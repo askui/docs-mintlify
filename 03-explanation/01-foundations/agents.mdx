@@ -1,0 +1,80 @@
+---
+title: "Agents"
+description: "Understand the foundational concept of agents in AskUI"
+---
+
+At the core of AskUI's architecture is the concept of **agents** - intelligent entities that understand, reason about, and interact with user interfaces on behalf of users. Agents represent a fundamental shift from traditional automation approaches by embedding intelligence directly into the automation process.
+
+## What Are Agents?
+
+An agent in AskUI is an autonomous system that combines multiple AI capabilities to interact with user interfaces:
+
+- **Visual Understanding**: Agents perceive and interpret UI elements through computer vision
+- **Contextual Reasoning**: They understand the purpose and relationships between interface elements
+- **Adaptive Behavior**: Agents adjust their actions based on changing interface states
+- **Goal-Oriented Operation**: They work toward completing user-specified objectives
+
+Unlike traditional automation scripts that follow rigid sequences, agents make intelligent decisions about how to achieve desired outcomes.
+
+## Why Agent-Based Automation?
+
+Traditional automation tools assume applications behave predictably and deterministically. However, real-world applications are stateful and exhibit unpredictable behaviors that cannot be controlled. AskUI's agent-based approach addresses the fundamental challenge of dealing with stateful applications by mimicking human adaptability.
+
+### Handling Unpredictable Application Behaviors
+
+Stateful applications present numerous challenges that traditional automation cannot handle:
+
+- **Variable Network Loading Times**: Applications may load quickly one moment and take several minutes the next, or fail entirely
+- **Hardware Dependencies**: Performance varies based on system resources, memory availability, and processing power
+- **External Application Interference**: Unexpected pop-ups from other applications (like Slack notifications) can disrupt workflows
+- **Random Dialog Appearances**: Applications may show different dialogs based on internal state or user history
+- **Inconsistent Loading Times**: The same operation might take 1 minute or 5 minutes depending on system conditions
+- **Pre-existing Test Data**: Applications may already contain data that affects subsequent operations
+
+### Human-Like Adaptability
+
+Since we cannot convert stateful applications into stateless ones, agents must deal with these situations like humans do. Agents continuously adapt their behavior based on what they observe, making real-time decisions about how to proceed when unexpected situations arise.
+
+### Action Validation and Recovery
+
+Agents can validate whether actions were successfully performed and recover from failures. For example, if an agent sends a scroll command but the mouse cursor wasn't in the scrollable area, the agent detects this failure, repositions the mouse, and performs the scroll action again.
+
+### Natural Language Interface
+Agents bridge the gap between human intention and machine execution. Users can describe what they want to accomplish in natural language, and agents translate this into appropriate actions while handling the unpredictable nature of stateful applications.
+
+### Tools
+
+Tools are the operational interface that agents use to interact with the underlying system. They provide the concrete actions agents can perform - from capturing screenshots and clicking buttons to typing text and executing commands. Tools bridge the gap between high-level agent reasoning and low-level system operations, enabling agents to translate their decisions into real-world actions.
+
+
+
+## Core Agent Lifecycle
+
+Every AskUI agent follows a consistent operational lifecycle:
+
+1. **Perception**: The agent captures and analyzes the current state of the interface
+2. **Understanding**: It interprets the visual information to identify elements and their relationships
+3. **Planning**: The agent determines the appropriate sequence of actions to achieve the goal
+4. **Execution**: It performs the planned actions on the interface
+5. **Verification**: The agent confirms whether actions succeeded and adjusts if necessary
+
+```python
+from askui import VisionAgent
+
+# Agent initialization creates the perception and reasoning systems
+with VisionAgent() as agent:
+    # Perception: Agent analyzes the current interface and system (e.g. network status)
+    # Understanding: Agent interprets the "login form" concept
+    # Planning: Agent determines the sequence of actions needed
+    # Execution: Agent performs the planned interactions
+    # Verification: Agent confirms successful completion
+    agent.act("Fill out the login form with username john.doe")
+```
+
+## Next Steps
+
+Understanding agents as the foundation of AskUI automation leads to several important concepts:
+
+- **[Agent Types](/03-explanation/01-foundations/agent-types)**: Different specialized agents for different platforms
+- **[Automation Paradigms](/03-explanation/01-foundations/automation-paradigms)**: How agents can operate in different modes
+- **[AI Models](/03-explanation/01-foundations/ai-models)**: The underlying intelligence that powers agent behavior

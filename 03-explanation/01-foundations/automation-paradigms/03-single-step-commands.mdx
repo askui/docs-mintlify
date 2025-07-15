@@ -1,0 +1,60 @@
+---
+title: "Single-Step Commands"
+description: "Use explicit commands when agentic instructions aren't reliable enough"
+---
+
+Single-step commands serve as an escape hatch when agentic instructions cannot handle specific automation cases reliably enough. While AI models are still involved in understanding visual elements and executing commands, this paradigm provides explicit control over the automation workflow.
+
+## Philosophy of Single-Step Commands
+
+Single-step commands operate on the principle of **explicit control**, where every action is deliberately specified by the developer. This approach provides:
+
+- **Fine-grained control**: Each command specifies exactly what action to take
+- **Higher reproducibility**: More consistent behavior across runs (though not deterministic)
+- **Debugging clarity**: Easy to identify exactly where issues occur
+- **Granular specification**: Precise control over individual interactions
+
+```python
+# Single-step approach: explicit control
+with VisionAgent() as agent:
+    agent.click("username field")
+    agent.type("username field", "john.doe")
+    agent.click("password field")
+    agent.type("password field", "secret123")
+    agent.click("Submit button")
+```
+
+
+## Core Components
+
+### Element Selection
+
+Single-step commands rely on precise element selection methods:
+
+- **Locator-Based Selection**: Use structured [locators](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators) to find elements by text, type, or image
+- **Relative Locators**: Find elements based on their spatial relationship to other elements - see [Relative locators](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#askui-locators-relatable)
+- **AI Elements**: Capture and reuse specific visual elements for repeated interactions - see [AI Element locators](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#askui-locators-aielement)
+
+### Interaction Methods
+
+Single-step commands provide granular control over interactions. Available methods vary by platform - see **[Agent Types](/03-explanation/01-foundations/agent-types)** for platform-specific details:
+
+- **Click Operations**: Left click, right click, double click with precise targeting
+- **Text Input**: Type text into specific fields with options for clearing existing content
+- **Keyboard Operations**: Send individual key presses and key combinations (Ctrl+C, Alt+Tab, etc.)
+- **Mouse Operations**: Direct mouse movement, scrolling, and drag-and-drop actions
+
+### Tools and Utilities
+
+Built-in tools extend single-step command capabilities. Available tools vary by platform - see **[Agent Types](/03-explanation/01-foundations/agent-types)** for platform-specific details:
+
+- **Web Browser Tools**: Open new browser windows, navigate to URLs, control browser tabs
+- **Operating System Tools**: Clipboard operations, file system access, multi-monitor support
+- **Data Processing Tools**: Text extraction, data validation, content manipulation
+- **System Integration**: Process management, network operations, configuration handling
+
+## Next Steps
+
+- Review **[Element Selection Best Practices](/03-explanation/02-best-practices/01-element-selection/01-element-selection)** for reliable selection
+- Learn about **[Interaction Best Practices](/03-explanation/02-best-practices/03-interactions)** for effective single-step automation
+- Explore **[Agentic Instructions](/03-explanation/01-foundations/automation-paradigms/agentic-instructions)** for goal-oriented automation
