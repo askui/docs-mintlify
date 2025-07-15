@@ -52,6 +52,10 @@ with AndroidVisionAgent() as agent:
     agent.tap("settings")
     agent.type("search field", "bluetooth")
     agent.act("Navigate to bluetooth settings")
+    
+    # Android system key controls
+    agent.key_tap("VOLUME_UP")
+    agent.key_tap("VOLUME_DOWN")
 ```
 
 The AndroidVisionAgent's developer experience emphasizes:
