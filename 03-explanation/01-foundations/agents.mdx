@@ -42,6 +42,12 @@ Agents can validate whether actions were successfully performed and recover from
 ### Natural Language Interface
 Agents bridge the gap between human intention and machine execution. Users can describe what they want to accomplish in natural language, and agents translate this into appropriate actions while handling the unpredictable nature of stateful applications.
 
+### Tools
+
+Tools are the operational interface that agents use to interact with the underlying system. They provide the concrete actions agents can perform - from capturing screenshots and clicking buttons to typing text and executing commands. Tools bridge the gap between high-level agent reasoning and low-level system operations, enabling agents to translate their decisions into real-world actions.
+
+
+
 ## Core Agent Lifecycle
 
 Every AskUI agent follows a consistent operational lifecycle:
@@ -57,7 +63,7 @@ from askui import VisionAgent
 
 # Agent initialization creates the perception and reasoning systems
 with VisionAgent() as agent:
-    # Perception: Agent analyzes the current interface
+    # Perception: Agent analyzes the current interface and system (e.g. network status)
     # Understanding: Agent interprets the "login form" concept
     # Planning: Agent determines the sequence of actions needed
     # Execution: Agent performs the planned interactions
