@@ -133,7 +133,7 @@ is_installed = "com.example.app" in output
 agent.shell("am force-stop com.example.app")
 
 # Clear app data (use with caution!)
-# agent.shell("pm clear com.example.app")
+agent.shell("pm clear com.example.app")
 ```
 
 ### Android Gestures
@@ -164,6 +164,7 @@ agent.drag_and_drop(200, 300, 600, 300, duration_in_ms=1500)
 </Accordion>
 
 <Accordion title="Elements not found">
+- Open the report generated from SimpleHTMLReporter and check if if the element is visiable on the screenshot.
 - Add `agent.wait()` calls to give the UI time to load or animate.
 - If an element is off-screen, use `agent.swipe()` to scroll it into view.
 - Make your text prompts more specific. For example, instead of `"button"`, try `"blue login button"`.
