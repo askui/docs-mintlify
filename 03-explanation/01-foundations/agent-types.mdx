@@ -19,11 +19,11 @@ AskUI's response to this complexity is architectural specialization rather than 
 
 ## Agent Specialization Philosophy
 
-AskUI's multi-platform support is built on the principle that **platform-specific optimization outperforms universal compatibility**. This design philosophy manifests in several ways:
+AskUI's multi-platform support is built on the principle that **specialized agents enable superior developer experience through platform-native APIs**. This design philosophy manifests in several ways:
 
-### VisionAgent: The Desktop Generalist
+### VisionAgent: Desktop-Native Developer Experience
 
-The VisionAgent embodies AskUI's approach to desktop automation by embracing the diversity of desktop environments. Unlike mobile platforms with standardized UI guidelines, desktop applications span decades of different UI frameworks, from native OS controls to modern web-based applications running in browsers.
+The VisionAgent provides a desktop-centric API that speaks the language of desktop interaction patterns. The IDE can intelligently suggest desktop-specific functions, making development intuitive for desktop automation scenarios.
 
 ```python
 from askui import VisionAgent
@@ -35,51 +35,49 @@ with VisionAgent() as agent:
     agent.mouse_move("submit button")
 ```
 
-The VisionAgent's design reflects this reality by:
-- **Accommodating multiple interaction models**: It seamlessly handles both traditional desktop applications and web-based interfaces
-- **Bridging platform boundaries**: The same agent can interact with native Windows applications, macOS apps, and web browsers
-- **Abstracting OS differences**: While maintaining platform-specific capabilities, it provides a consistent interface across Windows, macOS, and Linux
+The VisionAgent's developer experience focuses on:
+- **Desktop-familiar terminology**: Uses `click`, `mouse_move`, `drag_and_drop` - terms that match desktop interaction patterns
+- **IDE autocomplete support**: The IDE can recommend desktop-specific functions based on context
+- **Platform-appropriate abstractions**: Provides APIs that match how developers think about desktop automation
 
-### AndroidVisionAgent: The Mobile Specialist
+### AndroidVisionAgent: Mobile-Native Developer Experience
 
-The AndroidVisionAgent represents a different design philosophy tailored to mobile's unique constraints and interaction patterns. Mobile automation requires understanding:
-
-- **Touch-centric interactions**: Mobile interfaces are designed for finger-based navigation, not cursor precision
-- **Context-aware behavior**: Mobile apps heavily rely on sensors, location, and device state
-- **Resource sensitivity**: Mobile automation must account for battery usage, network connectivity, and processing limitations
-- **Platform conventions**: Android's Material Design and navigation patterns differ fundamentally from desktop paradigms
+The AndroidVisionAgent provides a mobile-centric API that uses Android's native interaction vocabulary. The IDE can surface Android-specific functions and system capabilities, enabling developers to discover platform features naturally.
 
 ```python
 from askui import AndroidVisionAgent
 
 with AndroidVisionAgent() as agent:
-    # Touch-optimized interactions for mobile interfaces
+    # Mobile-native interactions using Android terminology
     agent.tap("settings")
     agent.type("search field", "bluetooth")
     agent.act("Navigate to bluetooth settings")
 ```
 
-The AndroidVisionAgent's specialization allows it to work naturally within these constraints rather than fighting against them.
+The AndroidVisionAgent's developer experience emphasizes:
+- **Mobile-familiar terminology**: Uses `tap`, `swipe`, `long_press` - terms that match mobile interaction patterns
+- **Android system integration**: Provides `back_key()`, `home_key()`, `enable_wifi()` - Android-specific capabilities
+- **IDE discoverability**: The IDE can recommend Android-specific functions and system features as developers type
 
 ## Design Trade-offs and Architectural Decisions
 
 The decision to create specialized agents rather than a unified interface represents a fundamental trade-off in automation architecture. This choice has several implications:
 
-### Specialization vs. Universality
+### Developer Experience vs. Universal APIs
 
-**Why specialization won**: Early automation tools attempted to create universal interfaces that could handle any platform. This approach consistently failed because:
-- Platform-specific optimizations became impossible
-- The lowest common denominator approach reduced effectiveness across all platforms
-- Maintaining compatibility with diverse platforms created complex, fragile code
-- Users ended up writing platform-specific code anyway to handle edge cases
+**Why platform-native APIs enhance DevEx**: Early automation tools attempted to create universal interfaces that could handle any platform. This approach consistently failed from a developer experience perspective because:
+- Developers had to learn generic abstractions that didn't match their mental models
+- IDE tooling couldn't provide meaningful autocomplete suggestions for platform-specific features
+- The lowest common denominator approach hid platform capabilities behind generic interfaces
+- Developers ended up writing platform-specific workarounds anyway
 
-**The cost of specialization**: AskUI's approach requires users to understand which agent to use for which platform. This creates a learning curve but provides more reliable and efficient automation.
+**The benefit of specialization**: AskUI's approach allows developers to work with familiar platform terminology while enabling IDEs to provide intelligent, context-aware suggestions for platform-specific capabilities.
 
-### Consistency vs. Optimization
+### Consistency vs. Platform Idioms
 
-AskUI balances consistency with optimization by maintaining **conceptual consistency** while allowing **implementation divergence**. Both agents share core concepts like [`locate()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#locate), [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get), and [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#act), but their implementations are optimized for their respective platforms.
+AskUI balances consistency with platform idioms by maintaining **conceptual consistency** while allowing **terminology divergence**. Both agents share core concepts like [`locate()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#locate), [`get()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#get), and [`act()`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent#act), but their interaction methods use platform-native terminology.
 
-This approach recognizes that while users want consistent mental models, the underlying platforms behave differently enough that forced API consistency would compromise effectiveness.
+This approach recognizes that while developers want consistent mental models, they also want to work with familiar platform terminology. IDEs can leverage this specialization to provide better developer tooling and discoverability.
 
 ### Platform Evolution and Future-Proofing
 
