@@ -56,6 +56,26 @@ Both single-step commands and agentic instructions use AI for:
 - **Natural Language Processing**: Models interpret descriptions like "submit button" or "username field"
 - **Adaptation**: Models handle minor visual variations in interface elements
 
+### Model Types
+
+AskUI leverages three distinct types of AI models that work together to enable both paradigms ([source](https://github.com/askui/vision-agent/blob/main/src/askui/models/models.py)):
+
+**LocateModel** (NL, Screenshot -> Model -> Point)
+- Find Text
+- Find Images / Icon  
+- Find Element Types (textfields)
+- Find Element Descriptions (Prompts)
+
+**GetModel** (NL, Image, Response Schema -> Model -> Structured Output)
+- Answer Yes/No questions
+- Extract structured data from interfaces
+- Validate interface states
+
+**ActModel** (Goal, Tools -> Model -> Sequence Of Actions)
+- Autonomous behavior planning
+- Multi-step workflow execution
+- Adaptive decision-making
+
 ### The Key Difference
 
 ```python
