@@ -44,10 +44,10 @@ Query models process natural language and generate responses. They understand co
 - **GPT-4**: General language understanding and reasoning
 - **Computer Use**: Anthropic's model for computer interaction tasks
 
-### 3. Large Action Models (LAMs)
+### 3. Action Models (AMs)
 **What they do**: Plan and coordinate multi-step tasks
 
-Large Action Models take high-level goals and break them into sequences of actions. They coordinate the other models and handle errors.
+Action Models take high-level goals and break them into sequences of actions. They coordinate the other models and handle errors.
 
 **Tasks:**
 - Break down complex goals into steps
@@ -63,17 +63,17 @@ Large Action Models take high-level goals and break them into sequences of actio
 
 When you give AskUI a task:
 
-1. **Large Action Model** creates a plan with specific steps
+1. **Action Model** creates a plan with specific steps
 2. **Query Models** interpret any unclear instructions
 3. **Locator Models** execute each individual action
-4. **Large Action Model** checks results and continues or adjusts the plan
+4. **Action Model** checks results and continues or adjusts the plan
 
 For example, with "Book a flight from Berlin to Rome":
-1. LAM plans: open travel site → search flights → select options → book
+1. AM plans: open travel site → search flights → select options → book
 2. Locator model clicks on flight search
 3. Query model interprets "Berlin" and "Rome" as departure/destination
 4. Locator model fills in the form fields
-5. LAM monitors progress and handles any errors
+5. AM monitors progress and handles any errors
 
 ## Model Capabilities
 
