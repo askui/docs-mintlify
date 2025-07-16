@@ -78,30 +78,10 @@ The following step-by-step instructions will show you how to add the correct cer
 ![](./images/proxy-macos-chrome-download-root-certificate3.png)
 <figcaption>*macOS/Unix Chrome: Open the certificate viewer step 3.*</figcaption>
 
-#### Windows:
-
-Add the following to your `<project>\.askui\Settings\AskuiEnvironmentSettings.json`
-
-```json
-{
-	...
-  "environmentVariables": {
-    ...
-    "NODE_EXTRA_CA_CERTS": "<insert absolute path of certificate>"
-    ...
-  },
-  ...
-}
-```
-
-#### macOS/Unix:
-```bash
-export NODE_EXTRA_CA_CERTS='<insert absolute path of certificate>'
-```
+Use [AskUI-SetSettings -ServerIdentityCertificate reference](/04-reference/02-askui-suite/02-askui-suite/AskUI-SetSettings) to load the certificate into the necessary places of your system.
 
 **Additional information:**
 - [Get Zscalar custom certificate](https://help.zscaler.com/zia/adding-custom-certificate-application-specific-trusted-store)
-- [AskUI-SetSettings -ServerIdentityCertificate reference](/04-reference/02-askui-suite/02-askui-suite/AskUI-SetSettings) 
 
 ## Firewall Configuration
 
