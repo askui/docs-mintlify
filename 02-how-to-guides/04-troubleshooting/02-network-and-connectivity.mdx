@@ -5,231 +5,102 @@ description: Solutions for proxy, firewall, and network-related problems
 
 This guide helps you resolve network connectivity issues, including proxy configuration and SSL/TLS certificate problems.
 
-## Proxy Configuration
+## Proxy
 
-In enterprise settings, you may encounter proxy-related issues at two points:
-1. During AskUI installation
-2. When AskUI Controller connects to AskUI Inference
+The AskUI Shell has built-in proxy autodetection. This is the **recommended approach** for handling proxy connections:
 
-### NTLM or Kerberos Proxy Setup
+### Recommended: Proxy Autodetection (AskUI Shell)
 
-NTLM or Kerberos proxies require authentication via your Windows user or username/password combination. We recommend using a local proxy to handle authentication.
+1. Start the local proxy
+2. Set HTTP_PROXY environment variables
+3. Run `npm run askui` or `python test.py`
 
-#### Setting Up a Local Proxy with Px
+The AskUI Shell will automatically detect and configure the proxy settings for you.
 
-[Px](https://github.com/genotrance/px) is recommended as a local proxy:
+### Alternative Options
 
-1. Install Px following their documentation
-2. Start the proxy (default port: 3128)
+If the automatic proxy detection doesn't work for your setup, you can use these fallback options:
 
-<Note>
-Choose the binary option if package managers aren't available in your environment.
-</Note>
+#### Manual Proxy Configuration
 
-**Windows Autostart Configuration:**
+Use the AskUI Shell command to manually set proxy settings:
 
-Create `px-start.bat` in your Px installation folder:
-```batch
-cd c:\tools\px
-px.exe
-```
-
-To set up autostart:
-1. Create a link to `px-start.bat`
-2. Press `Windows + R`, enter `shell:startup`
-3. Move the link to this folder
-
-### Configure pip to Use Proxy
-
-Create a pip configuration file:
-
-**Linux/macOS** (`~/.config/pip/pip.conf`):
-```ini
-[global]
-proxy = http://127.0.0.1:3128
-```
-
-**Windows** (`%APPDATA%\pip\pip.ini`):
-```ini
-[global]
-proxy = http://127.0.0.1:3128
-```
-
-### Set Environment Variables
-
-**In Python scripts:**
-```python
-import os
-os.environ['HTTP_PROXY'] = 'http://127.0.0.1:3128'
-os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:3128'
-```
-
-**System-wide configuration:**
-
-Linux/macOS:
 ```bash
-export HTTP_PROXY=http://127.0.0.1:3128
-export HTTPS_PROXY=http://127.0.0.1:3128
+AskUI-SetSettings -HttpProxy <proxy> -HttpsProxy <proxy>
 ```
 
-Windows:
-```batch
-set HTTP_PROXY=http://127.0.0.1:3128
-set HTTPS_PROXY=http://127.0.0.1:3128
+#### Start Local Proxy Manually
+
+For advanced users who need full control over proxy configuration, you can start the local proxy manually. See the [PxProxy documentation](https://docs.askui.com/04-reference/02-askui-suite/02-askui-suite/PxProxy/Public) for detailed instructions.
+
+## Deep Package Inspection
+
+Company proxies, like [Zscalar](https://www.zscaler.com/resources/security-terms-glossary/what-is-cloud-proxy), use [deep package inspection](https://en.wikipedia.org/wiki/Deep_packet_inspection) to analyze the network traffic. Such proxies are adding self-signed certificates to the HTTPS request to break up the TLS connection.
+
+This can result in the following error messages:
+```
+ RequestError: self signed certificate
+```
+or
+```
+ RequestError: unable to verify the first certificate
 ```
 
-## AskUI Controller Proxy Configuration
+You can add a self-signed certificate as extra CA Certs to solve this problem as detailed in the next section.
 
-### Method 1: Using Environment Variables
+### Add Self-Signed Certificate as Extra CA Certs (RECOMMENDED)
+The following step-by-step instructions will show you how to add the correct certificate as extra CA Certs.
 
-The Python client uses the `requests` library which automatically uses proxy environment variables.
+1. Open the certificate viewer in your browser.
 
-### Method 2: Configure Proxies in Code
+    Chrome: Depending on your operating system there is a **Lock**-icon left of your browser bar that opens the certificate viewer directly or another icon that opens a _Site Information_ menu where you have to select **Connection is Secure** -> **Certificate is Valid**
 
-```python
-from askui import Agent
+    Firefox: Click the **Lock**-icon left of your browser bar. click on **Connection Secure** -> **More Information**. Select the tab **Security**. Click **View Certificate**.
 
-# Basic proxy configuration
-proxies = {
-    'http': 'http://your-proxy-url:port',
-    'https': 'https://your-proxy-url:port'
+2. Chrome: Open the **Details** tab.
+
+   Firefox: Select the **GTS Root R1** certificate.
+3. Chrome: Select the Certificate **GTS Root R1** and click **Export...** on the bottom right.
+
+   Firefox: Under **Miscellaneous**, you can download the certificate.
+4. Save it somewhere you can find it.
+
+![](./images/proxy-windows-chrome-download-root-certificate.png)
+<figcaption>*Windows Chrome: Download the certificate in the three steps marked inside the picture above.*</figcaption>
+
+![](./images/proxy-macos-chrome-download-root-certificate1.png)
+<figcaption>*macOS/Unix Chrome: Open the certificate viewer step 1.*</figcaption>
+
+![](./images/proxy-macos-chrome-download-root-certificate2.png)
+<figcaption>*macOS/Unix Chrome: Open the certificate viewer step 2.*</figcaption>
+
+![](./images/proxy-macos-chrome-download-root-certificate3.png)
+<figcaption>*macOS/Unix Chrome: Open the certificate viewer step 3.*</figcaption>
+
+#### Windows:
+
+Add the following to your `<project>\.askui\Settings\AskuiEnvironmentSettings.json`
+
+```json
+{
+	...
+  "environmentVariables": {
+    ...
+    "NODE_EXTRA_CA_CERTS": "<insert absolute path of certificate>"
+    ...
+  },
+  ...
 }
-
-# Initialize with proxy
-agent = Agent(proxy_config=proxies)
 ```
 
-### Proxy with Authentication
-
-```python
-proxies = {
-    'http': 'http://username:password@your-proxy-url:port',
-    'https': 'https://username:password@your-proxy-url:port'
-}
-
-agent = Agent(proxy_config=proxies)
-```
-
-## SSL/TLS Certificate Issues
-
-Corporate proxies often perform Deep Package Inspection by adding self-signed certificates. This causes errors like:
-- `SSLError: self-signed certificate`
-- `SSLError: unable to verify the first certificate`
-
-### Solution: Adding Custom Certificates
-
-<Accordion title="Certificate Configuration Methods">
-
-#### Method 1: Environment Variable
-```python
-import os
-os.environ['REQUESTS_CA_BUNDLE'] = '/path/to/your/certificate.pem'
-```
-
-#### Method 2: In Code
-```python
-from askui import Agent
-
-# Initialize with custom certificate
-agent = Agent(verify='/path/to/your/certificate.pem')
-```
-
-#### Method 3: System Certificate Store
-Add your corporate certificate to the system's certificate store instead of configuring it in code.
-
-</Accordion>
-
-### Extracting Corporate Certificates
-
-1. **From Browser:**
-   - Chrome: Click lock icon → "Certificate"
-   - Firefox: Click lock icon → "Connection Secure" → "More Information" → "View Certificate"
-
-2. Select the root certificate (often named after your company)
-
-3. Export/download in PEM format
-
-4. Save to accessible location
-
-<Warning>
-**Security Note**: Never use `verify=False` in production. It disables SSL verification and exposes you to man-in-the-middle attacks.
-</Warning>
-
-## AskUI Suite Proxy Commands
-
-Use these commands in askui-shell to manage proxy settings:
-
-```powershell
-# Start local proxy
-AskUI-StartLocalProxy
-
-# Configure proxy settings
-AskUI-SetLocalProxySettings -ProxyUrl "http://127.0.0.1:3128"
-
-# Remove proxy settings
-AskUI-RemoveLocalProxySettings
-
-# Stop local proxy
-AskUI-StopLocalProxy
-```
-
-## Common Network Errors
-
-### Connection Timeout
-
-**Symptoms:**
-- Operations hang for long periods
-- Timeout errors after 30-60 seconds
-
-**Solutions:**
-1. Check firewall allows outbound HTTPS (port 443)
-2. Verify proxy settings are correct
-3. Test connection: `AskUI-TestConnection`
-
-### DNS Resolution Failures
-
-**Symptoms:**
-- "Unable to resolve host" errors
-- Connection failures to askui.com domains
-
-**Solutions:**
-1. Check DNS settings
-2. Try using corporate DNS servers
-3. Add explicit DNS entries if needed
-
-### Certificate Verification Failed
-
-**Symptoms:**
-- SSL certificate errors
-- "Certificate verify failed" messages
-
-**Solutions:**
-1. Add corporate root certificate (see above)
-2. Update certificate bundle: `pip install --upgrade certifi`
-3. Check system date/time is correct
-
-## Debugging Network Issues
-
-Enable verbose logging to diagnose problems:
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
-# This will show detailed HTTP requests/responses
-```
-
-Use network debugging tools:
+#### macOS/Unix:
 ```bash
-# Test connectivity
-ping inference.askui.com
-
-# Check DNS resolution
-nslookup inference.askui.com
-
-# Test HTTPS connection
-curl -v https://inference.askui.com
+export NODE_EXTRA_CA_CERTS='<insert absolute path of certificate>'
 ```
+
+**Additional information:**
+- [Get Zscalar custom certificate](https://help.zscaler.com/zia/adding-custom-certificate-application-specific-trusted-store)
+- [AskUI-SetSettings -ServerIdentityCertificate reference](/04-reference/02-askui-suite/02-askui-suite/AskUI-SetSettings) 
 
 ## Firewall Configuration
 
