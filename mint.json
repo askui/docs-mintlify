@@ -69,6 +69,7 @@
         "01-tutorials/tutorials-overview",
         "01-tutorials/00-installation",
         "01-tutorials/01-your-first-agent",
+        "01-tutorials/03-web-automation-patterns",
         "01-tutorials/02-android-automation",
         {
           "group": "Example Automations",
