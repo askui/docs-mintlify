@@ -7,14 +7,14 @@ description: "Learn how to use and configure different AI models"
 
 AskUI uses a **layered system of AI models,** each with a distinct role in understanding, executing, and interacting with user interfaces. Here's how we classify and use them:
 
-1. **Grounding Models** (Locators)
-   1. Grounding models identify and interact with UI elements on the screen.
+1. **Locator Models** (Locators)
+   1. Locator models identify and interact with UI elements on the screen.
 2. **Query Models** (Asks)
    - Responsible for answering user queries or generating intelligent responses.
 3. **Large Action Models** (act command) (Multi Step)
    - Responsibilites
      - Goal to → Planning
-     - Delegate Grounding Models
+     - Delegate Locator Models
      - Delegate Query Models
      - Reflection of Errors
    - UI-Tars
@@ -22,8 +22,8 @@ AskUI uses a **layered system of AI models,** each with a distinct role in under
 
    | **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | Online Trainable |
    | :----------------- | :------------- | :------------------------------------- | :------------ | :--------------- |
-   | Grounding          | UIDT-1         | Locate elements & understand screen    | No            | Partial          |
-   | Grounding          | PTA-1          | Convert prompts into one-click actions | No            | Yes              |
+   | Locator          | UIDT-1         | Locate elements & understand screen    | No            | Partial          |
+   | Locator          | PTA-1          | Convert prompts into one-click actions | No            | Yes              |
    | Query              | GPT-4          | Understand & respond to user queries   | Yes           | No               |
    | Query              | Computer Use   | Understand & respond to user queries   | Yes           | No               |
    | Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No               |
