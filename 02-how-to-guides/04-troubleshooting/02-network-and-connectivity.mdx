@@ -5,6 +5,33 @@ description: Solutions for proxy, firewall, and network-related problems
 
 This guide helps you resolve network connectivity issues, including proxy configuration and SSL/TLS certificate problems.
 
+## Proxy
+
+The AskUI Shell has built-in proxy autodetection. This is the **recommended approach** for handling proxy connections:
+
+### Recommended: Proxy Autodetection (AskUI Shell)
+
+1. Start the local proxy
+2. Set HTTP_PROXY environment variables
+3. Run `npm run askui` or `python test.py`
+
+The AskUI Shell will automatically detect and configure the proxy settings for you.
+
+### Alternative Options
+
+If the automatic proxy detection doesn't work for your setup, you can use these fallback options:
+
+#### Manual Proxy Configuration
+
+Use the AskUI Shell command to manually set proxy settings:
+
+```bash
+AskUI-SetSettings -HttpProxy <proxy> -HttpsProxy <proxy>
+```
+
+#### Start Local Proxy Manually
+
+For advanced users who need full control over proxy configuration, you can start the local proxy manually. See the [PxProxy documentation](https://docs.askui.com/04-reference/02-askui-suite/02-askui-suite/PxProxy/Public) for detailed instructions.
 
 ## Deep Package Inspection
 
