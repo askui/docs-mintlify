@@ -74,46 +74,6 @@ Info:  Error report was submitted successfully.
 Your access tokens and sensitive data are NOT included in error reports.
 </Note>
 
-## Manual Diagnostic Collection
-
-If automatic reporting fails, collect manually:
-
-### 1. System Information
-```powershell
-# Save all diagnostic info
-AskUI-ShowVersions > askui_diagnostics.txt
-AskUI-ShowSettings >> askui_diagnostics.txt
-AskUI-ShowProcess >> askui_diagnostics.txt
-AskUI-ShowControllers >> askui_diagnostics.txt
-```
-
-### 2. Python Environment
-```bash
-# Python and package versions
-python --version
-pip show askui
-pip list | grep askui
-```
-
-### 3. Screenshot of Issue
-```python
-# Capture what AskUI sees
-from askui import VisionAgent
-
-with VisionAgent() as agent:
-    agent.save_screenshot("issue_screenshot.png")
-```
-
-### 4. Debug Logs
-```python
-# Enable debug logging
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
-# Run your problematic code
-# Copy the debug output
-```
-
 ## Contacting Support
 
 ### Email Support
