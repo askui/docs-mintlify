@@ -7,23 +7,6 @@ This guide helps you resolve common installation and setup issues with AskUI.
 
 ## Installation Errors
 
-### Mac Web Installer Crashes with `Killed: 9`
-
-If the AskUI installer crashes on macOS with a `Killed: 9` error, this is typically due to macOS security restrictions.
-
-**Solution:**
-1. Open System Preferences > Security & Privacy
-2. Click the lock to make changes
-3. Look for a message about the blocked installer
-4. Click "Open Anyway" or "Allow"
-5. Run the installer again
-
-If the issue persists:
-```bash
-# Remove quarantine attribute
-xattr -d com.apple.quarantine /path/to/installer
-```
-
 ### Windows Long Path Support
 
 Some Windows systems have issues with long file paths during installation.
