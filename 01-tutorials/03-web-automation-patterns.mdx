@@ -1,0 +1,600 @@
+---
+title: "Web Automation Patterns"
+description: "Master common web automation patterns with VisionAgent"
+---
+
+Learn essential patterns for reliable web automation using VisionAgent. This tutorial covers real-world scenarios based on common automation challenges.
+
+<Note>
+**Prerequisites**: Complete [Your First Agent](/01-tutorials/01-your-first-agent) tutorial before starting.
+</Note>
+
+## What You'll Learn
+
+This tutorial teaches you how to:
+- Open and control applications
+- Handle dynamic text and buttons
+- Work with forms and input fields
+- Manage popups and overlays
+- Use visual relationships for element selection
+- Implement proper wait strategies
+
+## Tutorial Application
+
+We'll use the [SauceDemo](https://www.saucedemo.com/) web application for our examples - a test e-commerce site perfect for learning automation patterns.
+
+## 1. Opening Applications
+
+Learn different ways to launch applications and websites.
+
+<CodeGroup>
+```python browser.py
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    # Open website in default browser
+    agent.tools.webbrowser.open_new("https://www.saucedemo.com")
+    agent.wait(2)
+    
+    # Verify page loaded
+    if agent.get("Is the Swag Labs login page visible?"):
+        print("✓ Application opened successfully")
+```
+
+```python local_app.py
+from askui import VisionAgent
+import subprocess
+
+with VisionAgent() as agent:
+    # Open local application (Windows example)
+    subprocess.Popen(["C:\\Program Files\\MyApp\\app.exe"])
+    agent.wait(3)
+    
+    # Open local application (macOS example)
+    # subprocess.Popen(["open", "-a", "Calculator"])
+    
+    # Verify application started
+    if agent.get("Is MyApp window visible?"):
+        print("✓ Local application opened")
+```
+</CodeGroup>
+
+<Tip>
+Always add wait times after opening applications to ensure they're fully loaded before interacting with them.
+</Tip>
+
+## 2. Clicking Text and Dynamic Elements
+
+Handle text-based interactions with proper error handling and dynamic content.
+
+### Basic Text Clicking
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+
+with VisionAgent() as agent:
+    # Click with implicit wait
+    agent.click(loc.Text("Add to cart"))
+    
+    # Alternative: Click with error handling
+    try:
+        agent.click(loc.Text("Checkout"))
+        print("✓ Clicked checkout button")
+    except Exception as e:
+        print(f"✗ Could not find checkout button: {e}")
+```
+
+### Handling Text Detection Issues
+
+<AccordionGroup>
+<Accordion title="Text with Line Breaks">
+When text appears on multiple lines, use partial matching:
+
+```python
+# Instead of searching for "Web Automation\nTesting"
+# Search for the beginning of the text
+agent.click(loc.Text("Web Automation", match_type="contains"))
+```
+</Accordion>
+
+<Accordion title="Merged or Overlapping Text">
+When overlay text merges with background text:
+
+```python
+# Use AI element as fallback
+agent.click(
+    loc.Text("Start now")
+    .or_(loc.AiElement("start-button"))
+)
+
+# Or target beginning of text
+agent.click(loc.Text("Start", match_type="contains"))
+```
+</Accordion>
+
+<Accordion title="Missing Whitespace">
+Handle text with inconsistent spacing:
+
+```python
+# Use regex for flexible matching
+agent.click(loc.Text(r"your\s*name", match_type="regex"))
+```
+</Accordion>
+</AccordionGroup>
+
+## 3. Working with Icons and Buttons
+
+Interact with visual elements beyond text.
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+
+with VisionAgent() as agent:
+    # Click icon using AI element
+    agent.click(loc.AiElement("shopping-cart"))
+    
+    # Alternative: Use prompt with visual relations
+    agent.click(
+        loc.Prompt("cart icon")
+        .right_of(loc.Text("Product Name"))
+    )
+    
+    # Or use element with visual relations
+    agent.click(
+        loc.Element()
+        .right_of(loc.Text("Product Name"))
+        .and_(loc.Prompt("cart icon"))
+    )
+```
+
+<Note>
+AI elements work best with:
+- High color contrast against background
+- Clear rectangular shapes
+- Distinct visual properties
+</Note>
+
+## 4. Form Filling and Text Input
+
+Efficiently fill forms with structured data.
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+
+class CheckoutForm:
+    def __init__(self, agent):
+        self.agent = agent
+    
+    def fill_shipping_details(self, first_name, last_name, postal_code):
+        # Click and type pattern
+        fields = [
+            ("First Name", first_name),
+            ("Last Name", last_name),
+            ("Zip/Postal Code", postal_code)
+        ]
+        
+        for label, value in fields:
+            self.agent.click(loc.Text(label))
+            self.agent.type(value)
+            self.agent.wait(0.5)  # Small delay between fields
+        
+        print("✓ Shipping details filled")
+
+# Usage
+with VisionAgent() as agent:
+    form = CheckoutForm(agent)
+    form.fill_shipping_details("John", "Doe", "12345")
+```
+
+## 5. Visual Relationships
+
+Use spatial relationships to find elements precisely.
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+
+with VisionAgent() as agent:
+    # Click button below specific text
+    agent.click(
+        loc.Prompt("button")
+        .below_of(loc.Text("Product Details"))  # See docs: /04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#below-of
+    )
+    
+    # Click icon to the right of text
+    agent.click(
+        loc.Prompt("icon")
+        .right_of(loc.Text("Quantity"))  # See docs: /04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#right-of
+    )
+    
+    # Complex relationship
+    agent.click(
+        loc.Element()
+        .above_of(loc.Text("Total"))  # See docs: /04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#above-of
+        .left_of(loc.Text("$29.99"))  # See docs: /04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#left-of
+    )
+```
+
+<Tip>
+Visual relationships are powerful for targeting elements in dynamic layouts:
+- Directional: [`above_of`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#above-of), [`below_of`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#below-of), [`left_of`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#left-of), [`right_of`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#right-of)
+- Proximity: [`nearest_to`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#nearest-to)
+- Container: [`containing`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#containing), [`inside_of`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#inside-of)
+- Logical: [`and_`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#and), [`or_`](/04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators#or)
+</Tip>
+
+## 6. Wait Strategies
+
+Implement proper waiting for reliable automation.
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+import time
+
+with VisionAgent() as agent:
+    # Fixed wait
+    agent.wait(2)
+    
+    # Check for element existence with retry pattern
+    max_retries = 10
+    for i in range(max_retries):
+        try:
+            agent.locate(loc.Text("Welcome"))
+            print("✓ Element found")
+            break
+        except:
+            if i < max_retries - 1:
+                agent.wait(1)
+            else:
+                print("✗ Element not found after retries")
+    
+    # Wait for condition using get
+    start_time = time.time()
+    while time.time() - start_time < 15:
+        if agent.get("Is the shopping cart visible?"):
+            break
+        agent.wait(1)
+    
+    # Wait for element to disappear
+    while True:
+        try:
+            agent.locate(loc.Text("Loading..."))
+            agent.wait(0.5)
+        except:
+            # Element no longer found
+            break
+```
+
+## 7. Keyboard Shortcuts
+
+Use keyboard shortcuts for efficient navigation.
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    # Single key press
+    agent.keyboard('enter')
+    agent.keyboard('escape')
+    agent.keyboard('tab')
+    
+    # Key combinations with modifiers
+    agent.keyboard('a', modifier_keys=['control'])  # Select all
+    agent.keyboard('c', modifier_keys=['control'])  # Copy
+    agent.keyboard('v', modifier_keys=['control'])  # Paste
+    
+    # Page navigation
+    agent.keyboard('pagedown')
+    agent.keyboard('end')  # Go to end of page
+    
+    # Close popup/window
+    agent.keyboard('f4', modifier_keys=['alt'])
+```
+
+## 8. Handling Popups and Dynamic Content
+
+Manage unexpected UI elements gracefully.
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+
+class PopupHandler:
+    def __init__(self, agent):
+        self.agent = agent
+    
+    def handle_dynamic_popup(self):
+        """Handle popups that may or may not appear"""
+        # Quick escape attempt
+        self.agent.keyboard('escape')
+        self.agent.wait(0.5)
+        
+        # Check for specific popup types
+        popups = [
+            ("Accept Cookies", "Accept"),
+            ("Special Offer", "No Thanks"),
+            ("Newsletter", "Close")
+        ]
+        
+        for popup_text, dismiss_text in popups:
+            try:
+                # Try to locate the popup text
+                self.agent.locate(loc.Text(popup_text))
+                self.agent.click(loc.Text(dismiss_text))
+                print(f"✓ Dismissed {popup_text} popup")
+                break
+            except:
+                # Popup not found, continue
+                pass
+    
+    def safe_click(self, locator, fallback_locator=None):
+        """Click with fallback option"""
+        try:
+            self.agent.click(locator)
+            return True
+        except:
+            if fallback_locator:
+                try:
+                    self.agent.click(fallback_locator)
+                    return True
+                except:
+                    pass
+        return False
+
+# Usage
+with VisionAgent() as agent:
+    handler = PopupHandler(agent)
+    
+    # Handle any popups before main flow
+    handler.handle_dynamic_popup()
+    
+    # Click with fallback
+    clicked = handler.safe_click(
+        loc.Text("Start Shopping"),
+        fallback_locator=loc.Prompt("Shop button")
+    )
+```
+
+## Helper Functions
+
+Since VisionAgent focuses on core functionality, here are useful helper functions for common patterns:
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+import time
+
+class AutomationHelpers:
+    """Common helper functions for VisionAgent automations"""
+    
+    @staticmethod
+    def wait_until(agent, condition_func, timeout=10, check_interval=0.5):
+        """Wait until a condition is met"""
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            if condition_func():
+                return True
+            agent.wait(check_interval)
+        return False
+    
+    @staticmethod
+    def element_exists(agent, locator):
+        """Check if an element exists"""
+        try:
+            agent.locate(locator)
+            return True
+        except:
+            return False
+    
+    @staticmethod
+    def wait_for_element(agent, locator, timeout=10):
+        """Wait for an element to appear"""
+        def check():
+            return AutomationHelpers.element_exists(agent, locator)
+        
+        return AutomationHelpers.wait_until(agent, check, timeout)
+    
+    @staticmethod
+    def wait_for_element_gone(agent, locator, timeout=10):
+        """Wait for an element to disappear"""
+        def check():
+            return not AutomationHelpers.element_exists(agent, locator)
+        
+        return AutomationHelpers.wait_until(agent, check, timeout)
+
+# Usage example
+with VisionAgent() as agent:
+    helpers = AutomationHelpers()
+    
+    # Wait for page to load
+    if helpers.wait_for_element(agent, loc.Text("Welcome"), timeout=15):
+        print("✓ Page loaded")
+    
+    # Check if element exists
+    if helpers.element_exists(agent, loc.Text("Login")):
+        agent.click(loc.Text("Login"))
+```
+
+## Complete Example: E-commerce Purchase Flow
+
+Here's a complete automation combining all patterns:
+
+```python
+from askui import VisionAgent
+from askui import locators as loc
+from askui.reporting import SimpleHtmlReporter
+import logging
+
+class SauceDemoAutomation:
+    def __init__(self):
+        self.agent = None
+        
+    def __enter__(self):
+        self.agent = VisionAgent(
+            log_level=logging.INFO,
+            reporters=[SimpleHtmlReporter()]
+        ).__enter__()
+        return self
+        
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.agent:
+            self.agent.__exit__(exc_type, exc_val, exc_tb)
+    
+    def login(self, username="standard_user", password="secret_sauce"):
+        """Login to SauceDemo"""
+        self.agent.click(loc.Text("Username"))
+        self.agent.type(username)
+        
+        self.agent.click(loc.Text("Password"))
+        self.agent.type(password)
+        
+        self.agent.click(loc.Text("Login"))
+        self.agent.wait(2)
+        
+        # Verify login
+        try:
+            self.agent.locate(loc.Text("Products"))
+            print("✓ Login successful")
+        except:
+            raise Exception("Login failed")
+    
+    def add_product_to_cart(self, product_name):
+        """Add a specific product to cart"""
+        # Find add to cart button near product
+        self.agent.click(
+            loc.Text("Add to cart")
+            .nearest_to(loc.Text(product_name, match_type="contains"))
+        )
+        
+        # Verify cart updated
+        cart_count = self.agent.get(
+            "What number is shown on the shopping cart badge?"
+        )
+        print(f"✓ Cart has {cart_count} items")
+    
+    def checkout(self, first_name, last_name, zip_code):
+        """Complete checkout process"""
+        # Go to cart
+        self.agent.click(loc.AiElement("shopping-cart"))
+        self.agent.wait(1)
+        
+        # Proceed to checkout
+        self.agent.click(loc.Text("Checkout"))
+        self.agent.wait(1)
+        
+        # Fill form
+        form_fields = [
+            ("First Name", first_name),
+            ("Last Name", last_name),
+            ("Zip/Postal Code", zip_code)
+        ]
+        
+        for label, value in form_fields:
+            self.agent.click(loc.Text(label))
+            self.agent.type(value)
+        
+        # Continue
+        self.agent.click(loc.Text("Continue"))
+        self.agent.wait(1)
+        
+        # Finish order
+        self.agent.keyboard('end')  # Scroll to bottom
+        self.agent.click(loc.Text("Finish"))
+        
+        # Verify success
+        try:
+            self.agent.locate(loc.Text("Thank you for your order"))
+            print("✓ Order completed successfully!")
+            return True
+        except:
+            return False
+
+# Run the complete flow
+with SauceDemoAutomation() as automation:
+    # Open application
+    automation.agent.tools.webbrowser.open_new("https://www.saucedemo.com")
+    automation.agent.wait(3)
+    
+    # Execute purchase flow
+    automation.login()
+    automation.add_product_to_cart("Sauce Labs Backpack")
+    success = automation.checkout("John", "Doe", "12345")
+    
+    if success:
+        print("\n🎉 Automation completed successfully!")
+```
+
+## Best Practices Summary
+
+<CardGroup cols={2}>
+<Card title="Always Wait" icon="clock">
+Add appropriate waits after actions that trigger page changes
+</Card>
+
+<Card title="Use Fallbacks" icon="shield">
+Implement alternative locators when elements might vary
+</Card>
+
+<Card title="Handle Errors" icon="exclamation-triangle">
+Use try-except blocks for actions that might fail
+</Card>
+
+<Card title="Be Specific" icon="crosshairs">
+Use visual relationships to target elements precisely
+</Card>
+</CardGroup>
+
+## Troubleshooting Common Issues
+
+<AccordionGroup>
+<Accordion title="Element not found">
+- Increase wait times
+- Use more specific locators
+- Check if element is scrolled out of view
+- Try AI elements for complex visuals
+</Accordion>
+
+<Accordion title="Text detection fails">
+- Use `contains()` for partial matching
+- Try regex patterns for flexible matching
+- Consider using AI elements as fallback
+</Accordion>
+
+<Accordion title="Popup interference">
+- Add escape key press at start
+- Implement popup detection logic
+- Use conditional clicks
+</Accordion>
+
+<Accordion title="Slow execution">
+- Reduce unnecessary waits
+- Use batch operations where possible
+- Enable parallel execution for independent tasks
+</Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+Now that you've mastered these patterns:
+
+<CardGroup cols={2}>
+<Card title="Android Automation" icon="mobile" href="/01-tutorials/02-android-automation">
+Apply these patterns to mobile automation
+</Card>
+
+<Card title="Data Extraction" icon="database" href="/02-how-to-guides/05-build-ai-agents/extract-data-from-ui/overview">
+Learn to extract structured data from UIs
+</Card>
+
+<Card title="AI Agent Instructions" icon="robot" href="/03-explanation/02-best-practices/04-effective-agentic-instructions">
+Write instructions for autonomous agents
+</Card>
+
+<Card title="Example Automations" icon="code" href="/01-tutorials/example-automations/00-overview">
+Explore real-world automation examples
+</Card>
+</CardGroup>

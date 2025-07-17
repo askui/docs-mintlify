@@ -19,12 +19,6 @@ For solutions to common problems, see our [Troubleshooting Guides](/02-how-to-gu
 - **Impact**: Users on macOS, Linux, or ARM architectures cannot use the local proxy feature
 - **Workaround**: Use alternative proxy solutions on non-Windows platforms
 
-#### TypeScript Project Limitation
-- **Affected Commands**: `AskUI-NewProject`, `AskUI-RunProject`
-- **Description**: These commands only support TypeScript projects
-- **Impact**: Python projects must be created and managed manually
-- **Workaround**: Use Python SDK directly with manual project setup
-
 ### Performance Issues
 
 #### ADE Slower Startup Time
@@ -53,34 +47,17 @@ For solutions to common problems, see our [Troubleshooting Guides](/02-how-to-gu
 - **Cause**: Controller session mismatch
 - **Solution**: See [Runtime Errors Guide](/02-how-to-guides/04-troubleshooting/05-runtime-and-environment-errors#session-info-doesnt-match-error)
 
-### Multi-Monitor Limitations
-- **Issue**: Limited support for systems with 3+ monitors
-- **Impact**: May not detect elements on monitors beyond the second
-- **Workaround**: Specify display parameter explicitly
-
 ## Model Limitations
 
 ### OCR Accuracy
-- **Issue**: Certain fonts or backgrounds reduce text recognition accuracy
+- **Issue**: Certain fonts, font sizes or backgrounds reduce text recognition accuracy
 - **Affected**: Decorative fonts, low contrast text, complex backgrounds
 - **Solution**: See [OCR Troubleshooting](/02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr#ocr-and-text-recognition-issues)
 
 ### Dynamic Content
 - **Issue**: Rapidly changing content may not be captured accurately
-- **Impact**: Animations or live data might be missed
+- **Impact**: Animations, toasts or live data might be missed
 - **Workaround**: Add delays or wait for stable state
-
-## Browser Compatibility
-
-### Chrome Extensions
-- **Issue**: Some Chrome extensions interfere with element detection
-- **Affected Extensions**: Ad blockers, dark mode extensions
-- **Workaround**: Disable extensions during automation
-
-### Safari on macOS
-- **Issue**: Limited accessibility permissions
-- **Impact**: Some elements may not be detectable
-- **Solution**: Grant full accessibility permissions in System Preferences
 
 ## Enterprise Features
 
@@ -93,18 +70,6 @@ For solutions to common problems, see our [Troubleshooting Guides](/02-how-to-gu
 - **Issue**: Offline installation requires manual dependency management
 - **Impact**: Standard installation procedures don't work
 - **Contact**: Enterprise support for offline installation packages
-
-## Mobile Testing
-
-### iOS Simulator
-- **Issue**: Text selection in iOS Simulator is unreliable
-- **Affected Versions**: iOS 15+
-- **Workaround**: Use real devices for text-heavy automation
-
-### Android Emulator
-- **Issue**: GPU acceleration conflicts on some systems
-- **Impact**: Visual detection may be slow or inaccurate
-- **Solution**: Disable GPU acceleration in emulator settings
 
 ## Reporting New Issues
 

@@ -12,7 +12,7 @@ Before diving into model improvement techniques, it's important to understand th
 
 **Re-teaching in AskUI includes:**
 - **Prompt Engineering:** Giving clear, contextual instructions like _"Click on the login button"_ helps models interpret intent more accurately.
-- **LLMs and LAMs are re-teachable models, like GPT4, Anthropic Claude etc**
+- **LLMs and AMs are re-teachable models, like GPT4, Anthropic Claude etc**
 
 ### Training
 **Training** involves changing the internal parameters of a model - its **weights** - through exposure to **large datasets** and feedback signals. This is computationally expensive and typically happens during development, online training or in batch processes. OCR re-teaching is one example of training and AskUI supports online training.
@@ -50,8 +50,8 @@ Following models are supported:
 
 | **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | **Online Trainable** |
 | :----------------- | :------------- | :------------------------------------- | :------------ | :--------------- |
-| Grounding          | UIDT-1         | Locate elements & understand screen    | No            | Partial          |
-| Grounding          | PTA-1          | Convert prompts into one-click actions | No            | Yes              |
+| Locator          | UIDT-1         | Locate elements & understand screen    | No            | Partial          |
+| Locator          | PTA-1          | Convert prompts into one-click actions | No            | Yes              |
 | Query              | GPT-4          | Understand & respond to user queries   | Yes           | No               |
 | Query              | Computer Use   | Understand & respond to user queries   | Yes           | No               |
 | Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No               |
