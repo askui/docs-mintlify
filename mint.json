@@ -192,6 +192,7 @@
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/types",
         "04-reference/system-requirements",
         "04-reference/network-requirements",
+        "04-reference/environment-variables.mdx",
         "04-reference/ai-models"
       ]
     },
