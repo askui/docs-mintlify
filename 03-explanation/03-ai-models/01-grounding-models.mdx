@@ -20,12 +20,14 @@ AskUI uses a **layered system of AI models,** each with a distinct role in under
    - UI-Tars
    - Computer-Use
 
-   | **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | Online Trainable |
-   | :----------------- | :------------- | :------------------------------------- | :------------ | :--------------- |
-   | Locator          | UIDT-1         | Locate elements & understand screen    | No            | Partial          |
-   | Locator          | PTA-1          | Convert prompts into one-click actions | No            | Yes              |
-   | Query              | GPT-4          | Understand & respond to user queries   | Yes           | No               |
-   | Query              | Computer Use   | Understand & respond to user queries   | Yes           | No               |
-   | Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No               |
-   | Large Action (act) | UI-Tars        | Plan and execute full workflows        | Yes           | No               |
+| **Model Type**     | **Model Name** | **Purpose**                            | **Teachable** | **Online Trainable** |
+| :----------------- | :------------- | :------------------------------------- | :------------ | :------------------- |
+| Locator          | UIDT-1         | Locate elements & understand screen    | No            | Partial              |
+| Locator          | PTA-1          | Convert prompts into one-click actions | No            | Yes                  |
+| Query              | GPT-4          | Understand & respond to user queries   | Yes           | No                   |
+| Query              | Gemini 2.5 Flash          | Understand & respond to user queries   | Yes           | No                   |
+| Query              | Gemini 2.5 Pro          | Understand & respond to user queries   | Yes           | No                   |
+| Query              | Computer Use   | Understand & respond to user queries   | Yes           | No                   |
+| Large Action (act) | Computer Use   | Plan and execute full workflows        | Yes           | No                   |
+| Large Action (act) | UI-Tars        | Plan and execute full workflows        | Yes           | No                   |
 
