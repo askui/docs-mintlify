@@ -37,7 +37,7 @@ To use `askui-shell` as your default terminal in VSCode:
     "terminal.integrated.profiles.windows": {
         "askui-shell": {
             "path": [
-                "${env:USERPROFILE}\\AppData\\Local\\Programs\\askui\\askui-shell\\AskUI-Shell.exe"
+                "${env:ASKUI_INSTALLATION_DIRECTORY}\\Tools\\askui-shell.cmd"
             ],
             "args": ["-ExecutionPolicy", "Bypass", "-NoExit", "-NoLogo"],
             "icon": "terminal-powershell"
@@ -90,7 +90,7 @@ For Linux:
 
 1. Go to Settings > Tools > Terminal
 2. Set Shell path to:
-   - Windows: `%USERPROFILE%\AppData\Local\Programs\askui\askui-shell\AskUI-Shell.exe`
+   - Windows: `%ASKUI_INSTALLATION_DIRECTORY%\\Tools\\askui-shell.cmd`
    - macOS: `$ASKUI_INSTALLATION_DIRECTORY/Tools/askui-shell`
    - linux: `$ASKUI_INSTALLATION_DIRECTORY/Tools/askui-shell`
 3. Apply and restart PyCharm
