@@ -1,6 +1,6 @@
 ---
 title: "Environment Variables"
-description: "This are the environment variables for AskUI"
+description: "These are the environment variables for AskUI"
 ---
 
 
@@ -24,26 +24,7 @@ description: "This are the environment variables for AskUI"
 - **ASKUI_INFERENCE_ENDPOINT**: The URL of the Vision Agent's inference endpoint, which handles image and text analysis.
 - **ASKUI_CONTROLLER_PATH**: The file path to the controller's executable or binary file.
 - **ASKUI__VA__TELEMETRY__ENABLED**: A boolean flag to enable or disable the recording of usage data for the Vision Agent. Setting this variable to False will disable telemetry.
-- **ASKUI_CONTROLLER_ARGS**: Arguments to pass to the AskUI Remote Device Controller executable. This variable accepts a string of command-line arguments that control the behavior of the controller.
-
-  **Supported arguments:**
-  - `--showOverlay [true|false]`: Controls whether the controller shows an overlay on the screen during automation. Default is `true`.
-  - `--debugDraw [true|false]`: Enables or disables debug drawing features for troubleshooting.
-  - `--configFile <AbsolutePathToConfigFile>`: Specifies the path to a configuration file for the controller.
-
-  **Examples:**
-  ```bash
-  # Disable overlay and use custom config file
-  ASKUI_CONTROLLER_ARGS="--showOverlay false --configFile /path/to/config.json"
-  
-  # Disable overlay only
-  ASKUI_CONTROLLER_ARGS="--showOverlay false"
-  
-  # Enable debug drawing
-  ASKUI_CONTROLLER_ARGS="--debugDraw true"
-  ```
-
-  **Default value:** `--showOverlay true`
+- **ASKUI_CONTROLLER_ARGS**: Command-line arguments for the AskUI Remote Device Controller. See details in [ASKUI_CONTROLLER_ARGS](#askui_controller_args).
 
 ---
 
@@ -55,7 +36,32 @@ description: "This are the environment variables for AskUI"
 
 ---
 
-### AskUI UI Controller Watchdog Windows Service:
+### AskUI Controller Auto Recover Service:
 
 - **ASKUI_RUNNER_WIDTH**: The width of screen to be used for the runner window, after disconnecting from RDP session.
 - **ASKUI_RUNNER_HEIGHT**: The height of screen to be used for the runner window, after disconnecting from RDP session.
+
+---
+
+## Details
+
+### ASKUI_CONTROLLER_ARGS
+
+Supported arguments:
+- `--showOverlay [true|false]`: Controls whether the controller shows an overlay on the screen during automation. Default is `true`.
+- `--debugDraw [true|false]`: Enables or disables debug drawing features for troubleshooting.
+- `--configFile <AbsolutePathToConfigFile>`: Specifies the path to a configuration file for the controller.
+
+Examples:
+```bash
+# Disable overlay and use custom config file
+ASKUI_CONTROLLER_ARGS="--showOverlay false --configFile /path/to/config.json"
+
+# Disable overlay only
+ASKUI_CONTROLLER_ARGS="--showOverlay false"
+
+# Enable debug drawing
+ASKUI_CONTROLLER_ARGS="--debugDraw true"
+```
+
+Default value: `--showOverlay true`
