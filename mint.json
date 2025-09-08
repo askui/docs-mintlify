@@ -221,18 +221,13 @@
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist"
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-BuildErrorReport",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-CompressErrorReport",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-NewErrorReport",
+                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-SubmitErrorReport"
               ],
               "group": "Debug"
-            },
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-BuildErrorReport",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-CompressErrorReport",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-NewErrorReport",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Experimental/AskUI-SubmitErrorReport"
-              ],
-              "group": "Experimental"
             }
           ],
           "group": "ADE"
