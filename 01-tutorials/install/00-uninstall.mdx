@@ -1,0 +1,42 @@
+
+---
+title: Uninstallation
+description: 'Uninstall AskUI from your OS'
+---
+
+
+## Uninstallation
+
+If you no longer need **AsKUI Suite**, you can uninstall it easily. The uninstallation process will:
+
+- Remove all files in the AsKUI Suite installation directory.
+- Clean up environment variables such as `ASKUI_INSTALLATION_DIRECTORY`.
+- Delete the `.askui` folder from your home directory.  
+
+<Tabs>
+  <Tab title="Windows">
+    Uninstall AsKUI Suite using the standard Windows uninstall process:
+
+    1. Open the **Control Panel**  
+    2. Go to **Programs → Programs and Features**  
+    3. Find **AsKUI Suite** in the list of installed applications  
+    4. Select it and click **Uninstall**  
+    5. Follow the prompts to complete the process
+  </Tab>
+
+  <Tab title="MacOS and Linux">
+    Use the uninstall script included with your installation:
+
+    <Tabs>
+      <Tab title="Open a Terminal and run">
+        ```bash
+        bash $ASKUI_INSTALLATION_DIRECTORY/Tools/uninstall-askui-suites.sh
+        ```
+      </Tab>
+    </Tabs>
+  </Tab>
+</Tabs>
+
+<Note>
+After uninstallation, AsKUI Suite will be completely removed from your system.
+</Note>
