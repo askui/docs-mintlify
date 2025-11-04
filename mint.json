@@ -68,7 +68,6 @@
         "01-tutorials/tutorials-overview",
         {
           "group": "Installation",
-          "icon": "play",
           "pages": [
             "01-tutorials/00-installation",
             "01-tutorials/install/00-uninstall"
@@ -93,6 +92,7 @@
     },
     {
       "group": "How-to Guides",
+      "icon": "wrench",
       "pages": [
         "02-how-to-guides/how-to-overview",
         {
@@ -154,6 +154,7 @@
     },
     {
       "group": "Understanding AskUI",
+      "icon": "lightbulb",
       "pages": [
         "03-explanation/explanation-overview",
         {
