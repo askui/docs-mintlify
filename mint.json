@@ -63,10 +63,12 @@
     },
     {
       "group": "Tutorial",
+      "icon": "rocket",
       "pages": [
         "01-tutorials/tutorials-overview",
         {
           "group": "Installation",
+          "icon": "play",
           "pages": [
             "01-tutorials/00-installation",
             "01-tutorials/install/00-uninstall"
