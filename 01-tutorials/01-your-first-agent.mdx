@@ -1,6 +1,6 @@
 ---
-title: "Your First Agent"
-description: "Build your first automation agent with AskUI"
+title: "Your First Desktop Agent"
+description: "Build your first desktop automation agent with AskUI"
 ---
 
 In this tutorial, you'll create your first AskUI agent that automates a real-world task: searching for products on Amazon.
@@ -23,31 +23,55 @@ You'll create an agent that:
   <Step title="Create Your Agent Script">
     Create a new Python file `amazon_shopping.py` and add the following code:
 
-    ```python
-    from askui import VisionAgent
-    import logging
-    from askui import locators as loc
-    from askui.reporting import SimpleHtmlReporter
     
-    # Initialize your agent with logging and reporting
-    with VisionAgent(
-        log_level=logging.DEBUG,
-        reporters=[SimpleHtmlReporter()]
-    ) as agent:
-        # Open Amazon website
-        agent.tools.webbrowser.open_new("http://www.amazon.com")
-        agent.wait(3)  # Wait for page to load
-    
-        # Search for a product
-        agent.click(loc.Element("textfield"))
-        agent.type("nike shoes")
-        agent.keyboard('enter')
-        agent.wait(2)  # Wait for search results
-    
-        # Verify page contents
-        page_status = agent.get("Are Nike shoes visible on the screen?")
-        print(f"Cart Status: {page_status}")
-    ```
+    <Tabs>
+    <Tab title="Agent">
+      ```python
+      from askui import VisionAgent
+      from askui import locators as loc
+      from askui.reporting import SimpleHtmlReporter
+
+      # Initialize your agent with logging and reporting
+      with VisionAgent(
+          reporters=[SimpleHtmlReporter()]
+      ) as agent:
+          agent.act("""
+          You are an automated agent that performs desktop tasks.
+                    
+          Steps:
+          1. Open a web browser and navigate to "http://www.amazon.com".
+          2. In the search bar, type "nike shoes" and press enter.    
+          3. Check if the search results page displays Nike shoes.
+          """)
+      ```
+      </Tab>
+      <Tab title="Hybrid Agent">
+      ```python
+      from askui import VisionAgent
+      from askui import locators as loc
+      from askui.reporting import SimpleHtmlReporter
+
+      # Initialize your agent with logging and reporting
+      with VisionAgent(
+          reporters=[SimpleHtmlReporter()]
+      ) as agent:
+          # Open Amazon website
+          agent.tools.webbrowser.open_new("http://www.amazon.com")
+          agent.wait(3)  # Wait for page to load
+
+          # Search for a product
+          agent.click(loc.Element("textfield"))
+          agent.type("nike shoes")
+          agent.keyboard('enter')
+          agent.wait(2)  # Wait for search results
+
+          # Verify page contents
+          page_status = agent.get("Are Nike shoes visible on the screen?")
+          print(f"Cart Status: {page_status}")
+      ```
+      </Tab>
+    </Tabs>
+      
 
     Run the script:
 
@@ -67,7 +91,7 @@ You'll create an agent that:
 
     ### Agent Initialization
     ```python
-    with VisionAgent(log_level=logging.DEBUG, reporters=[SimpleHtmlReporter()]) as agent:
+    with VisionAgent(reporters=[SimpleHtmlReporter()]) as agent:
     ```
     - Creates a vision agent that can see and interact with your screen
     - Enables debug logging to see what's happening
