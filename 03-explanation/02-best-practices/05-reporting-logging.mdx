@@ -17,8 +17,10 @@ Enable detailed logging to better understand what your agent is doing during exe
 import logging
 from askui import VisionAgent
 
+logging.basicConfig(level=logging.DEBUG)
+
 # Set log level to DEBUG for detailed output
-with VisionAgent(log_level=logging.DEBUG) as agent:
+with VisionAgent() as agent:
     agent.click("Login button")
     agent.type("myuser@example.com")
 ```
