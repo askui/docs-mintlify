@@ -45,6 +45,20 @@ contents = [
 ]
 
 [[tool.pydoc-markdown.renderer.pages]]
+title = "Android Vision Agent"
+name = "android-vision-agent"
+contents = [ 
+    "askui.android_agent.AndroidVisionAgent.*",
+]
+
+[[tool.pydoc-markdown.renderer.pages]]
+title = "Agent Base"
+name = "agent-base"
+contents = [ 
+    "askui.agent_base.AgentBase.*",
+]
+
+[[tool.pydoc-markdown.renderer.pages]]
 title = "Locators"
 name = "locators"
 contents = [
@@ -118,5 +132,5 @@ contents = [
 [dependency-groups]
 dev = [
     "pydoc-markdown>=4.8.2",
-    "askui>=0.5.3",
+    "askui>=0.22.2",
 ]

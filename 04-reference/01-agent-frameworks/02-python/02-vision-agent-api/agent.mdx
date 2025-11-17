@@ -2,12 +2,16 @@
 title: Agent
 ---
 
-<a id="askui.VisionAgent"></a>
+<a id="askui.agent"></a>
 
-## askui.VisionAgent
+# askui.agent
+
+<a id="askui.agent.VisionAgent"></a>
+
+## askui.agent.VisionAgent
 
 ```python
-class VisionAgent()
+class VisionAgent(AgentBase)
 ```
 
 A vision-based agent that can interact with user interfaces through computer vision and AI.
@@ -17,7 +21,6 @@ It uses computer vision models to locate UI elements and execute actions on them
 
 **Arguments**:
 
-- `log_level` _int | str, optional_ - The logging level to use. Defaults to `logging.INFO`.
 - `display` _int, optional_ - The display number to use for screen interactions. Defaults to `1`.
 - `reporters` _list[Reporter] | None, optional_ - List of reporter instances for logging and reporting. If `None`, an empty list is used.
 - `tools` _AgentToolbox | None, optional_ - Custom toolbox instance. If `None`, a default one will be created with `AskUiControllerClient`.
@@ -37,88 +40,16 @@ It uses computer vision models to locate UI elements and execute actions on them
         agent.act("Open settings menu")
     ```
 
-<a id="askui.VisionAgent.act"></a>
-
-#### act
-
-```python
-def act(
-    goal: Annotated[str | list[MessageParam],
-                    Field(min_length=1)],
-    model: str | None = None,
-    on_message: OnMessageCb | None = None
-) -> None
-```
-
-Instructs the agent to achieve a specified goal through autonomous actions.
-
-The agent will analyze the screen, determine necessary steps, and perform actions
-to accomplish the goal. This may include clicking, typing, scrolling, and other
-interface interactions.
-
-**Arguments**:
-
-- `goal` _str_ - A description of what the agent should achieve.
-- `model` _str | None, optional_ - The composition or name of the model(s) to be used for achieving the `goal`.
-- `on_message` _OnMessageCb | None, optional_ - Callback for new messages. If it returns `None`, stops and does not add the message.
-  
-
-**Returns**:
-
-  None
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.act("Open the settings menu")
-        agent.act("Search for 'printer' in the search box")
-        agent.act("Log in with username 'admin' and password '1234'")
-    ```
-
-<a id="askui.VisionAgent.cli"></a>
-
-#### cli
-
-```python
-def cli(command: Annotated[str, Field(min_length=1)]) -> None
-```
-
-Executes a command on the command line interface.
-
-This method allows running shell commands directly from the agent. The command
-is split on spaces and executed as a subprocess.
-
-**Arguments**:
-
-- `command` _str_ - The command to execute on the command line.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.cli(fr'start "" "C:\Program Files\VideoLAN\VLC\vlc.exe"') # Start in VLC Non-Blocking
-        agent.cli(fr'"C:\Program Files\VideoLAN\VLC\vlc.exe"') # Start in VLC Blocking
-        agent.cli("echo Hello World")  # Prints "Hello World"
-        agent.cli("ls -la")  # Lists files in current directory with details
-        agent.cli("python --version")  # Displays Python version
-    ```
-
-<a id="askui.VisionAgent.click"></a>
+<a id="askui.agent.VisionAgent.click"></a>
 
 #### click
 
 ```python
 def click(
-    locator: Optional[str | Locator] = None,
-    button: Literal['left', 'middle', 'right'] = 'left',
+    locator: Optional[str | Locator | Point] = None,
+    button: Literal["left", "middle", "right"] = "left",
     repeat: Annotated[int, Field(gt=0)] = 1,
+    offset: Optional[Point] = None,
     model: ModelComposition | str | None = None
 ) -> None
 ```
@@ -127,9 +58,10 @@ Simulates a mouse click on the user interface element identified by the provided
 
 **Arguments**:
 
-- `locator` _str | Locator | None, optional_ - The identifier or description of the element to click. If `None`, clicks at current position.
+- `locator` _str | Locator | Point | None, optional_ - UI element description, structured locator, or absolute coordinates (x, y). If `None`, clicks at current position.
 - `button` _'left' | 'middle' | 'right', optional_ - Specifies which mouse button to click. Defaults to `'left'`.
 - `repeat` _int, optional_ - The number of times to click. Must be greater than `0`. Defaults to `1`.
+- `offset` _Point | None, optional_ - Pixel offset (x, y) from the target location. Positive x=right, negative x=left, positive y=down, negative y=up.
 - `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element to click on using the `locator`.
   
 
@@ -141,237 +73,21 @@ Simulates a mouse click on the user interface element identified by the provided
     with VisionAgent() as agent:
         agent.click()              # Left click on current position
         agent.click("Edit")        # Left click on text "Edit"
+        agent.click((100, 200))    # Left click at absolute coordinates (100, 200)
         agent.click("Edit", button="right")  # Right click on text "Edit"
         agent.click(repeat=2)      # Double left click on current position
         agent.click("Edit", button="middle", repeat=4)   # 4x middle click on text "Edit"
+        agent.click("Submit", offset=(10, -5))  # Click 10 pixels right and 5 pixels up from "Submit"
     ```
 
-<a id="askui.VisionAgent.get"></a>
-
-#### get
-
-```python
-def get(
-    query: Annotated[str, Field(min_length=1)],
-    response_schema: Type[ResponseSchema] | None = None,
-    model: str | None = None,
-    image: Optional[Img] = None
-) -> ResponseSchema | str
-```
-
-Retrieves information from an image (defaults to a screenshot of the current screen) based on the provided query.
-
-**Arguments**:
-
-- `query` _str_ - The query describing what information to retrieve.
-- `image` _Img | None, optional_ - The image to extract information from. Defaults to a screenshot of the current screen. Can be a path to an image file, a PIL Image object or a data URL.
-- `response_schema` _Type[ResponseSchema] | None, optional_ - A Pydantic model class that defines the response schema. If not provided, returns a string.
-- `model` _str | None, optional_ - The composition or name of the model(s) to be used for retrieving information from the screen or image using the `query`. Note: `response_schema` is not supported by all models.
-  
-
-**Returns**:
-
-  ResponseSchema | str: The extracted information, `str` if no `response_schema` is provided.
-  
-  Limitations:
-  - Nested Pydantic schemas are not currently supported
-  - Schema support is only available with "askui" model (default model if `ASKUI_WORKSPACE_ID` and `ASKUI_TOKEN` are set) at the moment
-  
-
-**Example**:
-
-    ```python
-    from askui import ResponseSchemaBase, VisionAgent
-    from PIL import Image
-
-    class UrlResponse(ResponseSchemaBase):
-        url: str
-
-    with VisionAgent() as agent:
-        # Get URL as string
-        url = agent.get("What is the current url shown in the url bar?")
-
-        # Get URL as Pydantic model from image at (relative) path
-        response = agent.get(
-            "What is the current url shown in the url bar?",
-            response_schema=UrlResponse,
-            image="screenshot.png",
-        )
-        print(response.url)
-
-        # Get boolean response from PIL Image
-        is_login_page = agent.get(
-            "Is this a login page?",
-            response_schema=bool,
-            image=Image.open("screenshot.png"),
-        )
-
-        # Get integer response
-        input_count = agent.get(
-            "How many input fields are visible on this page?",
-            response_schema=int,
-        )
-
-        # Get float response
-        design_rating = agent.get(
-            "Rate the page design quality from 0 to 1",
-            response_schema=float,
-        )
-    ```
-
-<a id="askui.VisionAgent.key_down"></a>
-
-#### key\_down
-
-```python
-def key_down(key: PcKey | ModifierKey) -> None
-```
-
-Simulates the pressing of a key.
-
-**Arguments**:
-
-- `key` _PcKey | ModifierKey_ - The key to be pressed.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.key_down('a')  # Press the 'a' key
-        agent.key_down('shift')  # Press the 'Shift' key
-    ```
-
-<a id="askui.VisionAgent.key_up"></a>
-
-#### key\_up
-
-```python
-def key_up(key: PcKey | ModifierKey) -> None
-```
-
-Simulates the release of a key.
-
-**Arguments**:
-
-- `key` _PcKey | ModifierKey_ - The key to be released.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.key_up('a')  # Release the 'a' key
-        agent.key_up('shift')  # Release the 'Shift' key
-    ```
-
-<a id="askui.VisionAgent.keyboard"></a>
-
-#### keyboard
-
-```python
-def keyboard(
-    key: PcKey | ModifierKey,
-    modifier_keys: Optional[list[ModifierKey]] = None,
-    repeat: Annotated[int, Field(gt=0)] = 1
-) -> None
-```
-
-Simulates pressing (and releasing) a key or key combination on the keyboard.
-
-**Arguments**:
-
-- `key` _PcKey | ModifierKey_ - The main key to press. This can be a letter, number, special character, or function key.
-- `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Common modifier keys include `'ctrl'`, `'alt'`, `'shift'`.
-- `repeat` _int, optional_ - The number of times to press (and release) the key. Must be greater than `0`. Defaults to `1`.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.keyboard('a')  # Press 'a' key
-        agent.keyboard('enter')  # Press 'Enter' key
-        agent.keyboard('v', ['control'])  # Press Ctrl+V (paste)
-        agent.keyboard('s', ['control', 'shift'])  # Press Ctrl+Shift+S
-        agent.keyboard('a', repeat=2)  # Press 'a' key twice
-    ```
-
-<a id="askui.VisionAgent.locate"></a>
-
-#### locate
-
-```python
-def locate(
-    locator: str | Locator,
-    screenshot: Optional[Img] = None,
-    model: ModelComposition | str | None = None
-) -> Point
-```
-
-Locates the UI element identified by the provided locator.
-
-**Arguments**:
-
-- `locator` _str | Locator_ - The identifier or description of the element to locate.
-- `screenshot` _Img | None, optional_ - The screenshot to use for locating the element. Can be a path to an image file, a PIL Image object or a data URL. If `None`, takes a screenshot of the currently selected display.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element using the `locator`.
-  
-
-**Returns**:
-
-- `Point` - The coordinates of the element as a tuple (x, y).
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        point = agent.locate("Submit button")
-        print(f"Element found at coordinates: {point}")
-    ```
-
-<a id="askui.VisionAgent.mouse_down"></a>
-
-#### mouse_down
-
-```python
-def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
-```
-
-Simulates the pressing of a mouse button.
-
-**Arguments**:
-
-- `button` _'left' | 'middle' | 'right', optional_ - The mouse button to be pressed. Defaults to `'left'`.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.mouse_down()  # Press the left mouse button
-        agent.mouse_down('right')  # Press the right mouse button
-        agent.mouse_down('middle')  # Press the middle mouse button
-    ```
-
-<a id="askui.VisionAgent.mouse_move"></a>
+<a id="askui.agent.VisionAgent.mouse_move"></a>
 
 #### mouse\_move
 
 ```python
 def mouse_move(
-    locator: str | Locator,
+    locator: str | Locator | Point,
+    offset: Optional[Point] = None,
     model: ModelComposition | str | None = None
 ) -> None
 ```
@@ -380,7 +96,8 @@ Moves the mouse cursor to the UI element identified by the provided locator.
 
 **Arguments**:
 
-- `locator` _str | Locator_ - The identifier or description of the element to move to.
+- `locator` _str | Locator | Point_ - UI element description, structured locator, or absolute coordinates (x, y).
+- `offset` _Point | None, optional_ - Pixel offset (x, y) from the target location. Positive x=right, negative x=left, positive y=down, negative y=up.
 - `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element to move the mouse to using the `locator`.
   
 
@@ -391,11 +108,13 @@ Moves the mouse cursor to the UI element identified by the provided locator.
 
     with VisionAgent() as agent:
         agent.mouse_move("Submit button")  # Moves cursor to submit button
-        agent.mouse_move("Close")  # Moves cursor to close element
+        agent.mouse_move((300, 150))       # Moves cursor to absolute coordinates (300, 150)
+        agent.mouse_move("Close")          # Moves cursor to close element
         agent.mouse_move("Profile picture", model="custom_model")  # Uses specific model
+        agent.mouse_move("Menu", offset=(5, 10))  # Move 5 pixels right and 10 pixels down from "Menu"
     ```
 
-<a id="askui.VisionAgent.mouse_scroll"></a>
+<a id="askui.agent.VisionAgent.mouse_scroll"></a>
 
 #### mouse\_scroll
 
@@ -431,9 +150,103 @@ Simulates scrolling the mouse wheel by the specified horizontal and vertical amo
         agent.mouse_scroll(3, 0)   # Usually scrolls right 3 units
     ```
 
-<a id="askui.VisionAgent.mouse_up"></a>
+<a id="askui.agent.VisionAgent.type"></a>
 
-#### mouse_up
+#### type
+
+```python
+def type(
+    text: Annotated[str, Field(min_length=1)],
+    locator: str | Locator | Point | None = None,
+    offset: Optional[Point] = None,
+    model: ModelComposition | str | None = None,
+    clear: bool = True
+) -> None
+```
+
+Types the specified text as if it were entered on a keyboard.
+
+If `locator` is provided, it will first click on the element to give it focus before typing.
+If `clear` is `True` (default), it will triple click on the element to select the current text (in multi-line inputs like textareas the current line or paragraph) before typing.
+
+**IMPORTANT:** `clear` only works if a `locator` is provided.
+
+**Arguments**:
+
+- `text` _str_ - The text to be typed. Must be at least `1` character long.
+- `locator` _str | Locator | Point | None, optional_ - UI element description, structured locator, or absolute coordinates (x, y). If `None`, types at current focus.
+- `offset` _Point | None, optional_ - Pixel offset (x, y) from the target location. Positive x=right, negative x=left, positive y=down, negative y=up.
+- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element, i.e., input field, to type into using the `locator`.
+- `clear` _bool, optional_ - Whether to triple click on the element to give it focus and select the current text before typing. Defaults to `True`.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.type("Hello, world!")  # Types "Hello, world!" at current focus
+        agent.type("user@example.com", locator="Email")  # Clicks on "Email" input, then types
+        agent.type("username", locator=(200, 100))  # Clicks at coordinates (200, 100), then types
+        agent.type("password123", locator="Password field", model="custom_model")  # Uses specific model
+        agent.type("Hello, world!", locator="Textarea", clear=False)  # Types "Hello, world!" into textarea without clearing
+        agent.type("text", locator="Input field", offset=(5, 0))  # Click 5 pixels right of "Input field", then type
+    ```
+
+<a id="askui.agent.VisionAgent.key_up"></a>
+
+#### key\_up
+
+```python
+def key_up(key: PcKey | ModifierKey) -> None
+```
+
+Simulates the release of a key.
+
+**Arguments**:
+
+- `key` _PcKey | ModifierKey_ - The key to be released.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.key_up('a')  # Release the 'a' key
+        agent.key_up('shift')  # Release the 'Shift' key
+    ```
+
+<a id="askui.agent.VisionAgent.key_down"></a>
+
+#### key\_down
+
+```python
+def key_down(key: PcKey | ModifierKey) -> None
+```
+
+Simulates the pressing of a key.
+
+**Arguments**:
+
+- `key` _PcKey | ModifierKey_ - The key to be pressed.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.key_down('a')  # Press the 'a' key
+        agent.key_down('shift')  # Press the 'Shift' key
+    ```
+
+<a id="askui.agent.VisionAgent.mouse_up"></a>
+
+#### mouse\_up
 
 ```python
 def mouse_up(button: Literal["left", "middle", "right"] = "left") -> None
@@ -457,19 +270,19 @@ Simulates the release of a mouse button.
         agent.mouse_up('middle')  # Release the middle mouse button
     ```
 
-<a id="askui.VisionAgent.type"></a>
+<a id="askui.agent.VisionAgent.mouse_down"></a>
 
-#### type
+#### mouse\_down
 
 ```python
-def type(text: Annotated[str, Field(min_length=1)]) -> None
+def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
 ```
 
-Types the specified text as if it were entered on a keyboard.
+Simulates the pressing of a mouse button.
 
 **Arguments**:
 
-- `text` _str_ - The text to be typed. Must be at least `1` character long.
+- `button` _'left' | 'middle' | 'right', optional_ - The mouse button to be pressed. Defaults to `'left'`.
   
 
 **Example**:
@@ -478,32 +291,507 @@ Types the specified text as if it were entered on a keyboard.
     from askui import VisionAgent
 
     with VisionAgent() as agent:
-        agent.type("Hello, world!")  # Types "Hello, world!"
-        agent.type("user@example.com")  # Types an email address
-        agent.type("password123")  # Types a password
+        agent.mouse_down()  # Press the left mouse button
+        agent.mouse_down('right')  # Press the right mouse button
+        agent.mouse_down('middle')  # Press the middle mouse button
     ```
 
-<a id="askui.VisionAgent.wait"></a>
+<a id="askui.agent.VisionAgent.keyboard"></a>
+
+#### keyboard
+
+```python
+def keyboard(
+    key: PcKey | ModifierKey,
+    modifier_keys: Optional[list[ModifierKey]] = None,
+    repeat: Annotated[int, Field(gt=0)] = 1
+) -> None
+```
+
+Simulates pressing (and releasing) a key or key combination on the keyboard.
+
+**Arguments**:
+
+- `key` _PcKey | ModifierKey_ - The main key to press. This can be a letter, number, special character, or function key.
+- `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Common modifier keys include `'ctrl'`, `'alt'`, `'shift'`.
+- `repeat` _int, optional_ - The number of times to press (and release) the key. Must be greater than `0`. Defaults to `1`.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.keyboard('a')  # Press 'a' key
+        agent.keyboard('enter')  # Press 'Enter' key
+        agent.keyboard('v', ['control'])  # Press Ctrl+V (paste)
+        agent.keyboard('s', ['control', 'shift'])  # Press Ctrl+Shift+S
+        agent.keyboard('a', repeat=2)  # Press 'a' key twice
+    ```
+
+<a id="askui.agent.VisionAgent.cli"></a>
+
+#### cli
+
+```python
+def cli(command: Annotated[str, Field(min_length=1)]) -> None
+```
+
+Executes a command on the command line interface.
+
+This method allows running shell commands directly from the agent. The command
+is split on spaces and executed as a subprocess.
+
+**Arguments**:
+
+- `command` _str_ - The command to execute on the command line.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        # Use for Windows
+        agent.cli(fr'start "" "C:\Program Files\VideoLAN\VLClc.exe"') # Start in VLC non-blocking
+        agent.cli(fr'"C:\Program Files\VideoLAN\VLClc.exe"') # Start in VLC blocking
+
+        # Mac
+        agent.cli("open -a chrome")  # Open Chrome non-blocking for mac
+        agent.cli("chrome")  # Open Chrome blocking for linux
+        agent.cli("echo Hello World")  # Prints "Hello World"
+        agent.cli("python --version")  # Displays Python version
+
+        # Linux
+        agent.cli("nohub chrome")  # Open Chrome non-blocking for linux
+        agent.cli("chrome")  # Open Chrome blocking for linux
+        agent.cli("echo Hello World")  # Prints "Hello World"
+        agent.cli("python --version")  # Displays Python version
+
+    ```
+
+<a id="askui.agent.VisionAgent.act"></a>
+
+#### act
+
+```python
+def act(
+    goal: Annotated[str | list[MessageParam],
+                    Field(min_length=1)],
+    model: str | None = None,
+    on_message: OnMessageCb | None = None,
+    tools: list[Tool] | ToolCollection | None = None,
+    settings: ActSettings | None = None
+) -> None
+```
+
+Instructs the agent to achieve a specified goal through autonomous actions.
+
+The agent will analyze the screen, determine necessary steps, and perform
+actions to accomplish the goal. This may include clicking, typing, scrolling,
+and other interface interactions.
+
+**Arguments**:
+
+- `goal` _str | list[MessageParam]_ - A description of what the agent should
+  achieve.
+- `model` _str | None, optional_ - The composition or name of the model(s) to
+  be used for achieving the `goal`.
+- `on_message` _OnMessageCb | None, optional_ - Callback for new messages. If
+  it returns `None`, stops and does not add the message.
+- `tools` _list[Tool] | ToolCollection | None, optional_ - The tools for the
+  agent. Defaults to default tools depending on the selected model.
+- `settings` _AgentSettings | None, optional_ - The settings for the agent.
+  Defaults to a default settings depending on the selected model.
+  
+
+**Returns**:
+
+  None
+  
+
+**Raises**:
+
+- `MaxTokensExceededError` - If the model reaches the maximum token limit
+  defined in the agent settings.
+- `ModelRefusalError` - If the model refuses to process the request.
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.act("Open the settings menu")
+        agent.act("Search for 'printer' in the search box")
+        agent.act("Log in with username 'admin' and password '1234'")
+    ```
+
+<a id="askui.agent.VisionAgent.get"></a>
+
+#### get
+
+```python
+def get(
+    query: Annotated[str, Field(min_length=1)],
+    response_schema: Type[ResponseSchema] | None = None,
+    model: str | None = None,
+    source: Optional[InputSource] = None
+) -> ResponseSchema | str
+```
+
+Retrieves information from an image or PDF based on the provided `query`.
+
+If no `source` is provided, a screenshot of the current screen is taken.
+
+**Arguments**:
+
+- `query` _str_ - The query describing what information to retrieve.
+- `source` _InputSource | None, optional_ - The source to extract information
+  from. Can be a path to an image, PDF, or office document file,
+  a PIL Image object or a data URL. Defaults to a screenshot of the
+  current screen.
+- `response_schema` _Type[ResponseSchema] | None, optional_ - A Pydantic model
+  class that defines the response schema. If not provided, returns a
+  string.
+- `model` _str | None, optional_ - The composition or name of the model(s) to
+  be used for retrieving information from the screen or image using the
+  `query`. Note: `response_schema` is not supported by all models.
+  PDF processing is only supported for Gemini models hosted on AskUI.
+  
+
+**Returns**:
+
+  ResponseSchema | str: The extracted information, `str` if no
+  `response_schema` is provided.
+  
+
+**Raises**:
+
+- `NotImplementedError` - If PDF processing is not supported for the selected
+  model.
+- `ValueError` - If the `source` is not a valid PDF or image.
+  
+
+**Example**:
+
+    ```python
+    from askui import ResponseSchemaBase, VisionAgent
+    from PIL import Image
+    import json
+
+    class UrlResponse(ResponseSchemaBase):
+        url: str
+
+    class NestedResponse(ResponseSchemaBase):
+        nested: UrlResponse
+
+    class LinkedListNode(ResponseSchemaBase):
+        value: str
+        next: "LinkedListNode | None"
+
+    with VisionAgent() as agent:
+        # Get URL as string
+        url = agent.get("What is the current url shown in the url bar?")
+
+        # Get URL as Pydantic model from image at (relative) path
+        response = agent.get(
+            "What is the current url shown in the url bar?",
+            response_schema=UrlResponse,
+            source="screenshot.png",
+        )
+        # Dump whole model
+        print(response.model_dump_json(indent=2))
+        # or
+        response_json_dict = response.model_dump(mode="json")
+        print(json.dumps(response_json_dict, indent=2))
+        # or for regular dict
+        response_dict = response.model_dump()
+        print(response_dict["url"])
+
+        # Get boolean response from PIL Image
+        is_login_page = agent.get(
+            "Is this a login page?",
+            response_schema=bool,
+            source=Image.open("screenshot.png"),
+        )
+        print(is_login_page)
+
+        # Get integer response
+        input_count = agent.get(
+            "How many input fields are visible on this page?",
+            response_schema=int,
+        )
+        print(input_count)
+
+        # Get float response
+        design_rating = agent.get(
+            "Rate the page design quality from 0 to 1",
+            response_schema=float,
+        )
+        print(design_rating)
+
+        # Get nested response
+        nested = agent.get(
+            "Extract the URL and its metadata from the page",
+            response_schema=NestedResponse,
+        )
+        print(nested.nested.url)
+
+        # Get recursive response
+        linked_list = agent.get(
+            "Extract the breadcrumb navigation as a linked list",
+            response_schema=LinkedListNode,
+        )
+        current = linked_list
+        while current:
+            print(current.value)
+            current = current.next
+
+        # Get text from PDF
+        text = agent.get(
+            "Extract all text from the PDF",
+            source="document.pdf",
+        )
+        print(text)
+    ```
+
+<a id="askui.agent.VisionAgent.locate"></a>
+
+#### locate
+
+```python
+def locate(
+    locator: str | Locator,
+    screenshot: Optional[InputSource] = None,
+    model: ModelComposition | str | None = None
+) -> Point
+```
+
+Locates the first matching UI element identified by the provided locator.
+
+**Arguments**:
+
+- `locator` _str | Locator_ - The identifier or description of the element to
+  locate.
+- `screenshot` _InputSource | None, optional_ - The screenshot to use for
+  locating the element. Can be a path to an image file, a PIL Image object
+  or a data URL. If `None`, takes a screenshot of the currently
+  selected display.
+- `model` _ModelComposition | str | None, optional_ - The composition or name
+  of the model(s) to be used for locating the element using the `locator`.
+  
+
+**Returns**:
+
+- `Point` - The coordinates of the element as a tuple (x, y).
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        point = agent.locate("Submit button")
+        print(f"Element found at coordinates: {point}")
+    ```
+
+<a id="askui.agent.VisionAgent.locate_all"></a>
+
+#### locate\_all
+
+```python
+def locate_all(
+    locator: str | Locator,
+    screenshot: Optional[InputSource] = None,
+    model: ModelComposition | str | None = None
+) -> PointList
+```
+
+Locates all matching UI elements identified by the provided locator.
+
+Note: Some LocateModels can only locate a single element. In this case, the
+returned list will have a length of 1.
+
+**Arguments**:
+
+- `locator` _str | Locator_ - The identifier or description of the element to
+  locate.
+- `screenshot` _InputSource | None, optional_ - The screenshot to use for
+  locating the element. Can be a path to an image file, a PIL Image object
+  or a data URL. If `None`, takes a screenshot of the currently
+  selected display.
+- `model` _ModelComposition | str | None, optional_ - The composition or name
+  of the model(s) to be used for locating the element using the `locator`.
+  
+
+**Returns**:
+
+- `PointList` - The coordinates of the elements as a list of tuples (x, y).
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        points = agent.locate_all("Submit button")
+        print(f"Found {len(points)} elements at coordinates: {points}")
+    ```
+
+<a id="askui.agent.VisionAgent.locate_all_elements"></a>
+
+#### locate\_all\_elements
+
+```python
+def locate_all_elements(
+    screenshot: Optional[InputSource] = None,
+    model_composition: ModelComposition | None = None
+) -> list[DetectedElement]
+```
+
+Locate all elements in the current screen using AskUI Models.
+
+**Arguments**:
+
+- `screenshot` _InputSource | None, optional_ - The screenshot to use for
+  locating the elements. Can be a path to an image file, a PIL Image
+  object or a data URL. If `None`, takes a screenshot of the currently
+  selected display.
+- `model_composition` _ModelComposition | None, optional_ - The model composition
+  to be used for locating the elements.
+  
+
+**Returns**:
+
+- `list[DetectedElement]` - A list of detected elements
+  
+
+**Example**:
+
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        detected_elements = agent.locate_all_elements()
+        print(f"Found {len(detected_elements)} elements: {detected_elements}")
+    ```
+
+<a id="askui.agent.VisionAgent.annotate"></a>
+
+#### annotate
+
+```python
+def annotate(
+    screenshot: InputSource | None = None,
+    model_composition: ModelComposition | None = None,
+    output_directory: str = "reports"
+) -> None
+```
+
+Annotate the screenshot with the detected elements.
+Creates an interactive HTML file with the detected elements
+and saves it to the output directory.
+The HTML file can be opened in a browser to see the annotated image.
+The user can hover over the elements to see their names and text value
+and click on the box to copy the text value to the clipboard.
+
+**Arguments**:
+
+- `screenshot` _ImageSource | None, optional_ - The screenshot to annotate.
+  If `None`, takes a screenshot of the currently selected display.
+- `model_composition` _ModelComposition | None, optional_ - The composition
+  or name of the model(s) to be used for locating the elements.
+- `output_directory` _str, optional_ - The directory to save the annotated
+  image. Defaults to "reports".
+  
+  Example Using VisionAgent:
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.annotate()
+    ```
+  
+  Example Using AndroidVisionAgent:
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.annotate()
+    ```
+  
+  Example Using VisionAgent with custom screenshot and output directory:
+    ```python
+    from askui import VisionAgent
+
+    with VisionAgent() as agent:
+        agent.annotate(screenshot="screenshot.png", output_directory="htmls")
+    ```
+
+<a id="askui.agent.VisionAgent.wait"></a>
 
 #### wait
 
 ```python
-def wait(sec: Annotated[float, Field(gt=0.0)]) -> None
+def wait(
+    until: Annotated[float, Field(gt=0.0)] | str | Locator,
+    retry_count: Optional[Annotated[int, Field(gt=0)]] = None,
+    delay: Optional[Annotated[float, Field(gt=0.0)]] = None,
+    until_condition: Literal["appear", "disappear"] = "appear",
+    model: ModelComposition | str | None = None
+) -> None
 ```
 
-Pauses the execution of the program for the specified number of seconds.
+Pauses execution or waits until a UI element appears or disappears.
 
 **Arguments**:
 
-- `sec` _float_ - The number of seconds to wait. Must be greater than `0.0`.
+- `until` _float | str | Locator_ - If a float, pauses execution for the
+  specified number of seconds (must be greater than 0.0). If a string
+  or Locator, waits until the specified UI element appears or
+  disappears on screen.
+- `retry_count` _int | None_ - Number of retries when waiting for a UI
+  element. Defaults to 3 if None.
+- `delay` _int | None_ - Sleep duration in seconds between retries when
+  waiting for a UI element. Defaults to 1 second if None.
+- `until_condition` _Literal["appear", "disappear"]_ - The condition to wait
+  until the element satisfies. Defaults to "appear".
+- `model` _ModelComposition | str | None, optional_ - The composition or name
+  of the model(s) to be used for locating the element using the
+  `until` locator.
+  
+
+**Raises**:
+
+- `WaitUntilError` - If the UI element is not found after all retries.
   
 
 **Example**:
 
     ```python
     from askui import VisionAgent
+    from askui.locators import loc
 
     with VisionAgent() as agent:
+        # Wait for a specific duration
         agent.wait(5)  # Pauses execution for 5 seconds
         agent.wait(0.5)  # Pauses execution for 500 milliseconds
+
+        # Wait for a UI element to appear
+        agent.wait("Submit button", retry_count=5, delay=2)
+        agent.wait("Login form")  # Uses default retries and sleep time
+        agent.wait(loc.Text("Password"))  # Uses default retries and sleep time
+
+        # Wait for a UI element to disappear
+        agent.wait("Loading spinner", until_condition="disappear")
+
+        # Wait using a specific model
+        agent.wait("Submit button", model="custom_model")
     ```
+

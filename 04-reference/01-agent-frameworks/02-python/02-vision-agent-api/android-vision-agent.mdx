@@ -1,0 +1,658 @@
+---
+title: Android Vision Agent
+---
+
+<a id="askui.android_agent"></a>
+
+# askui.android\_agent
+
+<a id="askui.android_agent.AndroidVisionAgent"></a>
+
+## askui.android\_agent.AndroidVisionAgent
+
+```python
+class AndroidVisionAgent(AndroidVisionAgent)
+```
+
+<a id="askui.android_agent.AndroidVisionAgent.tap"></a>
+
+#### tap
+
+```python
+def tap(
+    target: str | Locator | tuple[int, int],
+    model: ModelComposition | str | None = None
+) -> None
+```
+
+Taps on the specified target.
+
+**Arguments**:
+
+- `target` _str | Locator | Point_ - The target to tap on. Can be a locator, a point, or a string.
+- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for tapping on the target.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.tap("Submit button")
+        agent.tap((100, 100))
+
+<a id="askui.android_agent.AndroidVisionAgent.type"></a>
+
+#### type
+
+```python
+def type(text: Annotated[str, Field(min_length=1)]) -> None
+```
+
+Types the specified text as if it were entered on a keyboard.
+
+**Arguments**:
+
+- `text` _str_ - The text to be typed. Must be at least `1` character long.
+  Only ASCII printable characters are supported. other characters will raise an error.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.type("Hello, world!")  # Types "Hello, world!"
+        agent.type("user@example.com")  # Types an email address
+        agent.type("password123")  # Types a password
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.key_tap"></a>
+
+#### key\_tap
+
+```python
+def key_tap(key: ANDROID_KEY) -> None
+```
+
+Taps the specified key on the Android device.
+
+**Arguments**:
+
+- `key` _ANDROID_KEY_ - The key to tap.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.key_tap("HOME")  # Taps the home key
+        agent.key_tap("BACK")  # Taps the back key
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.key_combination"></a>
+
+#### key\_combination
+
+```python
+def key_combination(
+    keys: Annotated[list[ANDROID_KEY], Field(min_length=2)],
+    duration_in_ms: int = 100
+) -> None
+```
+
+Taps the specified keys on the Android device.
+
+**Arguments**:
+
+- `keys` _list[ANDROID_KEY]_ - The keys to tap.
+- `duration_in_ms` _int, optional_ - The duration in milliseconds to hold the key combination. Default is 100ms.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.key_combination(["HOME", "BACK"])  # Taps the home key and then the back key
+        agent.key_combination(["HOME", "BACK"], duration_in_ms=200)  # Taps the home key and then the back key for 200ms.
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.shell"></a>
+
+#### shell
+
+```python
+def shell(command: str) -> str
+```
+
+Executes a shell command on the Android device.
+
+**Arguments**:
+
+- `command` _str_ - The shell command to execute.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.shell("pm list packages")  # Lists all installed packages
+        agent.shell("dumpsys battery")  # Displays battery information
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.drag_and_drop"></a>
+
+#### drag\_and\_drop
+
+```python
+def drag_and_drop(
+    x1: int, y1: int, x2: int, y2: int, duration_in_ms: int = 1000
+) -> None
+```
+
+Drags and drops the specified target.
+
+**Arguments**:
+
+- `x1` _int_ - The x-coordinate of the starting point.
+- `y1` _int_ - The y-coordinate of the starting point.
+- `x2` _int_ - The x-coordinate of the ending point.
+- `y2` _int_ - The y-coordinate of the ending point.
+- `duration_in_ms` _int, optional_ - The duration in milliseconds to hold the drag and drop. Default is 1000ms.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.drag_and_drop(100, 100, 200, 200)  # Drags and drops from (100, 100) to (200, 200)
+        agent.drag_and_drop(100, 100, 200, 200, duration_in_ms=2000)  # Drags and drops from (100, 100) to (200, 200) with a 2000ms duration
+
+<a id="askui.android_agent.AndroidVisionAgent.swipe"></a>
+
+#### swipe
+
+```python
+def swipe(
+    x1: int, y1: int, x2: int, y2: int, duration_in_ms: int = 1000
+) -> None
+```
+
+Swipes the specified target.
+
+**Arguments**:
+
+- `x1` _int_ - The x-coordinate of the starting point.
+- `y1` _int_ - The y-coordinate of the starting point.
+- `x2` _int_ - The x-coordinate of the ending point.
+- `y2` _int_ - The y-coordinate of the ending point.
+- `duration_in_ms` _int, optional_ - The duration in milliseconds to hold the swipe. Default is 1000ms.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.swipe(100, 100, 200, 200)  # Swipes from (100, 100) to (200, 200)
+        agent.swipe(100, 100, 200, 200, duration_in_ms=2000)  # Swipes from (100, 100) to (200, 200) with a 2000ms duration
+
+<a id="askui.android_agent.AndroidVisionAgent.set_device_by_serial_number"></a>
+
+#### set\_device\_by\_serial\_number
+
+```python
+def set_device_by_serial_number(device_sn: str) -> None
+```
+
+Sets the active device for screen interactions by name.
+
+**Arguments**:
+
+- `device_sn` _str_ - The serial number of the device to set as active.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.set_device_by_serial_number("Pixel 6")  # Sets the active device to the Pixel 6
+
+
+
+<a id="askui.android_agent.AndroidVisionAgent.act"></a>
+
+#### act
+
+```python
+def act(
+    goal: Annotated[str | list[MessageParam],
+                    Field(min_length=1)],
+    model: str | None = None,
+    on_message: OnMessageCb | None = None,
+    tools: list[Tool] | ToolCollection | None = None,
+    settings: ActSettings | None = None
+) -> None
+```
+
+Instructs the agent to achieve a specified goal through autonomous actions.
+
+The agent will analyze the screen, determine necessary steps, and perform
+actions to accomplish the goal. This may include clicking, typing, scrolling,
+and other interface interactions.
+
+**Arguments**:
+
+- `goal` _str | list[MessageParam]_ - A description of what the agent should
+  achieve.
+- `model` _str | None, optional_ - The composition or name of the model(s) to
+  be used for achieving the `goal`.
+- `on_message` _OnMessageCb | None, optional_ - Callback for new messages. If
+  it returns `None`, stops and does not add the message.
+- `tools` _list[Tool] | ToolCollection | None, optional_ - The tools for the
+  agent. Defaults to default tools depending on the selected model.
+- `settings` _AgentSettings | None, optional_ - The settings for the agent.
+  Defaults to a default settings depending on the selected model.
+  
+
+**Returns**:
+
+  None
+  
+
+**Raises**:
+
+- `MaxTokensExceededError` - If the model reaches the maximum token limit
+  defined in the agent settings.
+- `ModelRefusalError` - If the model refuses to process the request.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.act("Open the settings menu")
+        agent.act("Search for 'printer' in the search box")
+        agent.act("Log in with username 'admin' and password '1234'")
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.get"></a>
+
+#### get
+
+```python
+def get(
+    query: Annotated[str, Field(min_length=1)],
+    response_schema: Type[ResponseSchema] | None = None,
+    model: str | None = None,
+    source: Optional[InputSource] = None
+) -> ResponseSchema | str
+```
+
+Retrieves information from an image or PDF based on the provided `query`.
+
+If no `source` is provided, a screenshot of the current screen is taken.
+
+**Arguments**:
+
+- `query` _str_ - The query describing what information to retrieve.
+- `source` _InputSource | None, optional_ - The source to extract information
+  from. Can be a path to an image, PDF, or office document file,
+  a PIL Image object or a data URL. Defaults to a screenshot of the
+  current screen.
+- `response_schema` _Type[ResponseSchema] | None, optional_ - A Pydantic model
+  class that defines the response schema. If not provided, returns a
+  string.
+- `model` _str | None, optional_ - The composition or name of the model(s) to
+  be used for retrieving information from the screen or image using the
+  `query`. Note: `response_schema` is not supported by all models.
+  PDF processing is only supported for Gemini models hosted on AskUI.
+  
+
+**Returns**:
+
+  ResponseSchema | str: The extracted information, `str` if no
+  `response_schema` is provided.
+  
+
+**Raises**:
+
+- `NotImplementedError` - If PDF processing is not supported for the selected
+  model.
+- `ValueError` - If the `source` is not a valid PDF or image.
+  
+
+**Example**:
+
+    ```python
+    from askui import ResponseSchemaBase, AndroidVisionAgent
+    from PIL import Image
+    import json
+
+    class UrlResponse(ResponseSchemaBase):
+        url: str
+
+    class NestedResponse(ResponseSchemaBase):
+        nested: UrlResponse
+
+    class LinkedListNode(ResponseSchemaBase):
+        value: str
+        next: "LinkedListNode | None"
+
+    with AndroidVisionAgent() as agent:
+        # Get URL as string
+        url = agent.get("What is the current url shown in the url bar?")
+
+        # Get URL as Pydantic model from image at (relative) path
+        response = agent.get(
+            "What is the current url shown in the url bar?",
+            response_schema=UrlResponse,
+            source="screenshot.png",
+        )
+        # Dump whole model
+        print(response.model_dump_json(indent=2))
+        # or
+        response_json_dict = response.model_dump(mode="json")
+        print(json.dumps(response_json_dict, indent=2))
+        # or for regular dict
+        response_dict = response.model_dump()
+        print(response_dict["url"])
+
+        # Get boolean response from PIL Image
+        is_login_page = agent.get(
+            "Is this a login page?",
+            response_schema=bool,
+            source=Image.open("screenshot.png"),
+        )
+        print(is_login_page)
+
+        # Get integer response
+        input_count = agent.get(
+            "How many input fields are visible on this page?",
+            response_schema=int,
+        )
+        print(input_count)
+
+        # Get float response
+        design_rating = agent.get(
+            "Rate the page design quality from 0 to 1",
+            response_schema=float,
+        )
+        print(design_rating)
+
+        # Get nested response
+        nested = agent.get(
+            "Extract the URL and its metadata from the page",
+            response_schema=NestedResponse,
+        )
+        print(nested.nested.url)
+
+        # Get recursive response
+        linked_list = agent.get(
+            "Extract the breadcrumb navigation as a linked list",
+            response_schema=LinkedListNode,
+        )
+        current = linked_list
+        while current:
+            print(current.value)
+            current = current.next
+
+        # Get text from PDF
+        text = agent.get(
+            "Extract all text from the PDF",
+            source="document.pdf",
+        )
+        print(text)
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.locate"></a>
+
+#### locate
+
+```python
+def locate(
+    locator: str | Locator,
+    screenshot: Optional[InputSource] = None,
+    model: ModelComposition | str | None = None
+) -> Point
+```
+
+Locates the first matching UI element identified by the provided locator.
+
+**Arguments**:
+
+- `locator` _str | Locator_ - The identifier or description of the element to
+  locate.
+- `screenshot` _InputSource | None, optional_ - The screenshot to use for
+  locating the element. Can be a path to an image file, a PIL Image object
+  or a data URL. If `None`, takes a screenshot of the currently
+  selected display.
+- `model` _ModelComposition | str | None, optional_ - The composition or name
+  of the model(s) to be used for locating the element using the `locator`.
+  
+
+**Returns**:
+
+- `Point` - The coordinates of the element as a tuple (x, y).
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        point = agent.locate("Submit button")
+        print(f"Element found at coordinates: {point}")
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.locate_all"></a>
+
+#### locate\_all
+
+```python
+def locate_all(
+    locator: str | Locator,
+    screenshot: Optional[InputSource] = None,
+    model: ModelComposition | str | None = None
+) -> PointList
+```
+
+Locates all matching UI elements identified by the provided locator.
+
+Note: Some LocateModels can only locate a single element. In this case, the
+returned list will have a length of 1.
+
+**Arguments**:
+
+- `locator` _str | Locator_ - The identifier or description of the element to
+  locate.
+- `screenshot` _InputSource | None, optional_ - The screenshot to use for
+  locating the element. Can be a path to an image file, a PIL Image object
+  or a data URL. If `None`, takes a screenshot of the currently
+  selected display.
+- `model` _ModelComposition | str | None, optional_ - The composition or name
+  of the model(s) to be used for locating the element using the `locator`.
+  
+
+**Returns**:
+
+- `PointList` - The coordinates of the elements as a list of tuples (x, y).
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        points = agent.locate_all("Submit button")
+        print(f"Found {len(points)} elements at coordinates: {points}")
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.locate_all_elements"></a>
+
+#### locate\_all\_elements
+
+```python
+def locate_all_elements(
+    screenshot: Optional[InputSource] = None,
+    model_composition: ModelComposition | None = None
+) -> list[DetectedElement]
+```
+
+Locate all elements in the current screen using AskUI Models.
+
+**Arguments**:
+
+- `screenshot` _InputSource | None, optional_ - The screenshot to use for
+  locating the elements. Can be a path to an image file, a PIL Image
+  object or a data URL. If `None`, takes a screenshot of the currently
+  selected display.
+- `model_composition` _ModelComposition | None, optional_ - The model composition
+  to be used for locating the elements.
+  
+
+**Returns**:
+
+- `list[DetectedElement]` - A list of detected elements
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        detected_elements = agent.locate_all_elements()
+        print(f"Found {len(detected_elements)} elements: {detected_elements}")
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.annotate"></a>
+
+#### annotate
+
+```python
+def annotate(
+    screenshot: InputSource | None = None,
+    model_composition: ModelComposition | None = None,
+    output_directory: str = "reports"
+) -> None
+```
+
+Annotate the screenshot with the detected elements.
+Creates an interactive HTML file with the detected elements
+and saves it to the output directory.
+The HTML file can be opened in a browser to see the annotated image.
+The user can hover over the elements to see their names and text value
+and click on the box to copy the text value to the clipboard.
+
+**Arguments**:
+
+- `screenshot` _ImageSource | None, optional_ - The screenshot to annotate.
+  If `None`, takes a screenshot of the currently selected display.
+- `model_composition` _ModelComposition | None, optional_ - The composition
+  or name of the model(s) to be used for locating the elements.
+- `output_directory` _str, optional_ - The directory to save the annotated
+  image. Defaults to "reports".
+  
+  Example Using AndroidVisionAgent:
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.annotate()
+    ```
+  
+  Example Using AndroidVisionAgent:
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.annotate()
+    ```
+  
+  Example Using AndroidVisionAgent with custom screenshot and output directory:
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.annotate(screenshot="screenshot.png", output_directory="htmls")
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.wait"></a>
+
+#### wait
+
+```python
+def wait(
+    until: Annotated[float, Field(gt=0.0)] | str | Locator,
+    retry_count: Optional[Annotated[int, Field(gt=0)]] = None,
+    delay: Optional[Annotated[float, Field(gt=0.0)]] = None,
+    until_condition: Literal["appear", "disappear"] = "appear",
+    model: ModelComposition | str | None = None
+) -> None
+```
+
+Pauses execution or waits until a UI element appears or disappears.
+
+**Arguments**:
+
+- `until` _float | str | Locator_ - If a float, pauses execution for the
+  specified number of seconds (must be greater than 0.0). If a string
+  or Locator, waits until the specified UI element appears or
+  disappears on screen.
+- `retry_count` _int | None_ - Number of retries when waiting for a UI
+  element. Defaults to 3 if None.
+- `delay` _int | None_ - Sleep duration in seconds between retries when
+  waiting for a UI element. Defaults to 1 second if None.
+- `until_condition` _Literal["appear", "disappear"]_ - The condition to wait
+  until the element satisfies. Defaults to "appear".
+- `model` _ModelComposition | str | None, optional_ - The composition or name
+  of the model(s) to be used for locating the element using the
+  `until` locator.
+  
+
+**Raises**:
+
+- `WaitUntilError` - If the UI element is not found after all retries.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+    from askui.locators import loc
+
+    with AndroidVisionAgent() as agent:
+        # Wait for a specific duration
+        agent.wait(5)  # Pauses execution for 5 seconds
+        agent.wait(0.5)  # Pauses execution for 500 milliseconds
+
+        # Wait for a UI element to appear
+        agent.wait("Submit button", retry_count=5, delay=2)
+        agent.wait("Login form")  # Uses default retries and sleep time
+        agent.wait(loc.Text("Password"))  # Uses default retries and sleep time
+
+        # Wait for a UI element to disappear
+        agent.wait("Loading spinner", until_condition="disappear")
+
+        # Wait using a specific model
+        agent.wait("Submit button", model="custom_model")
+    ```
+
