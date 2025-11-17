@@ -41,6 +41,7 @@ Taps on the specified target.
     with AndroidVisionAgent() as agent:
         agent.tap("Submit button")
         agent.tap((100, 100))
+    ```
 
 <a id="askui.android_agent.AndroidVisionAgent.type"></a>
 
@@ -177,6 +178,7 @@ Drags and drops the specified target.
     with AndroidVisionAgent() as agent:
         agent.drag_and_drop(100, 100, 200, 200)  # Drags and drops from (100, 100) to (200, 200)
         agent.drag_and_drop(100, 100, 200, 200, duration_in_ms=2000)  # Drags and drops from (100, 100) to (200, 200) with a 2000ms duration
+    ```
 
 <a id="askui.android_agent.AndroidVisionAgent.swipe"></a>
 
@@ -207,6 +209,7 @@ Swipes the specified target.
     with AndroidVisionAgent() as agent:
         agent.swipe(100, 100, 200, 200)  # Swipes from (100, 100) to (200, 200)
         agent.swipe(100, 100, 200, 200, duration_in_ms=2000)  # Swipes from (100, 100) to (200, 200) with a 2000ms duration
+    ```
 
 <a id="askui.android_agent.AndroidVisionAgent.set_device_by_serial_number"></a>
 
@@ -230,6 +233,7 @@ Sets the active device for screen interactions by name.
 
     with AndroidVisionAgent() as agent:
         agent.set_device_by_serial_number("Pixel 6")  # Sets the active device to the Pixel 6
+    ```
 
 
 
