@@ -1,0 +1,29 @@
+---
+title: Windows Silent Installation
+description: 'Install AskUI Suite silent on Windows'
+---
+
+You can perform a silent installation of AskUI Suite using the executable installer (.exe). This method also allows you to choose a custom installation directory.
+
+Basic Silent Installation
+
+Run the following command in the command line CMD
+```scripts
+"<installer_path>" /qn
+```
+⚠ Important: The installer path must be enclosed in quotes.
+
+Silent Installation with Custom Options
+
+To customize the installation, add the desired options to the command:
+```scripts
+"<installer_path>" /qn <Options>
+```
+
+
+Options:
+- `/l*v "<log_file_path>"`: Creates a verbose installation log at the specified path.
+- `APPDIR="<installation_directory>"`: Defines the installation directory.
+
+
+
