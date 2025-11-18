@@ -70,7 +70,9 @@
           "group": "Installation",
           "pages": [
             "01-tutorials/00-installation",
-            "01-tutorials/install/00-uninstall"
+            "01-tutorials/install/00-uninstall",
+            "01-tutorials/install/01-silent-windows-uninstall"
+            
           ]
         },
         "01-tutorials/01-your-first-agent",

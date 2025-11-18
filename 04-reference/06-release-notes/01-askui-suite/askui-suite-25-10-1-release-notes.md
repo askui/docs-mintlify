@@ -1,4 +1,4 @@
-# AskUI Suite 25.9.2
+# AskUI Suite 25.10.1
 
 ## General
 
@@ -24,11 +24,11 @@ The AskUI Suite is a comprehensive bundle that includes all necessary dependenci
 
 | OS | Arch | Link|
 | --- | ----| ---|
-| Windows | AMD64 | [Link](https://files.askui.com/releases/Installer/25.9.2/AskUI-Suite-25.9.2-User-Installer-Win-AMD64-Web.exe)
-| Windows | ARM64 | [Link](https://files.askui.com/releases/Installer/25.9.2/AskUI-Suite-25.9.2-User-Installer-Win-ARM64-Web.exe)
-| MacOS | ARM64 | [Link](https://files.askui.com/releases/Installer/25.9.2/AskUI-Suite-25.9.2-User-Installer-MacOS-ARM64-Web.run)
-| Linux | AMD64 | [Link](https://files.askui.com/releases/Installer/25.9.2/AskUI-Suite-25.9.2-User-Installer-Linux-AMD64-Web.run)
-| Linux | ARM64 | [Link](https://files.askui.com/releases/Installer/25.9.2/AskUI-Suite-25.9.2-User-Installer-Linux-ARM64-Web.run)
+| Windows | AMD64 | [Link](https://files.askui.com/releases/Installer/25.10.1/AskUI-Suite-25.10.1-User-Installer-Win-AMD64-Web.exe)
+| Windows | ARM64 | [Link](https://files.askui.com/releases/Installer/25.10.1/AskUI-Suite-25.10.1-User-Installer-Win-ARM64-Web.exe)
+| MacOS | ARM64 | [Link](https://files.askui.com/releases/Installer/25.10.1/AskUI-Suite-25.10.1-User-Installer-MacOS-ARM64-Web.run)
+| Linux | AMD64 | [Link](https://files.askui.com/releases/Installer/25.10.1/AskUI-Suite-25.10.1-User-Installer-Linux-AMD64-Web.run)
+| Linux | ARM64 | [Link](https://files.askui.com/releases/Installer/25.10.1/AskUI-Suite-25.10.1-User-Installer-Linux-ARM64-Web.run)
 
 ### Installation
 
@@ -47,7 +47,7 @@ To update your [AskUI Typescript ADK](https://github.com/askui/askui) to the new
 
 1. Open your project in VSCode
 2. Enter the AskUI Shell by `askui-shell`
-3. Update AskUI by `npm install --dev askui@0.28.1`
+3. Update AskUI by `npm install --dev askui@latest`
 
 ### AskUI Vision Agent (Python)
 
@@ -55,17 +55,15 @@ To update your [AskUI Vision Agent](https://github.com/askui/vision-agent) to th
 
 1. Open your project in VSCode
 2. Enable your virtual environment.
-3. Enter `pip install askui==0.15.0`
+3. Enter `pip install askui --upgrade`
 
 ## Fix
-- None
+
+Nothing has changed
 
 ## New Features
 
-- Move AskUI-Error from experimental to debug mode.
-- Add AskUI Suite application short in /Application folder on MacOS.
-- Fix OpenGL bug
-- Add MacOS shortcut
+Nothing has changed
 
 
 ## Known Issues
@@ -84,10 +82,10 @@ To update your [AskUI Vision Agent](https://github.com/askui/vision-agent) to th
 | AskUIOCRTeaching                              | 0.4.0   | [Link](https://github.com/askui/ml-ocr-text-recognition-desktop-frontend/releases/tag/v0.4.0)                                                                                            |
 | PowerShell                                           | 7.5.2   | [Link](https://github.com/PowerShell/PowerShell/releases/tag/v7.5.2) |
 | Python                                                 | 3.13.1  | [Link](https://www.python.org/downloads/release/python-3131/) |
-| AskUIRemoteDeviceController            | 0.19.0  | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.7.1) |
-| AskUIRemoteDeviceSnippingTool       | 0.3.0   | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.7.1) |
-| UIController                                         | 0.15.0  | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.7.1) |
-| AskUIRemoteDeviceSetupTool          | 0.2.1  | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.7.1) |
+| AskUIRemoteDeviceController            | 0.21.0  | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.9.1) |
+| AskUIRemoteDeviceSnippingTool       | 0.3.0   | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.9.1) |
+| UIController                                         | 0.15.0  | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.9.1) |
+| AskUIRemoteDeviceSetupTool          | 0.3.1  | [Link](https://github.com/askui/askui-ui-controller/releases/tag/25.9.1) |
 | AskUIRunnerManager                         | 0.1.0   |                                                                                                        |
 | ADE.ProcessManager                          | 0.1.0   |                                                                                                        |
 | ADE.ProjectManager                           | 0.1.0   |                                                                                                        |
