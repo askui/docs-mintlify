@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/askui/docs-mintlify#readme",
   "dependencies": {
-    "@mintlify/scraping": "^4.0.93",
-    "mintlify": "^4.0.354"
+    "@mintlify/scraping": "^4.0.467",
+    "mintlify": "^4.2.204"
   }
 }
