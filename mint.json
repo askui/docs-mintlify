@@ -26,12 +26,12 @@
     },
     {
       "name": "Sign up",
-      "url": "https://hub.askui.com"
+      "url": "https://app.caesr.ai"
     }
   ],
   "topbarCtaButton": {
     "name": "Login",
-    "url": "https://hub.askui.com"
+    "url": "https://app.caesr.ai"
   },
   "tabs": [
     {
@@ -46,14 +46,14 @@
       "url": "https://docs-ts.askui.com"
     },
     {
-      "name": "Community",
-      "icon": "people",
-      "url": "https://discord.gg/Gu35zMGxbx"
+      "name": "Status Page",
+      "icon": "page",
+      "url": "https://status.askui.com"
     },
     {
-      "name": "Roadmap",
-      "icon": "road",
-      "url": "https://askui.notion.site/1d519a9494f880c9ac14ddcd91653b54?v=1d519a9494f88022b02b000c3f4cd9ff"
+      "name": "Trust Center",
+      "icon": "lock",
+      "url": "https://trust.askui.com"
     }
   ],
   "navigation": [
@@ -463,34 +463,34 @@
             {
               "group": "AskUI Suite",
               "pages": [
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-11-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-10-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-9-2-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-8-2-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-8-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-7-2-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-7-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-6-3-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-6-2-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-6-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-4-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-3-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-25-2-1-release-notes-link",
-                "04-reference/06-release-notes/01-askui-suite/askui-suite-old-release-notes"
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-11-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-10-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-9-2-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-8-2-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-8-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-7-2-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-7-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-6-3-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-6-2-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-6-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-4-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-3-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-2-1-release-notes-link",
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-old-release-notes"
               ]
             },
             {
               "group": "AskUI Frameworks",
               "pages": [
-                "04-reference/06-release-notes/02-agent-frameworks/python-vision-agent-release-notes",
-                "04-reference/06-release-notes/02-agent-frameworks/typescirpt-adk-release-notes"
+                "05-additional-resources/release-notes/02-agent-frameworks/python-vision-agent-release-notes",
+                "05-additional-resources/release-notes/02-agent-frameworks/typescirpt-adk-release-notes"
               ]
             }
           ]
         },
-        "04-reference/08-additional-resources/status-page",
-        "04-reference/08-additional-resources/trust-center",
-        "04-reference/08-additional-resources/agentic-instructions-example"
+        "05-additional-resources/status-page",
+        "05-additional-resources/trust-center",
+        "05-additional-resources/agentic-instructions-example"
       ]
     }
   ],
