@@ -512,7 +512,7 @@ returned list will have a length of 1.
 ```python
 def locate_all_elements(
     screenshot: Optional[InputSource] = None,
-    model_composition: ModelComposition | None = None
+    model: ModelComposition | None = None
 ) -> list[DetectedElement]
 ```
 
@@ -524,7 +524,7 @@ Locate all elements in the current screen using AskUI Models.
   locating the elements. Can be a path to an image file, a PIL Image
   object or a data URL. If `None`, takes a screenshot of the currently
   selected display.
-- `model_composition` _ModelComposition | None, optional_ - The model composition
+- `model` _ModelComposition | None, optional_ - The model composition
   to be used for locating the elements.
   
 
@@ -550,14 +550,14 @@ Locate all elements in the current screen using AskUI Models.
 ```python
 def annotate(
     screenshot: InputSource | None = None,
-    model_composition: ModelComposition | None = None,
-    output_directory: str = "reports"
+    annotation_dir: str = "annotations",
+    model: ModelComposition | None = None
 ) -> None
 ```
 
 Annotate the screenshot with the detected elements.
 Creates an interactive HTML file with the detected elements
-and saves it to the output directory.
+and saves it to the annotation directory.
 The HTML file can be opened in a browser to see the annotated image.
 The user can hover over the elements to see their names and text value
 and click on the box to copy the text value to the clipboard.
@@ -566,10 +566,11 @@ and click on the box to copy the text value to the clipboard.
 
 - `screenshot` _ImageSource | None, optional_ - The screenshot to annotate.
   If `None`, takes a screenshot of the currently selected display.
-- `model_composition` _ModelComposition | None, optional_ - The composition
-  or name of the model(s) to be used for locating the elements.
-- `output_directory` _str, optional_ - The directory to save the annotated
-  image. Defaults to "reports".
+- `annotation_dir` _str_ - The directory to save the annotated
+  image. Defaults to "annotations".
+- `model` _ModelComposition | None, optional_ - The composition
+  of the model(s) to be used for annotating the image.
+  If `None`, uses the default model.
   
   Example Using AndroidVisionAgent:
     ```python
@@ -587,12 +588,12 @@ and click on the box to copy the text value to the clipboard.
         agent.annotate()
     ```
   
-  Example Using AndroidVisionAgent with custom screenshot and output directory:
+  Example Using AndroidVisionAgent with custom screenshot and annotation directory:
     ```python
     from askui import AndroidVisionAgent
 
     with AndroidVisionAgent() as agent:
-        agent.annotate(screenshot="screenshot.png", output_directory="htmls")
+        agent.annotate(screenshot="screenshot.png", annotation_dir="htmls")
     ```
 
 <a id="askui.android_agent.AndroidVisionAgent.wait"></a>
