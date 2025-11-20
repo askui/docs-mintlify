@@ -4,7 +4,6 @@ title: Agent
 
 <a id="askui.agent.VisionAgent"></a>
 
-## askui.agent.VisionAgent
 
 ```python
 class VisionAgent(AgentBase)
@@ -38,7 +37,7 @@ It uses computer vision models to locate UI elements and execute actions on them
 
 <a id="askui.agent.VisionAgent.click"></a>
 
-#### click
+## click
 
 ```python
 def click(
@@ -78,7 +77,7 @@ Simulates a mouse click on the user interface element identified by the provided
 
 <a id="askui.agent.VisionAgent.mouse_move"></a>
 
-#### mouse\_move
+## mouse\_move
 
 ```python
 def mouse_move(
@@ -112,7 +111,7 @@ Moves the mouse cursor to the UI element identified by the provided locator.
 
 <a id="askui.agent.VisionAgent.mouse_scroll"></a>
 
-#### mouse\_scroll
+## mouse\_scroll
 
 ```python
 def mouse_scroll(x: int, y: int) -> None
@@ -148,7 +147,7 @@ Simulates scrolling the mouse wheel by the specified horizontal and vertical amo
 
 <a id="askui.agent.VisionAgent.type"></a>
 
-#### type
+## type
 
 ```python
 def type(
@@ -192,7 +191,7 @@ If `clear` is `True` (default), it will triple click on the element to select th
 
 <a id="askui.agent.VisionAgent.key_up"></a>
 
-#### key\_up
+## key\_up
 
 ```python
 def key_up(key: PcKey | ModifierKey) -> None
@@ -217,7 +216,7 @@ Simulates the release of a key.
 
 <a id="askui.agent.VisionAgent.key_down"></a>
 
-#### key\_down
+## key\_down
 
 ```python
 def key_down(key: PcKey | ModifierKey) -> None
@@ -242,7 +241,7 @@ Simulates the pressing of a key.
 
 <a id="askui.agent.VisionAgent.mouse_up"></a>
 
-#### mouse\_up
+## mouse\_up
 
 ```python
 def mouse_up(button: Literal["left", "middle", "right"] = "left") -> None
@@ -268,7 +267,7 @@ Simulates the release of a mouse button.
 
 <a id="askui.agent.VisionAgent.mouse_down"></a>
 
-#### mouse\_down
+## mouse\_down
 
 ```python
 def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
@@ -294,7 +293,7 @@ Simulates the pressing of a mouse button.
 
 <a id="askui.agent.VisionAgent.keyboard"></a>
 
-#### keyboard
+## keyboard
 
 ```python
 def keyboard(
@@ -328,7 +327,7 @@ Simulates pressing (and releasing) a key or key combination on the keyboard.
 
 <a id="askui.agent.VisionAgent.cli"></a>
 
-#### cli
+## cli
 
 ```python
 def cli(command: Annotated[str, Field(min_length=1)]) -> None
@@ -370,7 +369,7 @@ is split on spaces and executed as a subprocess.
 
 <a id="askui.agent.VisionAgent.act"></a>
 
-#### act
+## act
 
 ```python
 def act(
@@ -428,7 +427,7 @@ and other interface interactions.
 
 <a id="askui.agent.VisionAgent.get"></a>
 
-#### get
+## get
 
 ```python
 def get(
@@ -557,7 +556,7 @@ If no `source` is provided, a screenshot of the current screen is taken.
 
 <a id="askui.agent.VisionAgent.locate"></a>
 
-#### locate
+## locate
 
 ```python
 def locate(
@@ -598,7 +597,7 @@ Locates the first matching UI element identified by the provided locator.
 
 <a id="askui.agent.VisionAgent.locate_all"></a>
 
-#### locate\_all
+## locate\_all
 
 ```python
 def locate_all(
@@ -642,7 +641,7 @@ returned list will have a length of 1.
 
 <a id="askui.agent.VisionAgent.locate_all_elements"></a>
 
-#### locate\_all\_elements
+## locate\_all\_elements
 
 ```python
 def locate_all_elements(
@@ -680,7 +679,7 @@ Locate all elements in the current screen using AskUI Models.
 
 <a id="askui.agent.VisionAgent.annotate"></a>
 
-#### annotate
+## annotate
 
 ```python
 def annotate(
@@ -733,7 +732,7 @@ and click on the box to copy the text value to the clipboard.
 
 <a id="askui.agent.VisionAgent.wait"></a>
 
-#### wait
+## wait
 
 ```python
 def wait(

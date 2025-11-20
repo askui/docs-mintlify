@@ -4,8 +4,6 @@ title: Android Vision Agent
 
 <a id="askui.android_agent.AndroidVisionAgent"></a>
 
-## askui.android\_agent.AndroidVisionAgent
-
 ```python
 class AndroidVisionAgent(AgentBase)
 ```
@@ -37,7 +35,7 @@ It uses computer vision models to locate UI elements and execute actions on them
 
 <a id="askui.android_agent.AndroidVisionAgent.tap"></a>
 
-#### tap
+## tap
 
 ```python
 def tap(
@@ -66,7 +64,7 @@ Taps on the specified target.
 
 <a id="askui.android_agent.AndroidVisionAgent.type"></a>
 
-#### type
+## type
 
 ```python
 def type(text: Annotated[str, Field(min_length=1)]) -> None
@@ -93,7 +91,7 @@ Types the specified text as if it were entered on a keyboard.
 
 <a id="askui.android_agent.AndroidVisionAgent.key_tap"></a>
 
-#### key\_tap
+## key\_tap
 
 ```python
 def key_tap(key: ANDROID_KEY) -> None
@@ -118,7 +116,7 @@ Taps the specified key on the Android device.
 
 <a id="askui.android_agent.AndroidVisionAgent.key_combination"></a>
 
-#### key\_combination
+## key\_combination
 
 ```python
 def key_combination(
@@ -147,7 +145,7 @@ Taps the specified keys on the Android device.
 
 <a id="askui.android_agent.AndroidVisionAgent.shell"></a>
 
-#### shell
+## shell
 
 ```python
 def shell(command: str) -> str
@@ -172,7 +170,7 @@ Executes a shell command on the Android device.
 
 <a id="askui.android_agent.AndroidVisionAgent.drag_and_drop"></a>
 
-#### drag\_and\_drop
+## drag\_and\_drop
 
 ```python
 def drag_and_drop(
@@ -203,7 +201,7 @@ Drags and drops the specified target.
 
 <a id="askui.android_agent.AndroidVisionAgent.swipe"></a>
 
-#### swipe
+## swipe
 
 ```python
 def swipe(
@@ -234,7 +232,7 @@ Swipes the specified target.
 
 <a id="askui.android_agent.AndroidVisionAgent.set_device_by_serial_number"></a>
 
-#### set\_device\_by\_serial\_number
+## set\_device\_by\_serial\_number
 
 ```python
 def set_device_by_serial_number(device_sn: str) -> None
@@ -260,7 +258,7 @@ Sets the active device for screen interactions by name.
 
 <a id="askui.android_agent.AndroidVisionAgent.act"></a>
 
-#### act
+## act
 
 ```python
 def act(
@@ -318,7 +316,7 @@ and other interface interactions.
 
 <a id="askui.android_agent.AndroidVisionAgent.get"></a>
 
-#### get
+## get
 
 ```python
 def get(
@@ -447,7 +445,7 @@ If no `source` is provided, a screenshot of the current screen is taken.
 
 <a id="askui.android_agent.AndroidVisionAgent.locate"></a>
 
-#### locate
+## locate
 
 ```python
 def locate(
@@ -488,7 +486,7 @@ Locates the first matching UI element identified by the provided locator.
 
 <a id="askui.android_agent.AndroidVisionAgent.locate_all"></a>
 
-#### locate\_all
+## locate\_all
 
 ```python
 def locate_all(
@@ -532,7 +530,7 @@ returned list will have a length of 1.
 
 <a id="askui.android_agent.AndroidVisionAgent.locate_all_elements"></a>
 
-#### locate\_all\_elements
+## locate\_all\_elements
 
 ```python
 def locate_all_elements(
@@ -570,7 +568,7 @@ Locate all elements in the current screen using AskUI Models.
 
 <a id="askui.android_agent.AndroidVisionAgent.annotate"></a>
 
-#### annotate
+## annotate
 
 ```python
 def annotate(
@@ -623,7 +621,7 @@ and click on the box to copy the text value to the clipboard.
 
 <a id="askui.android_agent.AndroidVisionAgent.wait"></a>
 
-#### wait
+## wait
 
 ```python
 def wait(
