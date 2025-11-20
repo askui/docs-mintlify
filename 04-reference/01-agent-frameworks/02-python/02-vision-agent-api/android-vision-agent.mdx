@@ -10,6 +10,31 @@ title: Android Vision Agent
 class AndroidVisionAgent(AgentBase)
 ```
 
+A vision-based agent that can interact with Android devices through computer vision and AI.
+
+This agent can perform various UI interactions on Android devices like tapping, typing, swiping, and more.
+It uses computer vision models to locate UI elements and execute actions on them.
+
+**Arguments**:
+
+- `reporters` _list[Reporter] | None, optional_ - List of reporter instances for logging and reporting. If `None`, an empty list is used.
+- `model` _ModelChoice | ModelComposition | str | None, optional_ - The default choice or name of the model(s) to be used for vision tasks. Can be overridden by the `model` parameter in the `tap()`, `get()`, `act()` etc. methods.
+- `retry` _Retry, optional_ - The retry instance to use for retrying failed actions. Defaults to `ConfigurableRetry` with exponential backoff. Currently only supported for `locate()` method.
+- `models` _ModelRegistry | None, optional_ - A registry of models to make available to the `AndroidVisionAgent` so that they can be selected using the `model` parameter of `AndroidVisionAgent` or the `model` parameter of its `tap()`, `get()`, `act()` etc. methods. Entries in the registry override entries in the default model registry.
+- `model_provider` _str | None, optional_ - The model provider to use for vision tasks.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.tap("Submit button")
+        agent.type("Hello World")
+        agent.act("Open settings menu")
+    ```
+
 <a id="askui.android_agent.AndroidVisionAgent.tap"></a>
 
 #### tap
