@@ -193,6 +193,7 @@
       "group": "Python Vision Agent",
       "pages": [
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/android-vision-agent",
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/retry",

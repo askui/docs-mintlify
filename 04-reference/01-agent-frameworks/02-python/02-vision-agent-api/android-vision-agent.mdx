@@ -1,373 +1,262 @@
 ---
-title: Agent
+title: Android Vision Agent
 ---
 
-<a id="askui.agent.VisionAgent"></a>
-
+<a id="askui.android_agent.AndroidVisionAgent"></a>
 
 ```python
-class VisionAgent(AgentBase)
+class AndroidVisionAgent(AgentBase)
 ```
 
-A vision-based agent that can interact with user interfaces through computer vision and AI.
+A vision-based agent that can interact with Android devices through computer vision and AI.
 
-This agent can perform various UI interactions like clicking, typing, scrolling, and more.
+This agent can perform various UI interactions on Android devices like tapping, typing, swiping, and more.
 It uses computer vision models to locate UI elements and execute actions on them.
 
 **Arguments**:
 
-- `display` _int, optional_ - The display number to use for screen interactions. Defaults to `1`.
 - `reporters` _list[Reporter] | None, optional_ - List of reporter instances for logging and reporting. If `None`, an empty list is used.
-- `tools` _AgentToolbox | None, optional_ - Custom toolbox instance. If `None`, a default one will be created with `AskUiControllerClient`.
-- `model` _ModelChoice | ModelComposition | str | None, optional_ - The default choice or name of the model(s) to be used for vision tasks. Can be overridden by the `model` parameter in the `click()`, `get()`, `act()` etc. methods.
+- `model` _ModelChoice | ModelComposition | str | None, optional_ - The default choice or name of the model(s) to be used for vision tasks. Can be overridden by the `model` parameter in the `tap()`, `get()`, `act()` etc. methods.
 - `retry` _Retry, optional_ - The retry instance to use for retrying failed actions. Defaults to `ConfigurableRetry` with exponential backoff. Currently only supported for `locate()` method.
-- `models` _ModelRegistry | None, optional_ - A registry of models to make available to the `VisionAgent` so that they can be selected using the `model` parameter of `VisionAgent` or the `model` parameter of its `click()`, `get()`, `act()` etc. methods. Entries in the registry override entries in the default model registry.
+- `models` _ModelRegistry | None, optional_ - A registry of models to make available to the `AndroidVisionAgent` so that they can be selected using the `model` parameter of `AndroidVisionAgent` or the `model` parameter of its `tap()`, `get()`, `act()` etc. methods. Entries in the registry override entries in the default model registry.
+- `model_provider` _str | None, optional_ - The model provider to use for vision tasks.
   
 
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
-        agent.click("Submit button")
+    with AndroidVisionAgent() as agent:
+        agent.tap("Submit button")
         agent.type("Hello World")
         agent.act("Open settings menu")
     ```
 
-<a id="askui.agent.VisionAgent.click"></a>
+<a id="askui.android_agent.AndroidVisionAgent.tap"></a>
 
-## click
+## tap
 
 ```python
-def click(
-    locator: Optional[str | Locator | Point] = None,
-    button: Literal["left", "middle", "right"] = "left",
-    repeat: Annotated[int, Field(gt=0)] = 1,
-    offset: Optional[Point] = None,
+def tap(
+    target: str | Locator | tuple[int, int],
     model: ModelComposition | str | None = None
 ) -> None
 ```
 
-Simulates a mouse click on the user interface element identified by the provided locator.
+Taps on the specified target.
 
 **Arguments**:
 
-- `locator` _str | Locator | Point | None, optional_ - UI element description, structured locator, or absolute coordinates (x, y). If `None`, clicks at current position.
-- `button` _'left' | 'middle' | 'right', optional_ - Specifies which mouse button to click. Defaults to `'left'`.
-- `repeat` _int, optional_ - The number of times to click. Must be greater than `0`. Defaults to `1`.
-- `offset` _Point | None, optional_ - Pixel offset (x, y) from the target location. Positive x=right, negative x=left, positive y=down, negative y=up.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element to click on using the `locator`.
+- `target` _str | Locator | Point_ - The target to tap on. Can be a locator, a point, or a string.
+- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for tapping on the target.
   
 
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
-        agent.click()              # Left click on current position
-        agent.click("Edit")        # Left click on text "Edit"
-        agent.click((100, 200))    # Left click at absolute coordinates (100, 200)
-        agent.click("Edit", button="right")  # Right click on text "Edit"
-        agent.click(repeat=2)      # Double left click on current position
-        agent.click("Edit", button="middle", repeat=4)   # 4x middle click on text "Edit"
-        agent.click("Submit", offset=(10, -5))  # Click 10 pixels right and 5 pixels up from "Submit"
+    with AndroidVisionAgent() as agent:
+        agent.tap("Submit button")
+        agent.tap((100, 100))
     ```
 
-<a id="askui.agent.VisionAgent.mouse_move"></a>
-
-## mouse\_move
-
-```python
-def mouse_move(
-    locator: str | Locator | Point,
-    offset: Optional[Point] = None,
-    model: ModelComposition | str | None = None
-) -> None
-```
-
-Moves the mouse cursor to the UI element identified by the provided locator.
-
-**Arguments**:
-
-- `locator` _str | Locator | Point_ - UI element description, structured locator, or absolute coordinates (x, y).
-- `offset` _Point | None, optional_ - Pixel offset (x, y) from the target location. Positive x=right, negative x=left, positive y=down, negative y=up.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element to move the mouse to using the `locator`.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.mouse_move("Submit button")  # Moves cursor to submit button
-        agent.mouse_move((300, 150))       # Moves cursor to absolute coordinates (300, 150)
-        agent.mouse_move("Close")          # Moves cursor to close element
-        agent.mouse_move("Profile picture", model="custom_model")  # Uses specific model
-        agent.mouse_move("Menu", offset=(5, 10))  # Move 5 pixels right and 10 pixels down from "Menu"
-    ```
-
-<a id="askui.agent.VisionAgent.mouse_scroll"></a>
-
-## mouse\_scroll
-
-```python
-def mouse_scroll(x: int, y: int) -> None
-```
-
-Simulates scrolling the mouse wheel by the specified horizontal and vertical amounts.
-
-**Arguments**:
-
-- `x` _int_ - The horizontal scroll amount. Positive values typically scroll right, negative values scroll left.
-- `y` _int_ - The vertical scroll amount. Positive values typically scroll down, negative values scroll up.
-  
-
-**Notes**:
-
-  The actual scroll direction depends on the operating system's configuration.
-  Some systems may have "natural scrolling" enabled, which reverses the traditional direction.
-  
-  The meaning of scroll units varies across operating systems and applications.
-  A scroll value of `10` might result in different distances depending on the application and system settings.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.mouse_scroll(0, 10)  # Usually scrolls down 10 units
-        agent.mouse_scroll(0, -5)  # Usually scrolls up 5 units
-        agent.mouse_scroll(3, 0)   # Usually scrolls right 3 units
-    ```
-
-<a id="askui.agent.VisionAgent.type"></a>
+<a id="askui.android_agent.AndroidVisionAgent.type"></a>
 
 ## type
 
 ```python
-def type(
-    text: Annotated[str, Field(min_length=1)],
-    locator: str | Locator | Point | None = None,
-    offset: Optional[Point] = None,
-    model: ModelComposition | str | None = None,
-    clear: bool = True
-) -> None
+def type(text: Annotated[str, Field(min_length=1)]) -> None
 ```
 
 Types the specified text as if it were entered on a keyboard.
 
-If `locator` is provided, it will first click on the element to give it focus before typing.
-If `clear` is `True` (default), it will triple click on the element to select the current text (in multi-line inputs like textareas the current line or paragraph) before typing.
-
-**IMPORTANT:** `clear` only works if a `locator` is provided.
-
 **Arguments**:
 
 - `text` _str_ - The text to be typed. Must be at least `1` character long.
-- `locator` _str | Locator | Point | None, optional_ - UI element description, structured locator, or absolute coordinates (x, y). If `None`, types at current focus.
-- `offset` _Point | None, optional_ - Pixel offset (x, y) from the target location. Positive x=right, negative x=left, positive y=down, negative y=up.
-- `model` _ModelComposition | str | None, optional_ - The composition or name of the model(s) to be used for locating the element, i.e., input field, to type into using the `locator`.
-- `clear` _bool, optional_ - Whether to triple click on the element to give it focus and select the current text before typing. Defaults to `True`.
+  Only ASCII printable characters are supported. other characters will raise an error.
   
 
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
-        agent.type("Hello, world!")  # Types "Hello, world!" at current focus
-        agent.type("user@example.com", locator="Email")  # Clicks on "Email" input, then types
-        agent.type("username", locator=(200, 100))  # Clicks at coordinates (200, 100), then types
-        agent.type("password123", locator="Password field", model="custom_model")  # Uses specific model
-        agent.type("Hello, world!", locator="Textarea", clear=False)  # Types "Hello, world!" into textarea without clearing
-        agent.type("text", locator="Input field", offset=(5, 0))  # Click 5 pixels right of "Input field", then type
+    with AndroidVisionAgent() as agent:
+        agent.type("Hello, world!")  # Types "Hello, world!"
+        agent.type("user@example.com")  # Types an email address
+        agent.type("password123")  # Types a password
     ```
 
-<a id="askui.agent.VisionAgent.key_up"></a>
+<a id="askui.android_agent.AndroidVisionAgent.key_tap"></a>
 
-## key\_up
+## key\_tap
 
 ```python
-def key_up(key: PcKey | ModifierKey) -> None
+def key_tap(key: ANDROID_KEY) -> None
 ```
 
-Simulates the release of a key.
+Taps the specified key on the Android device.
 
 **Arguments**:
 
-- `key` _PcKey | ModifierKey_ - The key to be released.
+- `key` _ANDROID_KEY_ - The key to tap.
   
 
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
-        agent.key_up('a')  # Release the 'a' key
-        agent.key_up('shift')  # Release the 'Shift' key
+    with AndroidVisionAgent() as agent:
+        agent.key_tap("HOME")  # Taps the home key
+        agent.key_tap("BACK")  # Taps the back key
     ```
 
-<a id="askui.agent.VisionAgent.key_down"></a>
+<a id="askui.android_agent.AndroidVisionAgent.key_combination"></a>
 
-## key\_down
-
-```python
-def key_down(key: PcKey | ModifierKey) -> None
-```
-
-Simulates the pressing of a key.
-
-**Arguments**:
-
-- `key` _PcKey | ModifierKey_ - The key to be pressed.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.key_down('a')  # Press the 'a' key
-        agent.key_down('shift')  # Press the 'Shift' key
-    ```
-
-<a id="askui.agent.VisionAgent.mouse_up"></a>
-
-## mouse\_up
+## key\_combination
 
 ```python
-def mouse_up(button: Literal["left", "middle", "right"] = "left") -> None
-```
-
-Simulates the release of a mouse button.
-
-**Arguments**:
-
-- `button` _'left' | 'middle' | 'right', optional_ - The mouse button to be released. Defaults to `'left'`.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.mouse_up()  # Release the left mouse button
-        agent.mouse_up('right')  # Release the right mouse button
-        agent.mouse_up('middle')  # Release the middle mouse button
-    ```
-
-<a id="askui.agent.VisionAgent.mouse_down"></a>
-
-## mouse\_down
-
-```python
-def mouse_down(button: Literal["left", "middle", "right"] = "left") -> None
-```
-
-Simulates the pressing of a mouse button.
-
-**Arguments**:
-
-- `button` _'left' | 'middle' | 'right', optional_ - The mouse button to be pressed. Defaults to `'left'`.
-  
-
-**Example**:
-
-    ```python
-    from askui import VisionAgent
-
-    with VisionAgent() as agent:
-        agent.mouse_down()  # Press the left mouse button
-        agent.mouse_down('right')  # Press the right mouse button
-        agent.mouse_down('middle')  # Press the middle mouse button
-    ```
-
-<a id="askui.agent.VisionAgent.keyboard"></a>
-
-## keyboard
-
-```python
-def keyboard(
-    key: PcKey | ModifierKey,
-    modifier_keys: Optional[list[ModifierKey]] = None,
-    repeat: Annotated[int, Field(gt=0)] = 1
+def key_combination(
+    keys: Annotated[list[ANDROID_KEY], Field(min_length=2)],
+    duration_in_ms: int = 100
 ) -> None
 ```
 
-Simulates pressing (and releasing) a key or key combination on the keyboard.
+Taps the specified keys on the Android device.
 
 **Arguments**:
 
-- `key` _PcKey | ModifierKey_ - The main key to press. This can be a letter, number, special character, or function key.
-- `modifier_keys` _list[ModifierKey] | None, optional_ - List of modifier keys to press along with the main key. Common modifier keys include `'ctrl'`, `'alt'`, `'shift'`.
-- `repeat` _int, optional_ - The number of times to press (and release) the key. Must be greater than `0`. Defaults to `1`.
+- `keys` _list[ANDROID_KEY]_ - The keys to tap.
+- `duration_in_ms` _int, optional_ - The duration in milliseconds to hold the key combination. Default is 100ms.
   
 
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
-        agent.keyboard('a')  # Press 'a' key
-        agent.keyboard('enter')  # Press 'Enter' key
-        agent.keyboard('v', ['control'])  # Press Ctrl+V (paste)
-        agent.keyboard('s', ['control', 'shift'])  # Press Ctrl+Shift+S
-        agent.keyboard('a', repeat=2)  # Press 'a' key twice
+    with AndroidVisionAgent() as agent:
+        agent.key_combination(["HOME", "BACK"])  # Taps the home key and then the back key
+        agent.key_combination(["HOME", "BACK"], duration_in_ms=200)  # Taps the home key and then the back key for 200ms.
     ```
 
-<a id="askui.agent.VisionAgent.cli"></a>
+<a id="askui.android_agent.AndroidVisionAgent.shell"></a>
 
-## cli
+## shell
 
 ```python
-def cli(command: Annotated[str, Field(min_length=1)]) -> None
+def shell(command: str) -> str
 ```
 
-Executes a command on the command line interface.
-
-This method allows running shell commands directly from the agent. The command
-is split on spaces and executed as a subprocess.
+Executes a shell command on the Android device.
 
 **Arguments**:
 
-- `command` _str_ - The command to execute on the command line.
+- `command` _str_ - The shell command to execute.
   
 
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
-        # Use for Windows
-        agent.cli(fr'start "" "C:\Program Files\VideoLAN\VLClc.exe"') # Start in VLC non-blocking
-        agent.cli(fr'"C:\Program Files\VideoLAN\VLClc.exe"') # Start in VLC blocking
-
-        # Mac
-        agent.cli("open -a chrome")  # Open Chrome non-blocking for mac
-        agent.cli("chrome")  # Open Chrome blocking for linux
-        agent.cli("echo Hello World")  # Prints "Hello World"
-        agent.cli("python --version")  # Displays Python version
-
-        # Linux
-        agent.cli("nohub chrome")  # Open Chrome non-blocking for linux
-        agent.cli("chrome")  # Open Chrome blocking for linux
-        agent.cli("echo Hello World")  # Prints "Hello World"
-        agent.cli("python --version")  # Displays Python version
-
+    with AndroidVisionAgent() as agent:
+        agent.shell("pm list packages")  # Lists all installed packages
+        agent.shell("dumpsys battery")  # Displays battery information
     ```
 
-<a id="askui.agent.VisionAgent.act"></a>
+<a id="askui.android_agent.AndroidVisionAgent.drag_and_drop"></a>
+
+## drag\_and\_drop
+
+```python
+def drag_and_drop(
+    x1: int, y1: int, x2: int, y2: int, duration_in_ms: int = 1000
+) -> None
+```
+
+Drags and drops the specified target.
+
+**Arguments**:
+
+- `x1` _int_ - The x-coordinate of the starting point.
+- `y1` _int_ - The y-coordinate of the starting point.
+- `x2` _int_ - The x-coordinate of the ending point.
+- `y2` _int_ - The y-coordinate of the ending point.
+- `duration_in_ms` _int, optional_ - The duration in milliseconds to hold the drag and drop. Default is 1000ms.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.drag_and_drop(100, 100, 200, 200)  # Drags and drops from (100, 100) to (200, 200)
+        agent.drag_and_drop(100, 100, 200, 200, duration_in_ms=2000)  # Drags and drops from (100, 100) to (200, 200) with a 2000ms duration
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.swipe"></a>
+
+## swipe
+
+```python
+def swipe(
+    x1: int, y1: int, x2: int, y2: int, duration_in_ms: int = 1000
+) -> None
+```
+
+Swipes the specified target.
+
+**Arguments**:
+
+- `x1` _int_ - The x-coordinate of the starting point.
+- `y1` _int_ - The y-coordinate of the starting point.
+- `x2` _int_ - The x-coordinate of the ending point.
+- `y2` _int_ - The y-coordinate of the ending point.
+- `duration_in_ms` _int, optional_ - The duration in milliseconds to hold the swipe. Default is 1000ms.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.swipe(100, 100, 200, 200)  # Swipes from (100, 100) to (200, 200)
+        agent.swipe(100, 100, 200, 200, duration_in_ms=2000)  # Swipes from (100, 100) to (200, 200) with a 2000ms duration
+    ```
+
+<a id="askui.android_agent.AndroidVisionAgent.set_device_by_serial_number"></a>
+
+## set\_device\_by\_serial\_number
+
+```python
+def set_device_by_serial_number(device_sn: str) -> None
+```
+
+Sets the active device for screen interactions by name.
+
+**Arguments**:
+
+- `device_sn` _str_ - The serial number of the device to set as active.
+  
+
+**Example**:
+
+    ```python
+    from askui import AndroidVisionAgent
+
+    with AndroidVisionAgent() as agent:
+        agent.set_device_by_serial_number("Pixel 6")  # Sets the active device to the Pixel 6
+    ```
+
+
+
+<a id="askui.android_agent.AndroidVisionAgent.act"></a>
 
 ## act
 
@@ -417,15 +306,15 @@ and other interface interactions.
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         agent.act("Open the settings menu")
         agent.act("Search for 'printer' in the search box")
         agent.act("Log in with username 'admin' and password '1234'")
     ```
 
-<a id="askui.agent.VisionAgent.get"></a>
+<a id="askui.android_agent.AndroidVisionAgent.get"></a>
 
 ## get
 
@@ -474,7 +363,7 @@ If no `source` is provided, a screenshot of the current screen is taken.
 **Example**:
 
     ```python
-    from askui import ResponseSchemaBase, VisionAgent
+    from askui import ResponseSchemaBase, AndroidVisionAgent
     from PIL import Image
     import json
 
@@ -488,7 +377,7 @@ If no `source` is provided, a screenshot of the current screen is taken.
         value: str
         next: "LinkedListNode | None"
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         # Get URL as string
         url = agent.get("What is the current url shown in the url bar?")
 
@@ -554,7 +443,7 @@ If no `source` is provided, a screenshot of the current screen is taken.
         print(text)
     ```
 
-<a id="askui.agent.VisionAgent.locate"></a>
+<a id="askui.android_agent.AndroidVisionAgent.locate"></a>
 
 ## locate
 
@@ -588,14 +477,14 @@ Locates the first matching UI element identified by the provided locator.
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         point = agent.locate("Submit button")
         print(f"Element found at coordinates: {point}")
     ```
 
-<a id="askui.agent.VisionAgent.locate_all"></a>
+<a id="askui.android_agent.AndroidVisionAgent.locate_all"></a>
 
 ## locate\_all
 
@@ -632,14 +521,14 @@ returned list will have a length of 1.
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         points = agent.locate_all("Submit button")
         print(f"Found {len(points)} elements at coordinates: {points}")
     ```
 
-<a id="askui.agent.VisionAgent.locate_all_elements"></a>
+<a id="askui.android_agent.AndroidVisionAgent.locate_all_elements"></a>
 
 ## locate\_all\_elements
 
@@ -670,14 +559,14 @@ Locate all elements in the current screen using AskUI Models.
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         detected_elements = agent.locate_all_elements()
         print(f"Found {len(detected_elements)} elements: {detected_elements}")
     ```
 
-<a id="askui.agent.VisionAgent.annotate"></a>
+<a id="askui.android_agent.AndroidVisionAgent.annotate"></a>
 
 ## annotate
 
@@ -706,11 +595,11 @@ and click on the box to copy the text value to the clipboard.
   of the model(s) to be used for annotating the image.
   If `None`, uses the default model.
   
-  Example Using VisionAgent:
+  Example Using AndroidVisionAgent:
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         agent.annotate()
     ```
   
@@ -722,15 +611,15 @@ and click on the box to copy the text value to the clipboard.
         agent.annotate()
     ```
   
-  Example Using VisionAgent with custom screenshot and annotation directory:
+  Example Using AndroidVisionAgent with custom screenshot and annotation directory:
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         agent.annotate(screenshot="screenshot.png", annotation_dir="htmls")
     ```
 
-<a id="askui.agent.VisionAgent.wait"></a>
+<a id="askui.android_agent.AndroidVisionAgent.wait"></a>
 
 ## wait
 
@@ -771,10 +660,10 @@ Pauses execution or waits until a UI element appears or disappears.
 **Example**:
 
     ```python
-    from askui import VisionAgent
+    from askui import AndroidVisionAgent
     from askui.locators import loc
 
-    with VisionAgent() as agent:
+    with AndroidVisionAgent() as agent:
         # Wait for a specific duration
         agent.wait(5)  # Pauses execution for 5 seconds
         agent.wait(0.5)  # Pauses execution for 500 milliseconds
