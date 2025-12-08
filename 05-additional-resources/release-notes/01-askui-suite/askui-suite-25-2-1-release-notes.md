@@ -5,7 +5,7 @@
 The AskUI Suite is a comprehensive bundle that includes all necessary dependencies to deliver AskUI to end users. Additionally, it addresses enterprise challenges such as user rights restrictions and proxy issues, ensuring a seamless AskUI experience.
 
 This release focus on:
-1. Enhance On-Boarding experience for Users with the new [Agent Hub](https://app.caesr.ai/)
+1. Enhance On-Boarding experience for Users with the new [Caesr](https://app.caesr.ai/)
 2. Support [Python Vision Agent](https://github.com/askui/vision-agent)
 3. Improve ADE
 4. Improve Proxy Handling and Autodetection
@@ -45,7 +45,7 @@ Please follow our offical [installation guide](https://docs.askui.com/introducti
     - **Mac:** Open shell -> `sh "$ASKUI_INSTALLATION_DIRECTORY/Tools/uninstall-askui-suites.sh"`
     - **Linux:** Open shell -> `sh "$ASKUI_INSTALLATION_DIRECTORY/Tools/uninstall-askui-suites.sh`
 5. Continue with the [installation guide](https://docs.askui.com/introduction/02-getting-started/02-installation-guide)
-6. Create new Access Token in [Agent Hub](https://app.caesr.ai/)
+6. Create new Access Token in [Caesr](https://app.caesr.ai/)
 7. Set the access token
 
 ## Known Issues
@@ -288,7 +288,7 @@ Info:  Plugin with name 'MyPlugin' has been removed.
 
 ### ADE: Python Environment Manager
 
-The Python Environment Manager helps manage virtual environments, dependencies, and package installations, ensuring consistency across projects. It prevents conflicts and allows seamless switching between different Python versions and environments. It is used in combination with AskUI Agents from the [Agent Hub](https://app.caesr.ai/) and the [Python Vision Agent Libarary](https://github.com/askui/vision-agent)
+The Python Environment Manager helps manage virtual environments, dependencies, and package installations, ensuring consistency across projects. It prevents conflicts and allows seamless switching between different Python versions and environments. It is used in combination with AskUI Agents from the [Caesr](https://app.caesr.ai/) and the [Python Vision Agent Libarary](https://github.com/askui/vision-agent)
 
 <details>
   <summary><code>AskUI-EnablePythonEnvironment</code> - Activates a Python virtual environment. - <a href="https://askui.mintlify.app/02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment">docs</a></summary>
@@ -343,7 +343,7 @@ base C:\Users\DominikKlotz\.askui\.envs\base
 
 ### ADE: AskUI Agents and Runner Management
 
-AskUI Agents and Runner Management enable seamless UI automation, working with the [Agent Hub](https://app.caesr.ai) for centralized control. Runners handle execution, while Agents manage interactions, ensuring smooth and scalable automation.
+AskUI Agents and Runner Management enable seamless UI automation, working with the [Caesr](https://app.caesr.ai) for centralized control. Runners handle execution, while Agents manage interactions, ensuring smooth and scalable automation.
 
 <details>
   <summary><code>AskUI-GetRunnerVersion</code> - Retrieves the installed version of the AskUI Runner. - <a href="https://askui.mintlify.app/02-api-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion">docs</a></summary>
