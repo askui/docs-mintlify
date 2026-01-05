@@ -117,7 +117,7 @@ ADE C:\Users\MaxMustermann> AskUI-NewAiElement -Name "code"
   AskUI Typescript ADK:
     Filter:  aiElement('code')
     Example: await aui.click().aiElement('code').exec()
-  AskUI Python Vision Agent:
+  AskUI Python Python SDK:
     Example: agent.click(loc.AiElement("code"))
 ```
 </details>
@@ -149,9 +149,9 @@ To update your [AskUI Typescript ADK](https://github.com/askui/askui) to the new
 2. Enter the AskUI Shell by `askui-shell`
 3. Update AskUI by `npm install --dev askui@0.25.1`
 
-### AskUI Vision Agent (Python)
+### AskUI Python SDK
 
-To update your [AskUI Vision Agent](https://github.com/askui/vision-agent) to the new version:
+To update your [AskUI Python SDK](https://github.com/askui/vision-agent) to the new version:
 
 1. Open your project in VSCode
 2. Enable your virtual environment.
@@ -185,5 +185,5 @@ To update your [AskUI Vision Agent](https://github.com/askui/vision-agent) to th
 | ADE.PluginManager                            | 0.1.0   |                                                                                                        |
 | ADE.EnvironmentManager                  | 0.1.0   |                                                                                                        |
 | AskUI Typescript ADK                  | 0.25.1 | [Link](https://github.com/askui/askui/releases/tag/v0.25.1)                                                                                                         |
-| Python Vision Agent                  |  0.4.7   | [Link](https://github.com/askui/vision-agent/releases/tag/v0.4.7)                                                                                                     |
+| Python SDK                  |  0.4.7   | [Link](https://github.com/askui/vision-agent/releases/tag/v0.4.7)                                                                                                     |
 | VSCode                    | 1.98   |  |
