@@ -19,13 +19,13 @@ description: "These are the environment variables for AskUI"
 
 ---
 
-### Vision Agent:
+### Python SDK:
 
-- **ASKUI_INFERENCE_ENDPOINT**: The URL of the Vision Agent's inference endpoint, which handles image and text analysis.
+- **ASKUI_INFERENCE_ENDPOINT**: The URL of the Python SDK's inference endpoint, which handles image and text analysis.
 - **ASKUI_CONTROLLER_PATH**: The file path to the controller's executable or binary file.
-- **ASKUI__VA__TELEMETRY__ENABLED**: A boolean flag to enable or disable the recording of usage data for the Vision Agent. Setting this variable to False will disable telemetry.
+- **ASKUI__VA__TELEMETRY__ENABLED**: A boolean flag to enable or disable the recording of usage data for the Python SDK. Setting this variable to False will disable telemetry.
 - **ASKUI_CONTROLLER_ARGS**: Command-line arguments for the AskUI Remote Device Controller. See details in [ASKUI_CONTROLLER_ARGS](#askui_controller_args).
-- **ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART**: Boolean flag to enable or disable the automatic startup of AskUI Remote Device Controller Client Server by the Client in vision agent. Default is `true`.
+- **ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART**: Boolean flag to enable or disable the automatic startup of AskUI Remote Device Controller Client Server by the Client in Python SDK. Default is `true`.
 - **ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS**: The address of the AskUI Remote Device Controller Client Server. Default is `localhost:23000`.
 - **ASKUI__AUTHORIZATION**: Overwrites the HTTP Request Authorization Header with the value. (Optional)
 - **ASKUI_HTTP_SSL_VERIFICATION**: A boolean flag to enable or disable SSL certificate verification for HTTP requests. Default is `True`.

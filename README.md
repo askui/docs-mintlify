@@ -2,7 +2,7 @@
 
 This is the AskUI documentation. The documentation covers:
 
-- Python Vision Agent
+- Python SDK
 - AskUI Suite
 - Workspaces Service API
 - AskUI Inference API
@@ -48,7 +48,7 @@ npx mintlify dev
 pdm install
 ```
 
-2. Install newest version of askui-vision agent
+2. Install newest version of AskUI Python SDK
 ```
 pdm add -d askui@<latest version>
 ```
@@ -87,7 +87,7 @@ Then the `mint.json` needs to be updated to render new pages:
 Example:
 ```diff
     {
-      "group": "Python Vision Agent",
+      "group": "Python Python SDK",
       "pages": [
         "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
         "02-api-reference/01-agent-frameworks/02-python/02-vision-agent-api/locators",

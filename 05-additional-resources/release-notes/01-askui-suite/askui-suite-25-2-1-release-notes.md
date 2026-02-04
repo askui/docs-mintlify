@@ -6,7 +6,7 @@ The AskUI Suite is a comprehensive bundle that includes all necessary dependenci
 
 This release focus on:
 1. Enhance On-Boarding experience for Users with the new [Caesr](https://app.caesr.ai/)
-2. Support [Python Vision Agent](https://github.com/askui/vision-agent)
+2. Support [Python Python SDK](https://github.com/askui/vision-agent)
 3. Improve ADE
 4. Improve Proxy Handling and Autodetection
 
@@ -186,7 +186,7 @@ Info:  Response description: OK
 
 ### ADE: Windows Tools: Long Path Tools
 
-On Windows, the maximum file path length is 260 characters. Exceeding this limit results in a "Destination Path Too Long" error. This tool helps users check and enable Windows Long Path support. This helps to avoid errors with Python Vision Agent.
+On Windows, the maximum file path length is 260 characters. Exceeding this limit results in a "Destination Path Too Long" error. This tool helps users check and enable Windows Long Path support. This helps to avoid errors with Python Python SDK.
 
 <details>
   <summary><b>Startup Check</b> Warns Long Path Support is not enabled  - Displays a Long Path not enabled warning when starting the <code>askui-shell</code></summary>
@@ -288,7 +288,7 @@ Info:  Plugin with name 'MyPlugin' has been removed.
 
 ### ADE: Python Environment Manager
 
-The Python Environment Manager helps manage virtual environments, dependencies, and package installations, ensuring consistency across projects. It prevents conflicts and allows seamless switching between different Python versions and environments. It is used in combination with AskUI Agents from the [Caesr](https://app.caesr.ai/) and the [Python Vision Agent Libarary](https://github.com/askui/vision-agent)
+The Python Environment Manager helps manage virtual environments, dependencies, and package installations, ensuring consistency across projects. It prevents conflicts and allows seamless switching between different Python versions and environments. It is used in combination with AskUI Agents from the [Caesr](https://app.caesr.ai/) and the [Python SDK](https://github.com/askui/vision-agent)
 
 <details>
   <summary><code>AskUI-EnablePythonEnvironment</code> - Activates a Python virtual environment. - <a href="https://askui.mintlify.app/02-api-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment">docs</a></summary>

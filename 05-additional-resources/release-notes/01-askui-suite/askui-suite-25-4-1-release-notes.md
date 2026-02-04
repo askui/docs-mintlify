@@ -53,9 +53,9 @@ To update your [AskUI Typescipt ADK ](https://github.com/askui/askui) to the new
 6. Enter the AskUI Shell by `askui-shell`
 7. Update AskUI by `npm install --dev askui@0.23.1`
 
-### AskUI Vision Agent (Python)
+### AskUI Python SDK
 
-To update your [AskUI Vision Agent](https://github.com/askui/vision-agent) to the new version:
+To update your [AskUI Python SDK](https://github.com/askui/vision-agent) to the new version:
 1. Open your project in VSode 
 8. Enable your virtual environment.
 9. Enter `pip install askui==0.2.4`
@@ -131,7 +131,7 @@ Nothing has changed
 | ADE.PluginManager                            | 0.1.0   |                                                                                                        |
 | ADE.EnvironmentManager                  | 0.1.0   |                                                                                                        |
 | AskUI Typescript ADK                  | 0.23.1 | [Link](https://github.com/askui/askui/releases/tag/v0.23.1)                                                                                                         |
-| Python Vision Agent                  |  0.2.4   | [Link](https://github.com/askui/vision-agent/releases/tag/v0.2.4)                                                                                                     |
+| Python SDK                  |  0.2.4   | [Link](https://github.com/askui/vision-agent/releases/tag/v0.2.4)                                                                                                     |
 | VSCode                    | 1.98   |  |
 
 

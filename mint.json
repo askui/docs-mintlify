@@ -190,7 +190,7 @@
       ]
     },
     {
-      "group": "Python Vision Agent",
+      "group": "Python SDK",
       "pages": [
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent",
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/android-vision-agent",
