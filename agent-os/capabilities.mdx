@@ -1,0 +1,66 @@
+---
+title: Capabilities
+description: Background mode, multi-display, window targeting.
+---
+
+## Background Automation (Windows)
+
+Run automation while you work:
+
+```python
+with VisionAgent(background=True) as agent:
+    agent.act("Open Excel, create report, email to team")
+# You can keep working
+```
+
+## Multi-Display
+
+```python
+with VisionAgent() as agent:
+    displays = agent.tools.os.list_displays()
+
+    agent.tools.os.set_active_display(1)
+    agent.act("Open dashboard")
+
+    agent.tools.os.set_active_display(2)
+    agent.act("Open monitoring")
+```
+
+## Window Targeting
+
+```python
+agent.act("""
+    Find Chrome window with "Email" in title
+    Focus that window
+    Click "Compose"
+""")
+```
+
+## Direct Control
+
+```python
+# Keyboard
+agent.tools.os.keyboard_tap("v", modifier_keys=["control"])  # Paste
+agent.tools.os.keyboard_type("Hello!")
+
+# Mouse
+agent.tools.os.mouse_move(100, 200)
+agent.tools.os.mouse_click("left")
+agent.tools.os.mouse_scroll(0, -5)
+```
+
+## Companion Devices
+
+Control mobile devices via capture card + Bluetooth HID:
+
+| Device | Connection |
+|--------|------------|
+| iOS | Bluetooth HID |
+| Android | Bluetooth/USB HID |
+| Industrial HMI | Serial/USB |
+
+## Unicode Support
+
+```python
+agent.act('Type "Hello 世界 🎉"')  # Works with all Unicode
+```

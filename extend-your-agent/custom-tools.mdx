@@ -1,0 +1,63 @@
+---
+title: Custom Tools
+description: Extend agent capabilities with file ops, API calls, custom logic.
+---
+
+Tools let agents do more than UI interaction—read files, call APIs, query databases.
+
+## Built-in Tools
+
+```python
+from askui.tools import FileReadTool, FileWriteTool, SaveScreenshotTool
+
+with VisionAgent() as agent:
+    agent.act(
+        "Read config.json, fill form with those values",
+        tools=[FileReadTool("config.json")]
+    )
+```
+
+## Creating Custom Tools
+
+```python
+from askui.models.shared.tools import Tool
+
+class WeatherTool(Tool):
+    def __init__(self, api_key: str):
+        self._api_key = api_key
+        super().__init__(
+            name="get_weather",
+            description="Gets weather for a city.",
+            input_schema={
+                "type": "object",
+                "properties": {
+                    "city": {"type": "string", "description": "City name"}
+                },
+                "required": ["city"]
+            }
+        )
+
+    def __call__(self, city: str) -> str:
+        # Your API call here
+        return f"Weather in {city}: 22°C, Sunny"
+```
+
+## Usage
+
+```python
+weather = WeatherTool(api_key="...")
+db = DatabaseTool(db_path="./data.db")
+
+with VisionAgent() as agent:
+    agent.act(
+        "Look up customer in database, get weather for their city, fill form",
+        tools=[weather, db]
+    )
+```
+
+## Best Practices
+
+- **Clear descriptions**: Tell agent when to use the tool
+- **Precise input schema**: Define required parameters
+- **Informative returns**: Return useful strings, not just "done"
+- **Handle errors**: Return error messages instead of raising exceptions

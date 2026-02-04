@@ -1,0 +1,70 @@
+---
+title: Agentic Development
+description: Give Claude Code, Cursor, and other AI tools UI control.
+---
+
+AI coding assistants can write code but can't click buttons or test UIs. AskUI fixes that.
+
+## MCP Integration
+
+```python
+from fastmcp import Client
+from fastmcp.mcp_config import MCPConfig
+from askui.agent import VisionAgent
+from askui.models.shared.tools import ToolCollection
+from askui.tools.mcp.config import StdioMCPServer
+
+mcp_config = MCPConfig(
+    mcpServers={
+        "askui": StdioMCPServer(
+            command="python",
+            args=["-m", "askui.tools.mcp.servers.stdio"]
+        ),
+    }
+)
+
+mcp_client = Client(mcp_config)
+tools = ToolCollection(mcp_client=mcp_client)
+
+with VisionAgent() as agent:
+    agent.act("Test the login flow", tools=tools)
+```
+
+## Direct Integration
+
+```python
+with VisionAgent() as agent:
+    agent.act("""
+        Open localhost:3000
+        Click "Sign Up"
+        Fill registration form
+        Verify success message
+    """)
+```
+
+## Direct Tool Access
+
+```python
+with VisionAgent() as agent:
+    # Mouse
+    agent.tools.os.click("left", 2)  # Double-click
+    agent.tools.os.mouse_move(100, 200)
+
+    # Keyboard
+    agent.tools.os.keyboard_tap("v", modifier_keys=["control"])
+    agent.tools.os.keyboard_type("Hello")
+
+    # Clipboard
+    agent.tools.clipboard.copy("text")
+    text = agent.tools.clipboard.paste()
+
+    # Browser
+    agent.tools.webbrowser.open_new("https://example.com")
+```
+
+## Multi-Display
+
+```python
+with VisionAgent(display=2) as agent:
+    agent.act("Open dashboard on second monitor")
+```

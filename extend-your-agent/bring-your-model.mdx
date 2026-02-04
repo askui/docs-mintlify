@@ -1,0 +1,63 @@
+---
+title: Model Configuration
+description: Use AskUI default or bring your own LLM.
+---
+
+## Default
+
+No configuration needed. AskUI auto-selects optimal model:
+
+```python
+with VisionAgent() as agent:
+    agent.act("Fill the login form")
+```
+
+## Custom Model
+
+```python
+with VisionAgent(model="claude-sonnet-4-20250514") as agent:
+    agent.act("Complete checkout")
+
+# Or per command type
+with VisionAgent(model={
+    "act": "claude-sonnet-4-20250514",
+    "get": "askui",
+    "locate": "askui-combo",
+}) as agent:
+    agent.act("Search for flights")
+```
+
+## AskUI Models
+
+| Model | Use Case |
+|-------|----------|
+| `askui` | Auto-select (recommended) |
+| `askui-pta` | UI element detection |
+| `askui-ocr` | Text recognition |
+| `askui-combo` | Combined PTA + OCR |
+
+## Third-Party Providers
+
+### Anthropic
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+```
+
+### AWS Bedrock
+```bash
+export ASKUI_MODEL_PROVIDER="bedrock"
+export AWS_ACCESS_KEY_ID="..."
+export AWS_SECRET_ACCESS_KEY="..."
+```
+
+### Google Vertex AI
+```bash
+export ASKUI_MODEL_PROVIDER="vertex"
+export GOOGLE_CLOUD_PROJECT="your-project"
+```
+
+### OpenRouter
+```bash
+export ASKUI_MODEL_PROVIDER="openrouter"
+export OPENROUTER_API_KEY="..."
+```

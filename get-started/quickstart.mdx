@@ -1,0 +1,113 @@
+---
+title: Quickstart
+description: Get AskUI running in 5 minutes.
+---
+
+## 1. Sign Up
+
+Create account at [hub.askui.com](https://hub.askui.com). You'll get:
+- **Workspace ID**
+- **Access Token**
+
+## 2. Install Agent OS
+
+<Tabs>
+  <Tab title="Windows">
+    <CardGroup cols={2}>
+      <Card title="Windows AMD64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe">
+        Intel/AMD
+      </Card>
+      <Card title="Windows ARM64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-ARM64-Web.exe">
+        ARM
+      </Card>
+    </CardGroup>
+
+    ```powershell
+    # Or via CLI
+    Invoke-WebRequest -Uri "https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe" -OutFile "AskUI-Setup.exe"
+    .\AskUI-Setup.exe
+    ```
+  </Tab>
+  <Tab title="macOS">
+    <Card title="macOS ARM64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run">
+      Apple Silicon (M1/M2/M3/M4)
+    </Card>
+
+    ```bash
+    curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run
+    chmod +x AskUI-Setup.run && ./AskUI-Setup.run
+    ```
+
+    <Warning>Apple Silicon only. Intel Macs not supported.</Warning>
+  </Tab>
+  <Tab title="Linux">
+    <CardGroup cols={2}>
+      <Card title="Linux AMD64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run">
+        Intel/AMD
+      </Card>
+      <Card title="Linux ARM64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-ARM64-Web.run">
+        ARM
+      </Card>
+    </CardGroup>
+
+    ```bash
+    curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run
+    chmod +x AskUI-Setup.run && ./AskUI-Setup.run
+    ```
+
+    <Warning>X11 only. Wayland not supported.</Warning>
+  </Tab>
+</Tabs>
+
+## 3. Install SDK
+
+```bash
+pip install askui
+```
+
+Set credentials:
+
+<Tabs>
+  <Tab title="macOS/Linux">
+    ```bash
+    export ASKUI_WORKSPACE_ID="your-workspace-id"
+    export ASKUI_TOKEN="your-access-token"
+    ```
+  </Tab>
+  <Tab title="Windows PowerShell">
+    ```powershell
+    $env:ASKUI_WORKSPACE_ID="your-workspace-id"
+    $env:ASKUI_TOKEN="your-access-token"
+    ```
+  </Tab>
+</Tabs>
+
+## 4. Run First Task
+
+```python
+# first_task.py
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.act("""
+        Open a web browser
+        Navigate to google.com
+        Type "AskUI automation" in search box
+        Press Enter
+    """)
+```
+
+```bash
+python first_task.py
+```
+
+## Demo Project
+
+```bash
+git clone https://github.com/Lumpin-askui/AskUI-Demo-Project.git
+cd AskUI-Demo-Project
+pip install -r requirements.txt
+python act.py
+```
+
+CSV-based test automation with screenshots and reports.

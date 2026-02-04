@@ -1,0 +1,41 @@
+---
+title: Define Tasks
+description: Natural language or CSV. Describe what you want, agent handles how.
+---
+
+## Two Formats
+
+<CardGroup cols={2}>
+  <Card title="Natural Language" icon="message" href="/define-tasks/natural-language">
+    Plain text instructions. Best for interactive development.
+  </Card>
+  <Card title="CSV Format" icon="table" href="/define-tasks/csv-format">
+    Structured test cases. Best for test automation.
+  </Card>
+</CardGroup>
+
+## Quick Comparison
+
+**Natural Language:**
+```python
+agent.act("""
+    Open Chrome
+    Go to github.com
+    Click "Sign in"
+    Enter credentials
+""")
+```
+
+**CSV:**
+```csv
+Step,Action,Expected Result
+1,Open Chrome and navigate to github.com,GitHub loads
+2,Click "Sign in",Login page appears
+3,Enter credentials and submit,Dashboard loads
+```
+
+## Guidelines
+
+- **Be specific**: "Click the blue Submit button" > "Click submit"
+- **One action per step**: Easier to debug
+- **Include verification**: "Click Submit. Verify success message appears."

@@ -1,0 +1,63 @@
+---
+title: Caching
+description: Record actions, replay without AI inference.
+---
+
+<Warning>Experimental. API may change.</Warning>
+
+Record agent actions once, replay instantly. Skip AI reasoning for known workflows.
+
+## Record (Write)
+
+```python
+from askui.models.shared.settings import CachingSettings
+
+with VisionAgent() as agent:
+    agent.act(
+        goal="Log in as admin",
+        caching_settings=CachingSettings(
+            strategy="write",
+            cache_dir=".cache",
+            filename="login.json"
+        )
+    )
+```
+
+## Replay (Read)
+
+```python
+with VisionAgent() as agent:
+    agent.act(
+        goal="Log in",
+        caching_settings=CachingSettings(
+            strategy="read",
+            cache_dir=".cache"
+        )
+    )
+```
+
+## Auto Mode (Both)
+
+Try cache first, record if not found:
+
+```python
+caching_settings=CachingSettings(
+    strategy="both",
+    cache_dir=".cache",
+    filename="checkout.json"
+)
+```
+
+## Strategies
+
+| Strategy | Behavior |
+|----------|----------|
+| `"no"` | Default. No caching. |
+| `"write"` | Record to file |
+| `"read"` | Replay from file |
+| `"both"` | Cache first, record if missing |
+
+## Limitations
+
+- UI state sensitive—assumes same state as recording
+- Re-record when UI changes significantly
