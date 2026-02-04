@@ -1,0 +1,49 @@
+---
+title: CSV Format
+description: Structured test cases for automation.
+---
+
+## Structure
+
+```csv
+Test Case ID,Test Case Name,Step Number,Step,Expected Result
+TC001,Login,1,Navigate to app.example.com,Login page loads
+TC001,Login,2,Enter "admin@example.com" in email,Email entered
+TC001,Login,3,Enter "password123" in password,Password entered
+TC001,Login,4,Click "Sign In",Dashboard appears
+```
+
+## Execution
+
+```python
+from askui import VisionAgent
+from askui.tools import FileReadTool, SaveScreenshotTool
+
+with VisionAgent() as agent:
+    agent.act(
+        "Execute test cases from CSV. Screenshot each step. Report results.",
+        tools=[FileReadTool("tests.csv"), SaveScreenshotTool("./evidence")]
+    )
+```
+
+## Writing Steps
+
+```csv
+# Good - visual description
+Click the blue "Submit" button in the form footer,Form submitted
+
+# Bad - technical identifiers
+Click #submit-btn,Success
+```
+
+## Multiple Test Cases
+
+```csv
+Test Case ID,Test Case Name,Step Number,Step,Expected Result
+TC001,Login,1,Navigate to login page,Page loads
+TC001,Login,2,Enter credentials,Credentials entered
+TC001,Login,3,Click Sign In,Dashboard loads
+
+TC002,Logout,1,Click user avatar,Menu appears
+TC002,Logout,2,Click "Sign Out",Login page appears
+```

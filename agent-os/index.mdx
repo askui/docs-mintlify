@@ -1,0 +1,53 @@
+---
+title: Agent OS
+description: Device driver for screen capture and input control.
+---
+
+Agent OS runs locally and provides the physical interface between your AI agent and devices.
+
+## Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| Screen Capture | Pixel-perfect screenshots |
+| Mouse/Keyboard | Click, drag, scroll, type |
+| Multi-Display | Control multiple monitors |
+| Window Targeting | Focus specific windows |
+| Background Mode | Run without screen takeover (Windows) |
+
+## Platform Support
+
+| Feature | Windows | macOS | Linux |
+|---------|---------|-------|-------|
+| Core features | Yes | Yes | Yes |
+| Background Mode | Yes | No | No |
+
+<Warning>
+**macOS**: Apple Silicon only (M1/M2/M3/M4). No Intel support.
+
+**Linux**: X11 only. No Wayland support.
+</Warning>
+
+## Install
+
+<Tabs>
+  <Tab title="Windows">
+    | Arch | Download |
+    |------|----------|
+    | AMD64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe) |
+    | ARM64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-ARM64-Web.exe) |
+  </Tab>
+  <Tab title="macOS">
+    | Arch | Download |
+    |------|----------|
+    | ARM64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run) |
+  </Tab>
+  <Tab title="Linux">
+    | Arch | Download |
+    |------|----------|
+    | AMD64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run) |
+    | ARM64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-ARM64-Web.run) |
+  </Tab>
+</Tabs>
+
+Runs in system tray after installation.

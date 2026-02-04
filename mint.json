@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "AskUI",
   "openapi": [
     "https://workspaces.askui.com/openapi.json",
     "https://inference.askui.com/openapi.json"
@@ -26,12 +26,12 @@
     },
     {
       "name": "Sign up",
-      "url": "https://app.caesr.ai"
+      "url": "https://hub.askui.com"
     }
   ],
   "topbarCtaButton": {
     "name": "Login",
-    "url": "https://app.caesr.ai"
+    "url": "https://hub.askui.com"
   },
   "tabs": [
     {
@@ -58,135 +58,37 @@
   ],
   "navigation": [
     {
-      "group": "Documentation",
-      "pages": ["index"]
-    },
-    {
-      "group": "Tutorial",
-      "icon": "rocket",
+      "group": "Get Started",
       "pages": [
-        "01-tutorials/tutorials-overview",
-        {
-          "group": "Installation",
-          "pages": [
-            "01-tutorials/00-installation",
-            "01-tutorials/install/00-uninstall",
-            "01-tutorials/install/01-silent-windows-uninstall"
-            
-          ]
-        },
-        "01-tutorials/01-your-first-agent",
-        "01-tutorials/03-web-automation-patterns",
-        "01-tutorials/02-android-automation",
-        {
-          "group": "Example Automations",
-          "pages": [
-            "01-tutorials/example-automations/00-overview",
-            "01-tutorials/example-automations/01-online-casino",
-            "01-tutorials/example-automations/02-plc-water-tank",
-            "01-tutorials/example-automations/03-tic-tac-toe",
-            "01-tutorials/example-automations/04-android-automation",
-            "01-tutorials/example-automations/05-infotainment-systems",
-            "01-tutorials/example-automations/06-web-shopping"
-          ]
-        }
+        "index",
+        "get-started/quickstart",
+        "get-started/how-it-works"
       ]
     },
     {
-      "group": "How-to Guides",
-      "icon": "wrench",
+      "group": "Define Tasks",
       "pages": [
-        "02-how-to-guides/how-to-overview",
-        {
-          "group": "Build AI Agents",
-          "pages": [
-            "02-how-to-guides/05-build-ai-agents/00-build-ai-agents-overview",
-            "02-how-to-guides/05-build-ai-agents/01-act-towards-goal",
-            "02-how-to-guides/05-build-ai-agents/02-select-elements",
-            {
-              "group": "Extract Data from UI",
-              "pages": [
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/overview",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/yes-no-questions",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/text-extraction",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/numbers",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/tables",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/lists-navigation",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/tabs",
-                "02-how-to-guides/05-build-ai-agents/extract-data-from-ui/cards"
-              ]
-            },
-            "02-how-to-guides/05-build-ai-agents/06-interact-with-elements",
-            "02-how-to-guides/06-configure-different-models"
-          ]
-        },
-        {
-          "group": "Account Management",
-          "pages": [
-            "02-how-to-guides/01-account-management/01-account-management",
-            "02-how-to-guides/01-account-management/02-members-management",
-            "02-how-to-guides/01-account-management/03-usage-billing-dashboard",
-            "02-how-to-guides/01-account-management/04-tokens",
-            "02-how-to-guides/01-account-management/05-billing"
-          ]
-        },
-        {
-          "group": "Integrations",
-          "pages": [
-            "02-how-to-guides/02-integrations/01-github",
-            "02-how-to-guides/02-integrations/02-gitlab",
-            "02-how-to-guides/02-integrations/03-azure",
-            "02-how-to-guides/02-integrations/06-reporters"
-          ]
-        },
-        {
-          "group": "Troubleshooting",
-          "pages": [
-            "02-how-to-guides/04-troubleshooting/00-troubleshooting-overview",
-            "02-how-to-guides/04-troubleshooting/01-installation-and-setup-issues",
-            "02-how-to-guides/04-troubleshooting/02-network-and-connectivity",
-            "02-how-to-guides/04-troubleshooting/03-element-detection-and-ocr",
-            "02-how-to-guides/04-troubleshooting/05-runtime-and-environment-errors",
-            "02-how-to-guides/04-troubleshooting/06-reporting-bugs-and-getting-help",
-            "02-how-to-guides/04-troubleshooting/08-known-issues"
-          ]
-        }
+        "define-tasks/index",
+        "define-tasks/csv-format",
+        "define-tasks/natural-language",
+        "define-tasks/examples"
       ]
     },
     {
-      "group": "Understanding AskUI",
-      "icon": "lightbulb",
+      "group": "Extend Your Agent",
       "pages": [
-        "03-explanation/explanation-overview",
-        {
-          "group": "Foundations",
-          "pages": [
-            "03-explanation/01-foundations/foundations-overview",
-            "03-explanation/01-foundations/agents",
-            "03-explanation/01-foundations/agent-types",
-            {
-              "group": "Automation Paradigms",
-              "pages": [
-                "03-explanation/01-foundations/automation-paradigms/01-overview",
-                "03-explanation/01-foundations/automation-paradigms/02-agentic-instructions",
-                "03-explanation/01-foundations/automation-paradigms/03-single-step-commands"
-              ]
-            },
-            "03-explanation/01-foundations/ai-models"
-          ]
-        },
-        {
-          "group": "Best Practices",
-          "pages": [
-            "03-explanation/02-best-practices/04-effective-agentic-instructions",
-            "03-explanation/02-best-practices/01-element-selection/01-element-selection",
-            "03-explanation/02-best-practices/03-interactions",
-            "03-explanation/02-best-practices/05-reporting-logging",
-            "03-explanation/02-best-practices/06-improve-model-performance"
-          ]
-        },
-        "03-explanation/04-faq/faq",
-        "03-explanation/05-glossary"
+        "extend-your-agent/agentic-development",
+        "extend-your-agent/platform-agents",
+        "extend-your-agent/custom-tools",
+        "extend-your-agent/caching",
+        "extend-your-agent/bring-your-model"
+      ]
+    },
+    {
+      "group": "Agent OS",
+      "pages": [
+        "agent-os/index",
+        "agent-os/capabilities"
       ]
     },
     {
@@ -198,7 +100,12 @@
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/reporting",
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/retry",
         "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/tools",
-        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/types",
+        "04-reference/01-agent-frameworks/02-python/02-vision-agent-api/types"
+      ]
+    },
+    {
+      "group": "System Requirements",
+      "pages": [
         "04-reference/system-requirements",
         "04-reference/network-requirements",
         "04-reference/environment-variables",
@@ -206,170 +113,120 @@
       ]
     },
     {
-      "group": "AskUI Suite",
+      "group": "AskUI Suite Commands",
       "pages": [
         {
+          "group": "ADE",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-TestConnection",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-AddPlugin",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
-              ],
-              "group": "Public"
-            },
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-BuildErrorReport",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-CompressErrorReport",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-NewErrorReport",
-                "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-SubmitErrorReport"
-              ],
-              "group": "Debug"
-            }
-          ],
-          "group": "ADE"
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportDebugCommands",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ImportExperimentalCommands",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowAvailableCommands",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowVersions",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-TestConnection",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-AddPlugin",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemovePlugin",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowPlugins",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
+          ]
         },
         {
+          "group": "ADE Debug",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Public/AskUI-StartOCRTeaching"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "AskUIOCRTeaching"
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-AddProjectSettingsIfNotExist",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-BuildErrorReport",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-CompressErrorReport",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-NewErrorReport",
+            "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-SubmitErrorReport"
+          ]
         },
         {
+          "group": "OCR Teaching",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSetupTool/Experimental/AskUI-StartRemoteDeviceSetupTool"
-              ],
-              "group": "Experimental"
-            }
-          ],
-          "group": "AskUIRemoteDeviceSetupTool"
+            "04-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Public/AskUI-StartOCRTeaching"
+          ]
         },
         {
+          "group": "Remote Device Setup",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-OpenAIElement",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-RemoveAIElement",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-ShowAIElement",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAnnotationsForTraining"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "AskUIRemoteDeviceSnippingTool"
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSetupTool/Experimental/AskUI-StartRemoteDeviceSetupTool"
+          ]
         },
         {
+          "group": "AI Elements",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "AskUIRunnerManager"
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-OpenAIElement",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-RemoveAIElement",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-ShowAIElement",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAnnotationsForTraining"
+          ]
         },
         {
+          "group": "Runner Manager",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-AddAskUIControllerAutoRecoverService",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-AddRunnerUser",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-DisableScreensaver",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-RemoveAskUIControllerAutoRecoverService",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-SetAsGlobalInstallation",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-SetFirstAskUIRunner"
-              ],
-              "group": "Experimental"
-            }
-          ],
-          "group": "AsKUIWindowsRunnerTools"
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
+          ]
         },
         {
+          "group": "Windows Runner Tools",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "AskUIWindowsTools"
+            "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-AddAskUIControllerAutoRecoverService",
+            "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-AddRunnerUser",
+            "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-DisableScreensaver",
+            "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-RemoveAskUIControllerAutoRecoverService",
+            "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-SetAsGlobalInstallation",
+            "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-SetFirstAskUIRunner"
+          ]
         },
         {
+          "group": "Windows Tools",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
-                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
-                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
-                "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "PxProxy"
+            "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
+            "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
+          ]
         },
         {
+          "group": "Proxy",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
-                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
-                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
-                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
-                "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "Python"
+            "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
+            "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
+            "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
+            "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
+          ]
         },
         {
+          "group": "Python",
           "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
-                "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StartController",
-                "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "UIController"
+            "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
+            "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
+            "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
+            "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
+            "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
+          ]
+        },
+        {
+          "group": "UI Controller",
+          "pages": [
+            "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
+            "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StartController",
+            "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
+          ]
         }
       ]
     },
     {
-      "group": "Workspace Services API",
+      "group": "Workspace API",
       "pages": [
         {
           "group": "Access Tokens",
@@ -423,7 +280,9 @@
         },
         {
           "group": "Runs",
-          "pages": ["04-reference/07-workspace-service/runs/list-runs"]
+          "pages": [
+            "04-reference/07-workspace-service/runs/list-runs"
+          ]
         },
         {
           "group": "Schedules",
@@ -434,7 +293,9 @@
         },
         {
           "group": "Usage",
-          "pages": ["04-reference/07-workspace-service/usage/list-usage-events"]
+          "pages": [
+            "04-reference/07-workspace-service/usage/list-usage-events"
+          ]
         },
         {
           "group": "Workspace Memberships",

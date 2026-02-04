@@ -1,0 +1,44 @@
+---
+title: How It Works
+description: VisionAgent + Agent OS architecture.
+---
+
+<img src="/images/infographics/architecture.svg" alt="Architecture: Your Code → VisionAgent + LLM → Agent OS" />
+
+## Components
+
+### VisionAgent
+Python SDK that orchestrates tasks. Sends screenshots to LLM, receives actions, executes via Agent OS.
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.act("Log into the admin dashboard")
+```
+
+### Agent OS
+Device driver running locally. Provides screen capture, mouse/keyboard control, multi-display support.
+
+### LLM
+Understands UI from screenshots, plans actions, executes step-by-step. Configurable—use AskUI's default or bring your own.
+
+## Execution Flow
+
+1. **Screenshot** → Agent OS captures screen
+2. **Understanding** → LLM identifies UI elements
+3. **Planning** → LLM determines next action
+4. **Execution** → Agent OS performs click/type
+5. **Loop** → Repeat until task complete
+
+## Why Task-Based?
+
+```python
+# Traditional (breaks when UI changes)
+driver.find_element(By.ID, "email-input").send_keys("test@example.com")
+
+# AskUI (adapts to visual changes)
+agent.act('Enter "test@example.com" in the email field')
+```
+
+AI understands intent, not implementation. UI changes don't break your automation.

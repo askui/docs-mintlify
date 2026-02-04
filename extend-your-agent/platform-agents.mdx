@@ -1,0 +1,74 @@
+---
+title: Platform Agents
+description: Desktop, Android, and Web agents.
+---
+
+## VisionAgent (Desktop)
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.act("Open Chrome and navigate to github.com")
+    agent.click("Sign in")
+    agent.type("username")
+```
+
+## AndroidVisionAgent
+
+Control Android via ADB:
+
+```python
+from askui import AndroidVisionAgent
+
+with AndroidVisionAgent() as agent:
+    agent.act("Open Settings and enable Dark Mode")
+    agent.tap("Submit button")
+    agent.type("Hello World")
+    agent.swipe(100, 500, 100, 100)
+    agent.key_tap("HOME")
+```
+
+**Setup**: Enable USB debugging, connect via USB/WiFi ADB, verify with `adb devices`.
+
+**Device selection**:
+```python
+with AndroidVisionAgent(device=0) as agent:  # By index
+with AndroidVisionAgent(device="SERIAL123") as agent:  # By serial
+```
+
+## WebVisionAgent
+
+Playwright-based web automation:
+
+```python
+from askui import WebVisionAgent
+
+with WebVisionAgent() as agent:
+    agent.act("Navigate to github.com, click Sign in, enter credentials")
+```
+
+## Data Extraction
+
+All agents support `get()`:
+
+```python
+url = agent.get("What is the current URL?")
+is_logged_in = agent.get("Is user logged in?", response_schema=bool)
+
+# Structured data
+class UserInfo(ResponseSchemaBase):
+    username: str
+    email: str
+
+user = agent.get("Extract user info", response_schema=UserInfo)
+```
+
+## Choosing an Agent
+
+| Use Case | Agent |
+|----------|-------|
+| Desktop apps | `VisionAgent` |
+| Web (via desktop) | `VisionAgent` |
+| Web (headless) | `WebVisionAgent` |
+| Android | `AndroidVisionAgent` |

@@ -1,0 +1,66 @@
+---
+title: Natural Language
+description: Plain text task instructions.
+---
+
+## Basic Usage
+
+```python
+from askui import VisionAgent
+
+with VisionAgent() as agent:
+    agent.act("""
+        Open Firefox
+        Navigate to amazon.com
+        Search for "mechanical keyboard"
+        Click first result
+        Add to cart
+    """)
+```
+
+## Writing Effective Instructions
+
+```python
+# Good - visual description
+agent.act('Click the orange "Add to Cart" button')
+
+# Good - positional context
+agent.act('Click the search icon in the top right')
+
+# Bad - technical terms agent can't see
+agent.act('Click the element with id="add-to-cart"')
+```
+
+## Patterns
+
+### Form Filling
+```python
+agent.act("""
+    Fill registration form:
+    - First Name: Jane
+    - Email: jane@example.com
+    - Password: SecurePass123!
+    Check "I agree to terms"
+    Click "Create Account"
+""")
+```
+
+### Data Extraction
+```python
+result = agent.get("""
+    From the order confirmation, extract:
+    - Order number
+    - Total amount
+    - Delivery date
+""")
+```
+
+### Conditional
+```python
+agent.act("""
+    If there's a notification about "pending approval":
+        Click it and approve
+    Otherwise:
+        Close the panel
+""")
+```
