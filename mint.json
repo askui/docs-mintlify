@@ -308,10 +308,10 @@
             {
               "group": "Experimental",
               "pages": [
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-AddAgentOSService",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-DisableScreensaver",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-RemoveAgentOSService",
-                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-SetAsSystemInstallation"
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-AddAgentOSService",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-DisableScreensaver",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-RemoveAgentOSService",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-SetAsSystemInstallation"
               ]
             }
           ],
