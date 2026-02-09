@@ -300,26 +300,19 @@
           "pages": [
             {
               "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-AddAskUIControllerAutoRecoverService",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-AddRunnerUser",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-DisableScreensaver",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-RemoveAskUIControllerAutoRecoverService",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-SetAsGlobalInstallation",
-                "04-reference/02-askui-suite/02-askui-suite/AsKUIWindowsRunnerTools/Experimental/AskUI-SetFirstAskUIRunner"
-              ],
-              "group": "Experimental"
-            }
-          ],
-          "group": "AsKUIWindowsRunnerTools"
-        },
-        {
-          "pages": [
-            {
-              "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
                 "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
               ],
               "group": "Public"
+            },
+            {
+              "group": "Experimental",
+              "pages": [
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-AddAgentOSService",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-DisableScreensaver",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-RemoveAgentOSService",
+                "02-api-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-SetAsSystemInstallation"
+              ]
             }
           ],
           "group": "AskUIWindowsTools"
