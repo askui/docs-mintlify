@@ -26,12 +26,12 @@
     },
     {
       "name": "Sign up",
-      "url": "https://app.caesr.ai"
+      "url": "https://hub.askui.com"
     }
   ],
   "topbarCtaButton": {
     "name": "Login",
-    "url": "https://app.caesr.ai"
+    "url": "https://hub.askui.com"
   },
   "tabs": [
     {
@@ -456,6 +456,7 @@
             {
               "group": "AskUI Suite",
               "pages": [
+                "05-additional-resources/release-notes/01-askui-suite/askui-suite-26-1-1-release-notes-link",
                 "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-11-1-release-notes-link",
                 "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-10-1-release-notes-link",
                 "05-additional-resources/release-notes/01-askui-suite/askui-suite-25-9-2-release-notes-link",
@@ -473,7 +474,7 @@
               ]
             },
             {
-              "group": "AskUI Frameworks",
+              "group": "AskUI SDK",
               "pages": [
                 "05-additional-resources/release-notes/02-agent-frameworks/python-vision-agent-release-notes",
                 "05-additional-resources/release-notes/02-agent-frameworks/typescirpt-adk-release-notes"
