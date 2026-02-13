@@ -480,3 +480,74 @@ import NewAIElement from '/snippets/new-ai-element.mdx';
     <NewAIElement/>
   </Accordion>
 </AccordionGroup>
+
+# Element Detection Issues
+
+## 7. Checkbox not Detected
+
+**Problem:** The element detection model does not detect checkboxes as interactive elements. This means you cannot directly target a checkbox using element detection.
+
+**Example:**
+
+<Columns cols={2}>
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ✅ Expected Behavior
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Checkbox is detected as an element:</em>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      ![Checkbox detected](./images/CheckboxNotDetectedExpectedBehavior.png)
+    </div>
+  </Card>
+
+  <Card>
+    <div style={{ fontWeight: 'bold', marginBottom: '12px' }}>
+      ❌ Actual Issue
+    </div>
+
+    <div style={{ marginBottom: '8px' }}>
+      🖼️ <em>Checkbox is not detected:</em>
+    </div>
+
+    <div style={{ marginBottom: '12px' }}>
+      ![Checkbox not detected](./images/CheckboxNotDetectedActualIssue.png)
+    </div>
+  </Card>
+</Columns>
+
+### Solutions
+<AccordionGroup>
+  <Accordion title="Use Relative Click to an Anchor Element (Best Practice)">
+    Instead of clicking the checkbox directly, use a nearby text label as an anchor and click relative to it.
+
+    <CodeGroup>
+
+    ```python Python
+    from askui import locators as loc
+    ...
+    with VisionAgent() as agent:
+        agent.click(loc.RelativePosition(x=-30, y=0, anchor=loc.Text("Accept Terms")))
+    ```
+
+    ```python Typescript
+    await aui.moveMouseRelativeTo(-30, 0).text("Accept Terms").exec()
+    await aui.mouseLeftClick().exec()
+    ```
+
+    </CodeGroup>
+
+    <Tip>
+      Adjust the relative offset values (`x`, `y`) based on the position of the checkbox relative to the anchor text in your application.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Use Custom AI Element">
+    You can teach AskUI to recognize the checkbox by creating a custom AI Element.
+
+    <NewAIElement/>
+  </Accordion>
+</AccordionGroup>
