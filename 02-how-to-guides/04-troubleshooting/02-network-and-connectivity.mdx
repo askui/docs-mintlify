@@ -38,50 +38,67 @@ For advanced users who need full control over proxy configuration, you can start
 
 Company proxies, like [Zscalar](https://www.zscaler.com/resources/security-terms-glossary/what-is-cloud-proxy), use [deep package inspection](https://en.wikipedia.org/wiki/Deep_packet_inspection) to analyze the network traffic. Such proxies are adding self-signed certificates to the HTTPS request to break up the TLS connection.
 
-This can result in the following error messages:
-```
- RequestError: self signed certificate
-```
-or
-```
- RequestError: unable to verify the first certificate
-```
+<Tabs>
+  <Tab title="Python SDK">
+    **Problem:** Python does not use the operating system's certificate trust store by default. When an enterprise proxy injects a custom certificate for deep packet inspection, Python cannot verify it and rejects the connection.
 
-You can add a self-signed certificate as extra CA Certs to solve this problem as detailed in the next section.
+    **Example:**
+    ```
+    requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:852)
+    ```
 
-### Add Self-Signed Certificate as Extra CA Certs (RECOMMENDED)
-The following step-by-step instructions will show you how to add the correct certificate as extra CA Certs.
+    **Solution:** Install the `pip-system-certs` package, which configures Python to use the system certificate store:
 
-1. Open the certificate viewer in your browser.
+    ```bash
+    pip install pip-system-certs
+    ```
+  </Tab>
+  <Tab title="TypeScript SDK">
+    **Problem:** Node.js does not use the operating system's certificate trust store by default. When an enterprise proxy injects a custom certificate for deep packet inspection, Node.js cannot verify it and rejects the connection.
 
-    Chrome: Depending on your operating system there is a **Lock**-icon left of your browser bar that opens the certificate viewer directly or another icon that opens a _Site Information_ menu where you have to select **Connection is Secure** -> **Certificate is Valid**
+    **Example:**
+    ```
+    RequestError: self signed certificate
+    ```
+    or
+    ```
+    RequestError: unable to verify the first certificate
+    ```
 
-    Firefox: Click the **Lock**-icon left of your browser bar. click on **Connection Secure** -> **More Information**. Select the tab **Security**. Click **View Certificate**.
+    **Solution:** Add the proxy's self-signed certificate as extra CA Certs:
 
-2. Chrome: Open the **Details** tab.
+    1. Open the certificate viewer in your browser.
 
-   Firefox: Select the **GTS Root R1** certificate.
-3. Chrome: Select the Certificate **GTS Root R1** and click **Export...** on the bottom right.
+        Chrome: Depending on your operating system there is a **Lock**-icon left of your browser bar that opens the certificate viewer directly or another icon that opens a _Site Information_ menu where you have to select **Connection is Secure** -> **Certificate is Valid**
 
-   Firefox: Under **Miscellaneous**, you can download the certificate.
-4. Save it somewhere you can find it.
+        Firefox: Click the **Lock**-icon left of your browser bar. click on **Connection Secure** -> **More Information**. Select the tab **Security**. Click **View Certificate**.
 
-![](./images/proxy-windows-chrome-download-root-certificate.png)
-<figcaption>*Windows Chrome: Download the certificate in the three steps marked inside the picture above.*</figcaption>
+    2. Chrome: Open the **Details** tab.
 
-![](./images/proxy-macos-chrome-download-root-certificate1.png)
-<figcaption>*macOS/Unix Chrome: Open the certificate viewer step 1.*</figcaption>
+       Firefox: Select the **GTS Root R1** certificate.
+    3. Chrome: Select the Certificate **GTS Root R1** and click **Export...** on the bottom right.
 
-![](./images/proxy-macos-chrome-download-root-certificate2.png)
-<figcaption>*macOS/Unix Chrome: Open the certificate viewer step 2.*</figcaption>
+       Firefox: Under **Miscellaneous**, you can download the certificate.
+    4. Save it somewhere you can find it.
 
-![](./images/proxy-macos-chrome-download-root-certificate3.png)
-<figcaption>*macOS/Unix Chrome: Open the certificate viewer step 3.*</figcaption>
+    ![](./images/proxy-windows-chrome-download-root-certificate.png)
+    <figcaption>*Windows Chrome: Download the certificate in the three steps marked inside the picture above.*</figcaption>
 
-Use [AskUI-SetSettings -ServerIdentityCertificate reference](/04-reference/02-askui-suite/02-askui-suite/AskUI-SetSettings) to load the certificate into the necessary places of your system.
+    ![](./images/proxy-macos-chrome-download-root-certificate1.png)
+    <figcaption>*macOS/Unix Chrome: Open the certificate viewer step 1.*</figcaption>
 
-**Additional information:**
-- [Get Zscalar custom certificate](https://help.zscaler.com/zia/adding-custom-certificate-application-specific-trusted-store)
+    ![](./images/proxy-macos-chrome-download-root-certificate2.png)
+    <figcaption>*macOS/Unix Chrome: Open the certificate viewer step 2.*</figcaption>
+
+    ![](./images/proxy-macos-chrome-download-root-certificate3.png)
+    <figcaption>*macOS/Unix Chrome: Open the certificate viewer step 3.*</figcaption>
+
+    Use [AskUI-SetSettings -ServerIdentityCertificate reference](/04-reference/02-askui-suite/02-askui-suite/AskUI-SetSettings) to load the certificate into the necessary places of your system.
+
+    **Additional information:**
+    - [Get Zscalar custom certificate](https://help.zscaler.com/zia/adding-custom-certificate-application-specific-trusted-store)
+  </Tab>
+</Tabs>
 
 ## Firewall Configuration
 
