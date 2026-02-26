@@ -209,8 +209,10 @@
       "group": "AskUI Suite",
       "pages": [
         {
+          "group": "ADE",
           "pages": [
             {
+              "group": "Public",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-NewProject",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RunProject",
@@ -225,10 +227,10 @@
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-RemoveSettings",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-SetSettings",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Public/AskUI-ShowSettings"
-              ],
-              "group": "Public"
+              ]
             },
             {
+              "group": "Debug",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-ShowProcess",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-StopProcess",
@@ -237,127 +239,114 @@
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-CompressErrorReport",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-NewErrorReport",
                 "04-reference/02-askui-suite/02-askui-suite/ADE/Debug/AskUI-SubmitErrorReport"
-              ],
-              "group": "Debug"
+              ]
             }
-          ],
-          "group": "ADE"
+          ]
         },
         {
+          "group": "AskUICoreService",
           "pages": [
             {
+              "group": "Experimental",
+              "pages": [
+                "04-reference/02-askui-suite/02-askui-suite/AskUICoreService/Experimental/AskUI-AddAgentOSService",
+                "04-reference/02-askui-suite/02-askui-suite/AskUICoreService/Experimental/AskUI-RemoveAgentOSService"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "AskUIOCRTeaching",
+          "pages": [
+            {
+              "group": "Public",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/AskUIOCRTeaching/Public/AskUI-StartOCRTeaching"
-              ],
-              "group": "Public"
+              ]
             }
-          ],
-          "group": "AskUIOCRTeaching"
+          ]
         },
         {
+          "group": "AskUIRemoteDeviceSetupTool",
           "pages": [
             {
+              "group": "Experimental",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSetupTool/Experimental/AskUI-StartRemoteDeviceSetupTool"
-              ],
-              "group": "Experimental"
+              ]
             }
-          ],
-          "group": "AskUIRemoteDeviceSetupTool"
+          ]
         },
         {
+          "group": "AskUIRemoteDeviceSnippingTool",
           "pages": [
             {
+              "group": "Public",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAIElement",
                 "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-OpenAIElement",
                 "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-RemoveAIElement",
                 "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-ShowAIElement",
                 "04-reference/02-askui-suite/02-askui-suite/AskUIRemoteDeviceSnippingTool/Public/AskUI-NewAnnotationsForTraining"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "AskUIRemoteDeviceSnippingTool"
-        },
-        {
-          "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-GetRunnerVersion",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-InstallRunner",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-OpenAgent",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-ShowAgents",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-StartRunner",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIRunnerManager/Public/AskUI-SyncAgents"
-              ],
-              "group": "Public"
-            }
-          ],
-          "group": "AskUIRunnerManager"
-        },
-        {
-          "pages": [
-            {
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
-              ],
-              "group": "Public"
-            },
-            {
-              "group": "Experimental",
-              "pages": [
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-AddAgentOSService",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-DisableScreensaver",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-RemoveAgentOSService",
-                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Experimental/AskUI-SetAsSystemInstallation"
               ]
             }
-          ],
-          "group": "AskUIWindowsTools"
+          ]
         },
         {
+          "group": "AskUIWindowsTools",
           "pages": [
             {
+              "group": "Public",
+              "pages": [
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-DisableScreensaver",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-EnableLongPath",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-SetAsSystemInstallation",
+                "04-reference/02-askui-suite/02-askui-suite/AskUIWindowsTools/Public/AskUI-TestLongPathSupport"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "PxProxy",
+          "pages": [
+            {
+              "group": "Public",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-RemoveLocalProxySettings",
                 "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-SetLocalProxySettings",
                 "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StartLocalProxy",
                 "04-reference/02-askui-suite/02-askui-suite/PxProxy/Public/AskUI-StopLocalProxy"
-              ],
-              "group": "Public"
+              ]
             }
-          ],
-          "group": "PxProxy"
+          ]
         },
         {
+          "group": "Python",
           "pages": [
             {
+              "group": "Public",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-EnablePythonEnvironment",
                 "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-NewPythonEnvironment",
                 "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-RemovePythonEnvironment",
                 "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowInstalledPythonPackageVersion",
                 "04-reference/02-askui-suite/02-askui-suite/Python/Public/AskUI-ShowPythonEnvironments"
-              ],
-              "group": "Public"
+              ]
             }
-          ],
-          "group": "Python"
+          ]
         },
         {
+          "group": "UIController",
           "pages": [
             {
+              "group": "Public",
               "pages": [
                 "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-ShowControllers",
                 "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StartController",
                 "04-reference/02-askui-suite/02-askui-suite/UIController/Public/AskUI-StopControllers"
-              ],
-              "group": "Public"
+              ]
             }
-          ],
-          "group": "UIController"
+          ]
         }
       ]
     },
