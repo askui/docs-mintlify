@@ -1,0 +1,133 @@
+---
+title: "Workspace Architecture"
+description: "Understand the data model, entities, and role-based access control behind AskUI workspaces"
+---
+
+## Data Model Overview
+
+The following Entity Relationship Diagram shows how the core entities of the AskUI workspace service relate to each other. User identity is managed externally via **Auth0**.
+
+```mermaid
+erDiagram
+    USER {
+        string id PK "Auth0 Subject ID"
+        string email
+        string name
+        string picture
+        datetime createdAt
+        datetime updatedAt
+        boolean emailVerified
+    }
+
+    WORKSPACE {
+        uuid id PK
+        string name "1-128 chars"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    WORKSPACE_MEMBERSHIP {
+        uuid id PK
+        string userId FK
+        uuid workspaceId FK
+        WorkspacePrivilege[] privileges
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    WORKSPACE_ACCESS_TOKEN {
+        uuid id PK
+        string name
+        string hash
+        datetime expires_at "nullable"
+        datetime created_at
+    }
+
+    SUBJECT_ACCESS_TOKEN {
+        uuid id PK
+        string name "1-128 chars"
+        string creatorId FK "userId"
+        datetime expiresAt "nullable"
+        datetime createdAt
+    }
+
+    USAGE_EVENT {
+        uuid workspaceId FK
+        datetime timestamp
+        string eventType
+    }
+
+    USER ||--o{ WORKSPACE_MEMBERSHIP : "is member via"
+    WORKSPACE ||--o{ WORKSPACE_MEMBERSHIP : "has"
+    WORKSPACE_MEMBERSHIP ||--o{ WORKSPACE_ACCESS_TOKEN : "owns"
+    USER ||--o{ SUBJECT_ACCESS_TOKEN : "creates"
+    WORKSPACE ||--o{ USAGE_EVENT : "tracks"
+```
+
+### Entities at a Glance
+
+| Entity | Purpose |
+| --- | --- |
+| **User** | Identity record managed in Auth0 (email, name, profile picture). |
+| **Workspace** | Organisational container that groups members, tokens, and usage. |
+| **Workspace Membership** | Join entity that links a User to a Workspace and carries the assigned role. |
+| **Workspace Access Token** | Scoped credential tied to a specific membership (user + workspace pair). |
+| **Subject Access Token** | Global credential tied to a user, independent of any single workspace. |
+| **Usage Event** | Consumption record associated with a workspace for billing purposes. |
+
+## Role-Based Access Control
+
+Every workspace membership carries exactly **one** privilege that determines what the member is allowed to do. The three roles form a strict hierarchy:
+
+```mermaid
+graph TD
+    OWNER["<b>Owner</b><br/>ROLE_WORKSPACE_OWNER"]
+    ADMIN["<b>Admin</b><br/>ROLE_WORKSPACE_ADMIN"]
+    MEMBER["<b>Member</b><br/>ROLE_WORKSPACE_MEMBER"]
+
+    OWNER -->|includes all permissions of| ADMIN
+    ADMIN -->|includes all permissions of| MEMBER
+```
+
+### Permission Matrix
+
+| Capability | Owner | Admin | Member |
+| --- | :---: | :---: | :---: |
+| Use platform functionality | ✅ | ✅ | ✅ |
+| View workspace resources | ✅ | ✅ | ✅ |
+| Manage workspace resources & settings | ✅ | ✅ | ❌ |
+| Add / remove non-Owner members | ✅ | ✅ | ❌ |
+| Add / remove Owners | ✅ | ❌ | ❌ |
+| Manage subscription & billing | ✅ | ❌ | ❌ |
+| Delete workspace | ✅ | ❌ | ❌ |
+
+<Note>
+A member's role **cannot be changed** after assignment. To change a role you must remove the member and re-invite them with the desired role.
+</Note>
+
+### How Roles Are Assigned
+
+1. The user who **creates** a workspace automatically receives the `ROLE_WORKSPACE_OWNER` privilege.
+2. When an existing member **invites** a new user, they select the role at invitation time.
+3. The invited user accepts the invitation and a `WorkspaceMembership` with the chosen privilege is created.
+
+## Two Types of Access Tokens
+
+AskUI distinguishes between two token scopes:
+
+| Token Type | Scope | Tied To | Use Case |
+| --- | --- | --- | --- |
+| **Subject Access Token** | Global | User | Authenticating API calls on behalf of a user across any workspace they belong to. |
+| **Workspace Access Token** | Workspace | Membership | Authenticating API calls scoped to a single workspace, for example in CI/CD pipelines. |
+
+Both token types support an optional **expiration date**. Deleting a token takes effect immediately with no grace period.
+
+<Note>
+Your API credentials consist of your **Workspace ID** plus an **Access Token**. See [Token Management](/02-how-to-guides/01-account-management/04-tokens) for step-by-step instructions.
+</Note>
+
+## Next Steps
+
+- **[Members Management](/02-how-to-guides/01-account-management/02-members-management)**: Invite members, assign roles, and manage your team
+- **[Token Management](/02-how-to-guides/01-account-management/04-tokens)**: Create and manage access tokens
+- **[Usage & Billing](/02-how-to-guides/01-account-management/03-usage-billing-dashboard)**: Monitor workspace consumption and billing
