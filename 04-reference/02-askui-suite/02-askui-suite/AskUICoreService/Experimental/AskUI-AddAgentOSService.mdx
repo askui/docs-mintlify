@@ -9,16 +9,22 @@ Adds the AskUI AgentOS Service.
 This service is used to automatically recover the AskUI AgentOS if it crashes.
 It handles switching the RDP session to console mode.
 
+### PARAMETERS
+
+- `-Subnet` | _&lt;String&gt;_ - The subnet to listen to. e.g., 192.168.1.0 or 0.0.0.0
+Default is 127.0.0.1.
+More about subnets: https://en.wikipedia.org/wiki/Subnet 
+- `-enableSas` | _&lt;SwitchParameter&gt;_ - Enable Windows Secure Attention Sequence. Default is false.
+
 ### NOTES
 
 This Commandlet is only available on Windows.
-This Commandlet must be executed in an elevated PowerShell session.
 
 ### EXAMPLES
 
 #### EXAMPLE 1
 
-Adds the AskUI AgentOS Service.
+Adds the AskUI AgentOS Core Service.
 
 ```powershell
 AskUI-AddAgentOSService
