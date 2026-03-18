@@ -1,74 +1,51 @@
 ---
 title: Quickstart
-description: Get AskUI running in 5 minutes.
+description: Get AskUI running and see it automate a real app in 10 minutes.
 ---
 
-## 1. Sign Up
+By the end of this page, you'll watch AskUI open the Calculator app, click buttons, perform a calculation, and generate a report with screenshots — all autonomously.
 
-Create account at [hub.askui.com](https://hub.askui.com). You'll get:
-- **Workspace ID**
-- **Access Token**
+## 1. Install Agent OS
 
-## 2. Install Agent OS
+If you haven't already, install Agent OS on your machine. Pick your platform:
 
 <Tabs>
   <Tab title="Windows">
-    <CardGroup cols={2}>
-      <Card title="Windows AMD64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe">
-        Intel/AMD
-      </Card>
-      <Card title="Windows ARM64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-ARM64-Web.exe">
-        ARM
-      </Card>
-    </CardGroup>
-
     ```powershell
-    # Or via CLI
     Invoke-WebRequest -Uri "https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe" -OutFile "AskUI-Setup.exe"
     .\AskUI-Setup.exe
     ```
   </Tab>
   <Tab title="macOS">
-    <Card title="macOS ARM64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run">
-      Apple Silicon (M1/M2/M3/M4)
-    </Card>
-
     ```bash
     curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run
     chmod +x AskUI-Setup.run && ./AskUI-Setup.run
     ```
-
-    <Warning>Apple Silicon only. Intel Macs not supported.</Warning>
+    <Warning>Apple Silicon only (M1/M2/M3/M4).</Warning>
   </Tab>
   <Tab title="Linux">
-    <CardGroup cols={2}>
-      <Card title="Linux AMD64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run">
-        Intel/AMD
-      </Card>
-      <Card title="Linux ARM64" icon="download" href="https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-ARM64-Web.run">
-        ARM
-      </Card>
-    </CardGroup>
-
     ```bash
     curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run
     chmod +x AskUI-Setup.run && ./AskUI-Setup.run
     ```
-
-    <Warning>X11 only. Wayland not supported.</Warning>
+    <Warning>X11 only. No Wayland support.</Warning>
   </Tab>
 </Tabs>
 
-## 3. Install SDK
+Need more options? See the full [Installation guide](/agent-os/installation).
+
+## 2. Install the Python SDK
 
 ```bash
-pip install askui
+pip install askui[all]
 ```
 
-Set credentials:
+## 3. Set Your Credentials
+
+Sign up at [hub.askui.com](https://hub.askui.com) to get your **Workspace ID** and **Access Token**. These are needed for AskUI's cloud AI models.
 
 <Tabs>
-  <Tab title="macOS/Linux">
+  <Tab title="macOS / Linux">
     ```bash
     export ASKUI_WORKSPACE_ID="your-workspace-id"
     export ASKUI_TOKEN="your-access-token"
@@ -82,32 +59,98 @@ Set credentials:
   </Tab>
 </Tabs>
 
-## 4. Run First Task
+<Tip>
+Add these to your shell profile (`.bashrc`, `.zshrc`) or system environment variables so they persist across sessions.
+</Tip>
 
-```python
-# first_task.py
-from askui import VisionAgent
-
-with VisionAgent() as agent:
-    agent.act("""
-        Open a web browser
-        Navigate to google.com
-        Type "AskUI automation" in search box
-        Press Enter
-    """)
-```
+## 4. Verify Agent OS Is Running
 
 ```bash
-python first_task.py
+curl http://localhost:23000
 ```
 
-## Demo Project
+If you get a response, you're good. If you get "connection refused", start Agent OS from your system tray or application launcher.
+
+## 5. Run the Calculator Demo
+
+Clone the demo project and run it:
 
 ```bash
-git clone https://github.com/Lumpin-askui/AskUI-Demo-Project.git
+git clone https://github.com/askui/AskUI-Demo-Project.git
 cd AskUI-Demo-Project
 pip install -r requirements.txt
-python act.py
+python main.py tasks/calculator_test.csv
 ```
 
-CSV-based test automation with screenshots and reports.
+**Now watch your screen.** The agent will:
+
+1. Open the Calculator app
+2. Click the number buttons (2, 0, -, 1, 0)
+3. Press equals
+4. Verify the result is 10
+5. Take a screenshot at each step
+
+## 6. Check the Results
+
+When the run finishes, look in the `agent_workspace/` folder:
+
+```
+agent_workspace/
+└── 2026-03-18_14-50-00/
+    └── calculator_test/
+        ├── calculator_test_report.md   ← Detailed step-by-step report
+        ├── step1_calculator_opened.png ← Screenshot evidence
+        ├── step2_click_2.png
+        └── ...
+```
+
+Open the markdown report to see every step, what happened, and whether it matched the expected result.
+
+## What Just Happened?
+
+Here's what ran under the hood:
+
+1. **`main.py`** read the CSV task file — each row is a test step with an expected result
+2. **The Python SDK** sent each step to AskUI's cloud AI model, which looked at the screen and decided what to click
+3. **Agent OS** executed the clicks and keystrokes on your actual desktop
+4. **Screenshots** were captured at each step and saved as evidence
+5. **A report** was generated summarizing pass/fail for each step
+
+```
+[CSV Task File] → [Python SDK] → [AI Model] → [Agent OS] → [Your Screen]
+                                                    ↓
+                                              [Screenshots + Report]
+```
+
+## Try It Yourself
+
+**Change the calculation:** Open `tasks/calculator_test.csv` in any text editor. Change the numbers and expected result. Run again.
+
+**Write a plain-text task:** Create a new file `tasks/my_test.txt` with a natural language instruction:
+
+```
+Open the Notes app and type "Hello from AskUI"
+```
+
+Then run:
+
+```bash
+python main.py tasks/my_test.txt
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="How It Works" icon="lightbulb" href="/get-started/how-it-works">
+    Understand the architecture in detail.
+  </Card>
+  <Card title="Deployment Scenarios" icon="server" href="/agent-os/deployment-scenarios">
+    Deploy to VMs, CI pipelines, or mobile devices.
+  </Card>
+  <Card title="Define Tasks" icon="list-check" href="/define-tasks/index">
+    CSV format, natural language, and more.
+  </Card>
+  <Card title="Configuration" icon="gear" href="/agent-os/configuration">
+    Models, credentials, network, and custom tools.
+  </Card>
+</CardGroup>

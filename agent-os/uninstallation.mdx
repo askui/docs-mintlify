@@ -1,0 +1,53 @@
+---
+title: Uninstallation
+description: Remove Agent OS from Windows, macOS, or Linux.
+---
+
+## Uninstall Agent OS
+
+<Tabs>
+  <Tab title="Windows">
+    **Via Settings:**
+
+    1. Open **Settings → Apps → Installed apps**
+    2. Search for "AskUI"
+    3. Click **Uninstall**
+
+    **Via command line:**
+    ```powershell
+    # If installed as a service, stop it first
+    Stop-Service AskUI-AgentOS -ErrorAction SilentlyContinue
+
+    # Run the uninstaller
+    & "$env:LOCALAPPDATA\AskUI\uninstall.exe" /S
+    ```
+  </Tab>
+  <Tab title="macOS">
+    ```bash
+    # Remove the application
+    rm -rf /Applications/AskUI-Suite.app
+
+    # Remove user data (optional)
+    rm -rf ~/Library/Application\ Support/AskUI
+    ```
+  </Tab>
+  <Tab title="Linux">
+    ```bash
+    # If installed as a service, stop and disable it
+    sudo systemctl stop askui-agentos
+    sudo systemctl disable askui-agentos
+
+    # Run the uninstaller (if available)
+    /opt/askui/uninstall.sh
+
+    # Or remove manually
+    sudo rm -rf /opt/askui
+    ```
+  </Tab>
+</Tabs>
+
+## Uninstall the Python SDK
+
+```bash
+pip uninstall askui
+```

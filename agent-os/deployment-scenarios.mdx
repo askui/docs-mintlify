@@ -1,0 +1,292 @@
+---
+title: Deployment Scenarios
+description: How to deploy AskUI for local development, VMs, CI/CD pipelines, mobile devices, and multi-device setups.
+---
+
+You've [seen AskUI work locally](/get-started/quickstart). Now here's how to deploy it for real use. Every scenario uses the same two pieces — **Python SDK** and **Agent OS** — what changes is where they run and what they control.
+
+## Pick Your Scenario
+
+| Scenario | SDK runs on | Agent OS runs on | Controls |
+|----------|------------|-----------------|----------|
+| [Local Desktop](#local-desktop) | Your machine | Your machine | Your screen |
+| [Local SDK + VM](#local-sdk--agent-os-in-vm) | Your machine | VM | VM's screen |
+| [CI + VM](#sdk-in-ci--agent-os-in-vm) | CI runner | VM | VM's screen |
+| [CI + Remote](#sdk-in-ci--remote-agent-os) | CI runner | Remote server | Remote screen |
+| [Android](#android) | Host machine | Host machine | Android device/sim |
+| [iOS](#ios) | Host machine (macOS) | Host machine (macOS) | iOS device/sim |
+| [Multi-Device](#multi-device) | One machine | Multiple machines | Multiple devices |
+
+---
+
+## Desktop Scenarios
+
+### Local Desktop
+
+The simplest setup. Everything runs on one machine.
+
+```
+┌──────────────────────────────┐
+│        Your Machine          │
+│                              │
+│  [Python SDK] → [Agent OS] → screen │
+│                              │
+└──────────────────────────────┘
+```
+
+**When to use:** Local development, evaluation, demos.
+
+**Setup:**
+1. Install Agent OS on your machine ([Installation guide](/agent-os/installation))
+2. Install the Python SDK (`pip install askui`)
+3. Run your scripts locally
+
+**Works on:** Windows, macOS (Apple Silicon), Linux (X11)
+
+---
+
+### Local SDK + Agent OS in VM
+
+Your scripts run on your laptop. Agent OS runs inside a VM. Good for testing in a clean, isolated environment.
+
+```
+┌─────────────────┐        ┌──────────────────────┐
+│  Your Machine    │        │   VM (Windows/Linux)  │
+│                  │  :23000│                        │
+│  [Python SDK] ───────────→│  [Agent OS] → screen   │
+│                  │        │                        │
+└─────────────────┘        └──────────────────────┘
+```
+
+**When to use:** Testing on a specific OS version, keeping your machine clean, reproducible environments.
+
+**Setup:**
+1. Create a VM (VirtualBox, VMware, Hyper-V, etc.)
+2. Install Agent OS inside the VM as a [system service](/agent-os/installation#system-service-installation)
+3. Ensure the VM has a display (RDP session or virtual display)
+4. On your machine, point the SDK to the VM's IP:
+
+```python
+import os
+os.environ["ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS"] = "192.168.1.100:23000"
+
+from askui import VisionAgent
+with VisionAgent() as agent:
+    agent.act("Open Calculator")
+```
+
+**Gotchas:**
+- The VM needs an active display session — Agent OS captures the screen, so there must be one
+- On Windows VMs: disconnecting RDP minimizes the desktop. Use `AskUI-AddAskUIControllerAutoRecoverService` to maintain the session, or use a virtual display adapter
+- Set `ASKUI_RUNNER_WIDTH` and `ASKUI_RUNNER_HEIGHT` to control resolution after RDP disconnect
+
+---
+
+### SDK in CI + Agent OS in VM
+
+Your CI pipeline (GitHub Actions, Jenkins, GitLab CI) runs the Python SDK. A persistent VM runs Agent OS.
+
+```
+┌──────────────────┐        ┌──────────────────────┐
+│  CI Runner       │        │   VM (always-on)      │
+│  (GitHub Actions)│  :23000│                        │
+│  [Python SDK] ───────────→│  [Agent OS] → screen   │
+│                  │        │                        │
+└──────────────────┘        └──────────────────────┘
+```
+
+**When to use:** Automated test runs on every commit, scheduled regression testing.
+
+**Setup:**
+1. Set up a VM with Agent OS installed as a [system service](/agent-os/installation#system-service-installation)
+2. Ensure the VM is always-on with an active display session
+3. In your CI pipeline:
+
+```yaml
+# Example: GitHub Actions
+jobs:
+  ui-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install askui[all]
+      - run: python main.py tasks/
+        env:
+          ASKUI_WORKSPACE_ID: ${{ secrets.ASKUI_WORKSPACE_ID }}
+          ASKUI_TOKEN: ${{ secrets.ASKUI_TOKEN }}
+          ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS: "your-vm-ip:23000"
+```
+
+**Gotchas:**
+- The CI runner needs network access to the VM on port 23000
+- Store credentials as CI secrets, not in code
+- Consider running tests sequentially — Agent OS controls one screen at a time per instance
+
+---
+
+### SDK in CI + Remote Agent OS
+
+Same as above, but Agent OS runs on a dedicated remote server or cloud VM instead of a local VM.
+
+```
+┌──────────────────┐    internet    ┌──────────────────────┐
+│  CI Runner       │ ──────────────→│  Cloud VM             │
+│  [Python SDK]    │      :23000    │  [Agent OS] → screen  │
+└──────────────────┘                └──────────────────────┘
+```
+
+**When to use:** Shared test infrastructure, cloud-hosted test environments.
+
+**Additional considerations:**
+- Secure the connection — Agent OS has no built-in auth, so use a VPN, SSH tunnel, or firewall rules
+- Latency matters — screenshots are sent over the network. Keep SDK and Agent OS in the same region
+
+```bash
+# Example: SSH tunnel for secure remote access
+ssh -L 23000:localhost:23000 user@your-cloud-vm
+```
+
+---
+
+## Mobile Scenarios
+
+### Android
+
+Agent OS on the host machine connects to Android devices or simulators.
+
+```
+┌──────────────────────────────────────────┐
+│  Host Machine                             │
+│                                           │
+│  [Python SDK] → [Agent OS] ──ADB──→ [Android Device]  │
+│                                           │
+└──────────────────────────────────────────┘
+```
+
+**Connection methods:**
+
+| Method | Device Type | How it connects |
+|--------|-----------|----------------|
+| **ADB (USB)** | Real device | USB cable, `adb devices` must list it |
+| **ADB (network)** | Real device / simulator | `adb connect <ip>:<port>` |
+| **KVM** | Real device | Capture card + USB HID for input |
+
+**Setup for ADB:**
+1. Install ADB on the host machine
+2. Connect your Android device via USB (or `adb connect` for network)
+3. Verify: `adb devices` should show your device
+4. Install the SDK with Android support:
+
+```bash
+pip install askui[android]
+```
+
+```python
+from askui import AndroidVisionAgent
+
+with AndroidVisionAgent() as agent:
+    agent.act("Open Settings and turn on Wi-Fi")
+```
+
+**Android Simulator:**
+Same as ADB — the emulator appears as an ADB device. Start your emulator first, then `adb devices` should list it.
+
+---
+
+### iOS
+
+Agent OS must run on **macOS** (Apple Silicon) to control iOS devices.
+
+```
+┌──────────────────────────────────────────┐
+│  Mac (Apple Silicon)                      │
+│                                           │
+│  [Python SDK] → [Agent OS] ──IDB──→ [iOS Device]    │
+│                                           │
+└──────────────────────────────────────────┘
+```
+
+**Connection methods:**
+
+| Method | Device Type | How it connects |
+|--------|-----------|----------------|
+| **IDB** | Real device | USB + idb companion |
+| **IDB** | Simulator | Xcode simulator + idb |
+| **KVM** | Real device | Capture card + Bluetooth HID |
+
+**Setup for IDB:**
+1. Install [idb](https://fbidb.io/) on your Mac
+2. For real devices: connect via USB, trust the Mac on the device
+3. For simulators: start the simulator from Xcode
+4. Verify: `idb list-targets` should show your device/simulator
+
+**Gotchas:**
+- iOS development requires a Mac — there's no way around this
+- Real device testing may require an Apple Developer account for certain capabilities
+
+---
+
+## Multi-Device
+
+Orchestrate multiple devices from a single SDK instance. Useful for testing interactions between devices — e.g., send a message on a phone, verify it appears on a desktop.
+
+```
+                              ┌→ [Agent OS #1] → Desktop
+[Python SDK] ─────────────────┼→ [Agent OS #2] → Android Phone
+  (orchestrator)              └→ [Agent OS #3] → iOS Tablet
+```
+
+**Setup:**
+
+Run Agent OS on each host machine. In your script, create multiple agents pointing at different Agent OS instances:
+
+```python
+import os
+from askui import VisionAgent
+
+# Desktop agent
+os.environ["ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS"] = "desktop-host:23000"
+desktop_agent = VisionAgent()
+desktop_agent.open()
+
+# Mobile agent
+os.environ["ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS"] = "mobile-host:23000"
+mobile_agent = VisionAgent()
+mobile_agent.open()
+
+# Orchestrate
+mobile_agent.act("Send message 'Hello' to John")
+desktop_agent.act("Check that message 'Hello' from John appeared")
+
+desktop_agent.close()
+mobile_agent.close()
+```
+
+**Gotchas:**
+- Each Agent OS instance controls one device at a time
+- Network latency between agents can affect synchronization — add `wait_until()` checks between cross-device steps
+
+---
+
+## Scenario Comparison
+
+| | Local Desktop | Local + VM | CI + VM | CI + Remote | Mobile | Multi-Device |
+|--|:--:|:--:|:--:|:--:|:--:|:--:|
+| **Complexity** | Low | Medium | Medium | High | Medium | High |
+| **Needs always-on VM** | No | Optional | Yes | Yes | No | Yes |
+| **CI integration** | No | No | Yes | Yes | Optional | Optional |
+| **Network config** | None | VM networking | VM + CI access | VPN/tunnel | USB/ADB | Multiple hosts |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/agent-os/installation">
+    Install Agent OS in user, service, or silent mode.
+  </Card>
+  <Card title="Configuration" icon="gear" href="/agent-os/configuration">
+    Ports, models, credentials, network, and tools.
+  </Card>
+</CardGroup>

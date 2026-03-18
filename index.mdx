@@ -1,7 +1,9 @@
 ---
-title: AskUI SDK
-description: AskUI lets AI agents see screens and control devices. Desktop, mobile, web. One API.
+title: What is AskUI?
+description: AI-powered automation platform that controls any device with a screen — desktops, mobile phones, simulators, and embedded HMI panels.
 ---
+
+AskUI is an AI-powered automation platform that **controls any device with a screen**. It sees the screen like a human and interacts with it using mouse, keyboard, and touch — no selectors, no element IDs, no browser drivers.
 
 ```python
 from askui import VisionAgent
@@ -10,28 +12,57 @@ with VisionAgent() as agent:
     agent.act("Click 'Sign in', fill email with 'test@example.com', submit")
 ```
 
-No selectors. No element IDs. Natural language instructions.
+## The Two Pieces
+
+AskUI has two components that work together:
+
+| Component | What it does | Where it runs |
+|-----------|-------------|---------------|
+| **Python SDK** | Your script that says *what* to do | Wherever you run Python — your laptop, a CI runner, a server |
+| **Agent OS** | The hands and eyes — takes screenshots, moves the mouse, types on the keyboard | On the machine (or connected to the device) you want to control |
+
+They communicate over the network (gRPC on port 23000), which means they can run on the same machine or on different machines.
+
+```
+                              ┌→ Local Desktop (screen, mouse, keyboard)
+[Python SDK] → Agent OS ──────┼→ Android Device (ADB)
+  (your script)  (host)       ├→ Android Simulator (ADB)
+                              ├→ iOS Device (IDB / KVM)
+                              ├→ iOS Simulator (IDB)
+                              └→ Another Agent OS (multi-device)
+```
+
+## More Than UI Automation
+
+Agent OS is a **host that controls devices** — and it's extensible. You can wrap any API into a tool the agent can use:
+
+- **Desktop & web apps** — automate any application on Windows, macOS, or Linux
+- **Mobile apps** — Android (real devices and simulators via ADB/KVM) and iOS (via IDB/KVM)
+- **HMI testing** — automotive and industrial panels, combining screen interaction with hardware signals (CAN bus, serial, USB)
+- **Multi-device orchestration** — test a phone app while monitoring a desktop dashboard
+- **Custom tool integration** — wrap REST APIs, database queries, CAN bus signals, or any external system as agent tools
+
+## What This Means for You
+
+As the person deploying AskUI, your job is:
+
+1. **Install Agent OS** on whatever machine has access to the device(s) you want to control
+2. **Run the Python SDK** from wherever makes sense — the same machine, a CI pipeline, or a remote server
+3. **Make sure they can talk** — network connectivity on port 23000
+
+That's it. The rest is configuration.
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/get-started/quickstart">
-    Install and run your first task.
+    Install and run your first automation in 10 minutes.
   </Card>
   <Card title="How It Works" icon="lightbulb" href="/get-started/how-it-works">
-    Architecture overview.
+    Architecture, components, and execution flow.
+  </Card>
+  <Card title="Deployment Scenarios" icon="server" href="/agent-os/deployment-scenarios">
+    Local, VM, CI/CD, mobile, and multi-device setups.
+  </Card>
+  <Card title="Agent OS Installation" icon="download" href="/agent-os/installation">
+    All install modes: user, system service, silent.
   </Card>
 </CardGroup>
-
-## Capabilities
-
-| Feature | Description |
-|---------|-------------|
-| **Vision-based** | Sees pixels, not DOM. Works on any UI. |
-| **Cross-platform** | Desktop, web, Android, iOS, HMI |
-| **Background mode** | Runs without taking over your screen (Windows) |
-| **Natural language** | Describe tasks in plain English |
-
-## Use Cases
-
-- **Agentic development**: Give Claude Code/Cursor UI control
-- **Test automation**: CSV-based test suites with auto-reporting
-- **Process automation**: Automate workflows across any app

@@ -1,44 +1,155 @@
 ---
 title: How It Works
-description: VisionAgent + Agent OS architecture.
+description: Architecture, components, and how the SDK, Agent OS, and AI models work together.
 ---
 
-<img src="/images/infographics/architecture.svg" alt="Architecture: Your Code → VisionAgent + LLM → Agent OS" />
+Now that you've [seen AskUI in action](/get-started/quickstart), here's what's happening under the hood.
+
+## Architecture Overview
+
+```
+                                    HTTPS
+[Python SDK] ──────────────────────────────→ [AI Model (Cloud)]
+     │            understands screenshots,
+     │            decides what to click
+     │
+     │ gRPC :23000
+     │
+     ▼
+[Agent OS]  ────→ Local Desktop (screen, mouse, keyboard)
+  (host)    ────→ Android Device (ADB / KVM)
+            ────→ iOS Device (IDB / KVM)
+            ────→ Android/iOS Simulator
+            ────→ Industrial HMI (serial, USB)
+```
+
+There are three components. They can all run on the same machine, or be split across different machines.
 
 ## Components
 
-### VisionAgent
-Python SDK that orchestrates tasks. Sends screenshots to LLM, receives actions, executes via Agent OS.
+### Python SDK (VisionAgent)
+
+The SDK is where your automation logic lives. It:
+
+- Reads your task definitions (CSV, text, Python code)
+- Asks Agent OS for a screenshot of the current screen
+- Sends that screenshot to an AI model with the instruction ("click the Submit button")
+- Receives back coordinates (e.g., click at x=342, y=187)
+- Tells Agent OS to perform the action
 
 ```python
 from askui import VisionAgent
 
 with VisionAgent() as agent:
-    agent.act("Log into the admin dashboard")
+    agent.act("Open Settings and enable dark mode")
 ```
 
-### Agent OS
-Device driver running locally. Provides screen capture, mouse/keyboard control, multi-display support.
+The SDK doesn't need to be on the same machine as Agent OS. It just needs network access to it.
 
-### LLM
-Understands UI from screenshots, plans actions, executes step-by-step. Configurable—use AskUI's default or bring your own.
+### Agent OS
+
+Agent OS is the **device controller**. It runs on the host machine and provides:
+
+| Capability | Description |
+|-----------|-------------|
+| Screen capture | Pixel-perfect screenshots of the controlled device |
+| Input control | Mouse clicks, keyboard typing, touch gestures |
+| Multi-display | Control multiple monitors independently |
+| Window targeting | Focus and interact with specific windows |
+| Background mode | Run without taking over the screen (Windows only) |
+| Device connectivity | Connect to mobile devices, simulators, HMI panels |
+
+Agent OS listens on **port 23000** (configurable) and accepts commands via gRPC.
+
+**Agent OS is also extensible.** You can register custom tools that the AI agent can call — CAN bus signals, REST APIs, database queries, hardware interfaces. This makes it suitable for testing beyond just screens.
+
+### AI Model
+
+The AI model is what makes AskUI "see." It receives a screenshot and an instruction, then returns the action to take. Options:
+
+| Model | Where it runs | When to use |
+|-------|--------------|-------------|
+| **AskUI Cloud** (default) | AskUI servers | Easiest setup, best accuracy |
+| **Anthropic Claude** | Anthropic API | Already have an API key |
+| **AWS Bedrock / Vertex AI** | Your cloud | Data stays in your cloud |
+| **Self-hosted** (UI-TARS, HuggingFace) | Your servers | Full control, air-gapped environments |
+
+See [Configuration](/agent-os/configuration) for how to switch models.
 
 ## Execution Flow
 
-1. **Screenshot** → Agent OS captures screen
-2. **Understanding** → LLM identifies UI elements
-3. **Planning** → LLM determines next action
-4. **Execution** → Agent OS performs click/type
-5. **Loop** → Repeat until task complete
+When you run a task, here's exactly what happens on each step:
+
+<Steps>
+  <Step title="Screenshot">
+    Agent OS captures a pixel-perfect screenshot of the target device's screen.
+  </Step>
+  <Step title="Understanding">
+    The screenshot + your instruction is sent to the AI model. The model identifies UI elements and understands the current state.
+  </Step>
+  <Step title="Planning">
+    The AI model determines the next action: "click at (342, 187)" or "type 'hello' into the focused field."
+  </Step>
+  <Step title="Execution">
+    Agent OS performs the action — moves the mouse, clicks, types, scrolls — on the actual device.
+  </Step>
+  <Step title="Verification">
+    A new screenshot is taken. The agent checks if the expected result occurred. If not, it can retry or report failure.
+  </Step>
+  <Step title="Loop">
+    Steps 1–5 repeat until the task is complete or all steps have been executed.
+  </Step>
+</Steps>
+
+## Host Mode vs. Companion Mode
+
+Agent OS can operate in two modes:
+
+### Host Mode
+
+Agent OS controls the **local machine** it's installed on — the same screen you see. This is the default and most common setup.
+
+```
+[Agent OS on Machine A] → controls → [Machine A's screen]
+```
+
+**Use for:** Desktop automation, VM-based testing, CI runners.
+
+### Companion Mode
+
+Agent OS connects to an **external device** — a phone, tablet, simulator, or HMI panel — via ADB, IDB, KVM, or hardware interfaces.
+
+```
+[Agent OS on Machine A] → controls → [Android phone via ADB]
+                                    → [iOS device via IDB]
+                                    → [HMI panel via serial/USB]
+```
+
+**Use for:** Mobile testing, multi-device orchestration, HMI/automotive testing.
+
+In companion mode, the host machine doesn't need a display itself — it just needs the physical connection (USB, Bluetooth, network) to the target device.
 
 ## Why Task-Based?
 
+Traditional automation is brittle. AskUI is resilient:
+
 ```python
-# Traditional (breaks when UI changes)
+# Traditional — breaks when UI changes
 driver.find_element(By.ID, "email-input").send_keys("test@example.com")
 
-# AskUI (adapts to visual changes)
+# AskUI — adapts to visual changes
 agent.act('Enter "test@example.com" in the email field')
 ```
 
-AI understands intent, not implementation. UI changes don't break your automation.
+The AI understands **intent**, not implementation details. A button that moves, gets restyled, or changes ID still gets clicked — because the agent sees it the way a human would.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Deployment Scenarios" icon="server" href="/agent-os/deployment-scenarios">
+    Pick the right setup for your infrastructure.
+  </Card>
+  <Card title="Configuration" icon="gear" href="/agent-os/configuration">
+    Ports, models, credentials, and custom tools.
+  </Card>
+</CardGroup>

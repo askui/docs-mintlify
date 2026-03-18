@@ -1,0 +1,221 @@
+---
+title: Installation
+description: Install Agent OS on Windows, macOS, or Linux — user mode, system service, or silent install.
+---
+
+Agent OS is the device controller that runs on the machine you want to automate. It provides screen capture, mouse/keyboard control, and device connectivity.
+
+<Note>
+Agent OS is **free for non-commercial use**. Download it directly — no account required for the installer itself. You only need credentials from [hub.askui.com](https://hub.askui.com) if you use AskUI's cloud AI models.
+</Note>
+
+## Prerequisites
+
+- **Windows**: Windows 10 22H2+ or Windows Server 2022/2025 (64-bit)
+- **macOS**: macOS 10.15+, **Apple Silicon only** (M1/M2/M3/M4)
+- **Linux**: Ubuntu 18.04+, **X11 only** (no Wayland)
+- **Hardware**: 8 GB RAM, 4 CPU cores minimum
+
+## Choose Your Install Mode
+
+| Mode | Best for | Admin required? | Survives reboot? |
+|------|----------|-----------------|-------------------|
+| **User Mode** | Local evaluation, development | No | Starts manually |
+| **System Service** | VMs, CI runners, always-on machines | Yes | Yes (auto-starts) |
+| **Silent Install** | Scripted provisioning, fleet deployment | Yes | Yes (auto-starts) |
+
+---
+
+## User Mode Installation
+
+The simplest way to get started. Installs for the current user only.
+
+<Tabs>
+  <Tab title="Windows">
+    **Download:**
+
+    | Architecture | Installer |
+    |-------------|-----------|
+    | AMD64 (Intel/AMD) | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe) |
+    | ARM64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-ARM64-Web.exe) |
+
+    **Or install via command line:**
+    ```powershell
+    Invoke-WebRequest -Uri "https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe" -OutFile "AskUI-Setup.exe"
+    .\AskUI-Setup.exe
+    ```
+
+    After installation, Agent OS appears in your **system tray**.
+  </Tab>
+  <Tab title="macOS">
+    <Warning>**Apple Silicon only.** Intel Macs are not supported.</Warning>
+
+    **Download:**
+
+    | Architecture | Installer |
+    |-------------|-----------|
+    | ARM64 (M1/M2/M3/M4) | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run) |
+
+    **Or install via terminal:**
+    ```bash
+    curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-MacOS-ARM64-Web.run
+    chmod +x AskUI-Setup.run && ./AskUI-Setup.run
+    ```
+
+    <Note>
+    macOS will ask for **Accessibility** and **Screen Recording** permissions. Grant both — Agent OS needs them to control the screen.
+    </Note>
+  </Tab>
+  <Tab title="Linux">
+    <Warning>**X11 only.** Wayland is not supported. Switch to an X11/XOrg session if needed.</Warning>
+
+    **Download:**
+
+    | Architecture | Installer |
+    |-------------|-----------|
+    | AMD64 (Intel/AMD) | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run) |
+    | ARM64 | [Download](https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-ARM64-Web.run) |
+
+    **Or install via terminal:**
+    ```bash
+    curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run
+    chmod +x AskUI-Setup.run && ./AskUI-Setup.run
+    ```
+  </Tab>
+</Tabs>
+
+### Verify Installation
+
+After installing, confirm Agent OS is running:
+
+```bash
+curl http://localhost:23000
+```
+
+You should get a response (not a connection refused error). If Agent OS isn't running, start it from the system tray or application launcher.
+
+---
+
+## System Service Installation
+
+For machines that need Agent OS running permanently (VMs, test servers, CI runners). Requires admin/root privileges.
+
+<Tabs>
+  <Tab title="Windows">
+    **As Administrator:**
+    ```powershell
+    # Download the installer
+    Invoke-WebRequest -Uri "https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe" -OutFile "AskUI-Setup.exe"
+
+    # Install as system service
+    .\AskUI-Setup.exe /S /SERVICE
+    ```
+
+    Agent OS will register as a Windows Service and start automatically on boot.
+
+    **Manage the service:**
+    ```powershell
+    # Check status
+    Get-Service AskUI*
+
+    # Stop / Start
+    Stop-Service AskUI-AgentOS
+    Start-Service AskUI-AgentOS
+    ```
+  </Tab>
+  <Tab title="Linux">
+    ```bash
+    # Install
+    sudo ./AskUI-Setup.run --service
+
+    # Manage via systemd
+    sudo systemctl status askui-agentos
+    sudo systemctl restart askui-agentos
+    sudo systemctl enable askui-agentos   # auto-start on boot
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Silent Installation
+
+For automated provisioning scripts, CI/CD pipelines, and fleet management tools (Ansible, Terraform, etc.).
+
+<Tabs>
+  <Tab title="Windows">
+    ```powershell
+    # Download and install silently — no GUI, no prompts
+    Invoke-WebRequest -Uri "https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Win-AMD64-Web.exe" -OutFile "AskUI-Setup.exe"
+    .\AskUI-Setup.exe /S /D=C:\AskUI
+    ```
+
+    | Flag | Description |
+    |------|-------------|
+    | `/S` | Silent mode — no GUI |
+    | `/D=<path>` | Installation directory |
+    | `/SERVICE` | Install as Windows Service |
+  </Tab>
+  <Tab title="macOS / Linux">
+    ```bash
+    # Download and install silently
+    curl -o AskUI-Setup.run https://files.askui.com/releases/Installer/25.11.1/AskUI-Suite-25.11.1-User-Installer-Linux-AMD64-Web.run
+    chmod +x AskUI-Setup.run
+    ./AskUI-Setup.run --silent --prefix=/opt/askui
+    ```
+
+    | Flag | Description |
+    |------|-------------|
+    | `--silent` | No interactive prompts |
+    | `--prefix=<path>` | Installation directory |
+    | `--service` | Install as systemd service |
+  </Tab>
+</Tabs>
+
+---
+
+## Install the Python SDK
+
+On the machine where your automation scripts will run (can be the same machine as Agent OS, or different):
+
+```bash
+pip install askui
+```
+
+**Optional extras** for specific use cases:
+
+| Extra | What it adds |
+|-------|-------------|
+| `askui[all]` | Everything below |
+| `askui[android]` | Android device support |
+| `askui[web]` | Web/Playwright support |
+| `askui[bedrock]` | AWS Bedrock model provider |
+| `askui[vertex]` | Google Vertex AI support |
+
+```bash
+# Example: install with Android support only
+pip install askui[android]
+```
+
+<Note>
+Requires **Python 3.10 or newer**. Install from [python.org](https://python.org) if needed.
+</Note>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/get-started/quickstart">
+    Run your first automation in 10 minutes.
+  </Card>
+  <Card title="Uninstallation" icon="trash" href="/agent-os/uninstallation">
+    Remove Agent OS cleanly.
+  </Card>
+  <Card title="Deployment Scenarios" icon="server" href="/agent-os/deployment-scenarios">
+    Set up for VMs, CI/CD, mobile, or multi-device.
+  </Card>
+  <Card title="Configuration" icon="gear" href="/agent-os/configuration">
+    Ports, models, credentials, and custom tools.
+  </Card>
+</CardGroup>

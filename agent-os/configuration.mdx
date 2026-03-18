@@ -1,0 +1,304 @@
+---
+title: Configuration
+description: Agent OS settings, credentials, AI models, network, and custom tools.
+---
+
+Reference for all configurable settings. You don't need most of these to get started — the defaults work for local development.
+
+## Credentials
+
+Required only if you use AskUI's cloud AI models (the default).
+
+| Variable | Description | Where to get it |
+|----------|-------------|-----------------|
+| `ASKUI_WORKSPACE_ID` | Your workspace identifier | [hub.askui.com](https://hub.askui.com) |
+| `ASKUI_TOKEN` | Access token for API authentication | [hub.askui.com](https://hub.askui.com) |
+
+<Tabs>
+  <Tab title="macOS / Linux">
+    ```bash
+    export ASKUI_WORKSPACE_ID="your-workspace-id"
+    export ASKUI_TOKEN="your-access-token"
+    ```
+  </Tab>
+  <Tab title="Windows PowerShell">
+    ```powershell
+    $env:ASKUI_WORKSPACE_ID="your-workspace-id"
+    $env:ASKUI_TOKEN="your-access-token"
+    ```
+  </Tab>
+  <Tab title=".env file">
+    ```bash
+    # .env (in your project root)
+    ASKUI_WORKSPACE_ID=your-workspace-id
+    ASKUI_TOKEN=your-access-token
+    ```
+    The SDK loads `.env` files automatically.
+  </Tab>
+</Tabs>
+
+---
+
+## Agent OS Connection
+
+Control how the Python SDK connects to Agent OS.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS` | `localhost:23000` | Agent OS address (host:port) |
+| `ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART` | `true` | Auto-start Agent OS if not running |
+| `ASKUI_CONTROLLER_PATH` | *(auto-detected)* | Path to Agent OS executable |
+
+**Remote Agent OS example:**
+```bash
+export ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS="192.168.1.100:23000"
+export ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART="false"
+```
+
+---
+
+## Agent OS Settings
+
+Configure Agent OS behavior via `ASKUI_CONTROLLER_ARGS`:
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--showOverlay` | `true` | Show visual overlay during automation |
+| `--debugDraw` | `false` | Draw debug information on screen |
+| `--configFile` | *(none)* | Path to Agent OS config file |
+
+```bash
+# Disable overlay (useful for headless/CI)
+export ASKUI_CONTROLLER_ARGS="--showOverlay false"
+
+# Enable debug drawing for troubleshooting
+export ASKUI_CONTROLLER_ARGS="--debugDraw true"
+
+# Use a custom config file
+export ASKUI_CONTROLLER_ARGS="--configFile /path/to/config.json"
+```
+
+### Display Selection
+
+For multi-monitor setups, select which display Agent OS controls:
+
+```python
+# Use display 2
+with VisionAgent(display=2) as agent:
+    agent.act("Open dashboard")
+
+# List available displays
+with VisionAgent() as agent:
+    displays = agent.tools.os.list_displays()
+    print(displays)
+```
+
+### Windows RDP / Headless Settings
+
+When running Agent OS on a Windows VM accessed via RDP, disconnecting the RDP session can minimize the desktop. Use these settings to maintain a usable screen:
+
+| Variable | Description |
+|----------|-------------|
+| `ASKUI_RUNNER_WIDTH` | Screen width after RDP disconnect (e.g., `1920`) |
+| `ASKUI_RUNNER_HEIGHT` | Screen height after RDP disconnect (e.g., `1080`) |
+
+---
+
+## AI Model Selection
+
+By default, AskUI uses its own cloud model (`askui`). You can switch to other providers.
+
+### Default Model
+
+```python
+# Uses AskUI cloud model (default — no config needed)
+with VisionAgent() as agent:
+    agent.act("Click Submit")
+```
+
+### Single Model Override
+
+```python
+# Use a specific model for everything
+with VisionAgent(model="claude-sonnet-4-20250514") as agent:
+    agent.act("Click Submit")
+```
+
+### Per-Command Models
+
+Different tasks can use different models. Useful for optimizing cost and speed:
+
+```python
+with VisionAgent(model={
+    "act": "claude-sonnet-4-20250514",   # Best reasoning for complex tasks
+    "get": "askui",                       # Fast extraction
+    "locate": "askui-combo"               # Element detection
+}) as agent:
+    agent.act("Fill out the form")        # Uses Claude
+    name = agent.get("What name is shown?")  # Uses AskUI
+    agent.click("Submit")                 # Uses askui-combo
+```
+
+### Available Models
+
+| Model | Provider | Best for |
+|-------|----------|----------|
+| `askui` | AskUI Cloud | Default — auto-selects best model |
+| `askui-combo` | AskUI Cloud | Fast element detection |
+| `askui-pta` | AskUI Cloud | Prompt-based element detection |
+| `askui-ocr` | AskUI Cloud | Text recognition |
+| `claude-sonnet-4-20250514` | Anthropic | Complex reasoning tasks |
+| `claude-haiku-4-5-20251001` | Anthropic | Fast, cheaper tasks |
+| `gemini-2.5-flash` | AskUI Cloud | Fast, general purpose |
+| `gemini-2.5-pro` | AskUI Cloud | High accuracy |
+
+### Third-Party Provider Setup
+
+<Tabs>
+  <Tab title="Anthropic">
+    ```bash
+    export ANTHROPIC_API_KEY="your-api-key"
+    ```
+    ```python
+    with VisionAgent(model="claude-sonnet-4-20250514") as agent:
+        agent.act("Click Submit")
+    ```
+  </Tab>
+  <Tab title="AWS Bedrock">
+    ```bash
+    pip install askui[bedrock]
+    ```
+    ```python
+    with VisionAgent(
+        model="anthropic-claude-3-5-sonnet",
+        model_provider="bedrock"
+    ) as agent:
+        agent.act("Click Submit")
+    ```
+  </Tab>
+  <Tab title="Google Vertex AI">
+    ```bash
+    pip install askui[vertex]
+    ```
+    ```python
+    with VisionAgent(
+        model="gemini-2.5-pro",
+        model_provider="vertex"
+    ) as agent:
+        agent.act("Click Submit")
+    ```
+  </Tab>
+  <Tab title="Self-Hosted (UI-TARS)">
+    ```bash
+    export TARS_URL="http://your-server:8080"
+    export TARS_API_KEY="your-key"
+    ```
+    ```python
+    with VisionAgent(model="ui-tars") as agent:
+        agent.act("Click Submit")
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Custom Tools
+
+Extend the agent with tools that wrap any API or hardware interface. The AI agent can then call these tools autonomously.
+
+### Example: CAN Bus Tool
+
+```python
+from askui.models.shared.tools import Tool
+
+class CANBusTool(Tool):
+    name = "send_can_signal"
+    description = "Send a CAN bus signal to the vehicle ECU"
+
+    def run(self, signal_id: str, value: int) -> str:
+        # Your CAN bus implementation here
+        send_can_message(signal_id, value)
+        return f"Sent signal {signal_id} with value {value}"
+```
+
+### Registering Custom Tools
+
+```python
+from askui import VisionAgent
+
+tools = [CANBusTool()]
+
+with VisionAgent() as agent:
+    agent.act(
+        "Turn on the headlights by sending CAN signal 0x123",
+        tools=tools
+    )
+```
+
+See the [demo project's `helpers/tools/`](https://github.com/askui/AskUI-Demo-Project) for a working example.
+
+---
+
+## Network & Firewall
+
+### Ports
+
+| Port | Protocol | Direction | Purpose |
+|------|----------|-----------|---------|
+| **23000** | gRPC | SDK → Agent OS | Device control commands |
+| **443** | HTTPS | SDK → Internet | AskUI cloud model API |
+
+### Proxy
+
+If your network requires a proxy for outbound HTTPS (cloud model access):
+
+```bash
+export HTTP_PROXY="http://proxy.corp.com:8080"
+export HTTPS_PROXY="http://proxy.corp.com:8080"
+export NO_PROXY="localhost,127.0.0.1"
+```
+
+### Securing Remote Agent OS
+
+Agent OS has no built-in authentication. If Agent OS is on a remote machine:
+
+- **Preferred:** Use an SSH tunnel: `ssh -L 23000:localhost:23000 user@remote-host`
+- **Alternative:** Restrict port 23000 access via firewall rules (IP allowlist)
+- **Alternative:** Use a VPN between the SDK machine and Agent OS machine
+
+---
+
+## Telemetry
+
+AskUI collects anonymous usage data by default. To disable:
+
+```bash
+# Disable SDK telemetry
+export ASKUI__VA__TELEMETRY__ENABLED="false"
+
+# Disable AskUI Suite telemetry
+export ASKUI_DISABLE_TELEMETRY="true"
+```
+
+---
+
+## All Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ASKUI_WORKSPACE_ID` | *(required)* | Workspace ID from hub.askui.com |
+| `ASKUI_TOKEN` | *(required)* | Access token from hub.askui.com |
+| `ASKUI_CONTROLLER_CLIENT_SERVER_ADDRESS` | `localhost:23000` | Agent OS address |
+| `ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART` | `true` | Auto-start Agent OS |
+| `ASKUI_CONTROLLER_PATH` | *(auto)* | Agent OS executable path |
+| `ASKUI_CONTROLLER_ARGS` | `--showOverlay true` | Agent OS CLI arguments |
+| `ASKUI_RUNNER_WIDTH` | *(auto)* | Screen width for headless/RDP |
+| `ASKUI_RUNNER_HEIGHT` | *(auto)* | Screen height for headless/RDP |
+| `ASKUI_INFERENCE_ENDPOINT` | *(auto)* | Custom inference endpoint |
+| `ASKUI_HTTP_SSL_VERIFICATION` | `true` | SSL verification for HTTPS |
+| `ASKUI__VA__TELEMETRY__ENABLED` | `true` | SDK telemetry |
+| `ASKUI_DISABLE_TELEMETRY` | `false` | Suite telemetry |
+| `ASKUI_INSTALLATION_DIRECTORY` | *(auto)* | Suite install directory |
+| `HTTP_PROXY` | *(none)* | HTTP proxy |
+| `HTTPS_PROXY` | *(none)* | HTTPS proxy |
+| `NO_PROXY` | *(none)* | Proxy bypass list |

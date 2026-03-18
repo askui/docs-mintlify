@@ -88,7 +88,11 @@
       "group": "Agent OS",
       "pages": [
         "agent-os/index",
-        "agent-os/capabilities"
+        "agent-os/installation",
+        "agent-os/uninstallation",
+        "agent-os/capabilities",
+        "agent-os/deployment-scenarios",
+        "agent-os/configuration"
       ]
     },
     {
