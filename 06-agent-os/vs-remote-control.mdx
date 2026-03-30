@@ -1,0 +1,102 @@
+---
+title: AgentOS vs Remote Control Software
+description: How AgentOS differs from RDP, TeamViewer, UltraVNC, RustDesk, and other remote control tools.
+---
+
+Remote control software like RDP, TeamViewer, UltraVNC, and RustDesk lets **humans** view and interact with a remote desktop. AgentOS lets **AI agents** do the same — but the two are designed for fundamentally different purposes.
+
+## Different Goals
+
+| | Remote Control Software | AgentOS |
+| --- | --- | --- |
+| **Designed for** | Human operators viewing and controlling a remote screen | AI agents automating tasks programmatically |
+| **Input method** | Human moves mouse, types on keyboard | Agent sends commands via API (gRPC) |
+| **Screen access** | Streams video to a human viewer | Provides pixel-perfect screenshots to agent code |
+| **Session model** | Interactive session — a human must be watching | Unattended — no human needed |
+| **Automation support** | None (built for manual use) | Core purpose — screenshots, input, window/process management via API |
+
+## Why Not Just Use Remote Desktop?
+
+A common approach is to open an RDP or VNC session and run automation tools (like PyAutoGUI) inside it. This breaks down quickly:
+
+### Session Dependency
+
+Remote control software requires an **active session**. When the connection drops:
+
+- **RDP** locks the desktop — screenshots return a black screen, input stops working.
+- **VNC/TeamViewer/RustDesk** may keep the session alive, but there's no API to detect or recover from disconnects programmatically.
+
+AgentOS in [OS Service mode](/06-agent-os/runtime-modes#os-service) runs independently of any remote session. It transfers the session on disconnect and keeps automation running.
+
+### Unreliable Input
+
+Remote desktop protocols introduce a translation layer between the automation tool and the actual OS input system. This causes real-world issues that are difficult to debug:
+
+- **Clicks land in the wrong location** — RDP and VNC remap coordinates between the local and remote display. Differences in resolution, scaling (DPI), or multi-monitor setup cause mouse clicks to arrive at a different position than intended.
+- **Typing doesn't work or produces wrong characters** — remote protocols intercept and re-encode keyboard input. Special keys, keyboard layouts, Unicode characters, and fast key sequences can be lost, reordered, or misinterpreted. This is especially common with non-US keyboard layouts over RDP.
+- **Input timing is unpredictable** — network latency between the remote client and host means input events arrive with variable delay, causing race conditions in automation scripts that depend on timing.
+
+AgentOS injects input directly through OS-level APIs on the target machine — no protocol translation, no coordinate remapping, no network-induced timing issues.
+
+### No Programmatic Interface
+
+Remote control tools stream pixels to a human viewer. They don't provide:
+
+- A **screenshot API** that returns images your agent code can process.
+- A **structured input API** for keyboard and mouse commands.
+- **Window or process management** — you can't enumerate windows or start/stop processes through RDP.
+- **Event hooks** — no way to react programmatically to screen changes or session events.
+
+AgentOS exposes all of these through a gRPC API that the Python SDK connects to directly.
+
+### Security Constraints
+
+Remote desktop protocols operate within the user session and cannot reach privileged OS contexts:
+
+- **No logon screen access** — you can't automate the Windows lock screen or login prompt through RDP or VNC.
+- **No Secure Attention Sequence** — CTRL+ALT+DEL cannot be sent programmatically through remote control software. It requires a kernel-level driver.
+- **No SYSTEM privileges** — remote sessions run as the logged-in user, not as SYSTEM.
+
+AgentOS as an OS service runs with SYSTEM privileges and includes a signed kernel driver for Secure Attention Sequence. Beyond access, AgentOS is building a dedicated security layer with application and filesystem whitelisting, audit logs, and network scanning — giving enterprises fine-grained control over what agents can and cannot do. See [Enterprise Features](/06-agent-os/enterprise) for details.
+
+### Not Built for CI/CD
+
+Remote control software assumes a human will connect, do work, and disconnect. In CI/CD:
+
+- There's **no human to connect** — you need unattended, headless operation.
+- Sessions must survive **VM restarts, RDP disconnects, and pipeline retries** without manual intervention.
+- You need **deterministic startup** — the automation environment must be ready before your test code runs.
+
+AgentOS starts as a Windows service on boot, requires no active session, and is ready for automation immediately.
+
+## Comparison
+
+| Capability | AgentOS | RDP | TeamViewer | VNC (UltraVNC) | RustDesk |
+| --- | --- | --- | --- | --- | --- |
+| Programmatic screenshot API | Yes | No | No | No | No |
+| Programmatic input API | Yes (gRPC) | No | No | No | No |
+| Window/process management API | Yes | No | No | No | No |
+| Unattended (no human needed) | Yes | No (session locks) | Partial | Partial | Partial |
+| RDP disconnect resilience | Yes | N/A | No | No | No |
+| Logon screen automation | Yes | No | No | No | No |
+| Send CTRL+ALT+DEL | Yes | No | No | No | No |
+| SYSTEM privileges | Yes | No | No | No | No |
+| CI/CD ready | Yes | No | No | No | No |
+| No software on target | Yes (Companion Mode) | Requires RDP server | Requires agent | Requires VNC server | Requires agent |
+
+## Agent-Human-Interaction
+
+Remote control software is built for one model: a human controls a remote machine. AgentOS is building towards a collaborative model where **agents and humans work on the same machine together**.
+
+- **Shared desktop** — an agent can automate tasks in the background while a human uses the same machine. No need to lock out the user or take over the session.
+- **Handoff** — agents can prepare work (fill forms, navigate to the right screen, gather data) and hand control back to the human for decisions or approvals.
+- **Supervision** — a human can observe what the agent is doing in real time and intervene when needed, without disrupting the agent's session.
+
+This is a fundamentally different interaction model. Remote control tools assume one operator at a time — either a human is connected, or nobody is. AgentOS treats agents and humans as co-workers on the same machine.
+
+## When to Use What
+
+- **Remote control software** — when a human needs to view and interact with a remote machine manually.
+- **AgentOS** — when AI agents need to automate a machine programmatically, unattended, or alongside a human user.
+
+They can coexist: you can have RDP available for human debugging while AgentOS handles automated agent workflows on the same machine. AgentOS will keep running even when RDP sessions connect and disconnect.

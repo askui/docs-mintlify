@@ -1,0 +1,59 @@
+---
+title: Service Installer
+description: Install AgentOS as a Windows system service for enterprise and CI/CD.
+---
+
+This page covers installing AgentOS as an **OS service** (Windows system service). For standalone mode, see the [Standalone Installer](/06-agent-os/quickstart).
+
+## Prerequisites
+
+- **Windows** (Windows 10, Windows 11, Windows Server 2019+)
+- **Administrator rights** — the installer will prompt for elevation if needed.
+
+## Enterprise Ready
+
+The installer ships with enterprise security requirements built in:
+
+- **Signed binaries** — no need to bypass SmartScreen, Gatekeeper, or Execution Policies.
+- **Separated binaries and data** — program files and configuration/data are stored separately, following security best practices.
+- **Enterprise proxy and CA support** — compatible with deep packet inspection setups.
+
+## UI Installation
+
+1. Run the AgentOS installer (EXE).
+2. If prompted, approve the administrator elevation request.
+3. Go through the installer and open the **config** page to set options.
+4. Click **Install** and wait for completion.
+5. Click **Finish**. If the installer asks to reboot, restart the machine so all changes take effect.
+
+## Silent Installation
+
+For scripts, CI, or unattended setups, run the installer from an **elevated** command prompt (Run as administrator).
+
+<Note>Replace `<version>` with the actual version number of your installer (e.g. `26.2.1.3`).</Note>
+
+**Basic silent install (defaults):**
+
+```bash
+"AskUI-Agent-OS-<version>-Service-Installer-Win-AMD64.exe" /qn
+```
+
+**Custom install with options:**
+
+```bash
+"<installer_path>" /qn APPDIR="C:\ASKUI" /l*vx installer.log
+```
+
+See [Configuration](/06-agent-os/configuration) for all available installer parameters.
+
+## After Installation
+
+- **Default install path:** `C:\Program Files\askui GmbH\AskUI AgentOS`
+- The AskUI Python SDK automatically detects the service and uses it instead of standalone mode.
+- After uninstalling the app, the SDK falls back to standalone mode.
+
+## Uninstalling
+
+<Warning>
+**Do not** remove or stop only the service from Windows Services. Always **uninstall the full AskUI AgentOS application** to clean up correctly.
+</Warning>

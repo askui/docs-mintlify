@@ -37,6 +37,10 @@
     {
       "name": "Reference",
       "url": "04-reference"
+    },
+    {
+      "name": "Agent OS",
+      "url": "06-agent-os"
     }
   ],
   "anchors": [
@@ -477,6 +481,55 @@
         "05-additional-resources/status-page",
         "05-additional-resources/trust-center",
         "05-additional-resources/agentic-instructions-example"
+      ]
+    },
+    {
+      "group": "Agent OS",
+      "pages": [
+        "06-agent-os/index",
+        {
+          "group": "Installation",
+          "icon": "rocket",
+          "pages": [
+            "06-agent-os/quickstart",
+            "06-agent-os/installation",
+            "06-agent-os/configuration"
+          ]
+        },
+        {
+          "group": "How-to Guides",
+          "icon": "wrench",
+          "pages": [
+            {
+              "group": "Deployment Scenarios",
+              "pages": [
+                "06-agent-os/deployment-scenarios",
+                "06-agent-os/deployment-local",
+                "06-agent-os/deployment-ci",
+                "06-agent-os/deployment-multi-device"
+              ]
+            },
+            "06-agent-os/troubleshooting"
+          ]
+        },
+        {
+          "group": "Understanding Agent OS",
+          "icon": "lightbulb",
+          "pages": [
+            "06-agent-os/concepts",
+            "06-agent-os/capabilities",
+            "06-agent-os/runtime-modes",
+            "06-agent-os/control-modes",
+            "06-agent-os/vs-remote-control"
+          ]
+        },
+        {
+          "group": "Reference",
+          "pages": [
+            "06-agent-os/enterprise"
+          ]
+        },
+        "06-agent-os/release-notes"
       ]
     }
   ],

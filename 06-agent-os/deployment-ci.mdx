@@ -1,0 +1,92 @@
+---
+title: CI/CD Integration
+description: Run AgentOS unattended in pipelines, on VMs, or with connected devices.
+---
+
+You're running agents unattended in a pipeline or on remote infrastructure. The install method depends on whether you need OS service capabilities (RDP resilience, SYSTEM privileges) or standalone mode is sufficient.
+
+## Windows VM
+
+Run automation directly on a Windows VM that is part of your CI/CD pipeline. AgentOS runs as an OS service with SYSTEM privileges.
+
+**When to use:** Your CI runner *is* the Windows machine you want to automate.
+
+**Install:** [Service Installer](/06-agent-os/installation) on the VM.
+
+```mermaid
+graph LR
+    A[Python SDK] -->|gRPC| B[AgentOS<br/>OS Service] -->  C[Desktop<br/>SYSTEM privileges]
+    subgraph Windows VM
+        direction LR
+        A
+        B
+        C
+    end
+```
+
+The Python SDK and AgentOS both run on the same VM. The OS service ensures automation continues even if no user is logged in or the RDP session disconnects.
+
+## Remote Windows VM
+
+Automate a Windows VM from a separate CI runner. The SDK runs on the CI runner and connects to AgentOS on the remote VM over the network.
+
+**When to use:** Your CI runner is Linux/macOS but you need to automate a Windows desktop. Or your pipeline orchestrates work across multiple machines.
+
+**Install:** [Service Installer](/06-agent-os/installation) on the remote VM.
+
+```mermaid
+graph LR
+    A[Python SDK] -->|gRPC<br/>over network| B[AgentOS<br/>OS Service]
+    B --> C[Desktop]
+    subgraph CI Runner
+        A
+    end
+    subgraph Remote Windows VM
+        B
+        C
+    end
+```
+
+The SDK connects to AgentOS over the network via gRPC. The OS service on the remote VM handles desktop control independently — RDP disconnects, logon screens, and headless operation are all supported.
+
+## macOS / Linux CI Runner
+
+Run automation on a macOS or Linux CI runner. AgentOS runs in standalone mode.
+
+**When to use:** Your CI pipeline runs on macOS or Linux and you want to automate the desktop on that same runner.
+
+**Install:** `pip install askui-agent-os`
+
+```mermaid
+graph LR
+    A[Python SDK] -->|gRPC| B[AgentOS<br/>Standalone] --> C[Desktop<br/>macOS / Linux]
+    subgraph CI Runner
+        direction LR
+        A
+        B
+        C
+    end
+```
+
+Same as local development — AgentOS runs in standalone mode alongside your test code. Ensure the CI runner has a display (real or virtual) available.
+
+## Mobile Device in CI
+
+Automate Android or iOS devices connected to your CI runner via USB.
+
+**When to use:** Mobile testing in your pipeline — the device is physically connected to the CI runner.
+
+**Install:** `pip install askui-agent-os` on the CI runner.
+
+```mermaid
+graph LR
+    A[Python SDK] -->|gRPC| B[AgentOS<br/>Standalone]
+    B -->|USB / ADB| D[Android Device]
+    B -->|USB / IDB| E[iOS Device]
+    subgraph CI Runner
+        A
+        B
+    end
+```
+
+AgentOS runs on the CI runner and communicates with the connected device over USB. The CI runner needs physical USB access to the device (or a USB-over-network solution).
