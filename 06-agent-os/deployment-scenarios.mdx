@@ -1,0 +1,34 @@
+---
+title: Deployment Scenarios
+description: Find the right AgentOS setup for your target — local dev, CI/CD, or multi-device.
+---
+
+Choose the deployment scenario that matches your environment. Each scenario explains the architecture, how the Python SDK connects to AgentOS, and which installer to use.
+
+<CardGroup cols={3}>
+  <Card title="Local Development" icon="laptop" href="/06-agent-os/deployment-local">
+    Build and test agents on your own machine — desktop, mobile, or external hardware.
+  </Card>
+  <Card title="CI/CD Integration" icon="gears" href="/06-agent-os/deployment-ci">
+    Run agents unattended in pipelines, on VMs, or with connected devices.
+  </Card>
+  <Card title="Multi-Device Setups" icon="diagram-project" href="/06-agent-os/deployment-multi-device">
+    Control multiple targets from a single agent or pipeline.
+  </Card>
+</CardGroup>
+
+## Quick Reference
+
+Not sure which scenario fits? Find your target below.
+
+| Your target | Scenario | Install method |
+| --- | --- | --- |
+| Windows / macOS / Linux desktop | [Local Development](/06-agent-os/deployment-local#desktop) | `pip install askui-agent-os` |
+| Android device (USB) | [Local Development](/06-agent-os/deployment-local#mobile-device) | `pip install askui-agent-os` |
+| iOS device (USB) | [Local Development](/06-agent-os/deployment-local#mobile-device) | `pip install askui-agent-os` (Planned) |
+| Locked-down device (no software install) | [Local Development](/06-agent-os/deployment-local#kvm-external-hardware) | `pip install askui-agent-os` |
+| Windows VM in CI/CD | [CI/CD Integration](/06-agent-os/deployment-ci#windows-vm) | [Service Installer](/06-agent-os/installation) |
+| Remote Windows VM from CI runner | [CI/CD Integration](/06-agent-os/deployment-ci#remote-windows-vm) | [Service Installer](/06-agent-os/installation) |
+| macOS / Linux CI runner | [CI/CD Integration](/06-agent-os/deployment-ci#macos--linux-ci-runner) | `pip install askui-agent-os` |
+| Mobile device in CI | [CI/CD Integration](/06-agent-os/deployment-ci#mobile-device-in-ci) | `pip install askui-agent-os` |
+| Multiple targets at once | [Multi-Device Setups](/06-agent-os/deployment-multi-device) | Depends on targets |

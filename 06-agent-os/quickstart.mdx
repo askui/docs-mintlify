@@ -1,0 +1,34 @@
+---
+title: Standalone Installer
+description: Install AgentOS in standalone mode via pip.
+---
+
+Install AgentOS locally in standalone mode. This is the fastest way to start building agents.
+
+## Prerequisites
+
+- Python 3.10 or higher
+
+## Install
+
+AgentOS is included as a dependency of the AskUI SDK. Most users already have it:
+
+```bash
+pip install askui-agent-os
+```
+
+<Note>If you installed the AskUI SDK, AgentOS is already available. You only need to install it separately if you want a specific version.</Note>
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card title="Runtime Modes" icon="toggle-on" href="/06-agent-os/runtime-modes">
+    Understand standalone vs OS service mode.
+  </Card>
+  <Card title="Control Modes" icon="desktop" href="/06-agent-os/control-modes">
+    Host Mode vs Companion Mode — how AgentOS connects to targets.
+  </Card>
+  <Card title="Deploy as OS Service" icon="server" href="/06-agent-os/installation">
+    Set up AgentOS as a Windows service for CI/CD and enterprise.
+  </Card>
+</CardGroup>

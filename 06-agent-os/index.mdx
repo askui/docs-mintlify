@@ -1,0 +1,72 @@
+---
+title: Overview
+description: What is AgentOS, why it exists, and the key concepts you need to know.
+---
+
+AgentOS is the runtime layer that gives AI agents direct control over a machine's operating system — keyboard, mouse, screen, and system-level functions. It sits between your agent code and the OS, handling the low-level interactions so your agents can focus on tasks.
+
+**Designed for everyone, not just developers.** AgentOS is built so that non-technical users can install it and get it running without writing code or configuring system internals. The UI installer guides you through setup, the SDK auto-detects the service, and sensible defaults mean you don't need to touch configuration files to get started.
+
+**Platform independent.** AgentOS runs on Windows, macOS, and Linux. In [Companion Mode](/06-agent-os/control-modes#companion-mode), it can also control Android devices, iOS devices (planned), and any machine reachable through hardware interfaces — regardless of what OS the target runs.
+
+## How It Works
+
+AgentOS operates in two **control modes**:
+
+- **[Host Mode](/06-agent-os/control-modes#host-mode)** — AgentOS runs directly on the target machine as software. It controls the desktop via OS-level APIs with full access to screenshots, input, windows, and processes.
+- **[Companion Mode](/06-agent-os/control-modes#companion-mode)** — AgentOS runs on an external device (e.g. Raspberry Pi) and controls the target machine through hardware interfaces (USB, Bluetooth, HDMI capture). No software installation on the target required.
+
+Both modes expose the same **capabilities** to your agents — the building blocks for screen reading, input simulation, window management, and more.
+
+## Why AgentOS?
+
+### vs. Open Source (PyAutoGUI, xdotool, etc.)
+
+Open-source desktop automation libraries run **in the user's session only**. That works for simple scripting but breaks down for real-world agent deployments:
+
+- **No service mode** — when the user logs off or the RDP session disconnects, automation stops.
+- **No logon screen control** — you can't automate Windows logon, lock screens, or UAC prompts.
+- **No CTRL+ALT+DEL** — Secure Attention Sequence requires a kernel-level driver. User-space tools cannot send it.
+- **No session resilience** — if an RDP session drops, the desktop locks and screenshots go black.
+- **User-level privileges only** — no access to SYSTEM-level operations.
+
+### vs. Building It Yourself
+
+You *can* build OS-level control from scratch. Here's what that involves:
+
+- **Windows service with session management** — running as SYSTEM, attaching to interactive sessions, handling session 0 isolation.
+- **Secure Attention Sequence driver** — a signed kernel driver to send CTRL+ALT+DEL.
+- **RDP session transfer** — detecting disconnects and keeping the desktop alive for screenshot capture.
+- **Logon screen interaction** — injecting input on the secure desktop.
+- **Cross-version compatibility** — handling differences across Windows 10, 11, Server 2019, 2022.
+
+This is months of kernel and systems-level engineering before you write a single line of agent logic.
+
+### Comparison
+
+| Capability | AgentOS | Open Source | DIY |
+| --- | --- | --- | --- |
+| OS service mode | Yes | No | Months of work |
+| RDP resilience | Yes | No | Kernel-level effort |
+| Logon screen control | Yes | No | Requires SAS driver |
+| Send CTRL+ALT+DEL | Yes | No | Requires signed kernel driver |
+| CI/CD headless | Yes | No | Custom service wrapper |
+| SYSTEM privileges | Yes | No | Manual service setup |
+| External device control | Yes | No | Custom hardware integration |
+| Industry protocols | Planned | No | Custom integration per protocol |
+| Maintained and versioned | Yes | Varies | On you |
+| Time to first automation | Minutes | Hours | Months |
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/06-agent-os/quickstart">
+    Get AgentOS running in under 5 minutes.
+  </Card>
+  <Card title="Control Modes" icon="desktop" href="/06-agent-os/control-modes">
+    Host Mode vs Companion Mode — how AgentOS connects to targets.
+  </Card>
+  <Card title="Deployment Scenarios" icon="sitemap" href="/06-agent-os/deployment-scenarios">
+    Find the right setup for your target.
+  </Card>
+</CardGroup>
