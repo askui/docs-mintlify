@@ -27,18 +27,18 @@ Control modes define **how AgentOS connects to the target machine**. There are t
 
 Both modes expose the same interface to your agent code — the SDK doesn't need to know which mode is active.
 
-[Learn more about Control Modes →](/06-agent-os/control-modes)
+[Learn more about Control Modes →](/06-agent-os/understanding/control-modes)
 
 ## Runtime Modes
 
 Runtime modes define **how AgentOS runs on the machine it's installed on**. There are two:
 
 - **Standalone** — AgentOS runs as a regular process in the user's session. Install via `pip install askui-agent-os`. Best for local development and testing.
-- **OS Service** — AgentOS runs as a Windows system service with SYSTEM privileges. Install via the [Service Installer](/06-agent-os/installation). Best for CI/CD, headless VMs, and enterprise deployments.
+- **OS Service** — AgentOS runs as a Windows system service with SYSTEM privileges. Install via the [Service](/06-agent-os/installation/service). Best for CI/CD, headless VMs, and enterprise deployments.
 
 The runtime mode only applies to Host Mode. Companion Mode always runs standalone on the companion device.
 
-[Learn more about Runtime Modes →](/06-agent-os/runtime-modes)
+[Learn more about Runtime Modes →](/06-agent-os/understanding/runtime-modes)
 
 ## Capabilities
 
@@ -55,7 +55,7 @@ What's available depends on the combination of control mode and runtime mode:
 | Logon screen & CTRL+ALT+DEL | — | Yes | — |
 | Mobile devices (ADB/IDB) | — | — | Yes |
 
-[See all Capabilities →](/06-agent-os/capabilities)
+[See all Capabilities →](/06-agent-os/understanding/capabilities)
 
 ## How They Fit Together
 
@@ -67,13 +67,13 @@ Think of it as two independent choices:
 Your agent code stays the same regardless of the combination. The SDK connects to AgentOS via gRPC, and AgentOS handles the rest.
 
 <CardGroup cols={3}>
-  <Card title="Control Modes" icon="desktop" href="/06-agent-os/control-modes">
+  <Card title="Control Modes" icon="desktop" href="/06-agent-os/understanding/control-modes">
     Host Mode vs Companion Mode.
   </Card>
-  <Card title="Runtime Modes" icon="toggle-on" href="/06-agent-os/runtime-modes">
+  <Card title="Runtime Modes" icon="toggle-on" href="/06-agent-os/understanding/runtime-modes">
     Standalone vs OS Service.
   </Card>
-  <Card title="Capabilities" icon="list-check" href="/06-agent-os/capabilities">
+  <Card title="Capabilities" icon="list-check" href="/06-agent-os/understanding/capabilities">
     Full capability matrix.
   </Card>
 </CardGroup>

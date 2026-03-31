@@ -32,7 +32,21 @@ The SDK auto-detects the service. If it falls back to standalone:
 
 ### RDP session drops break automation
 
-Ensure `SERVICE_TRANSFER_SESSION_ON_DISCONNECT` is set to `1` (default). This keeps the desktop alive when an RDP session disconnects. See [Configuration](/06-agent-os/configuration).
+Ensure `SERVICE_TRANSFER_SESSION_ON_DISCONNECT` is set to `1` (default). This keeps the desktop alive when an RDP session disconnects. See [Configuration](/06-agent-os/installation/silent).
+
+### Agent can't press CTRL+ALT+DEL
+
+The login/lock screen cannot be automated unless the local security policy allows services to simulate a Secure Attention Sequence (SAS). To enable it:
+
+1. Open the **Group Policy Editor** (`gpedit.msc`).
+2. Navigate to **Computer Configuration → Administrative Templates → Windows Components → Windows Logon Options**.
+3. Set **Disable or enable software Secure Attention Sequence** to **Enabled**.
+
+Also verify that `SERVICE_ENABLE_SAS` is set to `1` (default) in the [Silent installer parameters](/06-agent-os/installation/silent#parameters).
+
+<Warning>
+The service includes a `windows.forceSas` option that overrides group policies. This is **not recommended** as it may trigger system integrity checks. Configure the GPE policy instead.
+</Warning>
 
 ### Need to reinstall or remove
 

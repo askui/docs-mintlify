@@ -11,7 +11,7 @@ AgentOS runs directly **on the target machine** as software. It controls the des
 
 - Agent code and AgentOS run on the same machine (or connect over the network).
 - Full access to OS-level features: window management, process control, multi-display support.
-- Can run as a [Windows service](/06-agent-os/installation) for SYSTEM privileges, RDP resilience, and logon screen control.
+- Can run as a [Windows service](/06-agent-os/installation/service) for SYSTEM privileges, RDP resilience, and logon screen control.
 - Supports Windows, macOS, and Linux.
 
 **Best for:** Desktop automation, CI/CD pipelines, enterprise VMs.
@@ -36,21 +36,21 @@ AgentOS runs on an **external device** and controls the target through hardware 
 | **OS service support** | Yes (Windows) | No |
 | **Platform support** | Windows, macOS, Linux | Any device with USB/HDMI/Bluetooth; Android (ADB), iOS (IDB planned) |
 
-For a detailed breakdown of what each mode can do, see [Capabilities](/06-agent-os/capabilities).
+For a detailed breakdown of what each mode can do, see [Capabilities](/06-agent-os/understanding/capabilities).
 
 ## What's Next?
 
 <CardGroup cols={2}>
-  <Card title="Capabilities" icon="list-check" href="/06-agent-os/capabilities">
+  <Card title="Capabilities" icon="list-check" href="/06-agent-os/understanding/capabilities">
     Full list of capabilities by control mode.
   </Card>
-  <Card title="Deployment Scenarios" icon="sitemap" href="/06-agent-os/deployment-scenarios">
+  <Card title="Deployment" icon="sitemap" href="/06-agent-os/how-to-guides/deployment-scenarios">
     Find the right setup for your target.
   </Card>
-  <Card title="Runtime Modes" icon="toggle-on" href="/06-agent-os/runtime-modes">
+  <Card title="Runtime Modes" icon="toggle-on" href="/06-agent-os/understanding/runtime-modes">
     Standalone vs OS service — choose the right runtime.
   </Card>
-  <Card title="Install as Service" icon="server" href="/06-agent-os/installation">
+  <Card title="Install as Service" icon="server" href="/06-agent-os/installation/service">
     Set up AgentOS as a Windows service for CI/CD and enterprise.
   </Card>
 </CardGroup>

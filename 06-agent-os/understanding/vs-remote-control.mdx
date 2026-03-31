@@ -26,7 +26,7 @@ Remote control software requires an **active session**. When the connection drop
 - **RDP** locks the desktop — screenshots return a black screen, input stops working.
 - **VNC/TeamViewer/RustDesk** may keep the session alive, but there's no API to detect or recover from disconnects programmatically.
 
-AgentOS in [OS Service mode](/06-agent-os/runtime-modes#os-service) runs independently of any remote session. It transfers the session on disconnect and keeps automation running.
+AgentOS in [OS Service mode](/06-agent-os/understanding/runtime-modes#os-service) runs independently of any remote session. It transfers the session on disconnect and keeps automation running.
 
 ### Unreliable Input
 
@@ -57,7 +57,7 @@ Remote desktop protocols operate within the user session and cannot reach privil
 - **No Secure Attention Sequence** — CTRL+ALT+DEL cannot be sent programmatically through remote control software. It requires a kernel-level driver.
 - **No SYSTEM privileges** — remote sessions run as the logged-in user, not as SYSTEM.
 
-AgentOS as an OS service runs with SYSTEM privileges and includes a signed kernel driver for Secure Attention Sequence. Beyond access, AgentOS is building a dedicated security layer with application and filesystem whitelisting, audit logs, and network scanning — giving enterprises fine-grained control over what agents can and cannot do. See [Enterprise Features](/06-agent-os/enterprise) for details.
+AgentOS as an OS service runs with SYSTEM privileges and includes a signed kernel driver for Secure Attention Sequence. Beyond access, AgentOS is building a dedicated security layer with application and filesystem whitelisting, audit logs, and network scanning — giving enterprises fine-grained control over what agents can and cannot do. See [Enterprise Features](/06-agent-os/reference/enterprise) for details.
 
 ### Not Built for CI/CD
 
