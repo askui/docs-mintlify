@@ -5,7 +5,7 @@ description: The key concepts behind AgentOS — how control modes, runtime mode
 
 AgentOS has three core concepts that determine what it can do and how it connects to a target machine. While the concepts below involve OS-level services, kernel drivers, and hardware interfaces, **you don't need to understand these internals to use AgentOS**. The installer handles the complexity — non-technical users can set up AgentOS through a guided UI without touching configuration files or the command line.
 
-AgentOS is **platform independent** — it supports Windows, macOS, Linux, Android, and iOS (planned), so the same agent code works across operating systems.
+AgentOS is **platform independent** — it supports Windows, macOS, Linux, Android, and iOS Simulators (experimental), so the same agent code works across operating systems.
 
 ```mermaid
 graph TD
@@ -42,7 +42,7 @@ The runtime mode only applies to Host Mode. Companion Mode always runs standalon
 
 ## Capabilities
 
-Capabilities are the building blocks your agents use — screenshots, keyboard input, mouse control, window management, process management, and more.
+Capabilities are the building blocks your agents use — screenshots, keyboard input, mouse control, window management, process management, and more. All capabilities are optimized for **token cost efficiency**, **low latency**, and **cross-device communication**.
 
 What's available depends on the combination of control mode and runtime mode:
 
@@ -56,6 +56,38 @@ What's available depends on the combination of control mode and runtime mode:
 | Mobile devices (ADB/IDB) | — | — | Yes |
 
 [See all Capabilities →](/06-agent-os/understanding/capabilities)
+
+## Administrator Rights (Windows)
+
+AgentOS consists of two components: the **AgentOS Service** and the **Remote Device Controller** (internally called the *Execution Engine* in installer parameters). Each can run *elevated* (with administrator privileges) or *non-elevated* (standard user privileges). Elevation determines what your agent can interact with — Windows prevents non-elevated processes from sending input to elevated applications.
+
+<Note>
+**Session 0 vs Interactive Session**: Windows runs services in **Session 0** — an isolated, non-interactive session with no desktop. Users log in to **Interactive Sessions** (Session 1, 2, ...) where the desktop and GUI applications live. The AgentOS OS Service runs in Session 0 but attaches to the user's interactive session to control the desktop. This is why it can keep automating even when no user is logged in or an RDP session disconnects.
+</Note>
+
+### Standalone
+
+| Component | Default | Elevated |
+| --- | --- | --- |
+| AgentOS | Not elevated (recommended) | Run with admin rights |
+| Remote Device Controller | Not elevated (recommended) | Run with admin rights |
+
+In standalone mode, both components run with the privileges of the current user. This is sufficient for most development scenarios. Only run with admin rights if you need to automate applications that themselves run as Administrator.
+
+### OS Service
+
+| Component | Default | Configurable |
+| --- | --- | --- |
+| AgentOS | Elevated (SYSTEM) | — |
+| Remote Device Controller | Not elevated (recommended) | `SERVICE_EXECUTION_ENGINE_ELEVATED=1` |
+
+The OS Service always runs AgentOS as SYSTEM (elevated). The Remote Device Controller defaults to non-elevated, which is recommended. Enable elevation for the controller only if your agent needs to interact with applications running as Administrator.
+
+<Tip>
+We recommend the **principle of least privilege**: keep both components non-elevated unless your agent specifically needs to automate admin-level applications. Only elevate what is necessary.
+</Tip>
+
+If your agent can't interact with an elevated application, see [Troubleshooting](/06-agent-os/how-to-guides/troubleshooting#agent-cant-interact-with-apps-running-as-administrator).
 
 ## How They Fit Together
 
