@@ -3,6 +3,8 @@ title: Local Development
 description: Deploy AgentOS on your own machine for desktop, mobile, or hardware-based automation.
 ---
 
+import MobileSetup from '/snippets/agent-os-mobile-setup.mdx';
+
 You're building and testing agents on your own machine. In all local scenarios, you install AgentOS via `pip install askui-agent-os` and your Python SDK connects to the local AgentOS instance over gRPC.
 
 ## Desktop
@@ -11,7 +13,7 @@ Automate the desktop on your own Windows, macOS, or Linux machine. AgentOS runs 
 
 **When to use:** Day-to-day development, debugging, and interactive testing.
 
-**Install:** `pip install askui-agent-os` → [Standalone Installer](/06-agent-os/quickstart)
+**Install:** `pip install askui-agent-os` → [Standalone](/06-agent-os/installation/standalone)
 
 ```mermaid
 graph LR
@@ -32,7 +34,7 @@ Automate an Android or iOS device connected to your machine via USB.
 
 **When to use:** Mobile app testing, device interaction during development.
 
-**Install:** `pip install askui-agent-os` → [Standalone Installer](/06-agent-os/quickstart)
+**Install:** `pip install askui-agent-os` → [Standalone](/06-agent-os/installation/standalone)
 
 ```mermaid
 graph LR
@@ -49,13 +51,15 @@ AgentOS acts as a bridge: it receives commands from the SDK via gRPC and forward
 
 <Note>You only need one of ADB or IDB depending on your target device — both are shown for completeness.</Note>
 
+<MobileSetup />
+
 ## KVM (External Hardware)
 
 Control a target device through physical hardware connections — keyboard/mouse via USB or Bluetooth, screen capture via HDMI.
 
 **When to use:** The target device can't have software installed on it (locked-down environments, embedded systems, kiosks).
 
-**Install:** `pip install askui-agent-os` → [Standalone Installer](/06-agent-os/quickstart)
+**Install:** `pip install askui-agent-os` → [Standalone](/06-agent-os/installation/standalone)
 
 ```mermaid
 graph LR
@@ -68,4 +72,4 @@ graph LR
     end
 ```
 
-This is [Companion Mode](/06-agent-os/control-modes#companion-mode): AgentOS simulates keyboard and mouse input over USB or Bluetooth HID, and captures the target's screen via an HDMI-to-USB capture device. No software installation on the target is required.
+This is [Companion Mode](/06-agent-os/understanding/control-modes#companion-mode): AgentOS simulates keyboard and mouse input over USB or Bluetooth HID, and captures the target's screen via an HDMI-to-USB capture device. No software installation on the target is required.

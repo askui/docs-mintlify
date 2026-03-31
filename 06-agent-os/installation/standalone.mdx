@@ -1,0 +1,40 @@
+---
+title: Standalone (pip)
+description: Install AgentOS in standalone mode via pip.
+---
+
+Install AgentOS locally in standalone mode. This is the fastest way to start building agents.
+
+<Note>
+AgentOS is proprietary software, **free for non-commercial use**. For commercial deployments, a license is required. See [pricing](https://www.askui.com/enterprise) for details.
+</Note>
+
+## Prerequisites
+
+- **Python** 3.10 or newer
+- **Windows**, **macOS**, or **Linux** — see [System Requirements](/06-agent-os/reference/system-requirements) for supported versions.
+- **macOS only**: You must grant **Accessibility** and **Screen Recording** permissions to your terminal or IDE. Go to **System Settings → Privacy & Security** and enable both permissions for the application running AgentOS.
+
+## Install
+
+AgentOS is available on [PyPI](https://pypi.org/project/askui-agent-os/) and included as a dependency of the AskUI SDK. Most users already have it:
+
+```bash
+pip install askui-agent-os
+```
+
+<Note>If you installed the AskUI SDK, AgentOS is already available. You only need to install it separately if you want a specific version.</Note>
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card title="Runtime Modes" icon="toggle-on" href="/06-agent-os/understanding/runtime-modes">
+    Understand standalone vs OS service mode.
+  </Card>
+  <Card title="Control Modes" icon="desktop" href="/06-agent-os/understanding/control-modes">
+    Host Mode vs Companion Mode — how AgentOS connects to targets.
+  </Card>
+  <Card title="Deploy as OS Service" icon="server" href="/06-agent-os/installation/service">
+    Set up AgentOS as a Windows service for CI/CD and enterprise.
+  </Card>
+</CardGroup>

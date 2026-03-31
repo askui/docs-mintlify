@@ -1,0 +1,46 @@
+<AccordionGroup>
+  <Accordion title="Android: Setting up ADB">
+    ADB (Android Debug Bridge) must be available on your PATH. ADB works with both physical devices and emulators. See Google's guide on [running apps on the Android Emulator](https://developer.android.com/studio/run/emulator) to get started with emulators.
+
+    <Steps>
+      <Step title="Download SDK Platform Tools">
+        Download from [developer.android.com](https://developer.android.com/tools/releases/platform-tools) and unzip to a folder (e.g. `C:\platform-tools` or `~/platform-tools`).
+      </Step>
+      <Step title="Add to PATH">
+        Add the unzipped folder to your **User** or **System PATH** environment variable.
+      </Step>
+      <Step title="Verify">
+        Open a new terminal and run:
+        ```bash
+        adb version
+        ```
+        You should see the ADB version output.
+      </Step>
+    </Steps>
+  </Accordion>
+  <Accordion title="iOS: Setting up IDB (macOS only)">
+    iOS automation requires macOS with Xcode and the Facebook IDB companion. IDB currently only works with **iOS Simulators**, not physical devices. See Apple's guide on [running your app in Simulator](https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device) to get started.
+
+    <Steps>
+      <Step title="Install Xcode with iOS Simulators">
+        Install [Xcode](https://developer.apple.com/xcode/) from the App Store and configure iOS Simulators. Verify they are visible:
+        ```bash
+        xcrun xctrace list devices
+        ```
+      </Step>
+      <Step title="Install IDB companion">
+        ```bash
+        brew tap facebook/fb
+        brew install idb-companion
+        ```
+      </Step>
+      <Step title="Verify">
+        Open a new terminal and run:
+        ```bash
+        idb_companion --list 1
+        ```
+        You should see your available simulators or devices listed.
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>

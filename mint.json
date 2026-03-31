@@ -39,7 +39,7 @@
       "url": "04-reference"
     },
     {
-      "name": "Agent OS",
+      "name": "AgentOS",
       "url": "06-agent-os"
     }
   ],
@@ -484,16 +484,16 @@
       ]
     },
     {
-      "group": "Agent OS",
+      "group": "AgentOS",
       "pages": [
         "06-agent-os/index",
         {
           "group": "Installation",
           "icon": "rocket",
           "pages": [
-            "06-agent-os/quickstart",
-            "06-agent-os/installation",
-            "06-agent-os/configuration"
+            "06-agent-os/installation/standalone",
+            "06-agent-os/installation/service",
+            "06-agent-os/installation/silent"
           ]
         },
         {
@@ -501,35 +501,52 @@
           "icon": "wrench",
           "pages": [
             {
-              "group": "Deployment Scenarios",
+              "group": "Deployment",
               "pages": [
-                "06-agent-os/deployment-scenarios",
-                "06-agent-os/deployment-local",
-                "06-agent-os/deployment-ci",
-                "06-agent-os/deployment-multi-device"
+                "06-agent-os/how-to-guides/deployment-scenarios",
+                "06-agent-os/how-to-guides/deployment-local",
+                "06-agent-os/how-to-guides/deployment-ci",
+                "06-agent-os/how-to-guides/deployment-multi-device"
               ]
             },
-            "06-agent-os/troubleshooting"
+            "06-agent-os/how-to-guides/troubleshooting"
           ]
         },
         {
-          "group": "Understanding Agent OS",
+          "group": "Understanding AgentOS",
           "icon": "lightbulb",
           "pages": [
-            "06-agent-os/concepts",
-            "06-agent-os/capabilities",
-            "06-agent-os/runtime-modes",
-            "06-agent-os/control-modes",
-            "06-agent-os/vs-remote-control"
+            "06-agent-os/understanding/concepts",
+            "06-agent-os/understanding/capabilities",
+            "06-agent-os/understanding/runtime-modes",
+            "06-agent-os/understanding/control-modes",
+            "06-agent-os/understanding/vs-remote-control"
           ]
         },
         {
           "group": "Reference",
           "pages": [
-            "06-agent-os/enterprise"
+            "06-agent-os/reference/system-requirements",
+            "06-agent-os/reference/enterprise"
           ]
         },
-        "06-agent-os/release-notes"
+        {
+          "group": "Release Notes",
+          "pages": [
+            {
+              "group": "Standalone (pip)",
+              "pages": [
+                "06-agent-os/release-notes/pypi-history"
+              ]
+            },
+            {
+              "group": "OS Service (exe)",
+              "pages": [
+                "06-agent-os/release-notes/release-notes"
+              ]
+            }
+          ]
+        }
       ]
     }
   ],
