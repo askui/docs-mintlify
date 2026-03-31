@@ -17,23 +17,6 @@ Use these for troubleshooting startup, crash, or connectivity issues.
 
 ## Common Issues
 
-### Service won't start
-
-1. Check the logs at the path above for error details.
-2. Verify the install completed successfully — look for errors in `installer.log` if you used `/l*vx installer.log` during installation.
-3. Ensure no other process is using the configured ports (default: `26000` for service, `23000` for execution engine).
-
-### SDK still uses standalone mode
-
-The SDK auto-detects the service. If it falls back to standalone:
-
-1. Verify the service is running in **Windows Services** (`services.msc`).
-2. Check that the service port (default `26000`) is reachable.
-
-### RDP session drops break automation
-
-Ensure `SERVICE_TRANSFER_SESSION_ON_DISCONNECT` is set to `1` (default). This keeps the desktop alive when an RDP session disconnects. See [Configuration](/06-agent-os/installation/silent).
-
 ### Agent can't press CTRL+ALT+DEL
 
 The login/lock screen cannot be automated unless the local security policy allows services to simulate a Secure Attention Sequence (SAS). To enable it:
@@ -46,6 +29,19 @@ Also verify that `SERVICE_ENABLE_SAS` is set to `1` (default) in the [Silent ins
 
 <Warning>
 The service includes a `windows.forceSas` option that overrides group policies. This is **not recommended** as it may trigger system integrity checks. Configure the GPE policy instead.
+</Warning>
+
+### Agent can't interact with apps running as Administrator
+
+Windows prevents non-elevated processes from sending input to elevated (Run as Administrator) applications. If your agent can't click or type into an app running as Administrator, you need to start the Remote Device Controller in elevated mode.
+
+To enable elevated mode:
+
+- **Service Installer (GUI)**: Open **Windows Add/Remove Programs**, find AskUI AgentOS, click **Modify**, and enable the elevated execution engine option. Alternatively, reinstall AgentOS with the option enabled.
+- **Silent Installer**: Set `SERVICE_EXECUTION_ENGINE_ELEVATED` to `1` — see [Silent installer parameters](/06-agent-os/installation/silent#parameters).
+
+<Warning>
+Running the execution engine elevated grants it higher privileges. Only enable this when you need to automate applications that run as Administrator.
 </Warning>
 
 ### Need to reinstall or remove

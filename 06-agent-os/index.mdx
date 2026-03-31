@@ -7,7 +7,7 @@ AgentOS is the runtime layer that gives AI agents direct control over a machine'
 
 **Designed for everyone, not just developers.** AgentOS is built so that non-technical users can install it and get it running without writing code or configuring system internals. The UI installer guides you through setup, the SDK auto-detects the service, and sensible defaults mean you don't need to touch configuration files to get started.
 
-**Platform independent.** AgentOS runs on Windows, macOS, and Linux. In [Companion Mode](/06-agent-os/understanding/control-modes#companion-mode), it can also control Android devices, iOS devices (planned), and any machine reachable through hardware interfaces — regardless of what OS the target runs.
+**Platform independent.** AgentOS runs on Windows, macOS, and Linux. In [Companion Mode](/06-agent-os/understanding/control-modes#companion-mode), it can also control Android devices, iOS Simulators (experimental), and any machine reachable through hardware interfaces — regardless of what OS the target runs.
 
 ## How It Works
 
@@ -20,55 +20,18 @@ Both modes expose the same **capabilities** to your agents — the building bloc
 
 ## Why AgentOS?
 
-Building a Computer Use Agent (CUA) proof-of-concept is straightforward — a few scripts with PyAutoGUI or xdotool and you have a demo running in minutes. But getting it to **production** is a different story. The gap between "works on my machine" and "runs reliably at scale" is where most teams get stuck. Especially CI/CD integration becomes a struggle — VMs start at the logon screen, automation requires an interactive user session, and OS security restrictions block input injection from non-interactive processes. Solving this means dealing with session management, login automation, and privilege escalation before your agent can even begin its work.
+Building a Computer Use Agent (CUA) proof-of-concept is straightforward — a few scripts with PyAutoGUI or xdotool and you have a demo running in minutes. But getting it to **production** is a different story. The gap between "works on my machine" and "runs reliably at scale" is where most teams get stuck. CI/CD integration is where it gets especially painful — VMs start at the logon screen, automation requires an interactive user session, and OS security restrictions block input injection from non-interactive processes. Solving this means dealing with session management, login automation, and privilege escalation before your agent can even begin its work.
 
-### vs. Open Source (PyAutoGUI, xdotool, etc.)
+See our detailed comparisons for more:
 
-Open-source desktop automation libraries run **in the user's session only**. That works for simple scripting but breaks down for real-world agent deployments:
-
-- **No service mode** — when the user logs off or the RDP session disconnects, automation stops.
-- **No logon screen control** — you can't automate Windows logon, lock screens, or UAC prompts.
-- **No CTRL+ALT+DEL** — Secure Attention Sequence requires a kernel-level driver. User-space tools cannot send it.
-- **No session resilience** — if an RDP session drops, the desktop locks and screenshots go black.
-- **User-level privileges only** — no access to SYSTEM-level operations.
-- **Broken coordinate mapping** — mouse coordinates, screenshot pixels, and OS display scaling (DPI) use different coordinate systems. Open-source tools don't unify them, so clicks land in the wrong place on scaled or multi-monitor setups.
-- **US ASCII only** — most libraries only support US keyboard layouts. Dead keys, compose sequences, non-Latin characters, and layout-dependent keys either fail silently or produce wrong input.
-- **Hardware-dependent key events** — connecting or disconnecting external keyboards changes how the OS reports key events. Open-source tools don't account for this, leading to missed or misinterpreted key presses.
-- **No display change recovery** — when displays are connected, disconnected, or change resolution, the desktop layout shifts. Open-source tools don't detect or recover from this, causing automation to break silently.
-
-### vs. Building It Yourself
-
-You *can* build OS-level control from scratch. Here's what that involves:
-
-- **Windows service with session management** — running as SYSTEM, attaching to interactive sessions, handling session 0 isolation.
-- **Secure Attention Sequence driver** — a signed kernel driver to send CTRL+ALT+DEL.
-- **RDP session transfer** — detecting disconnects and keeping the desktop alive for screenshot capture.
-- **Logon screen interaction** — injecting input on the secure desktop.
-- **Cross-version compatibility** — handling differences across Windows 10, 11, Server 2019, 2022.
-- **Coordinate system unification** — mouse coordinates, screenshot pixel coordinates, and OS display scaling (DPI) each use different coordinate systems. You need to map between them so that a click lands exactly where the agent sees it on the screenshot, across all resolutions and scaling factors.
-- **Keyboard input handling** — OS-level key events change depending on connected hardware (e.g. plugging in an external keyboard can alter scan codes and event routing). You also need to support all keys across all keyboard layouts — not just US ASCII — including dead keys, compose sequences, and Unicode characters that don't exist on a standard US keyboard.
-- **Display connect/disconnect handling** — monitors get plugged in, unplugged, or change resolution at runtime. You need to detect these events, update your coordinate mapping, and recover the automation session without losing state.
-
-This is months of kernel and systems-level engineering before you write a single line of agent logic.
-
-<Tip>
-Ask yourself: do you really want your engineers debugging why a click lands 10 pixels off on a 150% DPI display, or why a key press gets swallowed when a second keyboard is connected? Every hour spent on platform-specific input quirks is an hour not spent on your agent's actual logic. AgentOS handles the OS layer so your team can focus on solving your business problem with your agent.
-</Tip>
-
-### Comparison
-
-| Capability | AgentOS | Open Source | DIY |
-| --- | --- | --- | --- |
-| OS service mode | Yes | No | Months of work |
-| RDP resilience | Yes | No | Kernel-level effort |
-| Logon screen control | Yes | No | Requires SAS driver |
-| Send CTRL+ALT+DEL | Yes | No | Requires signed kernel driver |
-| CI/CD headless | Yes | No | Custom service wrapper |
-| SYSTEM privileges | Yes | No | Manual service setup |
-| External device control | Yes | No | Custom hardware integration |
-| Industry protocols | Planned | No | Custom integration per protocol |
-| Maintained and versioned | Yes | Varies | On you |
-| Time to first automation | Minutes | Hours | Months |
+<CardGroup cols={2}>
+  <Card title="vs Automation Libraries" icon="code" href="/06-agent-os/understanding/comparison/vs-automation-libs">
+    PyAutoGUI, RobotJS, xdotool, and why they fall short in production.
+  </Card>
+  <Card title="vs Remote Control Software" icon="display" href="/06-agent-os/understanding/comparison/vs-remote-control">
+    RDP, TeamViewer, VNC, RustDesk — built for humans, not agents.
+  </Card>
+</CardGroup>
 
 ## What's Next?
 

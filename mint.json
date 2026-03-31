@@ -520,7 +520,13 @@
             "06-agent-os/understanding/capabilities",
             "06-agent-os/understanding/runtime-modes",
             "06-agent-os/understanding/control-modes",
-            "06-agent-os/understanding/vs-remote-control"
+            {
+              "group": "Comparison",
+              "pages": [
+                "06-agent-os/understanding/comparison/vs-automation-libs",
+                "06-agent-os/understanding/comparison/vs-remote-control"
+              ]
+            }
           ]
         },
         {

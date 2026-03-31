@@ -1,0 +1,68 @@
+---
+title: AgentOS vs Automation Libraries
+description: How AgentOS differs from PyAutoGUI, RobotJS, xdotool, and other open-source automation tools.
+---
+
+Open-source desktop automation libraries like PyAutoGUI, RobotJS, xdotool, and similar tools let you script mouse clicks, key presses, and screenshots. They work well for simple scripting but break down when you move to production-grade agent deployments.
+
+## The Problem
+
+These libraries run **in the user's session only**. That means:
+
+- **No service mode** — when the user logs off or the RDP session disconnects, automation stops.
+- **No logon screen control** — you can't automate Windows logon, lock screens, or UAC prompts.
+- **No CTRL+ALT+DEL** — Secure Attention Sequence requires a kernel-level driver. User-space tools cannot send it.
+- **No session resilience** — if an RDP session drops, the desktop locks and screenshots go black.
+- **User-level privileges only** — no access to SYSTEM-level operations.
+- **No multi-display support** — most libraries only see the primary monitor. Automating across multiple displays requires manual coordinate offsets and per-display screenshot stitching.
+- **Wrong mouse-image coordinate system** — mouse coordinates and screenshot pixel coordinates use different coordinate systems, especially with DPI scaling. A position on the screenshot doesn't map 1:1 to where the mouse actually clicks, causing agents to miss their targets.
+- **US ASCII only** — most libraries only support US keyboard layouts. Dead keys, compose sequences, non-Latin characters, and layout-dependent keys either fail silently or produce wrong input.
+- **Hardware-dependent key events** — connecting or disconnecting external keyboards changes how the OS reports key events. These tools don't account for this, leading to missed or misinterpreted key presses.
+- **No display change recovery** — when displays are connected, disconnected, or change resolution, the desktop layout shifts. These tools don't detect or recover from this, causing automation to break silently.
+
+## Library Comparison
+
+| Library | Language | Platform | Limitations |
+| --- | --- | --- | --- |
+| [PyAutoGUI](https://pyautogui.readthedocs.io/) | Python | Windows, macOS, Linux | No service mode, no DPI handling, US keyboard only, no CI/CD support |
+| [RobotJS](http://robotjs.io/) | Node.js | Windows, macOS, Linux | Unmaintained, no Unicode support, no multi-monitor, no service mode |
+| [xdotool](https://github.com/jordansissel/xdotool) | CLI | Linux (X11 only) | Linux only, no Wayland, no service mode, no DPI handling |
+| [pynput](https://pynput.readthedocs.io/) | Python | Windows, macOS, Linux | Listener-focused, limited input simulation, no service mode |
+| [AutoIt](https://www.autoitscript.com/) | AutoIt | Windows only | Windows only, no service mode, no cross-platform |
+
+## AgentOS vs Automation Libraries
+
+| Capability | AgentOS | Automation Libraries |
+| --- | --- | --- |
+| OS service mode | Yes | No |
+| RDP resilience | Yes | No |
+| Logon screen control | Yes | No |
+| Send CTRL+ALT+DEL | Yes | No |
+| CI/CD headless | Yes | No |
+| SYSTEM privileges | Yes | No |
+| Unified coordinate system | Yes | No |
+| All keyboard layouts & Unicode | Yes | No (US ASCII mostly) |
+| Display connect/disconnect recovery | Yes | No |
+| External device control | Yes | No |
+| Cross-platform (Windows, macOS, Linux) | Yes | Varies |
+| Mobile devices (Android, iOS) | Yes | No |
+| Optimized for token costs & latency | Yes | Not designed for AI agents |
+
+## vs. Building It Yourself
+
+You *can* build OS-level control from scratch. Here's what that involves:
+
+- **Windows service with session management** — running as SYSTEM, attaching to interactive sessions, handling session 0 isolation.
+- **Secure Attention Sequence driver** — a signed kernel driver to send CTRL+ALT+DEL.
+- **RDP session transfer** — detecting disconnects and keeping the desktop alive for screenshot capture.
+- **Logon screen interaction** — injecting input on the secure desktop.
+- **Cross-version compatibility** — handling differences across Windows 10, 11, Server 2019, 2022.
+- **Coordinate system unification** — mouse coordinates, screenshot pixel coordinates, and OS display scaling (DPI) each use different coordinate systems. You need to map between them so that a click lands exactly where the agent sees it on the screenshot, across all resolutions and scaling factors.
+- **Keyboard input handling** — OS-level key events change depending on connected hardware (e.g. plugging in an external keyboard can alter scan codes and event routing). You also need to support all keys across all keyboard layouts — not just US ASCII — including dead keys, compose sequences, and Unicode characters that don't exist on a standard US keyboard.
+- **Display connect/disconnect handling** — monitors get plugged in, unplugged, or change resolution at runtime. You need to detect these events, update your coordinate mapping, and recover the automation session without losing state.
+
+This is months of kernel and systems-level engineering before you write a single line of agent logic.
+
+<Tip>
+Ask yourself: do you really want your engineers debugging why a click lands 10 pixels off on a 150% DPI display, or why a key press gets swallowed when a second keyboard is connected? Every hour spent on platform-specific input quirks is an hour not spent solving your business problem with your agent. AgentOS handles the OS layer so your team can focus on what matters.
+</Tip>
