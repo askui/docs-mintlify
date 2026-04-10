@@ -1,73 +1,82 @@
 ---
 title: "Welcome to AskUI"
-description: "Build AI agents that see and control desktop and mobile devices — no prior technical experience needed."
+description: "Build AI agents that control desktop and mobile devices"
 ---
 
-Set up an AI agent that sees and controls your computer screen. This guide takes you from zero to a running agent in about 30 minutes.
+Welcome to the AskUI documentation. This guide will help you understand what AskUI does and how to use it.
 
-## Getting Started
-
-<CardGroup cols={3}>
-  <Card
-    title="Installation & Setup"
-    icon="rocket"
-    href="get-started/installation-setup"
-  >
-    Open your terminal, install tools, clone the project, and configure credentials.
-  </Card>
-
-  <Card
-    title="Understanding AskUI"
-    icon="lightbulb"
-    href="get-started/understanding-askui"
-  >
-    How AI agents work, the demo project structure, and how to write tasks.
-  </Card>
-
-  <Card
-    title="Running the Agent"
-    icon="play"
-    href="get-started/running-the-agent"
-  >
-    Run the demo tasks, explore the output, and create your own automation.
-  </Card>
-</CardGroup>
+<img
+  alt="Hero Dark"
+  src="03-explanation/01-foundations/images/agent-os.png"
+/>
 
 ## What is AskUI?
 
-AskUI enables AI to control your desktop and mobile devices. We make Windows, macOS, Linux, Android and iOS accessible for AI agents by finding elements on screen and allowing [AgentOS](/06-agent-os/index) to execute agent commands on operating systems.
+AskUI enables AI to control your desktop and mobile devices. We make Windows, MacOS, Linux, Android and iOS accessible for AI agents by finding elements on screen and allowing our Agent OS execute agent commands on operating systems.
 
-Three components work together:
+## Documentation Structure
 
-- **[AgentOS](/06-agent-os/index)** — the runtime on your machine that captures screenshots, moves the mouse, and types on the keyboard.
-- **A vision-language model** (e.g. Claude Sonnet) — the AI that looks at each screenshot and decides what to do next.
-- **The [AskUI SDK](https://github.com/askui/python-sdk)** — the Python library that orchestrates the agent loop.
+Our documentation is organized into four main sections:
 
-## Resources
+<CardGroup cols={2}>
+  <Card 
+    title="Tutorials" 
+    icon="graduation-cap" 
+    href="01-tutorials/tutorials-overview"
+  >
+    **Learn by doing**. Step-by-step lessons that take you from installation to your first working AI agent. Start here if you're new to AskUI.
+  </Card>
+  
+  <Card 
+    title="How-to Guides" 
+    icon="wrench" 
+    href="02-how-to-guides/how-to-overview"
+  >
+    **Solve specific problems**. Practical recipes for common tasks like setting up integrations, managing accounts, or troubleshooting issues.
+  </Card>
+  
+  <Card 
+    title="Understanding AskUI" 
+    icon="lightbulb" 
+    href="03-explanation/explanation-overview"
+  >
+    **Learn concepts**. Explanations of how AskUI works, core concepts, and the AI models that power our platform.
+  </Card>
+  
+  <Card 
+    title="Reference" 
+    icon="code" 
+    href="04-reference"
+  >
+    **Look up details**. Complete technical reference for all APIs, commands, and configuration options.
+  </Card>
+</CardGroup>
+
+## Quick Links
 
 <CardGroup cols={3}>
-  <Card
-    title="AskUI SDK (Python)"
-    icon="python"
-    href="https://github.com/askui/python-sdk"
+  <Card 
+    title="Quickstart Tutorial" 
+    icon="rocket" 
+    href="01-tutorials/01-your-first-agent"
   >
-    Full API reference and technical docs on GitHub
+    Get started in 5 minutes
   </Card>
-
-  <Card
-    title="AgentOS"
-    icon="server"
-    href="06-agent-os/index"
+  
+  <Card 
+    title="Python Vision Agent" 
+    icon="python" 
+    href="04-reference/01-agent-frameworks/02-python/02-vision-agent-api/agent"
   >
-    Installation, deployment, and runtime documentation
+    Build agents with Python
   </Card>
-
-  <Card
-    title="Support"
-    icon="circle-question"
-    href="mailto:support@askui.com"
+  
+  <Card 
+    title="FAQ" 
+    icon="circle-question" 
+    href="03-explanation/04-faq/faq"
   >
-    Email us at support@askui.com
+    Common questions answered
   </Card>
 </CardGroup>
 
