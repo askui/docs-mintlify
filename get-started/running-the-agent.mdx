@@ -1,0 +1,326 @@
+---
+title: "Running the Agent"
+description: "Run the demo tasks, explore the output, then create and run your own task from scratch."
+---
+
+## 3.1 Run the Demo Tests
+
+Open your terminal and navigate to the project folder:
+
+```bash
+cd ~/Desktop/askui-projects/AskUI-Demo-Project
+```
+
+Now run the agent:
+
+<Tabs>
+  <Tab title="Windows">
+    ```bash
+    python main.py
+    ```
+  </Tab>
+  <Tab title="macOS / Linux">
+    ```bash
+    python3 main.py
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+**Hands off.** Don't touch your mouse or keyboard while the agent is running. It needs full control of both to perform its tasks. You'll see it opening applications, clicking buttons, typing text, and taking screenshots. Just watch.
+
+If you need to keep using your computer while the agent runs, see **section 3.4.4 — Background Automation** below.
+</Warning>
+
+When the agent finishes all its tests, it returns control to your terminal.
+
+---
+
+## 3.2 Explore the Output
+
+The agent saved everything it did into the `agent_workspace/` folder. You can explore this two ways:
+
+### From your file explorer
+
+Open the `AskUI-Demo-Project` folder on your Desktop. You'll see a new folder called `agent_workspace`. Open it. Inside, there's a folder whose name is the date and time of the run (e.g. `2026-03-31_14-30-00`). This folder contains:
+
+- A **subfolder for each test** the agent ran
+- Inside each subfolder: a **report** (.md file) describing what the agent did and whether each step passed or failed
+- **Screenshots** (.png files) captured during the run
+- An **HTML report** you can open in your browser to see a nicely formatted summary of the whole run
+
+### From your terminal
+
+Type `ls agent_workspace` and press Enter. You'll see the run folder listed. You can open any report file and read through what the agent wrote — this is the output it produced on its own.
+
+---
+
+## 3.3 Create and Run Your Own Task
+
+Now create your own task. You'll make a new test folder, write a task file, and run it.
+
+<Steps>
+  <Step title="Create a new test folder">
+    ```bash
+    mkdir tests/my-first-task
+    ```
+  </Step>
+  <Step title="Create a task file">
+    Open a text editor and write something like this:
+
+    ```markdown
+    ## Objective
+    Open the web browser and search for "AskUI documentation".
+
+    ## Steps
+    1. Open the default web browser on this machine.
+    2. Click on the address bar or search bar.
+    3. Type "AskUI documentation" and press Enter.
+    4. Wait for the results to load.
+    5. Verify that search results are displayed on screen.
+
+    ## Deliverables
+    A report confirming the search was performed successfully.
+    ```
+  </Step>
+  <Step title="Save the file">
+    Save the file as `search_test.md` inside the `tests/my-first-task/` folder.
+  </Step>
+</Steps>
+
+### Run your task
+
+<Tabs>
+  <Tab title="Windows">
+    **Run all tasks in your new folder:**
+    ```bash
+    python main.py tests/my-first-task
+    ```
+
+    **Run a single task file:**
+    ```bash
+    python main.py tests/my-first-task/search_test.md
+    ```
+
+    **Run everything:**
+    ```bash
+    python main.py
+    ```
+  </Tab>
+  <Tab title="macOS / Linux">
+    **Run all tasks in your new folder:**
+    ```bash
+    python3 main.py tests/my-first-task
+    ```
+
+    **Run a single task file:**
+    ```bash
+    python3 main.py tests/my-first-task/search_test.md
+    ```
+
+    **Run everything:**
+    ```bash
+    python3 main.py
+    ```
+  </Tab>
+</Tabs>
+
+<Info>
+This is the fundamental pattern of AI agent automation: you define *what* you want accomplished in a task file, and the agent figures out *how* to do it. You don't write click coordinates or any technical code. You describe the goal in plain language, and the agent figures out where to click and what to type — the same way a human would.
+</Info>
+
+---
+
+## 3.4 Configuring Your Agent
+
+Now that you've run the demo and created your own task, here are the configuration options you'll reach for as you move beyond the basics.
+
+### 3.4.1 — Target display
+
+By default, the agent controls your primary monitor. If you have more than one monitor and want the agent to work on a different one, edit `main.py` directly — there is no command-line flag for this.
+
+<Steps>
+  <Step title="Open main.py in your text editor">
+    <Tabs>
+      <Tab title="Windows">
+        ```bash
+        notepad main.py
+        ```
+      </Tab>
+      <Tab title="macOS">
+        ```bash
+        open -e main.py
+        ```
+      </Tab>
+      <Tab title="Linux">
+        ```bash
+        nano main.py
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Add the display parameter">
+    Find the `ComputerAgent(` initialization and add a `display` parameter:
+
+    ```python
+    agent = ComputerAgent(
+        display=2,  # 1 = primary monitor, 2 = second, etc.
+        act_tools=act_tools,
+        reporters=[...],
+    )
+    ```
+
+    The `[...]` means "the rest of the code that's already there" — don't delete it. Only add the `display=2,` line.
+  </Step>
+  <Step title="Save, close, and run as usual">
+    The agent will now control the display you specified.
+  </Step>
+</Steps>
+
+### 3.4.2 — Choosing a model
+
+The "Decide" step is handled by a **vision model** that looks at screenshots and decides what to do. The demo project uses Claude by default, activated by the `ANTHROPIC_API_KEY` you set in your `.env` file. If no key is set, it falls back to AskUI's built-in model.
+
+| Model | Tradeoff | Best for |
+| --- | --- | --- |
+| `claude-sonnet-4-6` | Balanced speed and accuracy | Default choice for most tasks |
+| `claude-opus-4-6` | Most capable, slower | Complex multi-step tasks, or when the screen layout is unusual |
+| `claude-haiku-4-5-20251001` | Fastest, less capable | Simple, repetitive tasks where speed matters |
+
+### 3.4.3 — Caching
+
+Every time the agent takes a screenshot and sends it to the AI, that's a request over the internet — which costs time and money. AskUI can **record** the agent's action sequence during a run, then **replay** it later without contacting the AI. This is especially useful for regression testing: record the flow once, replay it as many times as you like.
+
+| Strategy | What it does | When to use it |
+| --- | --- | --- |
+| `auto` (default) | Uses an existing recording if one exists. If not, runs the AI and saves a recording for next time. | Leave as default for everyday use — runs get faster automatically. |
+| `record` | Always runs the AI and saves a fresh recording. | Use after the app's interface has changed. |
+| `execute` | Only replays from a saved recording. Fails if no recording exists. | Use in pipelines where no AI requests should be made. |
+| `none` | Disables caching entirely. | Use when developing a new task so old recordings don't interfere. |
+
+You don't need to do anything to activate caching — `auto` is already the default. The commands below are for when you want to change that behaviour.
+
+#### Re-record a flow from scratch
+
+Use this after the app you're testing has changed its interface.
+
+<Tabs>
+  <Tab title="Windows">
+    ```bash
+    python main.py --cache-strategy record
+    ```
+  </Tab>
+  <Tab title="macOS / Linux">
+    ```bash
+    python3 main.py --cache-strategy record
+    ```
+  </Tab>
+</Tabs>
+
+#### Replay only — no AI requests
+
+Use this for strict guarantees that nothing is sent to the AI. Useful in CI environments.
+
+<Tabs>
+  <Tab title="Windows">
+    ```bash
+    python main.py --cache-strategy execute
+    ```
+  </Tab>
+  <Tab title="macOS / Linux">
+    ```bash
+    python3 main.py --cache-strategy execute
+    ```
+  </Tab>
+</Tabs>
+
+#### Turn off caching entirely
+
+Use this while writing or debugging a new task.
+
+<Tabs>
+  <Tab title="Windows">
+    ```bash
+    python main.py --cache-strategy none
+    ```
+  </Tab>
+  <Tab title="macOS / Linux">
+    ```bash
+    python3 main.py --cache-strategy none
+    ```
+  </Tab>
+</Tabs>
+
+For the full caching documentation, see the [AskUI Caching Guide](https://github.com/askui/python-sdk/blob/main/docs/06_caching.md).
+
+### 3.4.4 — Background automation
+
+When you ran the agent in section 3.1, you had to keep your hands off your mouse and keyboard the whole time — the agent literally takes control of them. If you need to use your computer while the agent runs, you have two options:
+
+#### Option A: Run the agent on a separate machine (simplest)
+
+Run the agent on a completely different computer — or inside a **virtual machine** (a pretend computer that runs as a window inside your real one). The agent takes over the virtual machine's screen and mouse; your real desktop stays completely free.
+
+<Steps>
+  <Step title="Download and install VirtualBox">
+    Get it from [virtualbox.org](https://www.virtualbox.org/wiki/Downloads).
+  </Step>
+  <Step title="Create a new virtual machine">
+    Open VirtualBox, click **New**, and follow the wizard. Give it at least 4 GB of RAM and 20 GB of disk space.
+  </Step>
+  <Step title="Install the operating system inside the VM">
+    You'll need an .iso file — freely available for Windows (microsoft.com) and Linux (your distribution's website).
+  </Step>
+  <Step title="Complete the full installation inside the VM">
+    Install Python, Git, clone the project, set up credentials, install the Suite.
+  </Step>
+  <Step title="Run the agent inside the VM">
+    It takes over the VM's screen — your real desktop stays free.
+  </Step>
+</Steps>
+
+#### Option B: Companion Mode
+
+If you need to automate a specific physical machine on a regular basis, AskUI supports **Companion Mode**, where a small separate device (like a Raspberry Pi) connects to the target machine through hardware cables. See section 3.4.5 for details.
+
+### 3.4.5 — Controlling a remote machine
+
+Everything so far uses **Host Mode** — AgentOS runs directly on the machine being automated. AskUI also supports **Companion Mode**, where AgentOS runs on a separate companion device and controls the target through hardware cables. No software needs to be installed on the target machine at all.
+
+This is designed for automating devices that can't have extra software installed — factory touchscreens, medical devices, industrial controllers, or locked-down machines.
+
+#### What you need for Companion Mode
+
+- A **companion device** — a Raspberry Pi 4 or later, or any spare laptop/desktop
+- An **HDMI capture card** — plugs into the companion via USB and receives the target's video output
+- A **USB cable** from the companion to the target — for sending keyboard and mouse input
+
+<Steps>
+  <Step title="Connect the hardware">
+    HDMI from target → capture card → companion via USB. Second USB cable from companion → target for input control.
+  </Step>
+  <Step title="Install AgentOS on the companion device">
+    Follow the [AgentOS installation guide](/06-agent-os/installation/standalone), using the installer for the companion's OS.
+  </Step>
+  <Step title="Start AgentOS on the companion in remote mode">
+    So it listens for commands over the network.
+  </Step>
+  <Step title="Point your scripts at the companion">
+    Specify its IP address when initializing the agent.
+  </Step>
+  <Step title="Run your tasks as normal">
+    Your Python scripts stay on your own machine — only AgentOS needs to run on the companion.
+  </Step>
+</Steps>
+
+<Info>
+The exact configuration parameters and connection settings depend on your hardware. The [AgentOS Control Modes documentation](/06-agent-os/understanding/control-modes) has step-by-step instructions for your configuration.
+</Info>
+
+---
+
+## Where to go next
+
+- **Write agent scripts directly in Python.** The [AskUI SDK on GitHub](https://github.com/askui/python-sdk) shows you how to call `agent.click()`, `agent.type()`, and `agent.act()` from your own Python code.
+- **Run the agent unattended on a server.** The [AgentOS documentation](/06-agent-os/index) covers installing AgentOS as a background service.
+- **Explore the full SDK reference.** See the [AskUI Python SDK documentation](https://github.com/askui/python-sdk) for the complete API reference.
