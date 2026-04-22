@@ -36,6 +36,10 @@ Automate a Windows VM from a separate CI runner. The SDK runs on the CI runner a
 
 **Install:** [Service](/06-agent-os/installation/service) on the remote VM.
 
+<Warning>
+  During installation, set **Connection Scope** to **Public (0.0.0.0)**. The default Private (127.0.0.1) only accepts local connections and will prevent the SDK from reaching AgentOS over the network.
+</Warning>
+
 ```mermaid
 graph LR
     A[Python SDK] -->|gRPC<br/>over network| B[AgentOS<br/>OS Service]
