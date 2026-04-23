@@ -1,0 +1,173 @@
+---
+title: "On-Premise Architecture"
+description: "Understand the organization-level data model and role-based access control for on-premise AskUI deployments"
+---
+
+## Overview
+
+On-premise deployments introduce an **Organization** layer above workspaces. Unlike the [SaaS model](/03-explanation/01-foundations/workspace-architecture) where any user can create workspaces self-service, on-premise deployments are centrally managed by an **Org Admin** who controls workspace provisioning and billing.
+
+## Data Model
+
+```mermaid
+erDiagram
+    USER {
+        string id PK "Identity Provider Subject ID"
+        string email
+        string name
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    ORGANIZATION {
+        uuid id PK
+        string name
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    ORG_MEMBERSHIP {
+        uuid id PK
+        string userId FK
+        uuid organizationId FK
+        OrgPrivilege privilege
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    WORKSPACE {
+        uuid id PK
+        uuid organizationId FK
+        string name "1-128 chars"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    WORKSPACE_MEMBERSHIP {
+        uuid id PK
+        string userId FK
+        uuid workspaceId FK
+        WorkspacePrivilege privilege
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    WORKSPACE_ACCESS_TOKEN {
+        uuid id PK
+        string name
+        string hash
+        datetime expires_at "nullable"
+        datetime created_at
+    }
+
+    USAGE_EVENT {
+        uuid workspaceId FK
+        datetime timestamp
+        string eventType
+    }
+
+    USER ||--o{ ORG_MEMBERSHIP : "belongs to"
+    ORGANIZATION ||--o{ ORG_MEMBERSHIP : "has"
+    ORGANIZATION ||--o{ WORKSPACE : "contains"
+    USER ||--o{ WORKSPACE_MEMBERSHIP : "is member via"
+    WORKSPACE ||--o{ WORKSPACE_MEMBERSHIP : "has"
+    WORKSPACE_MEMBERSHIP ||--o{ WORKSPACE_ACCESS_TOKEN : "owns"
+    WORKSPACE ||--o{ USAGE_EVENT : "tracks"
+```
+
+### Entities at a Glance
+
+| Entity | Purpose |
+| --- | --- |
+| **User** | Identity record managed by the customer's identity provider. |
+| **Organization** | Top-level tenant that groups workspaces, billing, and org-level users. |
+| **Org Membership** | Links a User to an Organization with the `ROLE_ORG_ADMIN` privilege. |
+| **Workspace** | Organisational container within an Organization for members, tokens, and usage. |
+| **Workspace Membership** | Links a User to a Workspace and carries the assigned workspace-level role. |
+| **Workspace Access Token** | Scoped credential tied to a specific membership (user + workspace pair). |
+| **Usage Event** | Consumption record associated with a workspace for billing purposes. |
+
+## Role Hierarchy
+
+On-premise adds the **Org Admin** role above the workspace-level roles. The Workspace Owner role has a reduced scope compared to the SaaS model — infrastructure-level permissions move up to the Org Admin.
+
+```mermaid
+graph TD
+    ORG_ADMIN["<b>Org Admin</b><br/>ROLE_ORG_ADMIN<br/><i>Organization level</i>"]
+    OWNER["<b>Workspace Owner</b><br/>ROLE_WORKSPACE_OWNER"]
+    ADMIN["<b>Workspace Admin</b><br/>ROLE_WORKSPACE_ADMIN"]
+    MEMBER["<b>Workspace Member</b><br/>ROLE_WORKSPACE_MEMBER"]
+
+    ORG_ADMIN -->|creates workspaces and assigns| OWNER
+    OWNER -->|includes all permissions of| ADMIN
+    ADMIN -->|includes all permissions of| MEMBER
+```
+
+## Permission Matrix
+
+### Organization Level
+
+| Capability | Org Admin |
+| --- | :---: |
+| Create workspaces | ✅ |
+| Delete workspaces | ✅ |
+| Assign Workspace Owners | ✅ |
+| Manage subscription & billing | ✅ |
+| View all workspaces in the organization | ✅ |
+
+### Workspace Level
+
+| Capability | Workspace Owner | Workspace Admin | Workspace Member |
+| --- | :---: | :---: | :---: |
+| Use platform functionality | ✅ | ✅ | ✅ |
+| View workspace resources | ✅ | ✅ | ✅ |
+| Manage workspace resources & settings | ✅ | ✅ | ❌ |
+| Invite / remove non-Owner members | ✅ | ✅ | ❌ |
+| Invite / remove Owners | ✅ | ❌ | ❌ |
+| Create workspaces | ❌ | ❌ | ❌ |
+| Delete workspaces | ❌ | ❌ | ❌ |
+| Manage subscription & billing | ❌ | ❌ | ❌ |
+
+<Note>
+A member's role **cannot be changed** after assignment. To change a role you must remove the member and re-invite them with the desired role.
+</Note>
+
+## SaaS vs On-Premise Comparison
+
+| Capability | SaaS (Workspace Owner) | On-Prem (Org Admin) | On-Prem (Workspace Owner) |
+| --- | :---: | :---: | :---: |
+| Create workspaces | ✅ self-service | ✅ | ❌ |
+| Delete workspaces | ✅ | ✅ | ❌ |
+| Manage billing | ✅ | ✅ | ❌ |
+| Assign Workspace Owners | — | ✅ | ❌ |
+| Invite members to workspace | ✅ | ✅ | ✅ |
+| Manage workspace resources | ✅ | ✅ | ✅ |
+
+## How Provisioning Works
+
+1. The **Org Admin** creates an Organization and becomes its administrator.
+2. The Org Admin **creates workspaces** within the Organization.
+3. The Org Admin **assigns a Workspace Owner** to each workspace, creating the first `WorkspaceMembership` with `ROLE_WORKSPACE_OWNER`.
+4. The Workspace Owner **invites members** (Admin or Member roles) to collaborate.
+5. Members create **Workspace Access Tokens** scoped to their membership for CI/CD and API access.
+
+```mermaid
+sequenceDiagram
+    participant OA as Org Admin
+    participant Org as Organization
+    participant WS as Workspace
+    participant WO as Workspace Owner
+    participant M as Member
+
+    OA->>Org: Creates Organization
+    OA->>WS: Creates Workspace
+    OA->>WO: Assigns as Workspace Owner
+    WO->>M: Invites as Workspace Member/Admin
+    M->>WS: Creates Access Token
+```
+
+## Next Steps
+
+- **[Workspace Architecture (SaaS)](/03-explanation/01-foundations/workspace-architecture)**: Compare with the SaaS data model and role concept
+- **[Members Management](/02-how-to-guides/01-account-management/02-members-management)**: Invite members, assign roles, and manage your team
+- **[Token Management](/02-how-to-guides/01-account-management/04-tokens)**: Create and manage access tokens
