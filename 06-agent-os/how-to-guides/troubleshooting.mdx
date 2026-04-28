@@ -7,15 +7,15 @@ description: Diagnose and fix common AgentOS issues.
 
 ## Logs
 
-The AgentOS Core Service and the Remote Device Controller are both spawned in the interactive user session. For troubleshooting, collect logs from **both** locations:
+The AskUI Core Service and the Remote Device Controller write to two separate locations. For troubleshooting, collect logs from **both**:
 
-**Interactive user session** (Core Service & Remote Device Controller):
+**Remote Device Controller** (runs in the interactive user session):
 
 ```
 %userprofile%\.askui\Logs
 ```
 
-**Service wrapper** (runs as SYSTEM):
+**AskUI Core Service** (runs as SYSTEM):
 
 ```
 C:\Windows\System32\config\systemprofile\.askui\logs
