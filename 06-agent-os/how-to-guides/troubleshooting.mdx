@@ -7,15 +7,30 @@ description: Diagnose and fix common AgentOS issues.
 
 ## Logs
 
-Service logs are stored at:
+The AskUI Core Service and the Remote Device Controller write to two separate locations. For troubleshooting, collect logs from **both**:
+
+**Remote Device Controller** (runs in the interactive user session):
+
+```
+%userprofile%\.askui\Logs
+```
+
+**AskUI Core Service** (runs as SYSTEM):
 
 ```
 C:\Windows\System32\config\systemprofile\.askui\logs
 ```
 
-Use these for troubleshooting startup, crash, or connectivity issues.
-
 ## Common Issues
+
+### Restart the AgentOS service
+
+Many issues are resolved by restarting the service. To restart it via Task Manager:
+
+1. Open **Task Manager** (`Ctrl+Shift+Esc`).
+2. Switch to the **Services** tab (the puzzle-piece icon).
+3. Search for **`AskuiCoreService`**.
+4. Right-click the entry and choose **Restart**.
 
 ### Agent can't press CTRL+ALT+DEL
 
@@ -43,6 +58,27 @@ To enable elevated mode:
 <Warning>
 Running the execution engine elevated grants it higher privileges. Only enable this when you need to automate applications that run as Administrator.
 </Warning>
+
+### `ipv4:127.0.0.1:23000 unavailable` in Standalone mode
+
+If the SDK fails to connect with an error like `ipv4:127.0.0.1:23000 unavailable` while running in **Standalone** runtime mode, autostart of the local AgentOS instance is likely disabled.
+
+Check the `ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART` environment variable — if it is set to `false`, the SDK will not start AgentOS automatically and there is nothing listening on port `23000`. Either unset the variable or set it to `true`:
+
+<Tabs>
+  <Tab title="Windows PowerShell">
+    ```powershell
+    $env:ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART="true"
+    ```
+  </Tab>
+  <Tab title="macOS/Linux">
+    ```bash
+    export ASKUI_CONTROLLER_CLIENT_SERVER_AUTOSTART=true
+    ```
+  </Tab>
+</Tabs>
+
+This variable is intentionally set to `false` when connecting to a remote AgentOS instance — see [Remote Windows VM](/06-agent-os/how-to-guides/deployment-ci#remote-windows-vm).
 
 ### Need to reinstall or remove
 
