@@ -9,13 +9,12 @@ AgentOS is **platform independent** — it supports Windows, macOS, Linux, Andro
 
 ```mermaid
 graph TD
-    A[Agent Code<br/>Python SDK] -->|gRPC| B[AgentOS]
-    B --> C{Control Mode}
-    C -->|Host Mode| D[OS-level APIs<br/>on target machine]
-    C -->|Companion Mode| E[Hardware interfaces<br/>from external device]
-    B --> F{Runtime Mode}
-    F -->|Standalone| G[User-space process]
-    F -->|OS Service| H[Windows SYSTEM service]
+    A[Agent Code<br/>Python SDK] -->|gRPC| B[AgentOS Service Binary]
+    B --> C{Runtime Mode<br/>How is the binary started?}
+    C -->|Standalone<br/>started by external program<br/>user privileges| D{Control Mode<br/>What does the binary control?}
+    C -->|OS Service<br/>registered as OS service<br/>SYSTEM privileges| D
+    D -->|Host Mode| E[Local host<br/>via OS-level APIs]
+    D -->|Companion Mode| F[Companion device<br/>via protocol]
 ```
 
 ## Control Modes
@@ -36,7 +35,7 @@ Runtime modes define **how AgentOS runs on the machine it's installed on**. Ther
 - **Standalone** — AgentOS runs as a regular process in the user's session. Install via `pip install askui-agent-os`. Best for local development and testing.
 - **OS Service** — AgentOS runs as a Windows system service with SYSTEM privileges. Install via the [Service](/06-agent-os/installation/service). Best for CI/CD, headless VMs, and enterprise deployments.
 
-The runtime mode only applies to Host Mode. Companion Mode always runs standalone on the companion device.
+Runtime mode is independent of control mode — both Host Mode and Companion Mode can run as Standalone or as OS Service. Higher privileges (OS Service) unlock additional capabilities such as RDP resilience and access to the Windows logon screen.
 
 [Learn more about Runtime Modes →](/06-agent-os/understanding/runtime-modes)
 
@@ -93,10 +92,10 @@ If your agent can't interact with an elevated application, see [Troubleshooting]
 
 Think of it as two independent choices:
 
-1. **Control mode** — *How do I reach the target?* Software on the target (Host) or hardware from outside (Companion).
-2. **Runtime mode** — *How does AgentOS run?* As a regular process (Standalone) or as a system service (OS Service).
+1. **Runtime mode** — *How does the AgentOS binary start, and with which privileges?* Started by an external program (Standalone, user privileges) or registered as a system service (OS Service, SYSTEM privileges).
+2. **Control mode** — *What does it control once running?* The local host (Host) or a separate device through a protocol (Companion).
 
-Your agent code stays the same regardless of the combination. The SDK connects to AgentOS via gRPC, and AgentOS handles the rest.
+Both runtime modes can be combined with both control modes. Your agent code stays the same regardless of the combination — the SDK connects to AgentOS via gRPC, and AgentOS handles the rest.
 
 <CardGroup cols={3}>
   <Card title="Control Modes" icon="desktop" href="/06-agent-os/understanding/control-modes">
