@@ -46,6 +46,18 @@ Also verify that `SERVICE_ENABLE_SAS` is set to `1` (default) in the [Silent ins
 The service includes a `windows.forceSas` option that overrides group policies. This is **not recommended** as it may trigger system integrity checks. Configure the GPE policy instead.
 </Warning>
 
+### AgentOS returns empty images or shuts down when the RDP Client window is minimized
+
+Minimizing the RDP Client window simulates a display disconnect on the remote machine. The Remote Device Controller loses access to the display — depending on the state, it either returns empty screenshots or shuts itself down entirely, ending any running automation.
+
+Mitigate with one of the following:
+
+- Start the job while RDP is connected and the window is maximized.
+- Disconnect the RDP session (rather than minimizing it) before starting the job.
+- On the **RDP client machine** (the one running `mstsc`), set a registry value to keep the session active when minimized:
+
+  Open `regedit`, navigate to `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Terminal Server Client`, and create a `DWORD` value named `RemoteDesktop_SuppressWhenMinimized` with data `2`.
+
 ### Agent can't interact with apps running as Administrator
 
 Windows prevents non-elevated processes from sending input to elevated (Run as Administrator) applications. If your agent can't click or type into an app running as Administrator, you need to start the Remote Device Controller in elevated mode.
